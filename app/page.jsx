@@ -345,7 +345,38 @@ function TopLocationsMarquee() {
 /* ---------- Page ---------- */
 export default function Home() {
   return (
-    <main className="text-ahCharcoal bg-ahChrome bg-chrome min-h-screen">
+    <main className="text-ahCharcoal min-h-screen bg-diamond">
+      {/* Diamond-plate background (global CSS) */}
+      <style jsx global>{`
+        /* Diamond plate steel, ~25% silver tone */
+        .bg-diamond {
+          background-color: #e6eaee; /* light silver base */
+          background-image:
+            /* subtle sheen */
+            radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 55%),
+            radial-gradient(ellipse at 80% 100%, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0) 60%),
+            /* diamond checks */
+            linear-gradient(135deg, rgba(255,255,255,0.28) 25%, transparent 25%),
+            linear-gradient(315deg, rgba(0,0,0,0.10) 25%, transparent 25%),
+            linear-gradient(45deg, rgba(255,255,255,0.20) 25%, transparent 25%),
+            linear-gradient(225deg, rgba(0,0,0,0.10) 25%, transparent 25%);
+          background-size:
+            100% 100%,
+            100% 100%,
+            24px 24px,
+            24px 24px,
+            24px 24px,
+            24px 24px;
+          background-position:
+            0 0,
+            0 0,
+            0 0,
+            12px 12px,
+            12px -12px,
+            -12px 0;
+        }
+      `}</style>
+
       <Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" />
 
       {/* Marquee */}
@@ -396,7 +427,7 @@ export default function Home() {
               <span className="underline decoration-ahAccent decoration-4 underline-offset-4">
                 Professional
               </span>{" "}
-              Towing — From Small Cars to Oilfield Heavy
+              Towing — From Small Cars to Heavy Duty Towing
             </h2>
             <p className="mt-3 text-base md:text-lg opacity-95">
               Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty
@@ -529,7 +560,7 @@ export default function Home() {
             id="7501393555433262367"
             caption="Heavy hauling training — precision, safety, and control."
           />
-        <FramedTikTok
+          <FramedTikTok
             url="https://www.tiktok.com/@285302ditchking/video/7500641039896628510"
             id="7500641039896628510"
             caption="A&H operators exercise with local first responders — teamwork in action."
@@ -540,7 +571,9 @@ export default function Home() {
             caption="Oilfield hauling — Pulling Unit move. No job too big."
           />
         </div>
-        <p className="mt-4 text-xs opacity-70">Tip: If videos don’t appear, enable third-party scripts or upload MP4s as a fallback.</p>
+        <p className="mt-4 text-xs opacity-70">
+          Tip: If videos don’t appear, enable third-party scripts or upload MP4s as a fallback.
+        </p>
       </Section>
 
       {/* Contact */}
@@ -553,7 +586,7 @@ export default function Home() {
         <BrandSlab as="h2" size="md" />
       </div>
 
-      {/* Footer */}
+      {/* Footer (address visibility enhanced) */}
       <footer className="bg-ahCharcoal text-ahText mt-6">
         <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-10 text-sm">
           <div>
@@ -586,12 +619,15 @@ export default function Home() {
               </li>
             </ul>
           </div>
+          {/* UPDATED CONTACT BLOCK */}
           <div>
             <div className="font-semibold text-white">Contact</div>
-            <p className="mt-2">
-              <a className="underline" href="tel:+14328424578">(432) 842-4578</a><br />
-              <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
-              2712 W F Street, Pecos, TX 79772
+            <p className="mt-2 text-white drop-shadow-sm">
+              <a className="underline font-semibold" href="tel:+14328424578">(432) 842-4578</a><br />
+              <a className="underline font-semibold" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
+              <span className="font-extrabold text-amber-200">
+                2712 W F Street, Pecos, TX 79772
+              </span>
             </p>
           </div>
         </div>

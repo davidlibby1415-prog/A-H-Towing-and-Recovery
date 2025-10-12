@@ -1,3 +1,4 @@
+import "./globals.css";
 export const metadata = {
   title: "A&H Towing & Recovery, LLC | Pecos, Texas",
   description:

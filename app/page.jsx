@@ -47,11 +47,42 @@ function Section({ id, title, subtitle, children }) {
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight drop-shadow-sm text-ahCharcoal">
             {title}
           </h2>
-          {subtitle && <p className="mt-2 text-base md:text-lg opacity-90">{subtitle}</p>}
+          {subtitle && (
+            <p className="mt-2 text-base md:text-lg opacity-90">
+              <strong>{subtitle}</strong>
+            </p>
+          )}
         </div>
         {children}
       </div>
     </section>
+  );
+}
+
+/* ---------- Map (OSM embed with Google Maps link) ---------- */
+function ShopMap({ className = "" }) {
+  // Approximate Pecos coords; avoids Google login prompts
+  const lat = 31.415; // Pecos area approx
+  const lon = -103.516;
+  const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lon - 0.02}%2C${lat - 0.02}%2C${lon + 0.02}%2C${lat + 0.02}&layer=mapnik&marker=${lat}%2C${lon}`;
+  const gmapsLink =
+    "https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772";
+
+  return (
+    <div className={`relative rounded-3xl overflow-hidden shadow-2xl min-h-[280px] md:min-h-[420px] bg-black ${className}`}>
+      <iframe
+        title="Map — A&H Shop (OpenStreetMap)"
+        className="absolute inset-0 w-full h-full"
+        loading="lazy"
+        src={osmSrc}
+      />
+      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur px-3 py-1 rounded text-xs">
+        Can’t see the map?{" "}
+        <a className="underline" href={gmapsLink} target="_blank" rel="noreferrer">
+          Open in Google Maps
+        </a>
+      </div>
+    </div>
   );
 }
 
@@ -64,7 +95,7 @@ export default function Home() {
       {/* Top bar */}
       <div className="w-full bg-ahCharcoal text-ahText text-sm">
         <div className="container max-w-7xl flex items-center justify-between py-2">
-          <span className="font-semibold">🚨 Live 24/7 Towing & Recovery • Pecos, TX & Oilfield Routes</span>
+          <span className="font-semibold">24/7 Towing & Recovery • Pecos, TX & Oilfield Routes</span>
           <a href="mailto:ah.towing.recovery23@gmail.com" className="underline underline-offset-4 hover:opacity-100">
             ah.towing.recovery23@gmail.com
           </a>
@@ -93,10 +124,12 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Big Brand Name Under Header */}
+      {/* Big Brand Name Under Header (color gradient for stronger brand) */}
       <div className="container max-w-7xl pt-6">
         <h1 className="text-center text-3xl md:text-5xl font-extrabold tracking-tight drop-shadow-sm">
-          A&amp;H Towing &amp; Recovery, LLC
+          <span className="bg-gradient-to-r from-ahBlue via-ahAccent to-ahRed bg-clip-text text-transparent">
+            A&amp;H Towing &amp; Recovery, LLC
+          </span>
         </h1>
       </div>
 
@@ -105,8 +138,11 @@ export default function Home() {
         <div className="container max-w-7xl grid md:grid-cols-2 gap-10 items-center pt-8 pb-14 md:pt-10 md:pb-20">
           <div>
             <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow">
-              Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Local</span> Towing
-              — From Small Cars to Oilfield Heavy
+              Fast, Friendly,{" "}
+              <span className="underline decoration-ahAccent decoration-4 underline-offset-4">
+                Professional
+              </span>{" "}
+              Towing — From Small Cars to Oilfield Heavy
             </h2>
             <p className="mt-4 text-lg opacity-95">
               Stranded on I-20 or US-285? We dispatch immediately for light, medium & heavy-duty tows,
@@ -121,42 +157,33 @@ export default function Home() {
             </div>
 
             <div className="mt-8 grid grid-cols-3 gap-4">
-              <Stat label="Local Response" value="< 30 min" />
+              <Stat label="Professional Response" value="< 30 min" />
               <Stat label="Operating" value="24/7/365" />
               <Stat label="Service Area" value="Pecos & Oilfield" />
             </div>
           </div>
 
-          {/* Map with centered heading */}
+          {/* Map with centered heading and OSM embed */}
           <div>
             <p className="font-bold text-lg md:text-xl mb-3 text-center text-ahCharcoal">
               A&amp;H Towing &amp; Recovery Office is Located at:
             </p>
-            <div className="relative rounded-3xl overflow-hidden shadow-2xl min-h-[280px] md:min-h-[420px] bg-black">
-              <iframe
-                title="Google Map — A&H Shop"
-                className="absolute inset-0 w-full h-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-                src="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772&output=embed"
-              />
-            </div>
+            <ShopMap />
           </div>
         </div>
       </section>
 
-      {/* Trust Signals */}
+      {/* Trust Signals (no emojis) */}
       <div className="border-y border-black/10 bg-white/70 backdrop-blur">
         <div className="container max-w-7xl grid grid-cols-2 md:grid-cols-4 gap-4 py-6 text-sm">
-          <div className="rounded-xl bg-white p-4 shadow-sm">✅ Licensed & Insured</div>
-          <div className="rounded-xl bg-white p-4 shadow-sm">🕛 24/7 Dispatch</div>
-          <div className="rounded-xl bg-white p-4 shadow-sm">🚚 Light • Medium • Heavy</div>
-          <div className="rounded-XL bg-white p-4 shadow-sm">🤝 Works with First Responders</div>
+          <div className="rounded-xl bg-white p-4 shadow-sm font-semibold">Licensed & Insured</div>
+          <div className="rounded-xl bg-white p-4 shadow-sm font-semibold">24/7 Dispatch</div>
+          <div className="rounded-xl bg-white p-4 shadow-sm font-semibold">Light • Medium • Heavy</div>
+          <div className="rounded-xl bg-white p-4 shadow-sm font-semibold">Trains with First Responders</div>
         </div>
       </div>
 
-      {/* Services */}
+      {/* Services (no symbols, stronger hierarchy) */}
       <Section
         id="services"
         title="24/7 Towing & Roadside — Built for West Texas and Oilfield Conditions"
@@ -165,20 +192,17 @@ export default function Home() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Column 1: Towing & Recovery */}
           <div className="rounded-2xl border border-black/10 p-6 bg-white">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">🛻</span>
-              <h3 className="text-xl font-bold">24/7 Towing Services</h3>
-            </div>
+            <h3 className="text-xl font-bold">24/7 Towing Services</h3>
             <ul className="mt-4 space-y-2 text-sm">
-              <li>✔️ Wrecker Services</li>
-              <li>✔️ Accident Removal</li>
-              <li>✔️ Light Weight Towing (Cars, SUVs, Small Trucks)</li>
-              <li>✔️ Rollback Towing</li>
-              <li>✔️ Flatbed Services</li>
-              <li>✔️ Heavy Duty & Commercial Towing</li>
-              <li>✔️ Long & Short Distance Towing</li>
-              <li>✔️ Off-Road Recovery</li>
-              <li>✔️ Oilfield Equipment Transport</li>
+              <li>Wrecker Services</li>
+              <li>Accident Removal</li>
+              <li>Light Weight Towing (Cars, SUVs, Small Trucks)</li>
+              <li>Rollback Towing</li>
+              <li>Flatbed Services</li>
+              <li>Heavy Duty & Commercial Towing</li>
+              <li>Long & Short Distance Towing</li>
+              <li>Off-Road Recovery</li>
+              <li>Oilfield Equipment Transport</li>
             </ul>
             <div className="mt-5 flex gap-2 flex-wrap">
               <PhoneCTA />
@@ -190,15 +214,12 @@ export default function Home() {
 
           {/* Column 2: Roadside */}
           <div className="rounded-2xl border border-black/10 p-6 bg-white">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">🧰</span>
-              <h3 className="text-xl font-bold">Emergency Roadside Assistance</h3>
-            </div>
+            <h3 className="text-xl font-bold">Emergency Roadside Assistance</h3>
             <ul className="mt-4 space-y-2 text-sm">
-              <li>⛽ Fuel Delivery</li>
-              <li>🔋 Jump Starts</li>
-              <li>🔑 Lockouts</li>
-              <li>🛞 Tire Changes</li>
+              <li>Fuel Delivery</li>
+              <li>Jump Starts</li>
+              <li>Lockouts</li>
+              <li>Tire Changes</li>
             </ul>
             <div className="mt-5 flex gap-2 flex-wrap">
               <PhoneCTA />
@@ -210,7 +231,7 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Coverage */}
+      {/* Coverage (no emojis) */}
       <Section
         id="coverage"
         title="Service Area"
@@ -222,24 +243,17 @@ export default function Home() {
               title="Coverage Map"
               className="w-full h-[360px]"
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer"
               allowFullScreen
-              src="https://www.google.com/maps/d/u/0/embed?mid=1&ehbc=2E312F"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik"
             />
           </div>
-          <ul className="space-y-2 text-sm">
-            {[
-              "Pecos, TX (Home Base)",
-              "Toyah • Barstow • Mentone",
-              "Monahans • Fort Stockton",
-              "Loving County & Reeves County",
-              "I-20, US-285, TX-17 Corridors",
-            ].map((x) => (
-              <li key={x} className="flex items-start gap-2">
-                <span>📍</span>
-                <span>{x}</span>
-              </li>
-            ))}
+          <ul className="space-y-2 text-sm list-disc list-inside">
+            <li>Pecos, TX (Home Base)</li>
+            <li>Toyah • Barstow • Mentone</li>
+            <li>Monahans • Fort Stockton</li>
+            <li>Loving County & Reeves County</li>
+            <li>I-20, US-285, TX-17 Corridors</li>
             <li className="pt-3">
               <a className="underline" href="#contact">
                 Need coverage beyond this? Ask us →
@@ -321,10 +335,12 @@ export default function Home() {
         <ContactSection />
       </Section>
 
-      {/* Big Brand Name Above Footer */}
+      {/* Big Brand Name Above Footer (gradient color again) */}
       <div className="container max-w-7xl pb-2">
         <h2 className="text-center text-2xl md:text-4xl font-extrabold tracking-tight drop-shadow-sm">
-          A&amp;H Towing &amp; Recovery, LLC
+          <span className="bg-gradient-to-r from-ahBlue via-ahAccent to-ahRed bg-clip-text text-transparent">
+            A&amp;H Towing &amp; Recovery, LLC
+          </span>
         </h2>
       </div>
 
@@ -540,19 +556,27 @@ function ContactSection() {
         <p className="mt-2 text-sm">Hours: 24/7 Dispatch</p>
         <div className="mt-6 rounded-xl overflow-hidden border border-black/10">
           <iframe
-            title="Shop Map"
+            title="Shop Map (OpenStreetMap)"
             className="w-full h-[220px]"
             loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-            src="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772&output=embed"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik"
           />
+          <div className="text-xs p-2 bg-white/90">
+            Prefer Google?{" "}
+            <a
+              className="underline"
+              href="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open in Google Maps
+            </a>
+          </div>
         </div>
         <div className="mt-6 text-xs opacity-80">
-          24/7 Professional Service - Call or Text Us!
+          24/7 Professional Service — Call or Text Us!
         </div>
       </div>
     </div>
   );
 }
-

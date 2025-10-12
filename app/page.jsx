@@ -8,7 +8,7 @@ function PhoneCTA({ className = "" }) {
   return (
     <a
       href="tel:+14328424578"
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
       aria-label="Call A&H Towing & Recovery"
     >
       24/7 Dispatch • (432) 842-4578
@@ -22,7 +22,7 @@ function SmsCTA({ className = "", body }) {
   return (
     <a
       href={href}
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahGreen hover:brightness-95 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
       aria-label="Text A&H Dispatch"
     >
       Text Dispatch (Prefilled)
@@ -33,8 +33,8 @@ function SmsCTA({ className = "", body }) {
 function Stat({ label, value }) {
   return (
     <div className="text-center">
-      <div className="text-3xl md:text-4xl font-extrabold">{value}</div>
-      <div className="text-xs md:text-sm opacity-80">{label}</div>
+      <div className="text-3xl md:text-4xl font-extrabold drop-shadow">{value}</div>
+      <div className="text-xs md:text-sm opacity-90">{label}</div>
     </div>
   );
 }
@@ -44,8 +44,8 @@ function Section({ id, title, subtitle, children }) {
     <section id={id} className="py-14 md:py-20">
       <div className="container max-w-7xl">
         <div className="mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{title}</h2>
-          {subtitle && <p className="mt-2 text-base md:text-lg opacity-80">{subtitle}</p>}
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight drop-shadow-sm text-ahCharcoal">{title}</h2>
+          {subtitle && <p className="mt-2 text-base md:text-lg opacity-90">{subtitle}</p>}
         </div>
         {children}
       </div>
@@ -56,33 +56,33 @@ function Section({ id, title, subtitle, children }) {
 /* ---------- Page ---------- */
 export default function Home() {
   return (
-    <main className="text-ahDark bg-ahLight">
+    <main className="text-ahCharcoal bg-ahChrome bg-chrome min-h-screen">
       {/* TikTok embed script */}
       <Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" />
 
-      {/* Top bar */}
-      <div className="w-full bg-black text-white text-sm">
+      {/* Top bar (charcoal) */}
+      <div className="w-full bg-ahCharcoal text-ahText text-sm">
         <div className="container max-w-7xl flex items-center justify-between py-2">
-          <span>🚨 24/7 Towing & Recovery • Pecos, TX & Reeves County</span>
+          <span className="font-semibold">🚨 24/7 Towing & Recovery • Pecos, TX & Reeves County</span>
           <a
             href="mailto:ah.towing.recovery23@gmail.com"
-            className="opacity-90 hover:opacity-100 underline-offset-4 hover:underline"
+            className="underline underline-offset-4 hover:opacity-100"
           >
             ah.towing.recovery23@gmail.com
           </a>
         </div>
       </div>
 
-      {/* Header / Nav */}
-      <header className="sticky top-0 z-50 backdrop-blur bg-white/80 border-b">
+      {/* Header / Nav (charcoal) */}
+      <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
         <div className="container max-w-7xl flex items-center gap-6 py-3">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-black text-white grid place-items-center font-bold">
+            <div className="h-10 w-10 rounded-xl bg-black text-white grid place-items-center font-bold shadow-cta">
               A&amp;H
             </div>
             <div className="leading-tight">
-              <div className="font-bold">A&amp;H Towing & Recovery, LLC</div>
-              <div className="text-xs opacity-70">Pecos • Reeves County • I-20 • US-285</div>
+              <div className="font-bold text-white drop-shadow">A&amp;H Towing & Recovery, LLC</div>
+              <div className="text-xs opacity-80">Pecos • Reeves County • I-20 • US-285</div>
             </div>
           </div>
           <nav className="ml-auto hidden md:flex items-center gap-6 text-sm">
@@ -101,14 +101,14 @@ export default function Home() {
       <section className="overflow-hidden">
         <div className="container max-w-7xl grid md:grid-cols-2 gap-10 items-center pt-12 pb-16 md:pt-16 md:pb-24">
           <div>
-            <h1 className="text-3xl md:text-5xl font-extrabold leading-tight">
+            <h1 className="text-3xl md:text-5xl font-extrabold leading-tight drop-shadow">
               Fast, Friendly,{" "}
-              <span className="underline decoration-ahBlue decoration-4 underline-offset-4">
+              <span className="underline decoration-ahAccent decoration-4 underline-offset-4">
                 Local
               </span>{" "}
               Towing in Pecos, TX
             </h1>
-            <p className="mt-4 text-lg opacity-90">
+            <p className="mt-4 text-lg opacity-95">
               Stuck on I-20 or US-285? Call or text A&amp;H for 24/7 towing, winch-outs,
               roadside assistance, and accident recovery. Professional operators. Transparent pricing.
             </p>
@@ -116,7 +116,7 @@ export default function Home() {
               <PhoneCTA />
               <a
                 href="#contact"
-                className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold border border-gray-300 hover:bg-white"
+                className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold border border-black/10 bg-white/70 backdrop-blur hover:bg-white"
               >
                 Share Location & Text Us
               </a>
@@ -127,19 +127,26 @@ export default function Home() {
               <Stat label="Since" value="2024" />
             </div>
           </div>
+
+          {/* Map: public embed, no login required */}
           <div className="relative rounded-3xl overflow-hidden shadow-2xl min-h-[280px] md:min-h-[420px] bg-black">
             <iframe
               title="Google Map — A&H Shop"
               className="absolute inset-0 w-full h-full"
               loading="lazy"
-              src="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772&output=embed"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+              src={
+                // Public embed form (Share → Embed). Using query embed also avoids session/cookies.
+                "https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772&output=embed"
+              }
             />
           </div>
         </div>
       </section>
 
       {/* Trust badges */}
-      <div className="bg-gray-50 border-y">
+      <div className="border-y border-black/10">
         <div className="container max-w-7xl grid grid-cols-2 md:grid-cols-4 gap-4 py-6 text-sm">
           <div className="rounded-xl bg-white p-4 shadow-sm">✅ Licensed & Insured</div>
           <div className="rounded-xl bg-white p-4 shadow-sm">🕛 24/7 Dispatch</div>
@@ -163,7 +170,7 @@ export default function Home() {
             { title: "Equipment Transport", desc: "Small machinery, tool boxes, sheds • Call for dimensions and rates." },
             { title: "Commercial Accounts", desc: "Fleet priority, direct billing, monthly reporting, dedicated point-of-contact." },
           ].map((card) => (
-            <div key={card.title} className="rounded-2xl border p-6 bg-white hover:shadow-md transition">
+            <div key={card.title} className="rounded-2xl border border-black/10 p-6 bg-white hover:shadow-md transition">
               <div className="text-lg font-bold">{card.title}</div>
               <p className="mt-2 text-sm opacity-90">{card.desc}</p>
               <div className="mt-4 flex gap-2 flex-wrap">
@@ -182,11 +189,13 @@ export default function Home() {
         subtitle="Pecos • Reeves County • I-20 • US-285 • Surrounding oilfield routes"
       >
         <div className="grid md:grid-cols-3 gap-6 items-start">
-          <div className="md:col-span-2 rounded-2xl overflow-hidden shadow">
+          <div className="md:col-span-2 rounded-2xl overflow-hidden shadow border border-black/10">
             <iframe
               title="Coverage Map"
               className="w-full h-[360px]"
               loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
               src="https://www.google.com/maps/d/u/0/embed?mid=1&ehbc=2E312F"
             />
           </div>
@@ -217,7 +226,7 @@ export default function Home() {
       >
         <div className="grid md:grid-cols-3 gap-6">
           {["6749520869598481669", "7118714547709648134", "7261479261679377669"].map((id) => (
-            <div key={id} className="rounded-2xl overflow-hidden border bg-white">
+            <div key={id} className="rounded-2xl overflow-hidden border border-black/10 bg-white">
               <blockquote
                 className="tiktok-embed"
                 cite={`https://www.tiktok.com/@285302ditchking/video/${id}`}
@@ -247,7 +256,7 @@ export default function Home() {
             { name: "Wheel-Lift Unit", details: "Quick response for tight spaces and short-haul tows." },
             { name: "Recovery Rig", details: "Winch-outs, ditch recoveries, scene support." },
           ].map((t) => (
-            <div key={t.name} className="rounded-2xl border p-6 bg-white">
+            <div key={t.name} className="rounded-2xl border border-black/10 p-6 bg-white">
               <div className="font-semibold">{t.name}</div>
               <div className="mt-2 opacity-90">{t.details}</div>
             </div>
@@ -263,7 +272,7 @@ export default function Home() {
             { q: "Professional recovery after a ditch slide. Zero damage.", n: "D. Lopez" },
             { q: "Transparent price and great communication.", n: "S. Nguyen" },
           ].map((r, i) => (
-            <figure key={i} className="rounded-2xl border p-6 bg-white">
+            <figure key={i} className="rounded-2xl border border-black/10 p-6 bg-white">
               <blockquote className="italic">“{r.q}”</blockquote>
               <figcaption className="mt-3 text-sm opacity-80">— {r.n}</figcaption>
             </figure>
@@ -280,12 +289,12 @@ export default function Home() {
         <ContactSection />
       </Section>
 
-      {/* Footer */}
-      <footer className="border-t">
+      {/* Footer (charcoal) */}
+      <footer className="bg-ahCharcoal text-ahText">
         <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-10 text-sm">
           <div>
-            <div className="font-bold">A&amp;H Towing & Recovery, LLC</div>
-            <p className="mt-2 opacity-80">
+            <div className="font-bold text-white drop-shadow-sm">A&amp;H Towing & Recovery, LLC</div>
+            <p className="mt-2 opacity-90">
               Serving Pecos and Reeves County with reliable towing, recovery, and roadside assistance.
             </p>
           </div>
@@ -381,7 +390,7 @@ function ContactSection() {
     );
   };
 
-  const mapsLink = coords ? `https://maps.google.com/?q=${coords.lat},${coords.lng}` : "";
+  const mapsLink = coords ? `https://www.google.com/maps?q=${coords.lat},${coords.lng}` : "";
   const smsBody =
     `Tow request from ${name || "(name)"}. ` +
     `Callback: ${callback || "(phone)"} . ` +
@@ -392,7 +401,7 @@ function ContactSection() {
 
   return (
     <div className="grid md:grid-cols-2 gap-8">
-      <div className="rounded-2xl border p-6 bg-white">
+      <div className="rounded-2xl border border-black/10 p-6 bg-white">
         <form className="grid gap-4" onSubmit={(e) => e.preventDefault()}>
           <label className="grid gap-1">
             <span className="text-sm">Name</span>
@@ -434,7 +443,7 @@ function ContactSection() {
             />
           </label>
 
-          <div className="grid gap-2 rounded-xl border p-3">
+          <div className="grid gap-2 rounded-xl border p-3 bg-white/70 backdrop-blur">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Share GPS Location</span>
               <button
@@ -445,7 +454,7 @@ function ContactSection() {
                 Use my GPS
               </button>
             </div>
-            <div className="text-xs opacity-70">
+            <div className="text-xs opacity-80">
               Status: {locStatus}
               {coords && (
                 <>
@@ -464,12 +473,12 @@ function ContactSection() {
             <SmsCTA body={smsBody} />
           </div>
           <p className="text-xs opacity-70">
-            Tip: The green button opens your SMS app with all details filled in, including GPS if allowed.
+            Tip: The red button opens your SMS app with all details filled in, including GPS if allowed.
           </p>
         </form>
       </div>
 
-      <div className="rounded-2xl border p-6 bg-gray-50">
+      <div className="rounded-2xl border border-black/10 p-6 bg-white/70 backdrop-blur">
         <div className="font-semibold">Call or Visit</div>
         <p className="mt-2 text-sm">
           Phone:{" "}
@@ -484,15 +493,17 @@ function ContactSection() {
         </p>
         <p className="mt-4 text-sm">Address: 2712 W F Street, Pecos, TX 79772</p>
         <p className="mt-2 text-sm">Hours: 24/7 Dispatch</p>
-        <div className="mt-6">
+        <div className="mt-6 rounded-xl overflow-hidden border border-black/10">
           <iframe
             title="Shop Map"
-            className="w-full h-[220px] rounded-xl"
+            className="w-full h-[220px]"
             loading="lazy"
-            src="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772&output=embed"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+            src={"https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772&output=embed"}
           />
         </div>
-        <div className="mt-6 text-xs opacity-70">
+        <div className="mt-6 text-xs opacity-80">
           Prefer web submission? Hook this form to Formspree/Formspark/Twilio Functions to receive texts server-side.
         </div>
       </div>

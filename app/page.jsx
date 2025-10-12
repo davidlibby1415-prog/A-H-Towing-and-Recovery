@@ -96,14 +96,14 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero */}
+      {/* Hero Section */}
       <section className="overflow-hidden">
         <div className="container max-w-7xl grid md:grid-cols-2 gap-10 items-center pt-12 pb-16 md:pt-16 md:pb-24">
           <div>
             <h1 className="text-3xl md:text-5xl font-extrabold leading-tight drop-shadow">
               Fast, Friendly,{" "}
               <span className="underline decoration-ahAccent decoration-4 underline-offset-4">
-                Local
+                and Professional
               </span>{" "}
               Towing in Pecos, TX
             </h1>
@@ -112,7 +112,7 @@ export default function Home() {
               roadside assistance, and accident recovery. Professional operators. Transparent pricing.
             </p>
 
-            {/* ✅ Updated Buttons */}
+            {/* ✅ Blue and Red Buttons */}
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <PhoneCTA />
               <SmsCTA
@@ -127,21 +127,26 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Map */}
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl min-h-[280px] md:min-h-[420px] bg-black">
-            <iframe
-              title="Google Map — A&H Shop"
-              className="absolute inset-0 w-full h-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-              src="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772&output=embed"
-            />
+          {/* ✅ Map with Centered Heading */}
+          <div>
+            <p className="font-bold text-lg md:text-xl mb-3 text-center text-ahCharcoal">
+              A&amp;H Towing &amp; Recovery Office is Located at:
+            </p>
+            <div className="relative rounded-3xl overflow-hidden shadow-2xl min-h-[280px] md:min-h-[420px] bg-black">
+              <iframe
+                title="Google Map — A&H Shop"
+                className="absolute inset-0 w-full h-full"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
+                src="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772&output=embed"
+              />
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Services */}
+      {/* Services Section */}
       <Section
         id="services"
         title="Towing & Roadside Services"
@@ -173,7 +178,7 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Contact */}
+      {/* Contact Section */}
       <Section
         id="contact"
         title="Request a Tow"
@@ -190,7 +195,7 @@ export default function Home() {
               A&amp;H Towing & Recovery, LLC
             </div>
             <p className="mt-2 opacity-90">
-              Serving Pecos and Reeves County with reliable towing and recovery across West Texas.
+              Serving Pecos and Reeves County with reliable towing and recovery.
             </p>
           </div>
           <div>
@@ -220,39 +225,11 @@ export default function Home() {
           </div>
         </div>
       </footer>
-
-      {/* JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            name: "A&H Towing & Recovery, LLC",
-            telephone: "+14328424578",
-            email: "ah.towing.recovery23@gmail.com",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "2712 W F Street",
-              addressLocality: "Pecos",
-              addressRegion: "TX",
-              postalCode: "79772",
-              addressCountry: "US",
-            },
-            areaServed: [
-              { "@type": "City", name: "Pecos" },
-              { "@type": "AdministrativeArea", name: "Reeves County" },
-            ],
-            openingHours: "Mo-Su 00:00-23:59",
-            sameAs: ["https://www.tiktok.com/@285302ditchking"],
-          }),
-        }}
-      />
     </main>
   );
 }
 
-/* ---------- Contact Form Section ---------- */
+/* ---------- Contact Section ---------- */
 function ContactSection() {
   const [name, setName] = useState("");
   const [callback, setCallback] = useState("");

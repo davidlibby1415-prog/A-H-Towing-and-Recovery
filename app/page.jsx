@@ -25,7 +25,7 @@ function PhoneCTA({ className = "" }) {
   );
 }
 
-function SmsCTA({ className = "", number = "+14328424578", body = "", onClick }) {
+function SmsCTA({ className = "", number = "+14328424578", body = "", onClick, children }) {
   const href = smsHref(number, body);
   return (
     <a
@@ -34,17 +34,18 @@ function SmsCTA({ className = "", number = "+14328424578", body = "", onClick })
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] ${className}`}
       aria-label="Text A&H Dispatch"
     >
-      Text Dispatch My Info &amp; Location
+      {children || "Text Dispatch My Info & Location"}
     </a>
   );
 }
 
+/* Shadowed section header wrapper */
 function Section({ id, title, subtitle, children }) {
   return (
     <section id={id} className="py-14 md:py-20">
       <div className="container max-w-7xl">
-        <div className="mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight drop-shadow-sm text-ahCharcoal">
+        <div className="mb-8 md:mb-12 rounded-2xl shadow-xl border border-black/10 bg-white/85 backdrop-blur px-5 md:px-6 py-4 md:py-5">
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-ahCharcoal">
             {title}
           </h2>
           {subtitle && (
@@ -112,6 +113,29 @@ function IconClock(props) {
       <circle cx="12" cy="12" r="9" />
       <path d="M12 7v6l4 2" />
     </svg>
+  );
+}
+
+/* ---------- Shared Brand Slab (used top & near footer so they match) ---------- */
+function BrandSlab({ as: Tag = "h1", size = "lg" }) {
+  const sizes = {
+    lg: "text-4xl md:text-6xl",
+    md: "text-2xl md:text-4xl",
+  };
+  return (
+    <div className="mx-auto max-w-fit rounded-3xl border border-white/10 bg-[#0b0f14] px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+      <Tag
+        className={`text-center ${sizes[size]} font-black leading-[1.05] tracking-tight`}
+        style={{
+          WebkitTextStroke: "1.5px #0b0f14",
+          textShadow: "0 1px 1px rgba(0,0,0,.4), 0 6px 16px rgba(0,0,0,.35)",
+        }}
+      >
+        <span className="bg-gradient-to-b from-zinc-100 via-zinc-200 to-zinc-300 bg-clip-text text-transparent">
+          A&amp;H TOWING &amp; RECOVERY, LLC
+        </span>
+      </Tag>
+    </div>
   );
 }
 
@@ -250,7 +274,6 @@ function StatMini({ value, label }) {
     </div>
   );
 }
-
 function StatsCompact() {
   return (
     <div className="grid grid-cols-3 gap-x-6" style={{ marginTop: "calc(1rem/1.618)" }}>
@@ -270,7 +293,6 @@ function TopLocationsMarquee() {
     <div className="w-full bg-ahCharcoal text-ahText text-sm">
       <div className="container max-w-7xl flex items-center gap-4 py-2">
         <div className="relative flex-1 overflow-hidden">
-          {/* Reduced-motion friendly: falls back to single line without animation */}
           <div className="marquee whitespace-nowrap font-semibold tracking-tight">
             <span className="inline-block pr-12">{text}</span>
             <span className="inline-block pr-12">{text}</span>
@@ -284,8 +306,6 @@ function TopLocationsMarquee() {
           ah.towing.recovery23@gmail.com
         </a>
       </div>
-
-      {/* Keyframes (scoped global) */}
       <style jsx global>{`
         @keyframes marquee-x {
           0% {
@@ -316,10 +336,10 @@ export default function Home() {
     <main className="text-ahCharcoal bg-ahChrome bg-chrome min-h-screen">
       <Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" />
 
-      {/* Top marquee with full locations list */}
+      {/* Top marquee */}
       <TopLocationsMarquee />
 
-      {/* Header (address under name) */}
+      {/* Header */}
       <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
         <div className="container max-w-7xl flex items-center gap-6 py-3">
           <div className="flex items-center gap-3">
@@ -341,21 +361,9 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Brand slab */}
+      {/* Brand slab (top) */}
       <div className="container max-w-7xl pt-6">
-        <div className="mx-auto max-w-fit rounded-3xl border border-white/10 bg-[#0b0f14] px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-          <h1
-            className="text-center text-4xl md:text-6xl font-black leading-[1.05] tracking-tight"
-            style={{
-              WebkitTextStroke: "1.5px #0b0f14",
-              textShadow: "0 1px 1px rgba(0,0,0,.4), 0 6px 16px rgba(0,0,0,.35)",
-            }}
-          >
-            <span className="bg-gradient-to-b from-zinc-100 via-zinc-200 to-zinc-300 bg-clip-text text-transparent">
-              A&amp;H TOWING &amp; RECOVERY, LLC
-            </span>
-          </h1>
-        </div>
+        <BrandSlab as="h1" size="lg" />
       </div>
 
       {/* Hero */}
@@ -375,9 +383,15 @@ export default function Home() {
               winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
             </p>
 
-            {/* Compact stats beside the video */}
             <div className="mx-auto md:mx-0 max-w-[640px] text-ahCharcoal">
               <StatsCompact />
+            </div>
+
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <PhoneCTA />
+              <SmsCTA
+                body={`Tow request from {Your Name}. Callback: {Your Phone}. Passengers: {#}. Vehicle: {Y/M/M}. Issue: {Flat tire / no-start / accident}. Location: {share GPS}.`}
+              />
             </div>
           </div>
 
@@ -456,7 +470,7 @@ export default function Home() {
 
         <div className="mt-6 flex gap-2 flex-wrap">
           <PhoneCTA />
-          {/* Plain SMS fallback (updates if GPS captured earlier) */}
+          {/* Keep a single SMS here in Services; Contact section will only have one (GPS) */}
           <SmsCTA
             body={`Tow request: {Y/M/M}. Heavy/Oilfield?: {Yes/No}. Passengers: {#}. Issue: {describe}. Location: (share GPS). Callback: {phone}.`}
           />
@@ -481,7 +495,6 @@ export default function Home() {
             />
           </div>
 
-          {/* Bigger, bold, one-color bullets (added Grandfalls & Wink, Metro capitalized) */}
           <ul className="space-y-3 list-disc pl-5 text-base md:text-lg font-semibold text-ahCharcoal">
             <li>Pecos (Home Base) • Reeves County</li>
             <li>Fort Stockton • Monahans • Kermit</li>
@@ -495,7 +508,7 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Proof / Training — framed videos too */}
+      {/* Proof / Training — framed videos */}
       <Section
         id="proof"
         title="Training & Community — Why Professionals Trust A&H"
@@ -507,7 +520,7 @@ export default function Home() {
             id="7501393555433262367"
             caption="Heavy hauling training — precision, safety, and control."
           />
-          <FramedTikTok
+        <FramedTikTok
             url="https://www.tiktok.com/@285302ditchking/video/7500641039896628510"
             id="7500641039896628510"
             caption="A&H operators exercise with local first responders — teamwork in action."
@@ -532,31 +545,24 @@ export default function Home() {
         <ContactSection />
       </Section>
 
-      {/* Footer brand slab */}
+      {/* Brand slab (bottom) — matches the top now */}
       <div className="container max-w-7xl pb-2">
-        <div className="mx-auto max-w-fit rounded-3xl border border-white/10 bg-[#0b0f14] px-5 py-2 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
-          <h2
-            className="text-center text-2xl md:text-4xl font-black tracking-tight"
-            style={{ WebkitTextStroke: "1.2px #0b0f14", textShadow: "0 1px 1px rgba(0,0,0,.45)" }}
-          >
-            <span className="bg-gradient-to-b from-zinc-100 via-zinc-200 to-zinc-300 bg-clip-text text-transparent">
-              A&amp;H TOWING &amp; RECOVERY, LLC
-            </span>
-          </h2>
-        </div>
+        <BrandSlab as="h2" size="md" />
       </div>
 
-      {/* Footer */}
+      {/* Footer (more vibrant + bold) */}
       <footer className="bg-ahCharcoal text-ahText mt-6">
         <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-10 text-sm">
           <div>
-            <div className="font-bold text-white drop-shadow-sm">A&amp;H Towing & Recovery, LLC</div>
-            <p className="mt-2 opacity-90">
-              Professional towing, recovery, and roadside assistance for Pecos & oilfield routes.
+            <div className="font-extrabold text-white drop-shadow-sm">
+              A&amp;H Towing &amp; Recovery, LLC
+            </div>
+            <p className="mt-2 font-bold text-amber-200">
+              Professional towing, recovery, and roadside assistance for Pecos &amp; oilfield routes.
             </p>
           </div>
           <div>
-            <div className="font-semibold">Quick Links</div>
+            <div className="font-semibold text-white">Quick Links</div>
             <ul className="mt-2 space-y-1">
               <li><a className="underline" href="#services">Services</a></li>
               <li><a className="underline" href="#coverage">Coverage</a></li>
@@ -565,7 +571,7 @@ export default function Home() {
             </ul>
           </div>
           <div>
-            <div className="font-semibold">Social</div>
+            <div className="font-semibold text-white">Social</div>
             <ul className="mt-2 space-y-1">
               <li><a className="underline" href="https://www.tiktok.com/@285302ditchking" target="_blank" rel="noreferrer">TikTok</a></li>
               <li><a className="underline" href="#">Facebook</a></li>
@@ -573,7 +579,7 @@ export default function Home() {
             </ul>
           </div>
           <div>
-            <div className="font-semibold">Contact</div>
+            <div className="font-semibold text-white">Contact</div>
             <p className="mt-2">
               <a className="underline" href="tel:+14328424578">(432) 842-4578</a><br />
               <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
@@ -583,7 +589,7 @@ export default function Home() {
         </div>
       </footer>
 
-      {/* JSON-LD (added Grandfalls & Wink) */}
+      {/* JSON-LD */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -676,7 +682,7 @@ function ContactSection() {
     e.preventDefault();
     const c = (await requestLocation()) || coords;
     const href = smsHref("+14328424578", buildSMSBody(c || coords));
-    window.location.href = href; // open SMS with GPS
+    window.location.href = href;
   };
 
   const smsBody = buildSMSBody(coords || null);
@@ -768,10 +774,10 @@ function ContactSection() {
 
           <div className="flex flex-wrap gap-3 mt-2">
             <PhoneCTA />
-            {/* Normal SMS (uses current coords if available) */}
-            <SmsCTA body={smsBody} />
-            {/* One-click: fetch GPS then open SMS with coordinates */}
-            <SmsCTA className="bg-ahBlue" body={smsBody} onClick={handleTextWithGPS} />
+            {/* Single text button here (GPS-enabled). Removed the redundant one. */}
+            <SmsCTA className="bg-ahBlue" body={smsBody} onClick={handleTextWithGPS}>
+              Text Dispatch (Include GPS)
+            </SmsCTA>
           </div>
           <p className="text-xs opacity-70">
             Tip: The blue button grabs GPS and then opens your SMS app with coordinates included.

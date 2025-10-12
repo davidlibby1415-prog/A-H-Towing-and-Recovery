@@ -96,14 +96,14 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="overflow-hidden">
         <div className="container max-w-7xl grid md:grid-cols-2 gap-10 items-center pt-12 pb-16 md:pt-16 md:pb-24">
           <div>
             <h1 className="text-3xl md:text-5xl font-extrabold leading-tight drop-shadow">
               Fast, Friendly,{" "}
               <span className="underline decoration-ahAccent decoration-4 underline-offset-4">
-                and Professional
+                Local
               </span>{" "}
               Towing in Pecos, TX
             </h1>
@@ -112,7 +112,7 @@ export default function Home() {
               roadside assistance, and accident recovery. Professional operators. Transparent pricing.
             </p>
 
-            {/* ✅ Blue and Red Buttons */}
+            {/* Blue + Red Buttons */}
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <PhoneCTA />
               <SmsCTA
@@ -127,7 +127,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ✅ Map with Centered Heading */}
+          {/* Map with centered heading */}
           <div>
             <p className="font-bold text-lg md:text-xl mb-3 text-center text-ahCharcoal">
               A&amp;H Towing &amp; Recovery Office is Located at:
@@ -146,7 +146,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Services */}
       <Section
         id="services"
         title="Towing & Roadside Services"
@@ -178,7 +178,37 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Contact Section */}
+      {/* TikTok */}
+      <Section
+        id="tiktok"
+        title="On the Job: @285302ditchking"
+        subtitle="Real recoveries, tips, and the day-to-day. Follow along on TikTok."
+      >
+        <div className="grid md:grid-cols-3 gap-6">
+          {["6749520869598481669", "7118714547709648134", "7261479261679377669"].map((id) => (
+            <div key={id} className="rounded-2xl overflow-hidden border border-black/10 bg-white">
+              <blockquote
+                className="tiktok-embed"
+                cite={`https://www.tiktok.com/@285302ditchking/video/${id}`}
+                data-video-id={id}
+                style={{ maxWidth: 605, minWidth: 325 }}
+              >
+                <section>
+                  <a target="_blank" rel="noreferrer" href="https://www.tiktok.com/@285302ditchking">
+                    @285302ditchking
+                  </a>
+                  <p>Field footage from recent recoveries. #towing #pecostx</p>
+                </section>
+              </blockquote>
+            </div>
+          ))}
+        </div>
+        <p className="mt-4 text-xs opacity-70">
+          Don’t see the videos? Make sure third-party scripts are allowed, or replace with uploaded MP4s.
+        </p>
+      </Section>
+
+      {/* Contact */}
       <Section
         id="contact"
         title="Request a Tow"
@@ -229,11 +259,12 @@ export default function Home() {
   );
 }
 
-/* ---------- Contact Section ---------- */
+/* ---------- Contact Section (with GPS + Passengers) ---------- */
 function ContactSection() {
   const [name, setName] = useState("");
   const [callback, setCallback] = useState("");
   const [vehicle, setVehicle] = useState("");
+  const [passengers, setPassengers] = useState(""); // NEW
   const [issue, setIssue] = useState("");
   const [coords, setCoords] = useState(null);
   const [locStatus, setLocStatus] = useState("Idle");
@@ -256,7 +287,9 @@ function ContactSection() {
 
   const mapsLink = coords ? `https://www.google.com/maps?q=${coords.lat},${coords.lng}` : "";
   const smsBody =
-    `Tow request from ${name || "(name)"}. Callback: ${callback || "(phone)"} . Vehicle: ${vehicle || "(Y/M/M)"} . Issue: ${issue || "(describe)"} . ` +
+    `Tow request from ${name || "(name)"}. Callback: ${callback || "(phone)"} . ` +
+    `Vehicle: ${vehicle || "(Y/M/M)"} . Passengers: ${passengers || "(#)"} . ` +
+    `Issue: ${issue || "(describe)"} . ` +
     (coords ? `Location: ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)} ${mapsLink}` : "(share location)");
 
   return (
@@ -273,6 +306,7 @@ function ContactSection() {
               required
             />
           </label>
+
           <label className="grid gap-1">
             <span className="text-sm">Callback Phone</span>
             <input
@@ -283,6 +317,7 @@ function ContactSection() {
               required
             />
           </label>
+
           <label className="grid gap-1">
             <span className="text-sm">Vehicle</span>
             <input
@@ -292,6 +327,21 @@ function ContactSection() {
               onChange={(e) => setVehicle(e.target.value)}
             />
           </label>
+
+          {/* NEW: Number of Passengers */}
+          <label className="grid gap-1">
+            <span className="text-sm">Number of Passengers</span>
+            <input
+              type="number"
+              min="1"
+              max="8"
+              className="rounded-xl border px-3 py-2"
+              placeholder="e.g., 2"
+              value={passengers}
+              onChange={(e) => setPassengers(e.target.value)}
+            />
+          </label>
+
           <label className="grid gap-1">
             <span className="text-sm">Issue</span>
             <textarea
@@ -332,7 +382,41 @@ function ContactSection() {
             <PhoneCTA />
             <SmsCTA body={smsBody} />
           </div>
+          <p className="text-xs opacity-70">
+            Tip: The red button opens your SMS app with all details filled in, including GPS if allowed.
+          </p>
         </form>
+      </div>
+
+      {/* Right column (contact info) */}
+      <div className="rounded-2xl border border-black/10 p-6 bg-white/70 backdrop-blur">
+        <div className="font-semibold">Call or Visit</div>
+        <p className="mt-2 text-sm">
+          Phone:{" "}
+          <a className="underline" href="tel:+14328424578">
+            (432) 842-4578
+          </a>
+          <br />
+          Email:{" "}
+          <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">
+            ah.towing.recovery23@gmail.com
+          </a>
+        </p>
+        <p className="mt-4 text-sm">Address: 2712 W F Street, Pecos, TX 79772</p>
+        <p className="mt-2 text-sm">Hours: 24/7 Dispatch</p>
+        <div className="mt-6 rounded-xl overflow-hidden border border-black/10">
+          <iframe
+            title="Shop Map"
+            className="w-full h-[220px]"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+            src="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772&output=embed"
+          />
+        </div>
+        <div className="mt-6 text-xs opacity-80">
+          Prefer web submission? Hook this form to Formspree/Formspark/Twilio Functions to receive texts server-side.
+        </div>
       </div>
     </div>
   );

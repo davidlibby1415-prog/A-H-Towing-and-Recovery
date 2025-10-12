@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import Script from "next/script";
 
-/* ---------- Utils ---------- */
+/* ============================ Utilities ============================ */
 function smsHref(number, body) {
   const encoded = encodeURIComponent(body);
   const isiOS =
@@ -34,7 +34,7 @@ async function requestGPS(setStatus) {
   });
 }
 
-/* GPS text button */
+/* SMS button that grabs GPS before opening the Messages app */
 function SmsGPSButton({ className = "", label = "Text Dispatch (Include GPS)" }) {
   const [status, setStatus] = useState("");
   const onClick = async (e) => {
@@ -57,7 +57,7 @@ function SmsGPSButton({ className = "", label = "Text Dispatch (Include GPS)" })
   );
 }
 
-/* ---------- Reusable UI Components ---------- */
+/* ====================== Small UI Helpers / Icons ====================== */
 function PhoneCTA({ className = "" }) {
   return (
     <a
@@ -70,25 +70,41 @@ function PhoneCTA({ className = "" }) {
   );
 }
 
+/* Accent strip used on every content box */
+function AccentStrip({ color = "from-ahBlue to-ahRed" }) {
+  return <div className={`h-1 w-full bg-gradient-to-r ${color}`} />;
+}
+
+/* Box shell with bg-white/90 + blur and an accent strip on top */
+function SoftBox({ children, className = "", strip = true }) {
+  return (
+    <div className={`rounded-2xl border border-black/10 shadow-xl bg-white/90 backdrop-blur ${className}`}>
+      {strip && <AccentStrip />}
+      <div className="p-5 md:p-6">{children}</div>
+    </div>
+  );
+}
+
+/* Section wrapper: headline panel (also soft) + content */
 function Section({ id, title, subtitle, children }) {
   return (
     <section id={id} className="py-12 md:py-16">
       <div className="container max-w-7xl">
-        <div className="mb-5 md:mb-8 rounded-2xl shadow-xl border border-black/10 bg-white/85 backdrop-blur px-5 md:px-6 py-4 md:py-5">
+        <SoftBox className="mb-5 md:mb-8">
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-ahCharcoal">{title}</h2>
           {subtitle && (
             <p className="mt-2 text-base md:text-lg opacity-90">
               <strong>{subtitle}</strong>
             </p>
           )}
-        </div>
+        </SoftBox>
         {children}
       </div>
     </section>
   );
 }
 
-/* ---------- Icons ---------- */
+/* Icons */
 const IconTruck = (props) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
     <path d="M3 14h10V6H7L3 10v4Z" />
@@ -144,7 +160,7 @@ function IconClock(props) {
   );
 }
 
-/* ---------- Brand Slab ---------- */
+/* Brand slab (matches top & bottom) */
 function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   const sizes = { lg: "text-4xl md:text-6xl", md: "text-2xl md:text-4xl" };
   return (
@@ -164,7 +180,7 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   );
 }
 
-/* ---------- Framed TikTok ---------- */
+/* ===================== TikTok Frames & Carousel ===================== */
 function FramedTikTok({ url, id, caption }) {
   return (
     <div className="mx-auto w-full max-w-[340px] sm:max-w-[380px] md:max-w-[420px]">
@@ -177,12 +193,7 @@ function FramedTikTok({ url, id, caption }) {
                 className="tiktok-embed h-full w-full"
                 cite={url}
                 data-video-id={id}
-                style={{
-                  maxWidth: "100%",
-                  minWidth: 260,
-                  height: "100%",
-                  background: "transparent",
-                }}
+                style={{ maxWidth: "100%", minWidth: 260, height: "100%", background: "transparent" }}
               >
                 <section>
                   <a target="_blank" rel="noreferrer" href="https://www.tiktok.com/@285302ditchking">
@@ -199,7 +210,6 @@ function FramedTikTok({ url, id, caption }) {
   );
 }
 
-/* ---------- TikTok Carousel ---------- */
 function TikTokCarousel() {
   const railRef = useRef(null);
   const [index, setIndex] = useState(0);
@@ -267,9 +277,7 @@ function TikTokCarousel() {
             type="button"
             onClick={() => manual(i)}
             aria-label={`Go to slide ${i + 1}`}
-            className={`h-2 w-2 rounded-full transition-all ${
-              i === index ? "w-5 bg-ahBlue" : "bg-black/30 hover:bg-black/50"
-            }`}
+            className={`h-2 w-2 rounded-full transition-all ${i === index ? "w-5 bg-ahBlue" : "bg-black/30 hover:bg-black/50"}`}
           />
         ))}
       </div>
@@ -277,15 +285,12 @@ function TikTokCarousel() {
   );
 }
 
-/* ---------- Stats ---------- */
+/* ========================= Stats (compact) ========================= */
 function StatMini({ value, label }) {
   return (
     <div className="text-center md:text-left">
       <div className="text-[clamp(18px,2.4vw,24px)] font-extrabold leading-none">{value}</div>
-      <div
-        className="text-[clamp(10px,1.2vw,12px)] font-bold opacity-90"
-        style={{ marginTop: "calc(.75rem/1.618)" }}
-      >
+      <div className="text-[clamp(10px,1.2vw,12px)] font-bold opacity-90" style={{ marginTop: "calc(.75rem/1.618)" }}>
         {label}
       </div>
     </div>
@@ -303,7 +308,7 @@ function StatsCompact() {
   );
 }
 
-/* ---------- Marquee ---------- */
+/* ========================= Top Marquee ========================= */
 function TopLocationsMarquee() {
   const text =
     "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 corridor • US-285 • TX-17 • Oilfield routes";
@@ -320,60 +325,30 @@ function TopLocationsMarquee() {
       </div>
       <style jsx global>{`
         @keyframes marquee-x {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-50%);
-          }
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
         }
-        .marquee {
-          display: inline-flex;
-          min-width: 200%;
-          animation: marquee-x 30s linear infinite;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .marquee {
-            animation: none !important;
-          }
-        }
+        .marquee { display: inline-flex; min-width: 200%; animation: marquee-x 30s linear infinite; }
+        @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
       `}</style>
     </div>
   );
 }
 
-/* ---------- Page ---------- */
+/* ============================== Page ============================== */
 export default function Home() {
   return (
     <main className="text-ahCharcoal min-h-screen bg-diamond">
-      {/* Diamond-plate background (global CSS) */}
+      {/* Diamond-plate image background (place /public/diamond-plate.jpg) */}
       <style jsx global>{`
-        /* Diamond plate steel, ~25% silver tone */
         .bg-diamond {
-          background-color: #e6eaee; /* light silver base */
           background-image:
-            /* subtle sheen */
-            radial-gradient(ellipse at 20% 0%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 55%),
-            radial-gradient(ellipse at 80% 100%, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0) 60%),
-            /* diamond checks */
-            linear-gradient(135deg, rgba(255,255,255,0.28) 25%, transparent 25%),
-            linear-gradient(315deg, rgba(0,0,0,0.10) 25%, transparent 25%),
-            linear-gradient(45deg, rgba(255,255,255,0.20) 25%, transparent 25%),
-            linear-gradient(225deg, rgba(0,0,0,0.10) 25%, transparent 25%);
-          background-size:
-            100% 100%,
-            100% 100%,
-            24px 24px,
-            24px 24px,
-            24px 24px,
-            24px 24px;
-          background-position:
-            0 0,
-            0 0,
-            0 0,
-            12px 12px,
-            12px -12px,
-            -12px 0;
+            linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)),
+            url("/diamond-plate.jpg");
+          background-size: cover, 320px 320px; /* tone overlay, then repeating plate */
+          background-repeat: no-repeat, repeat;
+          background-attachment: fixed;
+          background-position: center top, center;
         }
       `}</style>
 
@@ -386,17 +361,12 @@ export default function Home() {
       <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
         <div className="container max-w-7xl flex items-center gap-6 py-3">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-black text-white grid place-items-center font-bold shadow-cta">
-              A&amp;H
-            </div>
+            <div className="h-10 w-10 rounded-xl bg-black text-white grid place-items-center font-bold shadow-cta">A&amp;H</div>
             <div className="leading-tight">
               <div className="font-bold text-white drop-shadow">A&amp;H Towing & Recovery, LLC</div>
               <div className="text-xs opacity-90">2712 W F Street, Pecos, TX 79772</div>
               <div className="text-xs">
-                <a
-                  className="underline underline-offset-4 hover:opacity-100"
-                  href="mailto:ah.towing.recovery23@gmail.com"
-                >
+                <a className="underline underline-offset-4 hover:opacity-100" href="mailto:ah.towing.recovery23@gmail.com">
                   ah.towing.recovery23@gmail.com
                 </a>
               </div>
@@ -417,68 +387,53 @@ export default function Home() {
         <BrandSlab as="h1" size="lg" />
       </div>
 
-      {/* HERO: stacks on mobile, 2-cols on desktop */}
+      {/* HERO: intro + carousel in soft boxes; stacks on mobile, 2-col on desktop */}
       <section className="overflow-hidden">
         <div className="container max-w-7xl grid gap-6 lg:grid-cols-2 lg:gap-10 items-start pt-6 md:pt-8 pb-10">
-          {/* Intro (left) */}
-          <div className="order-1 max-w-prose mx-auto lg:mx-0 px-2 text-center lg:text-left">
+          <SoftBox>
             <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow">
-              Fast, Friendly,{" "}
-              <span className="underline decoration-ahAccent decoration-4 underline-offset-4">
-                Professional
-              </span>{" "}
-              Towing — From Small Cars to Heavy Duty Towing
+              Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
+              Towing — From Small Cars to Heavy Duty Tows
             </h2>
             <p className="mt-3 text-base md:text-lg opacity-95">
-              Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty
-              tows, winch-outs, accident recovery, and oilfield transport. Trained operators. Clear
-              pricing.
+              Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows,
+              winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
             </p>
-            <div className="mt-3">
-              <StatsCompact />
-            </div>
-            <div className="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+            <div className="mt-3"><StatsCompact /></div>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
               <PhoneCTA />
               <SmsGPSButton />
             </div>
-          </div>
+          </SoftBox>
 
-          {/* Carousel (right) */}
-          <div className="order-2 w-full px-2 flex justify-center lg:justify-end">
-            <div className="w-full max-w-[340px] sm:max-w-[380px] md:max-w-[420px]">
-              <TikTokCarousel />
-            </div>
-          </div>
+          <SoftBox>
+            <TikTokCarousel />
+          </SoftBox>
         </div>
       </section>
 
-      {/* Trust banner */}
-      <div className="relative isolate">
-        <div className="absolute inset-0 bg-gradient-to-r from-black/5 via-transparent to-black/5 pointer-events-none" />
-        <div className="container max-w-7xl py-8 md:py-[calc(1rem*1.618)]">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 md:gap-6">
-            {[
-              { title: "Licensed & Insured", sub: "Fully compliant. Professional operators.", icon: IconShield, color: "from-ahBlue to-blue-500" },
-              { title: "24/7 Dispatch", sub: "Call anytime — we roll now.", icon: IconClock, color: "from-ahRed to-red-500" },
-              { title: "Light • Medium • Heavy", sub: "Cars to oilfield equipment.", icon: IconTruck, color: "from-emerald-500 to-green-600" },
-              { title: "Trains w/ First Responders", sub: "Safety. Speed. Coordination.", icon: IconBolt, color: "from-violet-500 to-indigo-600" },
-            ].map(({ title, sub, icon: I, color }, idx) => (
-              <div key={idx} className="relative rounded-2xl overflow-hidden">
-                <div className={`h-1 w-full bg-gradient-to-r ${color}`} />
-                <div className="rounded-b-2xl bg-white border border-black/10 border-t-0 p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
-                  <div className="flex items-start gap-3">
-                    <div className={`h-10 w-10 rounded-xl bg-gradient-to-br ${color} grid place-items-center text-white`}>
-                      <I className="h-6 w-6" />
-                    </div>
-                    <div>
-                      <div className="font-semibold">{title}</div>
-                      <div className="text-xs opacity-80">{sub}</div>
-                    </div>
-                  </div>
+      {/* Trust banner — each card inside SoftBox for consistency */}
+      <div className="container max-w-7xl py-8 md:py-[calc(1rem*1.618)]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            { title: "Licensed & Insured", sub: "Fully compliant. Professional operators.", icon: IconShield, color: "from-ahBlue to-blue-500" },
+            { title: "24/7 Dispatch", sub: "Call anytime — we roll now.", icon: IconClock, color: "from-ahRed to-red-500" },
+            { title: "Light • Medium • Heavy", sub: "Cars to oilfield equipment.", icon: IconTruck, color: "from-emerald-500 to-green-600" },
+            { title: "Trains w/ First Responders", sub: "Safety. Speed. Coordination.", icon: IconBolt, color: "from-violet-500 to-indigo-600" },
+          ].map(({ title, sub, icon: I, color }, idx) => (
+            <SoftBox key={idx}>
+              <div className={`-mt-6 -mx-6 mb-4`}> <AccentStrip color={color} /> </div>
+              <div className="flex items-start gap-3">
+                <div className={`h-10 w-10 rounded-xl bg-gradient-to-br ${color} grid place-items-center text-white`}>
+                  <I className="h-6 w-6" />
+                </div>
+                <div>
+                  <div className="font-semibold">{title}</div>
+                  <div className="text-xs opacity-80">{sub}</div>
                 </div>
               </div>
-            ))}
-          </div>
+            </SoftBox>
+          ))}
         </div>
       </div>
 
@@ -486,9 +441,9 @@ export default function Home() {
       <Section
         id="services"
         title="24/7 Towing & Roadside — Built for West Texas and Oilfield Conditions"
-        subtitle="From small tows to oilfield equipment moves, we’re ready when you need us."
+        subtitle="From small tows to equipment moves, we’re ready when you need us."
       >
-        <div className="grid md:grid-cols-3 gap-5 md:gap-6">
+        <div className="grid md:grid-cols-3 gap-6">
           {[
             { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups", color: "from-ahBlue to-blue-400" },
             { icon: IconTruck, title: "Heavy Duty & Commercial", desc: "Oilfield & fleet", color: "from-ahRed to-red-500" },
@@ -500,9 +455,9 @@ export default function Home() {
             { icon: IconTruck, title: "Long & Short Distance", desc: "Local & state-to-state", color: "from-slate-500 to-slate-700" },
             { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional", color: "from-rose-500 to-pink-600" },
           ].map(({ icon: Ico, title, desc, color }) => (
-            <div key={title} className="relative rounded-2xl overflow-hidden">
-              <div className={`h-1 w-full bg-gradient-to-r ${color}`} />
-              <div className="rounded-b-2xl border border-black/10 border-t-0 bg-white p-6 flex items-start gap-4 shadow-sm hover:shadow-md transition-shadow">
+            <SoftBox key={title}>
+              <div className="-mt-6 -mx-6 mb-4"><AccentStrip color={color} /></div>
+              <div className="flex items-start gap-4">
                 <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${color} grid place-items-center flex-shrink-0`}>
                   <Ico className="h-7 w-7 text-white" />
                 </div>
@@ -511,40 +466,45 @@ export default function Home() {
                   <div className="text-sm opacity-80">{desc}</div>
                 </div>
               </div>
-            </div>
+            </SoftBox>
           ))}
         </div>
 
-        <div className="mt-6 flex gap-3 flex-wrap justify-center md:justify-start">
-          <PhoneCTA />
-          <SmsGPSButton />
-        </div>
+        <SoftBox className="mt-6">
+          <div className="flex gap-3 flex-wrap justify-center md:justify-start">
+            <PhoneCTA />
+            <SmsGPSButton />
+          </div>
+        </SoftBox>
       </Section>
 
       {/* Coverage */}
       <Section id="coverage" title="Service Area" subtitle="Pecos, TX and Surrounding West Texas Region">
         <div className="grid md:grid-cols-3 gap-6 items-start">
-          <div className="md:col-span-2 rounded-2xl overflow-hidden shadow border border-black/10">
+          <SoftBox className="md:col-span-2 p-0" strip={false}>
+            <AccentStrip />
             <iframe
               title="Coverage Map"
-              className="w-full h-[360px]"
+              className="w-full h-[360px] rounded-b-2xl"
               loading="lazy"
               referrerPolicy="no-referrer"
               allowFullScreen
               src="https://www.openstreetmap.org/export/embed.html?bbox=-104.2%2C30.9%2C-101.8%2C32.1&layer=mapnik"
             />
-          </div>
+          </SoftBox>
 
-          <ul className="space-y-3 list-disc pl-5 text-base md:text-lg font-semibold text-ahCharcoal">
-            <li>Pecos (Home Base) • Reeves County</li>
-            <li>Fort Stockton • Monahans • Kermit</li>
-            <li>Balmorhea • Pyote • Toyah • Grandfalls • Wink</li>
-            <li>Midland/Odessa Metro &amp; I-20 corridor</li>
-            <li>US-285 • TX-17 • Oilfield routes</li>
-            <li className="pt-2 text-ahBlue">
-              Professional coverage beyond this region is available — call to arrange long-distance transport.
-            </li>
-          </ul>
+          <SoftBox>
+            <ul className="space-y-3 list-disc pl-5 text-base md:text-lg font-semibold text-ahCharcoal">
+              <li>Pecos (Home Base) • Reeves County</li>
+              <li>Fort Stockton • Monahans • Kermit</li>
+              <li>Balmorhea • Pyote • Toyah • Grandfalls • Wink</li>
+              <li>Midland/Odessa Metro &amp; I-20 corridor</li>
+              <li>US-285 • TX-17 • Oilfield routes</li>
+              <li className="pt-2 text-ahBlue">
+                Professional coverage beyond this region is available — call to arrange long-distance transport.
+              </li>
+            </ul>
+          </SoftBox>
         </div>
       </Section>
 
@@ -555,30 +515,26 @@ export default function Home() {
         subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves."
       >
         <div className="grid md:grid-cols-3 gap-6">
-          <FramedTikTok
-            url="https://www.tiktok.com/@285302ditchking/video/7501393555433262367"
-            id="7501393555433262367"
-            caption="Heavy hauling training — precision, safety, and control."
-          />
-          <FramedTikTok
-            url="https://www.tiktok.com/@285302ditchking/video/7500641039896628510"
-            id="7500641039896628510"
-            caption="A&H operators exercise with local first responders — teamwork in action."
-          />
-          <FramedTikTok
-            url="https://www.tiktok.com/@285302ditchking/video/7480739591905938719"
-            id="7480739591905938719"
-            caption="Oilfield hauling — Pulling Unit move. No job too big."
-          />
+          {[ // three framed tiktoks inside SoftBox for spacing/blur consistency
+            { url: "https://www.tiktok.com/@285302ditchking/video/7501393555433262367", id: "7501393555433262367", caption: "Heavy hauling training — precision, safety, and control." },
+            { url: "https://www.tiktok.com/@285302ditchking/video/7500641039896628510", id: "7500641039896628510", caption: "A&H operators exercise with local first responders — teamwork in action." },
+            { url: "https://www.tiktok.com/@285302ditchking/video/7480739591905938719", id: "7480739591905938719", caption: "Oilfield hauling — Pulling Unit move. No job too big." },
+          ].map((v) => (
+            <SoftBox key={v.id}>
+              <FramedTikTok url={v.url} id={v.id} caption={v.caption} />
+            </SoftBox>
+          ))}
         </div>
-        <p className="mt-4 text-xs opacity-70">
-          Tip: If videos don’t appear, enable third-party scripts or upload MP4s as a fallback.
-        </p>
+        <SoftBox className="mt-4">
+          <p className="text-xs opacity-70">Tip: If videos don’t appear, enable third-party scripts or upload MP4s as a fallback.</p>
+        </SoftBox>
       </Section>
 
       {/* Contact */}
       <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
-        <ContactSection />
+        <SoftBox>
+          <ContactSection />
+        </SoftBox>
       </Section>
 
       {/* Brand slab (bottom) */}
@@ -586,7 +542,7 @@ export default function Home() {
         <BrandSlab as="h2" size="md" />
       </div>
 
-      {/* Footer (address visibility enhanced) */}
+      {/* Footer (address emphasized) */}
       <footer className="bg-ahCharcoal text-ahText mt-6">
         <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-10 text-sm">
           <div>
@@ -608,26 +564,18 @@ export default function Home() {
             <div className="font-semibold text-white">Social</div>
             <ul className="mt-2 space-y-1">
               <li>
-                <a
-                  className="underline"
-                  href="https://www.tiktok.com/@285302ditchking"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a className="underline" href="https://www.tiktok.com/@285302ditchking" target="_blank" rel="noreferrer">
                   TikTok
                 </a>
               </li>
             </ul>
           </div>
-          {/* UPDATED CONTACT BLOCK */}
           <div>
             <div className="font-semibold text-white">Contact</div>
             <p className="mt-2 text-white drop-shadow-sm">
               <a className="underline font-semibold" href="tel:+14328424578">(432) 842-4578</a><br />
               <a className="underline font-semibold" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
-              <span className="font-extrabold text-amber-200">
-                2712 W F Street, Pecos, TX 79772
-              </span>
+              <span className="font-extrabold text-amber-200">2712 W F Street, Pecos, TX 79772</span>
             </p>
           </div>
         </div>
@@ -675,7 +623,7 @@ export default function Home() {
   );
 }
 
-/* ---------- Contact Section ---------- */
+/* ========================= Contact Section ========================= */
 function ContactSection() {
   const [name, setName] = useState("");
   const [callback, setCallback] = useState("");
@@ -716,74 +664,38 @@ function ContactSection() {
 
   return (
     <div className="grid md:grid-cols-2 gap-8">
-      <div className="rounded-2xl border border-black/10 p-6 bg-white">
-        <form className="grid gap-4" onSubmit={(e) => e.preventDefault()}>
+      <SoftBox strip={false} className="p-0">
+        <AccentStrip />
+        <form className="grid gap-4 p-5 md:p-6" onSubmit={(e) => e.preventDefault()}>
           <label className="grid gap-1">
             <span className="text-sm">Name</span>
-            <input
-              className="rounded-xl border px-3 py-2"
-              placeholder="Full name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
+            <input className="rounded-xl border px-3 py-2" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
           </label>
 
           <label className="grid gap-1">
             <span className="text-sm">Callback Phone</span>
-            <input
-              className="rounded-xl border px-3 py-2"
-              placeholder="(###) ###-####"
-              value={callback}
-              onChange={(e) => setCallback(e.target.value)}
-              required
-            />
+            <input className="rounded-xl border px-3 py-2" placeholder="(###) ###-####" value={callback} onChange={(e) => setCallback(e.target.value)} required />
           </label>
 
           <label className="grid gap-1">
             <span className="text-sm">Vehicle</span>
-            <input
-              className="rounded-xl border px-3 py-2"
-              placeholder="Year / Make / Model"
-              value={vehicle}
-              onChange={(e) => setVehicle(e.target.value)}
-            />
+            <input className="rounded-xl border px-3 py-2" placeholder="Year / Make / Model" value={vehicle} onChange={(e) => setVehicle(e.target.value)} />
           </label>
 
           <label className="grid gap-1">
             <span className="text-sm">Number of Passengers</span>
-            <input
-              type="number"
-              min="1"
-              max="8"
-              className="rounded-xl border px-3 py-2"
-              placeholder="e.g., 2"
-              value={passengers}
-              onChange={(e) => setPassengers(e.target.value)}
-            />
+            <input type="number" min="1" max="8" className="rounded-xl border px-3 py-2" placeholder="e.g., 2" value={passengers} onChange={(e) => setPassengers(e.target.value)} />
           </label>
 
           <label className="grid gap-1">
             <span className="text-sm">Issue</span>
-            <textarea
-              className="rounded-2xl border px-3 py-2"
-              rows={3}
-              placeholder="Flat tire, no-start, accident, stuck, etc."
-              value={issue}
-              onChange={(e) => setIssue(e.target.value)}
-            />
+            <textarea className="rounded-2xl border px-3 py-2" rows={3} placeholder="Flat tire, no-start, accident, stuck, etc." value={issue} onChange={(e) => setIssue(e.target.value)} />
           </label>
 
-          <div className="grid gap-2 rounded-2xl border p-3 bg-white/70 backdrop-blur">
+          <div className="grid gap-2 rounded-2xl border p-3 bg-white/80 backdrop-blur">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Share GPS Location</span>
-              <button
-                type="button"
-                onClick={requestLocation}
-                className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
-              >
-                Use my GPS
-              </button>
+              <button type="button" onClick={requestLocation} className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50">Use my GPS</button>
             </div>
             <div className="text-xs opacity-80">
               Status: {locStatus}
@@ -791,9 +703,7 @@ function ContactSection() {
                 <>
                   <br />
                   Captured: {coords.lat.toFixed(5)}, {coords.lng.toFixed(5)}{" "}
-                  <a className="underline" href={mapsLink} target="_blank" rel="noreferrer">
-                    Open map
-                  </a>
+                  <a className="underline" href={mapsLink} target="_blank" rel="noreferrer">Open map</a>
                 </>
               )}
             </div>
@@ -801,7 +711,6 @@ function ContactSection() {
 
           <div className="flex flex-wrap gap-3 mt-2">
             <PhoneCTA />
-            {/* Bottom text button is RED */}
             <a
               href={smsHref("+14328424578", smsBody)}
               onClick={handleTextWithGPS}
@@ -810,45 +719,29 @@ function ContactSection() {
               Text Dispatch (Include GPS)
             </a>
           </div>
-          <p className="text-xs opacity-70">
-            Tip: The red button grabs GPS and then opens your SMS app with coordinates included.
-          </p>
+          <p className="text-xs opacity-70">Tip: The red button grabs GPS and then opens your SMS app with coordinates included.</p>
         </form>
-      </div>
+      </SoftBox>
 
-      <div className="rounded-2xl border border-black/10 p-6 bg-white/70 backdrop-blur">
+      <SoftBox>
         <div className="font-semibold">Call or Visit</div>
         <p className="mt-2 text-sm">
-          Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578</a>
-          <br />
-          Email:{" "}
-          <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">
-            ah.towing.recovery23@gmail.com
-          </a>
+          Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578</a><br />
+          Email: <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a>
         </p>
         <p className="mt-4 text-sm">Address: 2712 W F Street, Pecos, TX 79772</p>
         <p className="mt-2 text-sm">Hours: 24/7 Dispatch</p>
         <div className="mt-6 rounded-xl overflow-hidden border border-black/10">
-          <iframe
-            title="Shop Map (OpenStreetMap)"
-            className="w-full h-[220px]"
-            loading="lazy"
-            src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik"
-          />
+          <iframe title="Shop Map (OpenStreetMap)" className="w-full h-[220px]" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik" />
           <div className="text-xs p-2 bg-white/90">
             Prefer Google?{" "}
-            <a
-              className="underline"
-              href="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos,%20TX%2079772"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a className="underline" href="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos,%20TX%2079772" target="_blank" rel="noreferrer">
               Open in Google Maps
             </a>
           </div>
         </div>
         <div className="mt-6 text-xs opacity-80">24/7 Professional Service — Call or Text Us!</div>
-      </div>
+      </SoftBox>
     </div>
   );
 }

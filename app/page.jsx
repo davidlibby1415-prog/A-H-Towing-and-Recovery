@@ -34,7 +34,7 @@ async function requestGPS(setStatus) {
   });
 }
 
-/* Quick SMS button that grabs GPS on click and opens Messages */
+/* GPS text button */
 function SmsGPSButton({ className = "", label = "Text Dispatch (Include GPS)" }) {
   const [status, setStatus] = useState("");
   const onClick = async (e) => {
@@ -70,12 +70,11 @@ function PhoneCTA({ className = "" }) {
   );
 }
 
-/* Shadowed section header wrapper */
 function Section({ id, title, subtitle, children }) {
   return (
-    <section id={id} className="py-14 md:py-20">
+    <section id={id} className="py-12 md:py-16">
       <div className="container max-w-7xl">
-        <div className="mb-6 md:mb-10 rounded-2xl shadow-xl border border-black/10 bg-white/85 backdrop-blur px-5 md:px-6 py-4 md:py-5">
+        <div className="mb-5 md:mb-8 rounded-2xl shadow-xl border border-black/10 bg-white/85 backdrop-blur px-5 md:px-6 py-4 md:py-5">
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-ahCharcoal">{title}</h2>
           {subtitle && (
             <p className="mt-2 text-base md:text-lg opacity-90">
@@ -145,7 +144,7 @@ function IconClock(props) {
   );
 }
 
-/* ---------- Shared Brand Slab (top & bottom match) ---------- */
+/* ---------- Brand Slab ---------- */
 function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   const sizes = { lg: "text-4xl md:text-6xl", md: "text-2xl md:text-4xl" };
   return (
@@ -165,17 +164,14 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   );
 }
 
-/* ---------- TikTok Frame Wrapper (phone frame, red/white/blue bezel) ---------- */
+/* ---------- Framed TikTok ---------- */
 function FramedTikTok({ url, id, caption }) {
   return (
-    <div className="mx-auto max-w-[420px] w-full">
-      {/* phone bezel */}
-      <div className="relative rounded-[2rem] p-1 bg-gradient-to-r from-ahRed via-white to-ahBlue shadow-2xl">
-        <div className="rounded-[1.8rem] bg-black p-2">
-          {/* notch */}
-          <div className="mx-auto mb-2 h-3 w-24 rounded-b-xl bg-black/60" />
-          {/* 9:16 frame */}
-          <div className="relative w-full aspect-[9/16] overflow-hidden rounded-[1.2rem]">
+    <div className="mx-auto w-full max-w-[340px] sm:max-w-[380px] md:max-w-[420px]">
+      <div className="relative rounded-[1.6rem] p-0.5 sm:p-1 bg-gradient-to-r from-ahRed via-white to-ahBlue shadow-2xl">
+        <div className="rounded-[1.4rem] bg-black p-1.5 sm:p-2">
+          <div className="mx-auto mb-1.5 h-2.5 w-20 rounded-b-xl bg-black/60" />
+          <div className="relative w-full aspect-[9/16] overflow-hidden rounded-[1rem]">
             <div className="absolute inset-0 overflow-hidden">
               <blockquote
                 className="tiktok-embed h-full w-full"
@@ -183,17 +179,13 @@ function FramedTikTok({ url, id, caption }) {
                 data-video-id={id}
                 style={{
                   maxWidth: "100%",
-                  minWidth: 280,
+                  minWidth: 260,
                   height: "100%",
                   background: "transparent",
                 }}
               >
                 <section>
-                  <a
-                    target="_blank"
-                    rel="noreferrer"
-                    href="https://www.tiktok.com/@285302ditchking"
-                  >
+                  <a target="_blank" rel="noreferrer" href="https://www.tiktok.com/@285302ditchking">
                     @285302ditchking
                   </a>
                   <p className="text-white/90">{caption}</p>
@@ -207,7 +199,7 @@ function FramedTikTok({ url, id, caption }) {
   );
 }
 
-/* ---------- TikTok Carousel (no auto-advance; standardized width) ---------- */
+/* ---------- TikTok Carousel ---------- */
 function TikTokCarousel() {
   const railRef = useRef(null);
   const [index, setIndex] = useState(0);
@@ -260,7 +252,7 @@ function TikTokCarousel() {
     <div className="relative">
       <div
         ref={railRef}
-        className="grid grid-flow-col auto-cols-[min(440px,100%)] gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2"
+        className="grid grid-flow-col auto-cols-[min(360px,100%)] sm:auto-cols-[min(380px,100%)] md:auto-cols-[min(420px,100%)] gap-4 sm:gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-1.5"
       >
         {items.map((v) => (
           <div key={v.id} className="snap-start">
@@ -268,35 +260,15 @@ function TikTokCarousel() {
           </div>
         ))}
       </div>
-
-      {/* Arrows */}
-      <button
-        type="button"
-        onClick={() => manual(-1)}
-        aria-label="Previous"
-        className="absolute -left-3 top-1/2 -translate-y-1/2 hidden md:grid place-items-center h-10 w-10 rounded-full bg-black/70 text-white hover:bg-black/80"
-      >
-        ‹
-      </button>
-      <button
-        type="button"
-        onClick={() => manual(1)}
-        aria-label="Next"
-        className="absolute -right-3 top-1/2 -translate-y-1/2 hidden md:grid place-items-center h-10 w-10 rounded-full bg-black/70 text-white hover:bg-black/80"
-      >
-        ›
-      </button>
-
-      {/* Dots */}
-      <div className="mt-3 flex items-center justify-center gap-2">
+      <div className="mt-2 flex items-center justify-center gap-2">
         {items.map((_, i) => (
           <button
             key={i}
             type="button"
             onClick={() => manual(i)}
             aria-label={`Go to slide ${i + 1}`}
-            className={`h-2.5 w-2.5 rounded-full transition-all ${
-              i === index ? "w-6 bg-ahBlue" : "bg-black/30 hover:bg-black/50"
+            className={`h-2 w-2 rounded-full transition-all ${
+              i === index ? "w-5 bg-ahBlue" : "bg-black/30 hover:bg-black/50"
             }`}
           />
         ))}
@@ -305,10 +277,10 @@ function TikTokCarousel() {
   );
 }
 
-/* ---------- Compact Stats (golden-ratio spacing; mobile-friendly) ---------- */
+/* ---------- Stats ---------- */
 function StatMini({ value, label }) {
   return (
-    <div className="text-center">
+    <div className="text-center md:text-left">
       <div className="text-[clamp(18px,2.4vw,24px)] font-extrabold leading-none">{value}</div>
       <div
         className="text-[clamp(10px,1.2vw,12px)] font-bold opacity-90"
@@ -321,10 +293,7 @@ function StatMini({ value, label }) {
 }
 function StatsCompact() {
   return (
-    <div
-      className="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-3"
-      style={{ marginTop: "calc(.75rem/1.2)" }}
-    >
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-2.5 mt-3">
       <StatMini value="< 30 min" label="Professional Response" />
       <StatMini value="24/7/365" label="Operating" />
       <div className="col-span-2 md:col-span-1">
@@ -334,16 +303,14 @@ function StatsCompact() {
   );
 }
 
-/* ---------- Marquee (Top Locations) ---------- */
+/* ---------- Marquee ---------- */
 function TopLocationsMarquee() {
   const text =
     "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 corridor • US-285 • TX-17 • Oilfield routes";
-
   return (
     <div className="w-full bg-ahCharcoal text-ahText text-sm">
       <div className="container max-w-7xl py-2">
         <div className="relative overflow-hidden">
-          {/* Full-width marquee (email removed for more room) */}
           <div className="marquee whitespace-nowrap font-semibold tracking-tight">
             <span className="inline-block pr-12">{text}</span>
             <span className="inline-block pr-12">{text}</span>
@@ -381,10 +348,10 @@ export default function Home() {
     <main className="text-ahCharcoal bg-ahChrome bg-chrome min-h-screen">
       <Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" />
 
-      {/* Top marquee */}
+      {/* Marquee */}
       <TopLocationsMarquee />
 
-      {/* Header (email under address) */}
+      {/* Header */}
       <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
         <div className="container max-w-7xl flex items-center gap-6 py-3">
           <div className="flex items-center gap-3">
@@ -414,44 +381,40 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Brand slab (top) */}
-      <div className="container max-w-7xl pt-6">
+      {/* Brand slab */}
+      <div className="container max-w-7xl pt-5 md:pt-6">
         <BrandSlab as="h1" size="lg" />
       </div>
 
-      {/* Hero: INTRO ON TOP, TIKTOK CAROUSEL UNDER IT (full width) */}
+      {/* HERO: stacks on mobile, 2-cols on desktop */}
       <section className="overflow-hidden">
-        <div className="container max-w-7xl grid md:grid-cols-2 gap-[clamp(1rem,3vw,2rem)] items-start pt-8 pb-14 md:pt-10 md:pb-20">
-          {/* Intro (forces top, full-width) */}
-          <div className="order-1 md:col-span-2 max-w-prose mx-auto md:mx-0 px-2">
-            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center md:text-left">
+        <div className="container max-w-7xl grid gap-6 lg:grid-cols-2 lg:gap-10 items-start pt-6 md:pt-8 pb-10">
+          {/* Intro (left) */}
+          <div className="order-1 max-w-prose mx-auto lg:mx-0 px-2 text-center lg:text-left">
+            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow">
               Fast, Friendly,{" "}
               <span className="underline decoration-ahAccent decoration-4 underline-offset-4">
                 Professional
               </span>{" "}
               Towing — From Small Cars to Oilfield Heavy
             </h2>
-            <p className="mt-4 text-base md:text-lg opacity-95 text-center md:text-left">
+            <p className="mt-3 text-base md:text-lg opacity-95">
               Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty
               tows, winch-outs, accident recovery, and oilfield transport. Trained operators. Clear
               pricing.
             </p>
-
-            {/* Compact stats */}
-            <div className="mx-auto md:mx-0 max-w-[640px] text-ahCharcoal">
+            <div className="mt-3">
               <StatsCompact />
             </div>
-
-            {/* Actions */}
-            <div className="mt-5 md:mt-6 flex flex-wrap items-center justify-center md:justify-start gap-3">
+            <div className="mt-4 flex flex-wrap items-center justify-center lg:justify-start gap-3">
               <PhoneCTA />
               <SmsGPSButton />
             </div>
           </div>
 
-          {/* Carousel UNDER the intro, centered, same size as proof videos */}
-          <div className="order-2 md:col-span-2 w-full px-2">
-            <div className="max-w-[440px] mx-auto">
+          {/* Carousel (right) */}
+          <div className="order-2 w-full px-2 flex justify-center lg:justify-end">
+            <div className="w-full max-w-[340px] sm:max-w-[380px] md:max-w-[420px]">
               <TikTokCarousel />
             </div>
           </div>
@@ -488,7 +451,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Services — colored cards */}
+      {/* Services */}
       <Section
         id="services"
         title="24/7 Towing & Roadside — Built for West Texas and Oilfield Conditions"
@@ -521,7 +484,6 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Actions (GPS text enabled) */}
         <div className="mt-6 flex gap-3 flex-wrap justify-center md:justify-start">
           <PhoneCTA />
           <SmsGPSButton />
@@ -529,11 +491,7 @@ export default function Home() {
       </Section>
 
       {/* Coverage */}
-      <Section
-        id="coverage"
-        title="Service Area"
-        subtitle="Pecos, TX and Surrounding West Texas Region"
-      >
+      <Section id="coverage" title="Service Area" subtitle="Pecos, TX and Surrounding West Texas Region">
         <div className="grid md:grid-cols-3 gap-6 items-start">
           <div className="md:col-span-2 rounded-2xl overflow-hidden shadow border border-black/10">
             <iframe
@@ -559,7 +517,7 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Proof / Training — framed videos (same size as top) */}
+      {/* Proof / Training */}
       <Section
         id="proof"
         title="Training & Community — Why Professionals Trust A&H"
@@ -571,7 +529,7 @@ export default function Home() {
             id="7501393555433262367"
             caption="Heavy hauling training — precision, safety, and control."
           />
-          <FramedTikTok
+        <FramedTikTok
             url="https://www.tiktok.com/@285302ditchking/video/7500641039896628510"
             id="7500641039896628510"
             caption="A&H operators exercise with local first responders — teamwork in action."
@@ -582,17 +540,11 @@ export default function Home() {
             caption="Oilfield hauling — Pulling Unit move. No job too big."
           />
         </div>
-        <p className="mt-4 text-xs opacity-70">
-          Tip: If videos don’t appear, enable third-party scripts or upload MP4s as a fallback.
-        </p>
+        <p className="mt-4 text-xs opacity-70">Tip: If videos don’t appear, enable third-party scripts or upload MP4s as a fallback.</p>
       </Section>
 
       {/* Contact */}
-      <Section
-        id="contact"
-        title="Request a Tow"
-        subtitle="Fastest: Call or Text. Share your exact location and key details in one tap."
-      >
+      <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
         <ContactSection />
       </Section>
 
@@ -601,13 +553,11 @@ export default function Home() {
         <BrandSlab as="h2" size="md" />
       </div>
 
-      {/* Footer — vibrant & TikTok-only */}
+      {/* Footer */}
       <footer className="bg-ahCharcoal text-ahText mt-6">
         <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-10 text-sm">
           <div>
-            <div className="font-extrabold text-white drop-shadow-sm">
-              A&amp;H Towing &amp; Recovery, LLC
-            </div>
+            <div className="font-extrabold text-white drop-shadow-sm">A&amp;H Towing &amp; Recovery, LLC</div>
             <p className="mt-2 font-bold text-amber-200">
               Professional towing, recovery, and roadside assistance for Pecos &amp; oilfield routes.
             </p>
@@ -689,7 +639,7 @@ export default function Home() {
   );
 }
 
-/* ---------- Contact Section (with detailed SMS + GPS) ---------- */
+/* ---------- Contact Section ---------- */
 function ContactSection() {
   const [name, setName] = useState("");
   const [callback, setCallback] = useState("");
@@ -815,7 +765,7 @@ function ContactSection() {
 
           <div className="flex flex-wrap gap-3 mt-2">
             <PhoneCTA />
-            {/* Bottom text button is RED now */}
+            {/* Bottom text button is RED */}
             <a
               href={smsHref("+14328424578", smsBody)}
               onClick={handleTextWithGPS}
@@ -830,14 +780,10 @@ function ContactSection() {
         </form>
       </div>
 
-      {/* Right column (contact info) */}
       <div className="rounded-2xl border border-black/10 p-6 bg-white/70 backdrop-blur">
         <div className="font-semibold">Call or Visit</div>
         <p className="mt-2 text-sm">
-          Phone:{" "}
-          <a className="underline" href="tel:+14328424578">
-            (432) 842-4578
-          </a>
+          Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578</a>
           <br />
           Email:{" "}
           <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">
@@ -857,7 +803,7 @@ function ContactSection() {
             Prefer Google?{" "}
             <a
               className="underline"
-              href="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772"
+              href="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos,%20TX%2079772"
               target="_blank"
               rel="noreferrer"
             >
@@ -870,4 +816,3 @@ function ContactSection() {
     </div>
   );
 }
-

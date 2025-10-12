@@ -59,10 +59,51 @@ function Section({ id, title, subtitle, children }) {
   );
 }
 
+/* ---------- Simple SVG icons (large, bold line) ---------- */
+const IconTruck = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+    <path d="M3 14h10V6H7L3 10v4Z" />
+    <path d="M13 9h4l3 3v2h-7" />
+    <circle cx="7.5" cy="17.5" r="2" />
+    <circle cx="17.5" cy="17.5" r="2" />
+  </svg>
+);
+const IconFlatbed = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+    <path d="M2 14h13l4-3h3" />
+    <path d="M2 14v3h3" />
+    <circle cx="7" cy="18" r="2" />
+    <circle cx="18" cy="18" r="2" />
+  </svg>
+);
+const IconLock = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+    <rect x="5" y="11" width="14" height="9" rx="2" />
+    <path d="M8 11V8a4 4 0 1 1 8 0v3" />
+  </svg>
+);
+const IconBolt = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+    <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
+  </svg>
+);
+const IconHook = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+    <path d="M12 3v9a4 4 0 1 0 8 0" />
+    <circle cx="12" cy="3" r="2" />
+  </svg>
+);
+const IconFuel = (props) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+    <path d="M3 7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12H3V7Z" />
+    <path d="M13 10h2l3 3v6a2 2 0 0 0 2 2h1" />
+  </svg>
+);
+
 /* ---------- Map (OSM embed with Google Maps link) ---------- */
 function ShopMap({ className = "" }) {
   // Approximate Pecos coords; avoids Google login prompts
-  const lat = 31.415; // Pecos area approx
+  const lat = 31.415;
   const lon = -103.516;
   const osmSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lon - 0.02}%2C${lat - 0.02}%2C${lon + 0.02}%2C${lat + 0.02}&layer=mapnik&marker=${lat}%2C${lon}`;
   const gmapsLink =
@@ -124,13 +165,18 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Big Brand Name Under Header (color gradient for stronger brand) */}
+      {/* Industrial brand slab with outlined steel text */}
       <div className="container max-w-7xl pt-6">
-        <h1 className="text-center text-3xl md:text-5xl font-extrabold tracking-tight drop-shadow-sm">
-          <span className="bg-gradient-to-r from-ahBlue via-ahAccent to-ahRed bg-clip-text text-transparent">
-            A&amp;H Towing &amp; Recovery, LLC
-          </span>
-        </h1>
+        <div className="mx-auto max-w-fit rounded-3xl border border-white/10 bg-[#0e1116] px-6 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.55)]">
+          <h1
+            className="text-center text-3xl md:text-5xl font-extrabold tracking-tight drop-shadow"
+            style={{ WebkitTextStroke: "2px #0b0f14" }}
+          >
+            <span className="bg-gradient-to-r from-zinc-100 via-zinc-300 to-zinc-100 bg-clip-text text-transparent">
+              A&amp;H Towing &amp; Recovery, LLC
+            </span>
+          </h1>
+        </div>
       </div>
 
       {/* Hero */}
@@ -138,11 +184,7 @@ export default function Home() {
         <div className="container max-w-7xl grid md:grid-cols-2 gap-10 items-center pt-8 pb-14 md:pt-10 md:pb-20">
           <div>
             <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow">
-              Fast, Friendly,{" "}
-              <span className="underline decoration-ahAccent decoration-4 underline-offset-4">
-                Professional
-              </span>{" "}
-              Towing — From Small Cars to Oilfield Heavy
+              Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span> Towing — From Small Cars to Oilfield Heavy
             </h2>
             <p className="mt-4 text-lg opacity-95">
               Stranded on I-20 or US-285? We dispatch immediately for light, medium & heavy-duty tows,
@@ -173,7 +215,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust Signals (no emojis) */}
+      {/* Trust Signals */}
       <div className="border-y border-black/10 bg-white/70 backdrop-blur">
         <div className="container max-w-7xl grid grid-cols-2 md:grid-cols-4 gap-4 py-6 text-sm">
           <div className="rounded-xl bg-white p-4 shadow-sm font-semibold">Licensed & Insured</div>
@@ -183,59 +225,47 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Services (no symbols, stronger hierarchy) */}
+      {/* Services with large icons */}
       <Section
         id="services"
         title="24/7 Towing & Roadside — Built for West Texas and Oilfield Conditions"
         subtitle="From small tows to oilfield equipment moves, we’re ready when you need us."
       >
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Column 1: Towing & Recovery */}
-          <div className="rounded-2xl border border-black/10 p-6 bg-white">
-            <h3 className="text-xl font-bold">24/7 Towing Services</h3>
-            <ul className="mt-4 space-y-2 text-sm">
-              <li>Wrecker Services</li>
-              <li>Accident Removal</li>
-              <li>Light Weight Towing (Cars, SUVs, Small Trucks)</li>
-              <li>Rollback Towing</li>
-              <li>Flatbed Services</li>
-              <li>Heavy Duty & Commercial Towing</li>
-              <li>Long & Short Distance Towing</li>
-              <li>Off-Road Recovery</li>
-              <li>Oilfield Equipment Transport</li>
-            </ul>
-            <div className="mt-5 flex gap-2 flex-wrap">
-              <PhoneCTA />
-              <SmsCTA
-                body={`Tow request: {Y/M/M}. Heavy/Oilfield?: {Yes/No}. Passengers: {#}. Issue: {describe}. Location: {share GPS}. Callback: {phone}.`}
-              />
+        <div className="grid md:grid-cols-3 gap-5">
+          {[
+            { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups" },
+            { icon: IconTruck, title: "Heavy Duty & Commercial", desc: "Oilfield & fleet" },
+            { icon: IconFlatbed, title: "Flatbed / Rollback", desc: "Damage-free transport" },
+            { icon: IconBolt, title: "Jumpstarts", desc: "12V & roadside checks" },
+            { icon: IconLock, title: "Lockouts", desc: "Fast entry, no damage" },
+            { icon: IconHook, title: "Winching / Recovery", desc: "Off-road, mud, sand" },
+            { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel" },
+            { icon: IconTruck, title: "Long & Short Distance", desc: "Local & state-to-state" },
+            { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional" },
+          ].map(({ icon: Ico, title, desc }) => (
+            <div key={title} className="rounded-2xl border border-black/10 bg-white p-6 flex items-start gap-4">
+              <Ico className="h-14 w-14 shrink-0" />
+              <div>
+                <div className="font-semibold">{title}</div>
+                <div className="text-sm opacity-80">{desc}</div>
+              </div>
             </div>
-          </div>
+          ))}
+        </div>
 
-          {/* Column 2: Roadside */}
-          <div className="rounded-2xl border border-black/10 p-6 bg-white">
-            <h3 className="text-xl font-bold">Emergency Roadside Assistance</h3>
-            <ul className="mt-4 space-y-2 text-sm">
-              <li>Fuel Delivery</li>
-              <li>Jump Starts</li>
-              <li>Lockouts</li>
-              <li>Tire Changes</li>
-            </ul>
-            <div className="mt-5 flex gap-2 flex-wrap">
-              <PhoneCTA />
-              <SmsCTA
-                body={`Roadside request: {Fuel/Jump/Lockout/Tire}. Vehicle: {Y/M/M}. Passengers: {#}. Location: {share GPS}. Callback: {phone}.`}
-              />
-            </div>
-          </div>
+        <div className="mt-6 flex gap-2 flex-wrap">
+          <PhoneCTA />
+          <SmsCTA
+            body={`Tow request: {Y/M/M}. Heavy/Oilfield?: {Yes/No}. Passengers: {#}. Issue: {describe}. Location: {share GPS}. Callback: {phone}.`}
+          />
         </div>
       </Section>
 
-      {/* Coverage (no emojis) */}
+      {/* Coverage */}
       <Section
         id="coverage"
         title="Service Area"
-        subtitle="Pecos • Reeves County • I-20 • US-285 • TX-17 • Oilfield routes"
+        subtitle="Pecos, Fort Stockton, Kermit, Monahans, Balmorhea, Pyote, Toyah, Midland/Odessa, and the West Texas oilfields. We tow wherever you need us."
       >
         <div className="grid md:grid-cols-3 gap-6 items-start">
           <div className="md:col-span-2 rounded-2xl overflow-hidden shadow border border-black/10">
@@ -245,19 +275,18 @@ export default function Home() {
               loading="lazy"
               referrerPolicy="no-referrer"
               allowFullScreen
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=-104.2%2C30.9%2C-101.8%2C32.1&layer=mapnik"
             />
           </div>
           <ul className="space-y-2 text-sm list-disc list-inside">
-            <li>Pecos, TX (Home Base)</li>
-            <li>Toyah • Barstow • Mentone</li>
-            <li>Monahans • Fort Stockton</li>
-            <li>Loving County & Reeves County</li>
-            <li>I-20, US-285, TX-17 Corridors</li>
+            <li>Pecos (Home Base) • Reeves County</li>
+            <li>Fort Stockton • Monahans • Kermit</li>
+            <li>Balmorhea • Pyote • Toyah</li>
+            <li>Midland/Odessa metro & I-20 corridor</li>
+            <li>US-285 • TX-17 • Oilfield routes</li>
             <li className="pt-3">
-              <a className="underline" href="#contact">
-                Need coverage beyond this? Ask us →
-              </a>
+              Professional coverage beyond this region is available —{" "}
+              <a className="underline" href="#contact">call to arrange long-distance transport</a>.
             </li>
           </ul>
         </div>
@@ -266,11 +295,10 @@ export default function Home() {
       {/* Proof / Training — TikTok Embeds */}
       <Section
         id="proof"
-        title="Training & Community — Why Locals Trust A&H"
+        title="Training & Community — Why Professionals Trust A&H"
         subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves."
       >
         <div className="grid md:grid-cols-3 gap-6">
-          {/* Heavy hauling training */}
           <div className="rounded-2xl overflow-hidden border border-black/10 bg-white">
             <blockquote
               className="tiktok-embed"
@@ -287,7 +315,6 @@ export default function Home() {
             </blockquote>
           </div>
 
-          {/* First responders exercise */}
           <div className="rounded-2xl overflow-hidden border border-black/10 bg-white">
             <blockquote
               className="tiktok-embed"
@@ -304,7 +331,6 @@ export default function Home() {
             </blockquote>
           </div>
 
-          {/* Oilfield equipment / Pulling Unit — no job too big */}
           <div className="rounded-2xl overflow-hidden border border-black/10 bg-white">
             <blockquote
               className="tiktok-embed"
@@ -316,7 +342,7 @@ export default function Home() {
                 <a target="_blank" rel="noreferrer" href="https://www.tiktok.com/@285302ditchking">
                   @285302ditchking
                 </a>
-                <p>Oilfield hauling — Pulling Unit move. No job too big.</p>
+                <p>Oilfield Hauling — Pulling Unit Move. No Job too Big!</p>
               </section>
             </blockquote>
           </div>
@@ -335,13 +361,18 @@ export default function Home() {
         <ContactSection />
       </Section>
 
-      {/* Big Brand Name Above Footer (gradient color again) */}
+      {/* Footer brand slab */}
       <div className="container max-w-7xl pb-2">
-        <h2 className="text-center text-2xl md:text-4xl font-extrabold tracking-tight drop-shadow-sm">
-          <span className="bg-gradient-to-r from-ahBlue via-ahAccent to-ahRed bg-clip-text text-transparent">
-            A&amp;H Towing &amp; Recovery, LLC
-          </span>
-        </h2>
+        <div className="mx-auto max-w-fit rounded-3xl border border-white/10 bg-[#0e1116] px-5 py-2 shadow-[0_10px_30px_rgba(0,0,0,0.55)]">
+          <h2
+            className="text-center text-2xl md:text-4xl font-extrabold tracking-tight drop-shadow"
+            style={{ WebkitTextStroke: "1.6px #0b0f14" }}
+          >
+            <span className="bg-gradient-to-r from-zinc-100 via-zinc-300 to-zinc-100 bg-clip-text text-transparent">
+              A&amp;H Towing &amp; Recovery, LLC
+            </span>
+          </h2>
+        </div>
       </div>
 
       {/* Footer */}
@@ -349,7 +380,7 @@ export default function Home() {
         <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-10 text-sm">
           <div>
             <div className="font-bold text-white drop-shadow-sm">A&amp;H Towing & Recovery, LLC</div>
-            <p className="mt-2 opacity-90">Reliable towing, recovery, and roadside assistance for Pecos & oilfield routes.</p>
+            <p className="mt-2 opacity-90">Professional towing, recovery, and roadside assistance for Pecos & oilfield routes.</p>
           </div>
           <div>
             <div className="font-semibold">Quick Links</div>
@@ -399,10 +430,18 @@ export default function Home() {
             },
             areaServed: [
               { "@type": "City", name: "Pecos" },
-              { "@type": "AdministrativeArea", name: "Reeves County" }
+              { "@type": "City", name: "Fort Stockton" },
+              { "@type": "City", name: "Kermit" },
+              { "@type": "City", name: "Monahans" },
+              { "@type": "City", name: "Balmorhea" },
+              { "@type": "City", name: "Pyote" },
+              { "@type": "City", name: "Toyah" },
+              { "@type": "City", name: "Midland" },
+              { "@type": "City", name: "Odessa" },
+              { "@type": "AdministrativeArea", name: "West Texas oilfields" },
             ],
             openingHours: "Mo-Su 00:00-23:59",
-            sameAs: ["https://www.tiktok.com/@285302ditchking"]
+            sameAs: ["https://www.tiktok.com/@285302ditchking"],
           }),
         }}
       />

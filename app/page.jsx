@@ -11,7 +11,7 @@ function PhoneCTA({ className = "" }) {
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
       aria-label="Call A&H Towing & Recovery"
     >
-      24/7 Dispatch • (432) 842-4578
+      CALL 24/7 Dispatch
     </a>
   );
 }

@@ -207,7 +207,7 @@ function FramedTikTok({ url, id, caption }) {
   );
 }
 
-/* ---------- TikTok Carousel (no auto-advance) ---------- */
+/* ---------- TikTok Carousel (no auto-advance; standardized width) ---------- */
 function TikTokCarousel() {
   const railRef = useRef(null);
   const [index, setIndex] = useState(0);
@@ -260,7 +260,7 @@ function TikTokCarousel() {
     <div className="relative">
       <div
         ref={railRef}
-        className="grid grid-flow-col auto-cols-[min(520px,100%)] gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2"
+        className="grid grid-flow-col auto-cols-[min(440px,100%)] gap-6 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-2"
       >
         {items.map((v) => (
           <div key={v.id} className="snap-start">
@@ -384,7 +384,7 @@ export default function Home() {
       {/* Top marquee */}
       <TopLocationsMarquee />
 
-      {/* Header (email moved here under address) */}
+      {/* Header (email under address) */}
       <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
         <div className="container max-w-7xl flex items-center gap-6 py-3">
           <div className="flex items-center gap-3">
@@ -419,17 +419,17 @@ export default function Home() {
         <BrandSlab as="h1" size="lg" />
       </div>
 
-      {/* Hero (mobile-friendly, no overflow) */}
+      {/* Hero: INTRO ON TOP, TIKTOK CAROUSEL UNDER IT (full width) */}
       <section className="overflow-hidden">
         <div className="container max-w-7xl grid md:grid-cols-2 gap-[clamp(1rem,3vw,2rem)] items-start pt-8 pb-14 md:pt-10 md:pb-20">
-          {/* Left: text */}
-          <div className="order-2 md:order-1 max-w-prose mx-auto md:mx-0 px-2">
+          {/* Intro (forces top, full-width) */}
+          <div className="order-1 md:col-span-2 max-w-prose mx-auto md:mx-0 px-2">
             <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center md:text-left">
               Fast, Friendly,{" "}
               <span className="underline decoration-ahAccent decoration-4 underline-offset-4">
                 Professional
               </span>{" "}
-              Towing — From Small Cars to Oilfield Heavy Towing
+              Towing — From Small Cars to Oilfield Heavy
             </h2>
             <p className="mt-4 text-base md:text-lg opacity-95 text-center md:text-left">
               Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty
@@ -449,9 +449,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Right: TikTok carousel (phone-sized on mobile) */}
-          <div className="order-1 md:order-2 w-full px-2">
-            <div className="max-w-[520px] mx-auto">
+          {/* Carousel UNDER the intro, centered, same size as proof videos */}
+          <div className="order-2 md:col-span-2 w-full px-2">
+            <div className="max-w-[440px] mx-auto">
               <TikTokCarousel />
             </div>
           </div>
@@ -550,8 +550,8 @@ export default function Home() {
             <li>Pecos (Home Base) • Reeves County</li>
             <li>Fort Stockton • Monahans • Kermit</li>
             <li>Balmorhea • Pyote • Toyah • Grandfalls • Wink</li>
-            <li>Midland/Odessa Metro &amp; I-20 Corridor</li>
-            <li>US-285 • TX-17 • Oilfield Routes</li>
+            <li>Midland/Odessa Metro &amp; I-20 corridor</li>
+            <li>US-285 • TX-17 • Oilfield routes</li>
             <li className="pt-2 text-ahBlue">
               Professional coverage beyond this region is available — call to arrange long-distance transport.
             </li>
@@ -559,7 +559,7 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Proof / Training — framed videos */}
+      {/* Proof / Training — framed videos (same size as top) */}
       <Section
         id="proof"
         title="Training & Community — Why Professionals Trust A&H"
@@ -788,7 +788,7 @@ function ContactSection() {
             />
           </label>
 
-          <div className="grid gap-2 rounded-xl border p-3 bg-white/70 backdrop-blur">
+          <div className="grid gap-2 rounded-2xl border p-3 bg-white/70 backdrop-blur">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Share GPS Location</span>
               <button
@@ -815,17 +815,17 @@ function ContactSection() {
 
           <div className="flex flex-wrap gap-3 mt-2">
             <PhoneCTA />
-            {/* Single text button (GPS-enabled) */}
+            {/* Bottom text button is RED now */}
             <a
               href={smsHref("+14328424578", smsBody)}
               onClick={handleTextWithGPS}
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px]"
+              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px]"
             >
               Text Dispatch (Include GPS)
             </a>
           </div>
           <p className="text-xs opacity-70">
-            Tip: The blue button grabs GPS and then opens your SMS app with coordinates included.
+            Tip: The red button grabs GPS and then opens your SMS app with coordinates included.
           </p>
         </form>
       </div>
@@ -870,3 +870,4 @@ function ContactSection() {
     </div>
   );
 }
+

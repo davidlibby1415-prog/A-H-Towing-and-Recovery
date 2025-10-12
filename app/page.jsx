@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Script from "next/script";
 
-/* ---------- Reusable UI ---------- */
+/* ---------- Reusable UI Components ---------- */
 function PhoneCTA({ className = "" }) {
   return (
     <a
@@ -115,7 +115,9 @@ export default function Home() {
             {/* ✅ Updated Buttons */}
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <PhoneCTA />
-              <SmsCTA body={`Tow request for {Your Name}. Callback: {Your Phone}. Location: send GPS. Issue: {Flat tire / no-start}.`} />
+              <SmsCTA
+                body={`Tow request for {Your Name}. Callback: {Your Phone}. Location: send GPS. Issue: {Flat tire / no-start}.`}
+              />
             </div>
 
             <div className="mt-8 grid grid-cols-3 gap-4">
@@ -139,7 +141,222 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ... (rest of your sections remain unchanged) */}
+      {/* Services */}
+      <Section
+        id="services"
+        title="Towing & Roadside Services"
+        subtitle="Call for immediate dispatch or text us your location."
+      >
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            { title: "Light-Duty Towing", desc: "Cars, SUVs, pickups • Local & long-distance • Flatbed & wheel-lift." },
+            { title: "Winch-Outs & Recovery", desc: "Ditch extractions, stuck in sand/mud, off-road recovery, accident scenes." },
+            { title: "Roadside Assistance", desc: "Jump starts, tire changes, lockouts, fuel delivery, battery service." },
+            { title: "Private Property/Impounds", desc: "Property manager support • Compliance signage • Vehicle relocation." },
+            { title: "Equipment Transport", desc: "Small machinery, tool boxes, sheds • Call for dimensions and rates." },
+            { title: "Commercial Accounts", desc: "Fleet priority, direct billing, monthly reporting, dedicated contact." },
+          ].map((card) => (
+            <div
+              key={card.title}
+              className="rounded-2xl border border-black/10 p-6 bg-white hover:shadow-md transition"
+            >
+              <div className="text-lg font-bold">{card.title}</div>
+              <p className="mt-2 text-sm opacity-90">{card.desc}</p>
+              <div className="mt-4 flex gap-2 flex-wrap">
+                <PhoneCTA />
+                <SmsCTA
+                  body={`Tow request for {Your Name}. Callback: {Your Phone}. Location: send GPS. Issue: {${card.title}}.`}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Contact */}
+      <Section
+        id="contact"
+        title="Request a Tow"
+        subtitle="Fastest: Call or Text. Share your location and details below."
+      >
+        <ContactSection />
+      </Section>
+
+      {/* Footer */}
+      <footer className="bg-ahCharcoal text-ahText mt-10">
+        <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-10 text-sm">
+          <div>
+            <div className="font-bold text-white drop-shadow-sm">
+              A&amp;H Towing & Recovery, LLC
+            </div>
+            <p className="mt-2 opacity-90">
+              Serving Pecos and Reeves County with reliable towing and recovery across West Texas.
+            </p>
+          </div>
+          <div>
+            <div className="font-semibold">Quick Links</div>
+            <ul className="mt-2 space-y-1">
+              <li><a className="underline" href="#services">Services</a></li>
+              <li><a className="underline" href="#coverage">Coverage</a></li>
+              <li><a className="underline" href="#tiktok">Videos</a></li>
+              <li><a className="underline" href="#contact">Contact</a></li>
+            </ul>
+          </div>
+          <div>
+            <div className="font-semibold">Social</div>
+            <ul className="mt-2 space-y-1">
+              <li><a className="underline" href="https://www.tiktok.com/@285302ditchking" target="_blank" rel="noreferrer">TikTok</a></li>
+              <li><a className="underline" href="#">Facebook</a></li>
+              <li><a className="underline" href="#">Instagram</a></li>
+            </ul>
+          </div>
+          <div>
+            <div className="font-semibold">Contact</div>
+            <p className="mt-2">
+              <a className="underline" href="tel:+14328424578">(432) 842-4578</a><br />
+              <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
+              2712 W F Street, Pecos, TX 79772
+            </p>
+          </div>
+        </div>
+      </footer>
+
+      {/* JSON-LD */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            name: "A&H Towing & Recovery, LLC",
+            telephone: "+14328424578",
+            email: "ah.towing.recovery23@gmail.com",
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: "2712 W F Street",
+              addressLocality: "Pecos",
+              addressRegion: "TX",
+              postalCode: "79772",
+              addressCountry: "US",
+            },
+            areaServed: [
+              { "@type": "City", name: "Pecos" },
+              { "@type": "AdministrativeArea", name: "Reeves County" },
+            ],
+            openingHours: "Mo-Su 00:00-23:59",
+            sameAs: ["https://www.tiktok.com/@285302ditchking"],
+          }),
+        }}
+      />
     </main>
+  );
+}
+
+/* ---------- Contact Form Section ---------- */
+function ContactSection() {
+  const [name, setName] = useState("");
+  const [callback, setCallback] = useState("");
+  const [vehicle, setVehicle] = useState("");
+  const [issue, setIssue] = useState("");
+  const [coords, setCoords] = useState(null);
+  const [locStatus, setLocStatus] = useState("Idle");
+
+  const requestLocation = () => {
+    if (!navigator.geolocation) {
+      setLocStatus("Geolocation not supported");
+      return;
+    }
+    setLocStatus("Requesting location…");
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        setCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+        setLocStatus("Location captured");
+      },
+      (err) => setLocStatus("Location failed: " + err.message),
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+    );
+  };
+
+  const mapsLink = coords ? `https://www.google.com/maps?q=${coords.lat},${coords.lng}` : "";
+  const smsBody =
+    `Tow request from ${name || "(name)"}. Callback: ${callback || "(phone)"} . Vehicle: ${vehicle || "(Y/M/M)"} . Issue: ${issue || "(describe)"} . ` +
+    (coords ? `Location: ${coords.lat.toFixed(5)}, ${coords.lng.toFixed(5)} ${mapsLink}` : "(share location)");
+
+  return (
+    <div className="grid md:grid-cols-2 gap-8">
+      <div className="rounded-2xl border border-black/10 p-6 bg-white">
+        <form className="grid gap-4" onSubmit={(e) => e.preventDefault()}>
+          <label className="grid gap-1">
+            <span className="text-sm">Name</span>
+            <input
+              className="rounded-xl border px-3 py-2"
+              placeholder="Full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-sm">Callback Phone</span>
+            <input
+              className="rounded-xl border px-3 py-2"
+              placeholder="(###) ###-####"
+              value={callback}
+              onChange={(e) => setCallback(e.target.value)}
+              required
+            />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-sm">Vehicle</span>
+            <input
+              className="rounded-xl border px-3 py-2"
+              placeholder="Year / Make / Model"
+              value={vehicle}
+              onChange={(e) => setVehicle(e.target.value)}
+            />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-sm">Issue</span>
+            <textarea
+              className="rounded-xl border px-3 py-2"
+              rows={3}
+              placeholder="Flat tire, no-start, accident, stuck, etc."
+              value={issue}
+              onChange={(e) => setIssue(e.target.value)}
+            />
+          </label>
+
+          <div className="grid gap-2 rounded-xl border p-3 bg-white/70 backdrop-blur">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium">Share GPS Location</span>
+              <button
+                type="button"
+                onClick={requestLocation}
+                className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
+              >
+                Use my GPS
+              </button>
+            </div>
+            <div className="text-xs opacity-80">
+              Status: {locStatus}
+              {coords && (
+                <>
+                  <br />
+                  Captured: {coords.lat.toFixed(5)}, {coords.lng.toFixed(5)}{" "}
+                  <a className="underline" href={mapsLink} target="_blank" rel="noreferrer">
+                    Open map
+                  </a>
+                </>
+              )}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-3 mt-2">
+            <PhoneCTA />
+            <SmsCTA body={smsBody} />
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }

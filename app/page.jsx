@@ -11,7 +11,7 @@ function PhoneCTA({ className = "" }) {
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
       aria-label="Call A&H Towing & Recovery"
     >
-      Call Now! 24/7 Service
+      Call Dispatch Now! 24/7 Service
     </a>
   );
 }

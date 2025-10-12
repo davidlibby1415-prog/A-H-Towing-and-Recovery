@@ -25,7 +25,7 @@ function SmsCTA({ className = "", body }) {
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 ${className}`}
       aria-label="Text A&H Dispatch"
     >
-      Text Dispatch
+      Text Dispatch!
     </a>
   );
 }

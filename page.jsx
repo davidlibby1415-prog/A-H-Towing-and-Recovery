@@ -1,5 +1,6 @@
+"use client";
+
 import React, { useState } from "react";
-import Head from "next/head";
 import Script from "next/script";
 
 // --- CTA Components ---
@@ -11,7 +12,7 @@ function PhoneCTA({ className = "" }) {
       style={{ background: "#0ea5e9", color: "white" }}
       aria-label="Call A&H Towing & Recovery"
     >
-      24/7 Dispatch • (432) 842‑4578
+      24/7 Dispatch • (432) 842-4578
     </a>
   );
 }
@@ -47,7 +48,9 @@ function Section({ id, title, subtitle, children }) {
       <div className="mx-auto max-w-7xl px-4">
         <div className="mb-8 md:mb-12">
           <h2 className="text-2xl md:text-3xl font-bold tracking-tight">{title}</h2>
-          {subtitle && <p className="mt-2 text-base md:text-lg opacity-80">{subtitle}</p>}
+          {subtitle && (
+            <p className="mt-2 text-base md:text-lg opacity-80">{subtitle}</p>
+          )}
         </div>
         {children}
       </div>
@@ -57,13 +60,14 @@ function Section({ id, title, subtitle, children }) {
 
 // --- Main Page Export ---
 export default function AHTowingHome() {
+  // TikTok embed script (runs client-side)
+  // JSON-LD is added below inside <main>
   return (
     <>
-      <Head>
-        <title>A&H Towing & Recovery, LLC — Pecos TX</title>
-        <meta name="description" content="Fast, friendly, local towing and roadside service in Pecos, TX. Call 24/7 for dispatch." />
-        <link rel="icon" href="/favicon.ico" />
-        {/* SEO: LocalBusiness schema */}
+      <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
+
+      <main className="font-sans text-gray-900">
+        {/* JSON-LD (LocalBusiness) */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -90,9 +94,7 @@ export default function AHTowingHome() {
                 { "@type": "AdministrativeArea", name: "Loving County" },
               ],
               openingHours: "Mo-Su 00:00-23:59",
-              sameAs: [
-                "https://www.tiktok.com/@285302ditchking",
-              ],
+              sameAs: ["https://www.tiktok.com/@285302ditchking"],
               makesOffer: [
                 { "@type": "Offer", itemOffered: { "@type": "Service", name: "Light-Duty Towing" } },
                 { "@type": "Offer", itemOffered: { "@type": "Service", name: "Winch-Outs & Recovery" } },
@@ -101,24 +103,30 @@ export default function AHTowingHome() {
             }),
           }}
         />
-      </Head>
-      {/* TikTok Embed Script */}
-      <Script src="https://www.tiktok.com/embed.js" strategy="lazyOnload" />
 
-      <main className="font-sans text-gray-900">
         {/* Top bar */}
         <div className="w-full bg-black text-white text-sm">
           <div className="mx-auto max-w-7xl px-4 py-2 flex items-center justify-between">
             <span>🚨 24/7 Towing & Recovery • Pecos, TX & Reeves County</span>
-            <a href="mailto:ah.towing.recovery23@gmail.com" className="opacity-90 hover:opacity-100">ah.towing.recovery23@gmail.com</a>
+            <a
+              href="mailto:ah.towing.recovery23@gmail.com"
+              className="opacity-90 hover:opacity-100"
+            >
+              ah.towing.recovery23@gmail.com
+            </a>
           </div>
         </div>
-        {/* ... rest of homepage ... */}
+
+        {/* ... your existing sections/heroes/etc can stay here ... */}
+
         {/* Contact Section */}
-        <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Use the tools below to share your exact location and details in one tap.">
+        <Section
+          id="contact"
+          title="Request a Tow"
+          subtitle="Fastest: Call or Text. Use the tools below to share your exact location and details in one tap."
+        >
           <ContactSection />
         </Section>
-        {/* ... footer ... */}
       </main>
     </>
   );
@@ -145,7 +153,9 @@ function ContactSection() {
         setLocStatus("Location captured");
       },
       (err) => {
-        setLocStatus("Sorry, the app has failed to capture your exact location, please text a location or call us at (432)842-4578");
+        setLocStatus(
+          "Sorry, the app has failed to capture your exact location, please text a location or call us at (432)842-4578"
+        );
       },
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
     );
@@ -166,7 +176,46 @@ function ContactSection() {
     <div className="grid md:grid-cols-2 gap-8">
       <div className="rounded-2xl border p-6">
         <form className="grid grid-cols-1 gap-4" onSubmit={(e) => e.preventDefault()}>
-          {/* ... form fields ... */}
+          <label className="grid gap-1">
+            <span className="text-sm">Name</span>
+            <input
+              className="rounded-xl border px-3 py-2"
+              placeholder="Full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-sm">Callback Phone</span>
+            <input
+              className="rounded-xl border px-3 py-2"
+              placeholder="(###) ###-####"
+              value={callback}
+              onChange={(e) => setCallback(e.target.value)}
+              required
+            />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-sm">Vehicle</span>
+            <input
+              className="rounded-xl border px-3 py-2"
+              placeholder="Year / Make / Model"
+              value={vehicle}
+              onChange={(e) => setVehicle(e.target.value)}
+            />
+          </label>
+          <label className="grid gap-1">
+            <span className="text-sm">Issue</span>
+            <textarea
+              className="rounded-xl border px-3 py-2"
+              rows={3}
+              placeholder="Flat tire, no-start, accident, stuck, etc."
+              value={issue}
+              onChange={(e) => setIssue(e.target.value)}
+            />
+          </label>
+
           <div className="grid gap-2 rounded-xl border p-3">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Share GPS Location</span>
@@ -184,15 +233,48 @@ function ContactSection() {
                 <>
                   <br />
                   Captured: {coords.lat.toFixed(5)}, {coords.lng.toFixed(5)}{" "}
-                  <a className="underline" href={mapsLink} target="_blank" rel="noreferrer">Open map</a>
+                  <a className="underline" href={mapsLink} target="_blank" rel="noreferrer">
+                    Open map
+                  </a>
                 </>
               )}
             </div>
           </div>
-          {/* ... CTA buttons ... */}
+
+          <div className="flex flex-wrap gap-3 mt-2">
+            <PhoneCTA />
+            <SmsCTA body={smsBody} />
+          </div>
+          <p className="text-xs opacity-70">
+            Tip: The green button opens your SMS app with all details filled in, including GPS if allowed.
+          </p>
         </form>
       </div>
-      {/* ... right column ... */}
+
+      <div className="rounded-2xl border p-6 bg-gray-50">
+        <div className="font-semibold">Call or Visit</div>
+        <p className="mt-2 text-sm">
+          Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578</a>
+          <br />
+          Email:{" "}
+          <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">
+            ah.towing.recovery23@gmail.com
+          </a>
+        </p>
+        <p className="mt-4 text-sm">Address: 2712 W F Street, Pecos, TX 79772</p>
+        <p className="mt-4 text-sm">Hours: 24/7 Dispatch</p>
+        <div className="mt-6">
+          <iframe
+            title="Shop Map"
+            className="w-full h-[220px] rounded-xl"
+            loading="lazy"
+            src="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos%2C%20TX%2079772&output=embed"
+          />
+        </div>
+        <div className="mt-6 text-xs opacity-70">
+          Prefer web submission? Hook this form to Formspree/Formspark/Twilio Functions to receive texts server-side.
+        </div>
+      </div>
     </div>
   );
 }

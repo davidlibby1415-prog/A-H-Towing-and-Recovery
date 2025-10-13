@@ -70,10 +70,10 @@ function AccentStrip({ color = "from-ahBlue to-ahRed" }) {
   return <div className={`h-1 w-full bg-gradient-to-r ${color}`} />;
 }
 
-/* Box shell with bg-white/90 + blur and an accent strip on top */
-function SoftBox({ children, className = "", strip = true }) {
+/* Box shell (bg class can be overridden) */
+function SoftBox({ children, className = "", strip = true, bgClass = "bg-white/90" }) {
   return (
-    <div className={`rounded-2xl border border-black/10 shadow-xl bg-white/90 backdrop-blur ${className}`}>
+    <div className={`rounded-2xl border border-black/10 shadow-xl ${bgClass} backdrop-blur ${className}`}>
       {strip && <AccentStrip />}
       <div className="p-5 md:p-6">{children}</div>
     </div>
@@ -330,6 +330,53 @@ function TopLocationsMarquee() {
   );
 }
 
+/* ===================== HERO BACKGROUND VIDEO ROTATOR ===================== */
+function HeroBackgroundVideo() {
+  // Filenames: toe1/2/3 were mentioned; mapping to tow1/2/3 as provided earlier.
+  const vids = ["/videos/tow1.mp4", "/videos/tow2.mp4", "/videos/tow3.mp4"];
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setActive((i) => (i + 1) % vids.length);
+    }, 12000); // cross-fade every 12s
+    return () => clearInterval(id);
+  }, []);
+
+  return (
+    <div className="absolute inset-0 overflow-hidden rounded-3xl">
+      {/* darken a touch for legibility */}
+      <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+      {vids.map((src, i) => (
+        <video
+          key={src}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out ${
+            i === active ? "opacity-100" : "opacity-0"
+          }`}
+          // iOS & mobile autoplay requirements
+          muted
+          playsInline
+          autoPlay
+          loop
+          preload="metadata"
+          poster="/videos/fallback.jpg"
+          // prevent controls / PiP
+          controls={false}
+          disablePictureInPicture
+        >
+          <source src={src} type="video/mp4" />
+          {/* Fallback image if video fails completely */}
+          <img
+            src="/videos/fallback.jpg"
+            alt="Towing background"
+            className="h-full w-full object-cover"
+          />
+        </video>
+      ))}
+    </div>
+  );
+}
+
 /* ============================== Page ============================== */
 export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0);
@@ -409,26 +456,35 @@ export default function Home() {
         </div>
       </div>
 
-      {/* HERO (intro only) */}
+      {/* =================== HERO with BACKGROUND VIDEO =================== */}
       <section className="overflow-hidden">
-        <div className="container max-w-7xl pt-4 md:pt-6 pb-6">
-          <SoftBox>
-            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center">
-              Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
-              Towing — From Small Cars to Heavy Duty Tows
-            </h2>
-            <p className="mt-3 text-base md:text-lg opacity-95 text-center">
-              Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows,
-              winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
-              <strong> Click below to call or text us direct!</strong>
-            </p>
-            <div className="mt-3"><StatsCompact /></div>
-            <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
-              <PhoneCTA />
-              {/* RED buttons now just bring customers to the form (to the top / instructions) */}
-              <ScrollToFormCTA />
+        {/* We constrain the video to page margins and stack content over it */}
+        <div className="container max-w-7xl">
+          <div className="relative rounded-3xl overflow-hidden min-h-[420px] md:min-h-[480px]">
+            {/* Background video rotator */}
+            <HeroBackgroundVideo />
+
+            {/* Foreground content */}
+            <div className="relative z-10 px-3 sm:px-4 py-6 md:py-8">
+              <SoftBox bgClass="bg-white/50">
+                <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center">
+                  Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
+                  Towing — From Small Cars to Heavy Duty Tows
+                </h2>
+                <p className="mt-3 text-base md:text-lg opacity-95 text-center">
+                  Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows,
+                  winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
+                  <strong> Click below to call or text us direct!</strong>
+                </p>
+                <div className="mt-3"><StatsCompact /></div>
+                <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
+                  <PhoneCTA />
+                  {/* RED button scrolls to the form instructions */}
+                  <ScrollToFormCTA />
+                </div>
+              </SoftBox>
             </div>
-          </SoftBox>
+          </div>
         </div>
       </section>
 

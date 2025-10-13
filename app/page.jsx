@@ -12,28 +12,6 @@ function smsHref(number, body) {
   return `sms:${number}${sep}body=${encoded}`;
 }
 
-async function requestGPS(setStatus) {
-  if (typeof navigator === "undefined" || !navigator.geolocation) {
-    setStatus?.("Geolocation not supported");
-    return null;
-  }
-  setStatus?.("Requesting location…");
-  return new Promise((resolve) => {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const c = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-        setStatus?.("Location captured");
-        resolve(c);
-      },
-      (err) => {
-        setStatus?.("Location failed: " + err.message);
-        resolve(null);
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
-    );
-  });
-}
-
 /* ====================== Small UI Helpers / Icons ====================== */
 function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", fullWidth = false }) {
   const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
@@ -48,31 +26,36 @@ function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", 
   );
 }
 
-/* Text buttons that grab GPS first (for hero/services top CTAs) */
-function TextGPSCTA({
+/* Red CTA used everywhere EXCEPT the form; this only scrolls to the form */
+function ScrollToFormCTA({
   className = "",
   label = "Text Dispatch (Include GPS)",
-  prefix = "Tow request.",
+  targetId = "dispatch-form",
 }) {
-  const [status, setStatus] = useState("");
-  const onClick = async (e) => {
+  const onClick = (e) => {
     e.preventDefault();
-    const c = await requestGPS(setStatus);
-    const loc = c
-      ? `GPS: ${c.lat.toFixed(5)}, ${c.lng.toFixed(5)} https://www.google.com/maps?q=${c.lat},${c.lng}`
-      : "GPS: (share manually)";
-    const body = `${prefix} ${loc} Reply to confirm.`;
-    window.location.href = smsHref("+14328424578", body);
+    const el = document.getElementById(targetId) || document.getElementById("contact");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      // small delay to let scroll finish, then focus first field
+      setTimeout(() => {
+        const first = el.querySelector("input, textarea, select, button");
+        first?.focus();
+      }, 500);
+    } else {
+      // fallback to hash if element not found
+      window.location.hash = "#contact";
+    }
   };
   return (
-    <a
-      href="#"
+    <button
+      type="button"
       onClick={onClick}
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] ${className}`}
-      aria-label="Text A&H Dispatch"
+      aria-label="Go to dispatch form"
     >
       {label}
-    </a>
+    </button>
   );
 }
 
@@ -424,8 +407,8 @@ export default function Home() {
             <div className="mt-3"><StatsCompact /></div>
             <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
               <PhoneCTA />
-              {/* GPS-enabled quick text */}
-              <TextGPSCTA />
+              {/* RED buttons now just bring customers to the form */}
+              <ScrollToFormCTA />
             </div>
           </SoftBox>
         </div>
@@ -503,10 +486,11 @@ export default function Home() {
           ))}
         </div>
 
+        {/* Centered CTAs; red scrolls to the form */}
         <SoftBox className="mt-6">
           <div className="flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
-            <TextGPSCTA />
+            <ScrollToFormCTA />
           </div>
         </SoftBox>
       </Section>
@@ -564,15 +548,15 @@ export default function Home() {
 
       {/* Contact */}
       <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
-        {/* Centered buttons ABOVE the form */}
+        {/* Centered buttons ABOVE the form — red just scrolls to the form */}
         <SoftBox className="mb-4">
           <div className="flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
-            <TextGPSCTA />
+            <ScrollToFormCTA label="Text Dispatch (Include GPS)" />
           </div>
         </SoftBox>
 
-        {/* Do NOT center the form or the bottom map area */}
+        {/* Form + bottom map (not centered) */}
         <SoftBox>
           <ContactSection />
         </SoftBox>
@@ -674,40 +658,64 @@ function ContactSection() {
   const [coords, setCoords] = useState(null);
   const [locStatus, setLocStatus] = useState("Idle");
 
-  const requestLocation = async () => {
-    const c = await requestGPS(setLocStatus);
-    if (c) setCoords(c);
-    return c;
+  // The ONLY button that actually sends the SMS lives here.
+  // It uses a race: try GPS quickly; if slow, send without GPS so SMS still opens.
+  const handleSendText = (e) => {
+    e.preventDefault();
+
+    let sent = false;
+    const build = (c) => {
+      const loc = c
+        ? `Location: ${c.lat.toFixed(5)}, ${c.lng.toFixed(5)} https://www.google.com/maps?q=${c.lat},${c.lng}`
+        : "Location: (share GPS)";
+      return (
+        `Tow request from ${name || "(name)"}; ` +
+        `Callback: ${callback || "(phone)"}; ` +
+        `Vehicle: ${vehicle || "(Y/M/M)"}; ` +
+        `Passengers: ${passengers || "(#)"}; ` +
+        `Issue: ${issue || "(describe)"}; ${loc}`
+      );
+    };
+    const openSMS = (body) => {
+      if (sent) return;
+      sent = true;
+      window.location.href = smsHref("+14328424578", body);
+    };
+
+    // Fallback timer (~2.5s): opens SMS without GPS if slow/blocked
+    const fallback = setTimeout(() => openSMS(build(null)), 2500);
+
+    if (navigator?.geolocation) {
+      setLocStatus("Requesting location…");
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          clearTimeout(fallback);
+          const c = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          setCoords(c);
+          setLocStatus("Location captured");
+          openSMS(build(c));
+        },
+        (err) => {
+          clearTimeout(fallback);
+          setLocStatus("Location failed: " + err.message);
+          openSMS(build(null));
+        },
+        { enableHighAccuracy: true, timeout: 2000, maximumAge: 0 }
+      );
+    } else {
+      setLocStatus("Geolocation not supported");
+      clearTimeout(fallback);
+      openSMS(build(null));
+    }
   };
 
   const mapsLink = coords ? `https://www.google.com/maps?q=${coords.lat},${coords.lng}` : "";
 
-  const buildSMSBody = (c) => {
-    const loc = c
-      ? `Location: ${c.lat.toFixed(5)}, ${c.lng.toFixed(5)} https://www.google.com/maps?q=${c.lat},${c.lng}`
-      : "Location: (share GPS)";
-    return (
-      `Tow request from ${name || "(name)"}; ` +
-      `Callback: ${callback || "(phone)"}; ` +
-      `Vehicle: ${vehicle || "(Y/M/M)"}; Passengers: ${passengers || "(#)"}; ` +
-      `Issue: ${issue || "(describe)"}; ${loc}`
-    );
-  };
-
-  const handleTextWithGPS = async (e) => {
-    e.preventDefault();
-    const c = (await requestLocation()) || coords; // capture fresh GPS, fallback to existing
-    const href = smsHref("+14328424578", buildSMSBody(c || coords));
-    window.location.href = href;
-  };
-
-  const smsBody = buildSMSBody(coords || null);
-
   return (
-    <div className="grid md:grid-cols-2 gap-8">
+    <div className="grid md:grid-cols-2 gap-8" id="contact">
       <SoftBox strip={false} className="p-0">
         <AccentStrip />
-        <form className="grid gap-4 p-5 md:p-6" onSubmit={(e) => e.preventDefault()}>
+        <form id="dispatch-form" className="grid gap-4 p-5 md:p-6" onSubmit={(e) => e.preventDefault()}>
           <label className="grid gap-1">
             <span className="text-sm">Name</span>
             <input className="rounded-xl border px-3 py-2" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
@@ -715,7 +723,7 @@ function ContactSection() {
 
           <label className="grid gap-1">
             <span className="text-sm">Callback Phone</span>
-            <input className="rounded-xl border px-3 py-2" placeholder="(###) ###-####" value={callback} onChange={(e) => setCallback(e.target.value)} required />
+            <input className="rounded-xl border px-3 py-2" inputMode="tel" placeholder="(###) ###-####" value={callback} onChange={(e) => setCallback(e.target.value)} required />
           </label>
 
           <label className="grid gap-1">
@@ -736,7 +744,29 @@ function ContactSection() {
           <div className="grid gap-2 rounded-2xl border p-3 bg-white/80 backdrop-blur">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Share GPS Location</span>
-              <button type="button" onClick={requestLocation} className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50">Use my GPS</button>
+              {/* Optional pre-capture GPS button (not required to send) */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (!navigator?.geolocation) {
+                    setLocStatus("Geolocation not supported");
+                    return;
+                  }
+                  setLocStatus("Requesting location…");
+                  navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                      const c = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                      setCoords(c);
+                      setLocStatus("Location captured");
+                    },
+                    (err) => setLocStatus("Location failed: " + err.message),
+                    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+                  );
+                }}
+                className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
+              >
+                Use my GPS
+              </button>
             </div>
             <div className="text-xs opacity-80">
               Status: {locStatus}
@@ -750,23 +780,24 @@ function ContactSection() {
             </div>
           </div>
 
-          {/* Not centered per your instruction; GPS-enabled */}
+          {/* Only submit button that actually sends SMS */}
           <div className="flex flex-wrap gap-3 mt-2 justify-start">
             <PhoneCTA />
-            <a
-              href={smsHref("+14328424578", smsBody)}
-              onClick={handleTextWithGPS}
+            <button
+              type="button"
+              onClick={handleSendText}
               className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px]"
             >
-              {/* relabeled per your request */}
               Send Text to Dispatch
-            </a>
+            </button>
           </div>
-          <p className="text-xs opacity-70">The red button grabs GPS and then opens your SMS app with coordinates included.</p>
+          <p className="text-xs opacity-70">
+            The red button composes a text with your details and GPS (if available) in your Messages app.
+          </p>
         </form>
       </SoftBox>
 
-      {/* Bottom map/info — also NOT centered */}
+      {/* Bottom map/info — not centered */}
       <SoftBox>
         <div className="font-semibold">Call or Visit</div>
         <p className="mt-2 text-sm">

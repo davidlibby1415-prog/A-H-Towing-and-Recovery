@@ -25,7 +25,7 @@ function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", 
   );
 }
 
-/* Red CTA used everywhere EXCEPT the form; this only scrolls to the form instructions */
+/* Red CTA scrolls to the form */
 function ScrollToFormCTA({
   className = "",
   label = "Text Dispatch (Include GPS)",
@@ -154,32 +154,47 @@ function IconClock(props) {
   );
 }
 
-/* Brand slab — darkened, larger, charcoal text, on diamond plate; sits above all */
-function BrandSlab({ as: Tag = "h1", size = "lg" }) {
-  const sizes = {
-    lg: "text-5xl md:text-7xl",
-    md: "text-3xl md:text-5xl",
-  };
+/* ===== Brand slabs ===== */
+
+/* Large slab used at the very bottom (kept) */
+function BrandSlabBottom({ as: Tag = "h2", size = "md" }) {
+  const sizes = { md: "text-3xl md:text-5xl" };
   return (
     <div
-      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-5 shadow-[0_12px_40px_rgba(0,0,0,0.6)] pointer-events-none"
+      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-5 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
       style={{
         backgroundImage:
-          `linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), linear-gradient(0deg, rgba(244,63,94,0.18), rgba(244,63,94,0.18)), url("/diamond-plate.jpg")`,
-        backgroundSize: "cover, cover, cover",
+          `linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("/diamond-plate.jpg")`,
+        backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center, center, center",
+        backgroundPosition: "center",
       }}
     >
       <Tag
-        className={`text-center ${sizes[size]} font-black leading-[1.04] tracking-tight text-ahCharcoal`}
-        style={{
-          textShadow: "0 1px 1px rgba(0,0,0,.45), 0 6px 16px rgba(0,0,0,.45)",
-        }}
+        className={`${sizes[size]} text-center font-black leading-[1.04] tracking-tight text-ahCharcoal`}
+        style={{ textShadow: "0 1px 1px rgba(0,0,0,.45), 0 6px 16px rgba(0,0,0,.45)" }}
       >
         A&amp;H TOWING &amp; RECOVERY, LLC
       </Tag>
     </div>
+  );
+}
+
+/* BIG outlined brand for the new top banner (white outline, charcoal fill) */
+function BrandSlabTop({ as: Tag = "h1" }) {
+  return (
+    <Tag
+      className="text-center font-black leading-[1.03] tracking-tight"
+      style={{
+        fontSize: "clamp(36px, 6vw, 88px)",
+        color: "#1f2937", // charcoal
+        WebkitTextStroke: "2.5px #ffffff", // white outline
+        textShadow:
+          "0 2px 2px rgba(0,0,0,.35), 0 8px 22px rgba(0,0,0,.35)",
+      }}
+    >
+      A&amp;H TOWING &amp; RECOVERY, LLC
+    </Tag>
   );
 }
 
@@ -248,7 +263,7 @@ function TopLocationsMarquee() {
   );
 }
 
-/* ===================== Reusable Video Wrapper (hosts children) ===================== */
+/* ===================== Video wrapper (content on top) ===================== */
 function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", children }) {
   return (
     <section
@@ -274,8 +289,9 @@ function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", ch
       {/* Content on top of video */}
       <div className="relative z-20">
         {showBrand && (
-          <div className="absolute bottom-[8%] left-1/2 -translate-x-1/2 w-full px-4 pointer-events-none z-[999]">
-            <BrandSlab as="h1" size="lg" />
+          <div className="absolute bottom-[12%] left-1/2 -translate-x-1/2 w-full px-4 pointer-events-none z-[999]">
+            {/* Smaller slab on the lower third of tow1 video */}
+            <BrandSlabTop />
           </div>
         )}
         {children}
@@ -334,7 +350,28 @@ export default function Home() {
           </div>
         </header>
 
-        {/* =================== tow1: full screen banner with brand bottom-center (NO white spacer) =================== */}
+        {/* =================== NEW TOP BRAND BANNER on RED DIAMOND STEEL =================== */}
+        <section
+          className="relative z-[60] w-full overflow-hidden"
+          style={{ minHeight: "clamp(220px, 35vh, 520px)" }}
+        >
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                `linear-gradient(0deg, rgba(244,63,94,0.28), rgba(244,63,94,0.28)), linear-gradient(0deg, rgba(0,0,0,0.32), rgba(0,0,0,0.32)), url("/diamond-plate.jpg")`,
+              backgroundSize: "cover",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+            }}
+          />
+          <div className="relative z-[70] h-full w-full flex items-end justify-center px-4 pb-8">
+            {/* Big outlined brand centered near the lower third of this steel banner */}
+            <BrandSlabTop />
+          </div>
+        </section>
+
+        {/* =================== tow1 video with smaller duplicate brand on lower third =================== */}
         <VideoSection src="/videos/tow1.mp4" showBrand minVH={100} />
 
         {/* Color separator */}
@@ -369,7 +406,7 @@ export default function Home() {
         {/* Color separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahRed via-white to-ahBlue" />
 
-        {/* =================== tow2: centered behind the Services area =================== */}
+        {/* =================== tow2 behind Services =================== */}
         <VideoSection src="/videos/tow2.mp4" minVH={90}>
           <Section
             id="services"
@@ -416,7 +453,7 @@ export default function Home() {
         {/* Color separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-slate-200 via-rose-200/40 to-sky-200" />
 
-        {/* =================== Coverage (clean) =================== */}
+        {/* =================== Coverage =================== */}
         <Section id="coverage" title="Service Area" subtitle="Pecos, TX and Surrounding West Texas Region">
           <div className="grid md:grid-cols-3 gap-6 items-start">
             <SoftBox className="md:col-span-2 p-0" strip={false}>
@@ -451,7 +488,7 @@ export default function Home() {
         {/* Color separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-white to-ahRed" />
 
-        {/* =================== tow3: starts behind Training & Community =================== */}
+        {/* =================== tow3 behind Training & Community =================== */}
         <VideoSection src="/videos/tow3.mp4" minVH={90}>
           <Section
             id="proof"
@@ -484,15 +521,15 @@ export default function Home() {
             </div>
           </SoftBox>
 
-          {/* Form + bottom map (not centered) */}
+          {/* Form + bottom map */}
           <SoftBox>
             <ContactSection />
           </SoftBox>
         </Section>
 
-        {/* Brand slab (bottom) — charcoal on steel */}
+        {/* Bottom brand on steel */}
         <div className="container max-w-7xl pb-2">
-          <BrandSlab as="h2" size="md" />
+          <BrandSlabBottom />
         </div>
 
         {/* Footer */}

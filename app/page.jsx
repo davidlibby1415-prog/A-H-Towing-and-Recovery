@@ -289,327 +289,330 @@ export default function Home() {
   }, []);
 
   return (
-    {/* Removed bg-diamond class → solid, clean page background */}
-    <main className="text-ahCharcoal min-h-screen">
-      {/* TikTok script is still needed for framed videos in Proof section */}
-      <Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" />
+    <>
+      {/* Removed bg-diamond class → solid, clean page background */}
+      <main className="text-ahCharcoal min-h-screen">
+        {/* TikTok script is still needed for framed videos in Proof section */}
+        <Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" />
 
-      {/* Marquee */}
-      <TopLocationsMarquee />
+        {/* Marquee */}
+        <TopLocationsMarquee />
 
-      {/* Gold tagline centered under marquee */}
-      <div className="w-full bg-ahCharcoal">
-        <div className="container max-w-7xl">
-          <p className="text-center text-[13px] sm:text-sm font-semibold tracking-tight text-yellow-400 py-1">
-            Providing Towing, Recovery Services, and Emergency Roadside Assistance for West Texas
-          </p>
+        {/* Gold tagline centered under marquee */}
+        <div className="w-full bg-ahCharcoal">
+          <div className="container max-w-7xl">
+            <p className="text-center text-[13px] sm:text-sm font-semibold tracking-tight text-yellow-400 py-1">
+              Providing Towing, Recovery Services, and Emergency Roadside Assistance for West Texas
+            </p>
+          </div>
         </div>
-      </div>
 
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
-        <div className="container max-w-7xl flex items-center gap-6 py-3">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-black text-white grid place-items-center font-bold shadow-cta">A&amp;H</div>
-            <div className="leading-tight">
-              <div className="font-bold text-white drop-shadow">A&amp;H Towing & Recovery, LLC</div>
-              <div className="text-xs opacity-90">2712 W F Street, Pecos, TX 79772</div>
-              <div className="text-xs">
-                <a className="underline underline-offset-4 hover:opacity-100" href="mailto:ah.towing.recovery23@gmail.com">
-                  ah.towing.recovery23@gmail.com
-                </a>
+        {/* Header */}
+        <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
+          <div className="container max-w-7xl flex items-center gap-6 py-3">
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-black text-white grid place-items-center font-bold shadow-cta">A&amp;H</div>
+              <div className="leading-tight">
+                <div className="font-bold text-white drop-shadow">A&amp;H Towing & Recovery, LLC</div>
+                <div className="text-xs opacity-90">2712 W F Street, Pecos, TX 79772</div>
+                <div className="text-xs">
+                  <a className="underline underline-offset-4 hover:opacity-100" href="mailto:ah.towing.recovery23@gmail.com">
+                    ah.towing.recovery23@gmail.com
+                  </a>
+                </div>
+              </div>
+            </div>
+            <nav className="ml-auto hidden md:flex items-center gap-6 text-sm">
+              <a href="#services" className="hover:opacity-80">Services</a>
+              <a href="#coverage" className="hover:opacity-80">Coverage</a>
+              <a href="#proof" className="hover:opacity-80">Training & Proof</a>
+              <a href="#contact" className="hover:opacity-80">Contact</a>
+            </nav>
+            <PhoneCTA className="hidden sm:inline-flex" />
+          </div>
+        </header>
+
+        {/* Brand slab */}
+        <div className="container max-w-7xl pt-5 md:pt-6">
+          <BrandSlab as="h1" size="lg" />
+        </div>
+
+        {/* WIDE spacer between brand slab and hero */}
+        <div className="container max-w-7xl">
+          <div className="h-10 md:h-16 lg:h-20" />
+        </div>
+
+        {/* =================== HERO with SINGLE LOOPING VIDEO =================== */}
+        <section className="overflow-hidden">
+          <div className="container max-w-7xl">
+            {/* Taller hero to fill most of the screen within margins */}
+            <div className="relative rounded-3xl overflow-hidden min-h-[70vh] md:min-h-[80vh]">
+              {/* Unframed background video (tow1.mp4) */}
+              <video
+                className="absolute inset-0 h-full w-full object-cover"
+                muted
+                defaultMuted
+                playsInline
+                autoPlay
+                loop
+                preload="auto"
+                poster="/videos/fallback.jpg"
+                controls={false}
+                disablePictureInPicture
+              >
+                <source src="/videos/tow1.mp4" type="video/mp4" />
+                <img
+                  src="/videos/fallback.jpg"
+                  alt="Towing background"
+                  className="h-full w-full object-cover"
+                />
+              </video>
+
+              {/* darken for legibility */}
+              <div className="absolute inset-0 bg-black/25 pointer-events-none" />
+
+              {/* Foreground content */}
+              <div className="relative z-10 px-3 sm:px-4 py-6 md:py-8">
+                <SoftBox>
+                  <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center">
+                    Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
+                    Towing — From Small Cars to Heavy Duty Tows
+                  </h2>
+                  <p className="mt-3 text-base md:text-lg opacity-95 text-center">
+                    Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows,
+                    winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
+                    <strong> Click below to call or text us direct!</strong>
+                  </p>
+                  <div className="mt-3"><StatsCompact /></div>
+                  <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
+                    <PhoneCTA />
+                    <ScrollToFormCTA />
+                  </div>
+                </SoftBox>
               </div>
             </div>
           </div>
-          <nav className="ml-auto hidden md:flex items-center gap-6 text-sm">
-            <a href="#services" className="hover:opacity-80">Services</a>
-            <a href="#coverage" className="hover:opacity-80">Coverage</a>
-            <a href="#proof" className="hover:opacity-80">Training & Proof</a>
-            <a href="#contact" className="hover:opacity-80">Contact</a>
-          </nav>
-          <PhoneCTA className="hidden sm:inline-flex" />
-        </div>
-      </header>
+        </section>
 
-      {/* Brand slab */}
-      <div className="container max-w-7xl pt-5 md:pt-6">
-        <BrandSlab as="h1" size="lg" />
-      </div>
-
-      {/* WIDE spacer between brand slab and hero */}
-      <div className="container max-w-7xl">
-        <div className="h-10 md:h-16 lg:h-20" />
-      </div>
-
-      {/* =================== HERO with SINGLE LOOPING VIDEO =================== */}
-      <section className="overflow-hidden">
-        <div className="container max-w-7xl">
-          {/* Taller hero to fill most of the screen within margins */}
-          <div className="relative rounded-3xl overflow-hidden min-h-[70vh] md:min-h-[80vh]">
-            {/* Unframed background video (tow1.mp4) */}
-            <video
-              className="absolute inset-0 h-full w-full object-cover"
-              muted
-              defaultMuted
-              playsInline
-              autoPlay
-              loop
-              preload="auto"
-              poster="/videos/fallback.jpg"
-              controls={false}
-              disablePictureInPicture
-            >
-              <source src="/videos/tow1.mp4" type="video/mp4" />
-              <img
-                src="/videos/fallback.jpg"
-                alt="Towing background"
-                className="h-full w-full object-cover"
-              />
-            </video>
-
-            {/* darken for legibility */}
-            <div className="absolute inset-0 bg-black/25 pointer-events-none" />
-
-            {/* Foreground content */}
-            <div className="relative z-10 px-3 sm:px-4 py-6 md:py-8">
-              <SoftBox>
-                <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center">
-                  Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
-                  Towing — From Small Cars to Heavy Duty Tows
-                </h2>
-                <p className="mt-3 text-base md:text-lg opacity-95 text-center">
-                  Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows,
-                  winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
-                  <strong> Click below to call or text us direct!</strong>
-                </p>
-                <div className="mt-3"><StatsCompact /></div>
-                <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
-                  <PhoneCTA />
-                  <ScrollToFormCTA />
+        {/* Trust banner */}
+        <div className="container max-w-7xl py-8 md:py-[calc(1rem*1.618)]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { title: "Licensed & Insured", sub: "Fully compliant. Professional operators.", icon: IconShield, color: "from-ahBlue to-blue-500" },
+              { title: "24/7 Dispatch", sub: "Call anytime — we roll now.", icon: IconClock, color: "from-ahRed to-red-500" },
+              { title: "Light • Medium • Heavy", sub: "Cars to oilfield equipment.", icon: IconTruck, color: "from-emerald-500 to-green-600" },
+              { title: "Trains w/ First Responders", sub: "Safety. Speed. Coordination.", icon: IconBolt, color: "from-violet-500 to-indigo-600" },
+            ].map(({ title, sub, icon: I, color }, idx) => (
+              <SoftBox key={idx}>
+                <div className="-mt-6 -mx-6 mb-4"><AccentStrip color={color} /></div>
+                <div className="flex items-start gap-3">
+                  <div className={`h-10 w-10 rounded-xl bg-gradient-to-br ${color} grid place-items-center text-white`}>
+                    <I className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <div className="font-semibold">{title}</div>
+                    <div className="text-xs opacity-80">{sub}</div>
+                  </div>
                 </div>
               </SoftBox>
+            ))}
+          </div>
+        </div>
+
+        {/* Services */}
+        <Section
+          id="services"
+          title="24/7 Towing & Roadside — Built for West Texas and Oilfield Conditions"
+          subtitle="From small tows to equipment moves, we’re ready when you need us."
+        >
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups", color: "from-ahBlue to-blue-400" },
+              { icon: IconTruck, title: "Heavy Duty & Commercial", desc: "Oilfield & fleet", color: "from-ahRed to-red-500" },
+              { icon: IconFlatbed, title: "Flatbed / Rollback", desc: "Damage-free transport", color: "from-amber-500 to-orange-500" },
+              { icon: IconBolt, title: "Jumpstarts", desc: "12V & roadside checks", color: "from-yellow-400 to-amber-500" },
+              { icon: IconLock, title: "Lockouts", desc: "Fast entry, no damage", color: "from-emerald-500 to-green-600" },
+              { icon: IconHook, title: "Winching / Recovery", desc: "Off-road, mud, sand", color: "from-violet-500 to-indigo-600" },
+              { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel", color: "from-cyan-500 to-sky-500" },
+              { icon: IconTruck, title: "Long & Short Distance", desc: "Local & state-to-state", color: "from-slate-500 to-slate-700" },
+              { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional", color: "from-rose-500 to-pink-600" },
+            ].map(({ icon: Ico, title, desc, color }) => (
+              <SoftBox key={title}>
+                <div className="-mt-6 -mx-6 mb-4"><AccentStrip color={color} /></div>
+                <div className="flex items-start gap-4">
+                  <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${color} grid place-items-center flex-shrink-0`}>
+                    <Ico className="h-7 w-7 text-white" />
+                  </div>
+                  <div>
+                    <div className="font-semibold">{title}</div>
+                    <div className="text-sm opacity-80">{desc}</div>
+                  </div>
+                </div>
+              </SoftBox>
+            ))}
+          </div>
+
+          {/* Centered CTAs; red scrolls to the top of the form */}
+          <SoftBox className="mt-6">
+            <div className="flex gap-3 flex-wrap justify-center">
+              <PhoneCTA />
+              <ScrollToFormCTA />
+            </div>
+          </SoftBox>
+        </Section>
+
+        {/* Coverage */
+        }
+        <Section id="coverage" title="Service Area" subtitle="Pecos, TX and Surrounding West Texas Region">
+          <div className="grid md:grid-cols-3 gap-6 items-start">
+            <SoftBox className="md:col-span-2 p-0" strip={false}>
+              <AccentStrip />
+              <iframe
+                title="Coverage Map"
+                className="w-full h-[360px] rounded-b-2xl"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+                allowFullScreen
+                src="https://www.openstreetmap.org/export/embed.html?bbox=-104.2%2C30.9%2C-101.8%2C32.1&layer=mapnik"
+              />
+            </SoftBox>
+
+            <SoftBox>
+              <ul className="space-y-3 list-disc pl-5 text-base md:text-lg font-semibold text-ahCharcoal">
+                <li>Pecos (Home Base) • Reeves County</li>
+                <li>Fort Stockton • Monahans • Kermit</li>
+                <li>Balmorhea • Pyote • Toyah • Grandfalls • Wink</li>
+                <li>Midland/Odessa Metro &amp; I-20 Corridor</li>
+                <li>US-285 • TX-17 • Oilfield Routes</li>
+                <li className="pt-2">
+                  <a className="text-ahBlue underline font-semibold" href="tel:+14328424578">
+                    Professional coverage beyond this region is available — call to arrange long-distance transport.
+                  </a>
+                </li>
+              </ul>
+            </SoftBox>
+          </div>
+        </Section>
+
+        {/* Proof / Training */}
+        <Section
+          id="proof"
+          title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
+          subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves. Watch our videos below to learn more!"
+        >
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { url: "https://www.tiktok.com/@285302ditchking/video/7501393555433262367", id: "7501393555433262367", caption: "Heavy hauling training — precision, safety, and control." },
+              { url: "https://www.tiktok.com/@285302ditchking/video/7500641039896628510", id: "7500641039896628510", caption: "A&H operators exercise with local first responders — teamwork in action." },
+              { url: "https://www.tiktok.com/@285302ditchking/video/7480739591905938719", id: "7480739591905938719", caption: "Oilfield hauling — Pulling Unit move. No job too big." },
+            ].map((v) => (
+              <SoftBox key={v.id}>
+                <FramedTikTok url={v.url} id={v.id} caption={v.caption} />
+              </SoftBox>
+            ))}
+          </div>
+        </Section>
+
+        {/* Contact */}
+        <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
+          {/* Centered buttons ABOVE the form — red just scrolls to the form instructions */}
+          <SoftBox className="mb-4">
+            <div className="flex gap-3 flex-wrap justify-center">
+              <PhoneCTA />
+              <ScrollToFormCTA label="Text Dispatch (Include GPS)" />
+            </div>
+          </SoftBox>
+
+          {/* Form + bottom map (not centered) */}
+          <SoftBox>
+            <ContactSection />
+          </SoftBox>
+        </Section>
+
+        {/* Brand slab (bottom) — bright to match top */}
+        <div className="container max-w-7xl pb-2">
+          <BrandSlab as="h2" size="md" />
+        </div>
+
+        {/* Footer */}
+        <footer className="bg-ahCharcoal text-ahText mt-6">
+          <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-10 text-sm">
+            <div>
+              <div className="font-extrabold text-white drop-shadow-sm">A&amp;H Towing &amp; Recovery, LLC</div>
+              <p className="mt-2 font-bold text-amber-200">
+                Professional towing, recovery, and roadside assistance for Pecos &amp; oilfield routes.
+              </p>
+            </div>
+            <div>
+              <div className="font-semibold text-white">Quick Links</div>
+              <ul className="mt-2 space-y-1">
+                <li><a className="underline" href="#services">Services</a></li>
+                <li><a className="underline" href="#coverage">Coverage</a></li>
+                <li><a className="underline" href="#proof">Training & Proof</a></li>
+                <li><a className="underline" href="#contact">Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <div className="font-semibold text-white">Social</div>
+              <ul className="mt-2 space-y-1">
+                <li>
+                  <a className="underline" href="https://www.tiktok.com/@285302ditchking" target="_blank" rel="noreferrer">
+                    TikTok
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div className="font-semibold text-white">Contact</div>
+              <p className="mt-2 text-white drop-shadow-sm">
+                <a className="underline font-semibold" href="tel:+14328424578">(432) 842-4578</a><br />
+                <a className="underline font-semibold" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
+                <span className="font-extrabold text-amber-200">2712 W F Street, Pecos, TX 79772</span>
+              </p>
             </div>
           </div>
-        </div>
-      </section>
+        </footer>
 
-      {/* Trust banner */}
-      <div className="container max-w-7xl py-8 md:py-[calc(1rem*1.618)]">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            { title: "Licensed & Insured", sub: "Fully compliant. Professional operators.", icon: IconShield, color: "from-ahBlue to-blue-500" },
-            { title: "24/7 Dispatch", sub: "Call anytime — we roll now.", icon: IconClock, color: "from-ahRed to-red-500" },
-            { title: "Light • Medium • Heavy", sub: "Cars to oilfield equipment.", icon: IconTruck, color: "from-emerald-500 to-green-600" },
-            { title: "Trains w/ First Responders", sub: "Safety. Speed. Coordination.", icon: IconBolt, color: "from-violet-500 to-indigo-600" },
-          ].map(({ title, sub, icon: I, color }, idx) => (
-            <SoftBox key={idx}>
-              <div className="-mt-6 -mx-6 mb-4"><AccentStrip color={color} /></div>
-              <div className="flex items-start gap-3">
-                <div className={`h-10 w-10 rounded-xl bg-gradient-to-br ${color} grid place-items-center text-white`}>
-                  <I className="h-6 w-6" />
-                </div>
-                <div>
-                  <div className="font-semibold">{title}</div>
-                  <div className="text-xs opacity-80">{sub}</div>
-                </div>
-              </div>
-            </SoftBox>
-          ))}
-        </div>
-      </div>
-
-      {/* Services */}
-      <Section
-        id="services"
-        title="24/7 Towing & Roadside — Built for West Texas and Oilfield Conditions"
-        subtitle="From small tows to equipment moves, we’re ready when you need us."
-      >
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups", color: "from-ahBlue to-blue-400" },
-            { icon: IconTruck, title: "Heavy Duty & Commercial", desc: "Oilfield & fleet", color: "from-ahRed to-red-500" },
-            { icon: IconFlatbed, title: "Flatbed / Rollback", desc: "Damage-free transport", color: "from-amber-500 to-orange-500" },
-            { icon: IconBolt, title: "Jumpstarts", desc: "12V & roadside checks", color: "from-yellow-400 to-amber-500" },
-            { icon: IconLock, title: "Lockouts", desc: "Fast entry, no damage", color: "from-emerald-500 to-green-600" },
-            { icon: IconHook, title: "Winching / Recovery", desc: "Off-road, mud, sand", color: "from-violet-500 to-indigo-600" },
-            { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel", color: "from-cyan-500 to-sky-500" },
-            { icon: IconTruck, title: "Long & Short Distance", desc: "Local & state-to-state", color: "from-slate-500 to-slate-700" },
-            { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional", color: "from-rose-500 to-pink-600" },
-          ].map(({ icon: Ico, title, desc, color }) => (
-            <SoftBox key={title}>
-              <div className="-mt-6 -mx-6 mb-4"><AccentStrip color={color} /></div>
-              <div className="flex items-start gap-4">
-                <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${color} grid place-items-center flex-shrink-0`}>
-                  <Ico className="h-7 w-7 text-white" />
-                </div>
-                <div>
-                  <div className="font-semibold">{title}</div>
-                  <div className="text-sm opacity-80">{desc}</div>
-                </div>
-              </div>
-            </SoftBox>
-          ))}
-        </div>
-
-        {/* Centered CTAs; red scrolls to the top of the form */}
-        <SoftBox className="mt-6">
-          <div className="flex gap-3 flex-wrap justify-center">
-            <PhoneCTA />
-            <ScrollToFormCTA />
-          </div>
-        </SoftBox>
-      </Section>
-
-      {/* Coverage */}
-      <Section id="coverage" title="Service Area" subtitle="Pecos, TX and Surrounding West Texas Region">
-        <div className="grid md:grid-cols-3 gap-6 items-start">
-          <SoftBox className="md:col-span-2 p-0" strip={false}>
-            <AccentStrip />
-            <iframe
-              title="Coverage Map"
-              className="w-full h-[360px] rounded-b-2xl"
-              loading="lazy"
-              referrerPolicy="no-referrer"
-              allowFullScreen
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-104.2%2C30.9%2C-101.8%2C32.1&layer=mapnik"
-            />
-          </SoftBox>
-
-          <SoftBox>
-            <ul className="space-y-3 list-disc pl-5 text-base md:text-lg font-semibold text-ahCharcoal">
-              <li>Pecos (Home Base) • Reeves County</li>
-              <li>Fort Stockton • Monahans • Kermit</li>
-              <li>Balmorhea • Pyote • Toyah • Grandfalls • Wink</li>
-              <li>Midland/Odessa Metro &amp; I-20 Corridor</li>
-              <li>US-285 • TX-17 • Oilfield Routes</li>
-              <li className="pt-2">
-                <a className="text-ahBlue underline font-semibold" href="tel:+14328424578">
-                  Professional coverage beyond this region is available — call to arrange long-distance transport.
-                </a>
-              </li>
-            </ul>
-          </SoftBox>
-        </div>
-      </Section>
-
-      {/* Proof / Training */}
-      <Section
-        id="proof"
-        title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
-        subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves. Watch our videos below to learn more!"
-      >
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { url: "https://www.tiktok.com/@285302ditchking/video/7501393555433262367", id: "7501393555433262367", caption: "Heavy hauling training — precision, safety, and control." },
-            { url: "https://www.tiktok.com/@285302ditchking/video/7500641039896628510", id: "7500641039896628510", caption: "A&H operators exercise with local first responders — teamwork in action." },
-            { url: "https://www.tiktok.com/@285302ditchking/video/7480739591905938719", id: "7480739591905938719", caption: "Oilfield hauling — Pulling Unit move. No job too big." },
-          ].map((v) => (
-            <SoftBox key={v.id}>
-              <FramedTikTok url={v.url} id={v.id} caption={v.caption} />
-            </SoftBox>
-          ))}
-        </div>
-      </Section>
-
-      {/* Contact */}
-      <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
-        {/* Centered buttons ABOVE the form — red just scrolls to the form instructions */}
-        <SoftBox className="mb-4">
-          <div className="flex gap-3 flex-wrap justify-center">
-            <PhoneCTA />
-            <ScrollToFormCTA label="Text Dispatch (Include GPS)" />
-          </div>
-        </SoftBox>
-
-        {/* Form + bottom map (not centered) */}
-        <SoftBox>
-          <ContactSection />
-        </SoftBox>
-      </Section>
-
-      {/* Brand slab (bottom) — bright to match top */}
-      <div className="container max-w-7xl pb-2">
-        <BrandSlab as="h2" size="md" />
-      </div>
-
-      {/* Footer */}
-      <footer className="bg-ahCharcoal text-ahText mt-6">
-        <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-10 text-sm">
-          <div>
-            <div className="font-extrabold text-white drop-shadow-sm">A&amp;H Towing &amp; Recovery, LLC</div>
-            <p className="mt-2 font-bold text-amber-200">
-              Professional towing, recovery, and roadside assistance for Pecos &amp; oilfield routes.
-            </p>
-          </div>
-          <div>
-            <div className="font-semibold text-white">Quick Links</div>
-            <ul className="mt-2 space-y-1">
-              <li><a className="underline" href="#services">Services</a></li>
-              <li><a className="underline" href="#coverage">Coverage</a></li>
-              <li><a className="underline" href="#proof">Training & Proof</a></li>
-              <li><a className="underline" href="#contact">Contact</a></li>
-            </ul>
-          </div>
-          <div>
-            <div className="font-semibold text-white">Social</div>
-            <ul className="mt-2 space-y-1">
-              <li>
-                <a className="underline" href="https://www.tiktok.com/@285302ditchking" target="_blank" rel="noreferrer">
-                  TikTok
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <div className="font-semibold text-white">Contact</div>
-            <p className="mt-2 text-white drop-shadow-sm">
-              <a className="underline font-semibold" href="tel:+14328424578">(432) 842-4578</a><br />
-              <a className="underline font-semibold" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
-              <span className="font-extrabold text-amber-200">2712 W F Street, Pecos, TX 79772</span>
-            </p>
-          </div>
-        </div>
-      </footer>
-
-      {/* JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "LocalBusiness",
-            name: "A&H Towing & Recovery, LLC",
-            telephone: "+14328424578",
-            email: "ah.towing.recovery23@gmail.com",
-            address: {
-              "@type": "PostalAddress",
-              streetAddress: "2712 W F Street",
-              addressLocality: "Pecos",
-              addressRegion: "TX",
-              postalCode: "79772",
-              addressCountry: "US",
-            },
-            areaServed: [
-              { "@type": "City", name: "Pecos" },
-              { "@type": "AdministrativeArea", name: "Reeves County" },
-              { "@type": "City", name: "Fort Stockton" },
-              { "@type": "City", name: "Monahans" },
-              { "@type": "City", name: "Kermit" },
-              { "@type": "City", name: "Balmorhea" },
-              { "@type": "City", name: "Pyote" },
-              { "@type": "City", name: "Toyah" },
-              { "@type": "City", name: "Grandfalls" },
-              { "@type": "City", name: "Wink" },
-              { "@type": "City", name: "Midland" },
-              { "@type": "City", name: "Odessa" },
-              { "@type": "AdministrativeArea", name: "West Texas oilfields" },
-            ],
-            openingHours: "Mo-Su 00:00-23:59",
-            sameAs: ["https://www.tiktok.com/@285302ditchking"],
-          }),
-        }}
-      />
-    </main>
+        {/* JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              name: "A&H Towing & Recovery, LLC",
+              telephone: "+14328424578",
+              email: "ah.towing.recovery23@gmail.com",
+              address: {
+                "@type": "PostalAddress",
+                streetAddress: "2712 W F Street",
+                addressLocality: "Pecos",
+                addressRegion: "TX",
+                postalCode: "79772",
+                addressCountry: "US",
+              },
+              areaServed: [
+                { "@type": "City", name: "Pecos" },
+                { "@type": "AdministrativeArea", name: "Reeves County" },
+                { "@type": "City", name: "Fort Stockton" },
+                { "@type": "City", name: "Monahans" },
+                { "@type": "City", name: "Kermit" },
+                { "@type": "City", name: "Balmorhea" },
+                { "@type": "City", name: "Pyote" },
+                { "@type": "City", name: "Toyah" },
+                { "@type": "City", name: "Grandfalls" },
+                { "@type": "City", name: "Wink" },
+                { "@type": "City", name: "Midland" },
+                { "@type": "City", name: "Odessa" },
+                { "@type": "AdministrativeArea", name: "West Texas oilfields" },
+              ],
+              openingHours: "Mo-Su 00:00-23:59",
+              sameAs: ["https://www.tiktok.com/@285302ditchking"],
+            }),
+          }}
+        />
+      </main>
+    </>
   );
 }
 

@@ -85,9 +85,9 @@ function Section({ id, title, subtitle, children }) {
     <section id={id} className="py-12 md:py-16">
       <div className="container max-w-7xl">
         <SoftBox className="mb-5 md:mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-ahCharcoal text-center">{title}</h2>
+          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-ahCharcoal text-center">{title}</h2>
           {subtitle && (
-            <p className="mt-2 text-base md:text-lg opacity-90 text-center">
+            <p className="mt-2 text-base md:text-lg opacity-90 text-center font-bold">
               <strong>{subtitle}</strong>
             </p>
           )}
@@ -156,7 +156,7 @@ function IconClock(props) {
 
 /* ===== Brand slabs ===== */
 
-/* Large slab used at the very bottom (kept) */
+/* Bottom slab (unchanged look) */
 function BrandSlabBottom({ as: Tag = "h2", size = "md" }) {
   const sizes = { md: "text-3xl md:text-5xl" };
   return (
@@ -171,8 +171,12 @@ function BrandSlabBottom({ as: Tag = "h2", size = "md" }) {
       }}
     >
       <Tag
-        className={`${sizes[size]} text-center font-black leading-[1.04] tracking-tight text-ahCharcoal`}
-        style={{ textShadow: "0 1px 1px rgba(0,0,0,.45), 0 6px 16px rgba(0,0,0,.45)" }}
+        className={`${sizes[size]} text-center font-black leading-[1.04] tracking-tight`}
+        style={{
+          color: "#dfe3e8", // silver
+          WebkitTextStroke: "2.5px #000", // black outline
+          textShadow: "0 1px 1px rgba(0,0,0,.5), 0 6px 16px rgba(0,0,0,.45)",
+        }}
       >
         A&amp;H TOWING &amp; RECOVERY, LLC
       </Tag>
@@ -180,17 +184,16 @@ function BrandSlabBottom({ as: Tag = "h2", size = "md" }) {
   );
 }
 
-/* BIG outlined brand for the new top banner (white outline, charcoal fill) */
+/* TOP slab: match bottom style, silver text w/ black outline */
 function BrandSlabTop({ as: Tag = "h1" }) {
   return (
     <Tag
       className="text-center font-black leading-[1.03] tracking-tight"
       style={{
         fontSize: "clamp(36px, 6vw, 88px)",
-        color: "#1f2937", // charcoal
-        WebkitTextStroke: "2.5px #ffffff", // white outline
-        textShadow:
-          "0 2px 2px rgba(0,0,0,.35), 0 8px 22px rgba(0,0,0,.35)",
+        color: "#dfe3e8",          // silver
+        WebkitTextStroke: "2.5px #000",
+        textShadow: "0 2px 2px rgba(0,0,0,.5), 0 10px 24px rgba(0,0,0,.45)",
       }}
     >
       A&amp;H TOWING &amp; RECOVERY, LLC
@@ -224,7 +227,7 @@ function StatsCompact() {
   );
 }
 
-/* ========================= Top Marquee ========================= */
+/* ========================= Top Marquee + GLOBAL TEXT TWEAKS ========================= */
 function TopLocationsMarquee() {
   const text =
     "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • Oilfield Routes";
@@ -247,6 +250,12 @@ function TopLocationsMarquee() {
         .marquee { display: inline-flex; min-width: 200%; animation: marquee-x 30s linear infinite; }
         @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
 
+        /* GLOBAL: darken + embolden body text for crispness */
+        body { color: #0b0f14; font-weight: 600; }
+        :where(p, li, span, small, label, a, button, dt, dd, td, th) {
+          color: #0b0f14; font-weight: 600;
+        }
+
         /* Diamond-steel panel finish for all SoftBox containers */
         .diamond-panel {
           background-image:
@@ -263,7 +272,7 @@ function TopLocationsMarquee() {
   );
 }
 
-/* ===================== Video wrapper (with debug + poster) ===================== */
+/* ===================== Video wrapper (frameless background) ===================== */
 function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", children }) {
   const [videoError, setVideoError] = useState(false);
   return (
@@ -278,20 +287,15 @@ function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", ch
         autoPlay
         loop
         preload="metadata"
-        /* TEMP: show controls while debugging video load */
-        controls
-        onError={(e) => {
-          console.warn("Video failed to load:", src, e?.currentTarget?.error);
-          setVideoError(true);
-        }}
         poster="/videos/fallback.jpg"
+        onError={() => setVideoError(true)}
         disablePictureInPicture
       >
-        {/* IMPORTANT: public/videos/... is requested as /videos/... */}
+        {/* IMPORTANT: Place files at public/videos/*.mp4; served as /videos/*.mp4 */}
         <source src={src} type="video/mp4" />
       </video>
 
-      {/* Vignette overlay */}
+      {/* Vignette overlay for legibility */}
       <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.2)_78%,rgba(0,0,0,0.32)_100%)]" />
 
       {/* Content on top of video */}
@@ -304,10 +308,9 @@ function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", ch
         {children}
       </div>
 
-      {/* Visible debug message if the video fails to load */}
       {videoError && (
         <div className="absolute bottom-3 left-3 z-30 rounded-md bg-red-600/90 text-white px-3 py-1 text-xs shadow">
-          Video failed to load: {src}. Check that the file exists at /public{src}
+          Video failed to load: {src}. Confirm it exists at /public{src}
         </div>
       )}
     </section>
@@ -333,7 +336,7 @@ export default function Home() {
         {/* Gold tagline centered under marquee */}
         <div className="w-full bg-ahCharcoal">
           <div className="container max-w-7xl">
-            <p className="text-center text-[13px] sm:text-sm font-semibold tracking-tight text-yellow-400 py-1">
+            <p className="text-center text-[13px] sm:text-sm font-bold tracking-tight text-yellow-400 py-1">
               Providing Towing, Recovery Services, and Emergency Roadside Assistance for West Texas
             </p>
           </div>
@@ -354,7 +357,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <nav className="ml-auto hidden md:flex items-center gap-6 text-sm">
+            <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
               <a href="#services" className="hover:opacity-80">Services</a>
               <a href="#coverage" className="hover:opacity-80">Coverage</a>
               <a href="#proof" className="hover:opacity-80">Training & Proof</a>
@@ -364,18 +367,7 @@ export default function Home() {
           </div>
         </header>
 
-        {/* ===== TEMP DEBUG BAR (remove when videos confirmed) ===== */}
-        <div className="container max-w-7xl">
-          <div className="px-3 py-2 text-xs text-ahCharcoal/80">
-            <span className="font-semibold">Debug:</span>{" "}
-            <a className="underline mr-3" href="/videos/tow1.mp4" target="_blank" rel="noreferrer">Open tow1.mp4</a>
-            <a className="underline mr-3" href="/videos/tow2.mp4" target="_blank" rel="noreferrer">Open tow2.mp4</a>
-            <a className="underline" href="/videos/tow3.mp4" target="_blank" rel="noreferrer">Open tow3.mp4</a>
-          </div>
-        </div>
-        {/* ========================================================= */}
-
-        {/* =================== NEW TOP BRAND BANNER on RED DIAMOND STEEL =================== */}
+        {/* ===== TOP BRAND BANNER on DIAMOND STEEL (matches bottom style) ===== */}
         <section
           className="relative z-[60] w-full overflow-hidden"
           style={{ minHeight: "clamp(220px, 35vh, 520px)" }}
@@ -384,7 +376,7 @@ export default function Home() {
             className="absolute inset-0"
             style={{
               backgroundImage:
-                `linear-gradient(0deg, rgba(244,63,94,0.28), rgba(244,63,94,0.28)), linear-gradient(0deg, rgba(0,0,0,0.32), rgba(0,0,0,0.32)), url("/diamond-plate.jpg")`,
+                `linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("/diamond-plate.jpg")`,
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
               backgroundPosition: "center",
@@ -395,10 +387,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* =================== tow1 video with smaller duplicate brand on lower third =================== */}
+        {/* ========== tow1 background (frameless) with small duplicate brand ========== */}
         <VideoSection src="/videos/tow1.mp4" showBrand minVH={100} />
 
-        {/* Color separator */}
+        {/* Separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />
 
         {/* =================== HERO (intro content) =================== */}
@@ -427,7 +419,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Color separator */}
+        {/* Separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahRed via-white to-ahBlue" />
 
         {/* =================== tow2 behind Services =================== */}
@@ -474,7 +466,7 @@ export default function Home() {
           </Section>
         </VideoSection>
 
-        {/* Color separator */}
+        {/* Separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-slate-200 via-rose-200/40 to-sky-200" />
 
         {/* =================== Coverage =================== */}
@@ -509,7 +501,7 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* Color separator */}
+        {/* Separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-white to-ahRed" />
 
         {/* =================== tow3 behind Training & Community =================== */}
@@ -810,4 +802,3 @@ function ContactSection() {
     </div>
   );
 }
-

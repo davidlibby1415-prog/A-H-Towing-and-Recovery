@@ -48,14 +48,30 @@ function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", 
   );
 }
 
-function TextCTA({ className = "", body = "Tow request. Please include GPS and callback." }) {
+/* New: Text button that **grabs GPS** first (for hero, services, top contact-CTA row) */
+function TextGPSCTA({
+  className = "",
+  label = "Text Dispatch (Include GPS)",
+  prefix = "Tow request.",
+}) {
+  const [status, setStatus] = useState("");
+  const onClick = async (e) => {
+    e.preventDefault();
+    const c = await requestGPS(setStatus);
+    const loc = c
+      ? `GPS: ${c.lat.toFixed(5)}, ${c.lng.toFixed(5)} https://www.google.com/maps?q=${c.lat},${c.lng}`
+      : "GPS: (share manually)";
+    const body = `${prefix} ${loc} Reply to confirm.`;
+    window.location.href = smsHref("+14328424578", body);
+  };
   return (
     <a
-      href={smsHref("+14328424578", body)}
+      href="#"
+      onClick={onClick}
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] ${className}`}
       aria-label="Text A&H Dispatch"
     >
-      Text Dispatch (Include GPS)
+      {label}
     </a>
   );
 }
@@ -171,14 +187,13 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
 }
 
 /* ===================== TikTok Frames & Carousel ===================== */
-/* Shorter on desktop: keep tall on phones (9/16), but reduce aspect height on md+ */
+/* Shorter on desktop: keep tall on phones, reduce height on md+ */
 function FramedTikTok({ url, id, caption }) {
   return (
     <div className="mx-auto w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px]">
       <div className="relative rounded-[1.6rem] p-0.5 sm:p-1 bg-gradient-to-r from-ahRed via-white to-ahBlue shadow-2xl">
         <div className="rounded-[1.4rem] bg-black p-1.5 sm:p-2">
           <div className="mx-auto mb-1.5 h-2.5 w-20 rounded-b-xl bg-black/60" />
-          {/* Responsive aspect: tall on mobile, shorter on desktop */}
           <div className="relative w-full aspect-[9/16] md:aspect-[7/12] lg:aspect-[2/3] overflow-hidden rounded-[1rem]">
             <div className="absolute inset-0 overflow-hidden">
               <blockquote
@@ -300,7 +315,7 @@ function StatsCompact() {
 /* ========================= Top Marquee ========================= */
 function TopLocationsMarquee() {
   const text =
-    "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 corridor • US-285 • TX-17 • Oilfield routes";
+    "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • Oilfield Routes";
   return (
     <div className="w-full bg-ahCharcoal text-ahText text-sm">
       <div className="container max-w-7xl py-2">
@@ -387,10 +402,10 @@ export default function Home() {
         <BrandSlab as="h1" size="lg" />
       </div>
 
-      {/* Top call button centered under big name */}
+      {/* Top call button: perfectly centered under big name */}
       <div className="container max-w-7xl pt-3 pb-2">
-        <div className="max-w-md mx-auto">
-          <PhoneCTA fullWidth label="Click to Call for Service" />
+        <div className="flex justify-center w-full">
+          <PhoneCTA label="Click to Call for Service" />
         </div>
       </div>
 
@@ -408,10 +423,10 @@ export default function Home() {
               <strong> Click below to call or text us direct!</strong>
             </p>
             <div className="mt-3"><StatsCompact /></div>
-            {/* Center hero buttons: Call + Text side by side */}
+            {/* Center hero buttons: Call + Text side by side (Text grabs GPS) */}
             <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
               <PhoneCTA />
-              <TextCTA />
+              <TextGPSCTA />
             </div>
           </SoftBox>
         </div>
@@ -420,7 +435,7 @@ export default function Home() {
       {/* ACTION VIDEOS — TikTok carousel below hero */}
       <section className="overflow-hidden">
         <div className="container max-w-5xl px-3 sm:px-4">
-          {/* New heading above the top video */}
+          {/* Heading above the top video */}
           <h3 className="text-center font-extrabold text-blue-900 underline underline-offset-4 mb-3">
             Watch Us Work on TikTok!
           </h3>
@@ -493,7 +508,7 @@ export default function Home() {
         <SoftBox className="mt-6">
           <div className="flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
-            <TextCTA />
+            <TextGPSCTA />
           </div>
         </SoftBox>
       </Section>
@@ -518,7 +533,7 @@ export default function Home() {
               <li>Pecos (Home Base) • Reeves County</li>
               <li>Fort Stockton • Monahans • Kermit</li>
               <li>Balmorhea • Pyote • Toyah • Grandfalls • Wink</li>
-              <li>Midland/Odessa Metro &amp; I-20 corridor</li>
+              <li>Midland/Odessa Metro &amp; I-20 Corridor</li>
               <li>US-285 • TX-17 • Oilfield Routes</li>
               <li className="pt-2">
                 <a className="text-ahBlue underline font-semibold" href="tel:+14328424578">
@@ -534,7 +549,7 @@ export default function Home() {
       <Section
         id="proof"
         title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
-        subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves."
+        subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves. Watch our videos below to learn more!"
       >
         <div className="grid md:grid-cols-3 gap-6">
           {[
@@ -555,7 +570,8 @@ export default function Home() {
         <SoftBox className="mb-4">
           <div className="flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
-            <TextCTA />
+            {/* This top contact CTA also grabs GPS */}
+            <TextGPSCTA />
           </div>
         </SoftBox>
 
@@ -737,7 +753,7 @@ function ContactSection() {
             </div>
           </div>
 
-          {/* Keep these NOT centered per your instruction */}
+          {/* Keep these NOT centered per your instruction; still GPS-enabled */}
           <div className="flex flex-wrap gap-3 mt-2 justify-start">
             <PhoneCTA />
             <a
@@ -748,7 +764,7 @@ function ContactSection() {
               Text Dispatch (Include GPS)
             </a>
           </div>
-          <p className="text-xs opacity-70">Tip: The red button grabs GPS and then opens your SMS app with coordinates included.</p>
+          <p className="text-xs opacity-70">The red button grabs GPS and then opens your SMS app with coordinates included.</p>
         </form>
       </SoftBox>
 

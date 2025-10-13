@@ -154,7 +154,7 @@ function IconClock(props) {
   );
 }
 
-/* Brand slab — larger, darker, charcoal text, on diamond plate */
+/* Brand slab — darker, larger, charcoal text, on diamond plate */
 function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   const sizes = {
     lg: "text-5xl md:text-7xl",
@@ -251,9 +251,12 @@ function TopLocationsMarquee() {
 /* ===================== Reusable Video Wrapper (hosts children) ===================== */
 function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", children }) {
   return (
-    <section className={`relative w-full overflow-hidden ${extraClass}`} style={{ minHeight: `min(${minVH}vh, 1200px)` }}>
+    <section
+      className={`relative isolate w-full overflow-hidden ${extraClass}`}
+      style={{ minHeight: `min(${minVH}vh, 1200px)` }}
+    >
       <video
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover z-0"
         muted
         playsInline
         autoPlay
@@ -265,13 +268,13 @@ function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", ch
         <source src={src} type="video/mp4" />
       </video>
 
-      {/* Lighter vignette so it doesn't look like a gray blur */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.2)_78%,rgba(0,0,0,0.32)_100%)]" />
+      {/* Vignette overlay */}
+      <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.2)_78%,rgba(0,0,0,0.32)_100%)]" />
 
       {/* Content on top of video */}
-      <div className="relative z-10">
+      <div className="relative z-20">
         {showBrand && (
-          <div className="absolute bottom-[6%] left-1/2 -translate-x-1/2 w-full px-4">
+          <div className="absolute bottom-[6%] left-1/2 -translate-x-1/2 w-full px-4 pointer-events-none z-[60]">
             <BrandSlab as="h1" size="lg" />
           </div>
         )}

@@ -175,7 +175,7 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   );
 }
 
-/* ===================== TikTok Frames & Carousel ===================== */
+/* ===================== TikTok Frames (kept for Proof section) ===================== */
 function FramedTikTok({ url, id, caption }) {
   return (
     <div className="mx-auto w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px]">
@@ -200,78 +200,6 @@ function FramedTikTok({ url, id, caption }) {
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  );
-}
-
-function TikTokCarousel({ index, onIndexChange }) {
-  const railRef = useRef(null);
-  const items = [
-    { id: "7215414816326880554", url: "https://www.tiktok.com/@285302ditchking/video/7215414816326880554", caption: "Don’t Drink & Drive — we’ll get you and your vehicle home safe." },
-    { id: "6886898181007822086", url: "https://www.tiktok.com/@285302ditchking/video/6886898181007822086", caption: "Classic Car • Light Tow • Professional care and secure transport." },
-    { id: "7322804972259790110", url: "https://www.tiktok.com/@285302ditchking/video/7322804972259790110", caption: "Rolling Down In The Deep — recovery done right." },
-    { id: "7320362428586396958", url: "https://www.tiktok.com/@285302ditchking/video/7320362428586396958", caption: "Another Roll Over — rapid response and safety first." },
-    { id: "7318154070307491103", url: "https://www.tiktok.com/@285302ditchking/video/7318154070307491103", caption: "Heavy Lifting! — oilfield muscle, professional control." },
-    { id: "7277341945796611371", url: "https://www.tiktok.com/@285302ditchking/video/7277341945796611371", caption: "Drive with Caution! — we’re ready when things go wrong." },
-  ];
-
-  const scrollToIndex = (i) => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const child = rail.children[i];
-    if (child?.scrollIntoView) child.scrollIntoView({ behavior: "smooth", inline: "start" });
-  };
-
-  useEffect(() => {
-    scrollToIndex(index);
-  }, [index]);
-
-  useEffect(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const onScroll = () => {
-      const children = Array.from(rail.children);
-      const { scrollLeft } = rail;
-      let nearest = 0;
-      let best = Infinity;
-      children.forEach((el, i) => {
-        const dist = Math.abs(el.offsetLeft - scrollLeft);
-        if (dist < best) {
-          best = dist;
-          nearest = i;
-        }
-      });
-      onIndexChange(nearest);
-    };
-    rail.addEventListener("scroll", onScroll, { passive: true });
-    return () => rail.removeEventListener("scroll", onScroll);
-  }, [onIndexChange]);
-
-  return (
-    <div className="relative">
-      <div
-        ref={railRef}
-        className="grid grid-flow-col auto-cols-[min(320px,100%)] sm:auto-cols-[min(360px,100%)] md:auto-cols-[min(400px,100%)] gap-4 sm:gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-1.5"
-      >
-        {items.map((v) => (
-          <div key={v.id} className="snap-start">
-            <FramedTikTok url={v.url} id={v.id} caption={v.caption} />
-          </div>
-        ))}
-      </div>
-
-      {/* Dots tied to THIS carousel */}
-      <div className="mt-2 flex items-center justify-center gap-2">
-        {items.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => onIndexChange(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={`h-2 w-2 rounded-full transition-all ${i === index ? "w-5 bg-ahBlue" : "bg-black/30 hover:bg-black/50"}`}
-          />
-        ))}
       </div>
     </div>
   );
@@ -330,56 +258,8 @@ function TopLocationsMarquee() {
   );
 }
 
-/* ===================== HERO BACKGROUND VIDEO ROTATOR ===================== */
-function HeroBackgroundVideo() {
-  // Filenames: toe1/2/3 were mentioned; mapping to tow1/2/3 as provided earlier.
-  const vids = ["/videos/tow1.mp4", "/videos/tow2.mp4", "/videos/tow3.mp4"];
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setActive((i) => (i + 1) % vids.length);
-    }, 12000); // cross-fade every 12s
-    return () => clearInterval(id);
-  }, []);
-
-  return (
-    <div className="absolute inset-0 overflow-hidden rounded-3xl">
-      {/* darken a touch for legibility */}
-      <div className="absolute inset-0 bg-black/20 pointer-events-none" />
-      {vids.map((src, i) => (
-        <video
-          key={src}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-in-out ${
-            i === active ? "opacity-100" : "opacity-0"
-          }`}
-          // iOS & mobile autoplay requirements
-          muted
-          playsInline
-          autoPlay
-          loop
-          preload="metadata"
-          poster="/videos/fallback.jpg"
-          // prevent controls / PiP
-          controls={false}
-          disablePictureInPicture
-        >
-          <source src={src} type="video/mp4" />
-          {/* Fallback image if video fails completely */}
-          <img
-            src="/videos/fallback.jpg"
-            alt="Towing background"
-            className="h-full w-full object-cover"
-          />
-        </video>
-      ))}
-    </div>
-  );
-}
-
 /* ============================== Page ============================== */
 export default function Home() {
-  const [heroIndex, setHeroIndex] = useState(0);
 
   /* Force page to open at the very top and ignore browser scroll restore */
   useEffect(() => {
@@ -405,6 +285,7 @@ export default function Home() {
         }
       `}</style>
 
+      {/* TikTok script is still needed for framed videos in Proof section */}
       <Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" />
 
       {/* Marquee */}
@@ -456,13 +337,32 @@ export default function Home() {
         </div>
       </div>
 
-      {/* =================== HERO with BACKGROUND VIDEO =================== */}
+      {/* =================== HERO with SINGLE LOOPING VIDEO =================== */}
       <section className="overflow-hidden">
-        {/* We constrain the video to page margins and stack content over it */}
         <div className="container max-w-7xl">
           <div className="relative rounded-3xl overflow-hidden min-h-[420px] md:min-h-[480px]">
-            {/* Background video rotator */}
-            <HeroBackgroundVideo />
+            {/* Unframed background video (tow1.mp4) */}
+            <video
+              className="absolute inset-0 h-full w-full object-cover"
+              muted
+              playsInline
+              autoPlay
+              loop
+              preload="metadata"
+              poster="/videos/fallback.jpg"
+              controls={false}
+              disablePictureInPicture
+            >
+              <source src="/videos/tow1.mp4" type="video/mp4" />
+              <img
+                src="/videos/fallback.jpg"
+                alt="Towing background"
+                className="h-full w-full object-cover"
+              />
+            </video>
+
+            {/* darken a touch for legibility */}
+            <div className="absolute inset-0 bg-black/25 pointer-events-none" />
 
             {/* Foreground content */}
             <div className="relative z-10 px-3 sm:px-4 py-6 md:py-8">
@@ -488,19 +388,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ACTION VIDEOS — TikTok carousel below hero */}
-      <section className="overflow-hidden">
-        <div className="container max-w-5xl px-3 sm:px-4">
-          <h3 className="text-center font-extrabold text-blue-900 underline underline-offset-4 mb-3">
-            Watch Us Work on TikTok!
-          </h3>
-          <SoftBox>
-            <div className="mx-auto max-w-[420px] sm:max-w-[760px]">
-              <TikTokCarousel index={heroIndex} onIndexChange={setHeroIndex} />
-            </div>
-          </SoftBox>
-        </div>
-      </section>
+      {/* (Removed) ACTION VIDEOS — TikTok carousel below hero */}
 
       {/* Trust banner */}
       <div className="container max-w-7xl py-8 md:py-[calc(1rem*1.618)]">

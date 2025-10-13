@@ -36,7 +36,6 @@ async function requestGPS(setStatus) {
 
 /* ====================== Small UI Helpers / Icons ====================== */
 function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", fullWidth = false }) {
-  // fullWidth=true makes it fit nicely on mobile where we place it under the big title
   const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
   return (
     <a
@@ -139,7 +138,7 @@ function IconClock(props) {
   );
 }
 
-/* Brand slab (matches top & bottom, bright) */
+/* Brand slab (bright like top & bottom) */
 function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   const sizes = { lg: "text-4xl md:text-6xl", md: "text-2xl md:text-4xl" };
   return (
@@ -189,7 +188,7 @@ function FramedTikTok({ url, id, caption }) {
   );
 }
 
-function TikTokCarousel({ index, onIndexChange, showDots = true }) {
+function TikTokCarousel({ index, onIndexChange }) {
   const railRef = useRef(null);
   const items = [
     { id: "7215414816326880554", url: "https://www.tiktok.com/@285302ditchking/video/7215414816326880554", caption: "Don’t Drink & Drive — we’ll get you and your vehicle home safe." },
@@ -245,36 +244,18 @@ function TikTokCarousel({ index, onIndexChange, showDots = true }) {
         ))}
       </div>
 
-      {showDots && (
-        <div className="mt-2 flex items-center justify-center gap-2">
-          {items.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => onIndexChange(i)}
-              aria-label={`Go to slide ${i + 1}`}
-              className={`h-2 w-2 rounded-full transition-all ${i === index ? "w-5 bg-ahBlue" : "bg-black/30 hover:bg-black/50"}`}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* Dots bar we can place under the intro */
-function CarouselDots({ count, index, onClick }) {
-  return (
-    <div className="mt-2 flex items-center justify-center gap-2">
-      {[...Array(count)].map((_, i) => (
-        <button
-          key={i}
-          type="button"
-          onClick={() => onClick(i)}
-          aria-label={`Go to slide ${i + 1}`}
-          className={`h-2 w-2 rounded-full transition-all ${i === index ? "w-5 bg-ahBlue" : "bg-black/30 hover:bg-black/50"}`}
-        />
-      ))}
+      {/* Dots tied to THIS carousel */}
+      <div className="mt-2 flex items-center justify-center gap-2">
+        {items.map((_, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={() => onIndexChange(i)}
+            aria-label={`Go to slide ${i + 1}`}
+            className={`h-2 w-2 rounded-full transition-all ${i === index ? "w-5 bg-ahBlue" : "bg-black/30 hover:bg-black/50"}`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -335,13 +316,13 @@ export default function Home() {
 
   return (
     <main className="text-ahCharcoal min-h-screen bg-diamond">
-      {/* Diamond-plate image background (served from /public/diamond-plate.jpg) */}
+      {/* Diamond-plate image background */}
       <style jsx global>{`
         .bg-diamond {
           background-image:
             linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)),
             url("/diamond-plate.jpg");
-          background-size: cover, 320px 320px; /* overlay, then repeating plate */
+          background-size: cover, 320px 320px;
           background-repeat: no-repeat, repeat;
           background-attachment: fixed;
           background-position: center top, center;
@@ -353,7 +334,16 @@ export default function Home() {
       {/* Marquee */}
       <TopLocationsMarquee />
 
-      {/* Header (hide call button on mobile so it doesn't push layout) */}
+      {/* Gold tagline centered under marquee, inside a thin bar */}
+      <div className="w-full bg-ahCharcoal">
+        <div className="container max-w-7xl">
+          <p className="text-center text-[13px] sm:text-sm font-semibold tracking-tight text-yellow-400 py-1">
+            Providing Towing, Recovery Services, and Emergency Roadside Assistance for West Texas
+          </p>
+        </div>
+      </div>
+
+      {/* Header (keep header call button; do not center-shift it) */}
       <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
         <div className="container max-w-7xl flex items-center gap-6 py-3">
           <div className="flex items-center gap-3">
@@ -374,6 +364,7 @@ export default function Home() {
             <a href="#proof" className="hover:opacity-80">Training & Proof</a>
             <a href="#contact" className="hover:opacity-80">Contact</a>
           </nav>
+          {/* header button stays as-is per instruction */}
           <PhoneCTA className="hidden sm:inline-flex" />
         </div>
       </header>
@@ -383,39 +374,41 @@ export default function Home() {
         <BrandSlab as="h1" size="lg" />
       </div>
 
-      {/* NEW: Top call button centered under the big name */}
+      {/* Top call button centered under big name */}
       <div className="container max-w-7xl pt-3 pb-2">
         <div className="max-w-md mx-auto">
           <PhoneCTA fullWidth label="Click to Call for Service" />
         </div>
       </div>
 
-      {/* HERO: intro first, then carousel; tightened widths for mobile */}
+      {/* HERO (intro only now) — tightened, centered buttons */}
       <section className="overflow-hidden">
-        <div className="container max-w-7xl grid gap-6 lg:grid-cols-2 lg:gap-10 items-start pt-4 md:pt-6 pb-10">
-          {/* Intro card */}
-          <SoftBox className="order-1">
-            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow">
+        <div className="container max-w-7xl pt-4 md:pt-6 pb-6">
+          <SoftBox>
+            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center md:text-left">
               Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
               Towing — From Small Cars to Heavy Duty Tows
             </h2>
-            <p className="mt-3 text-base md:text-lg opacity-95">
+            <p className="mt-3 text-base md:text-lg opacity-95 text-center md:text-left">
               Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows,
               winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
             </p>
             <div className="mt-3"><StatsCompact /></div>
-
-            {/* Centered carousel dots placed directly under the intro (controls the hero carousel) */}
-            <CarouselDots count={6} index={heroIndex} onClick={setHeroIndex} />
-
-            <div className="mt-4 flex flex-wrap items-center gap-3 justify-center md:justify-start">
+            <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
+              {/* center all buttons except header and bottom-two-in-form */}
               <PhoneCTA />
             </div>
           </SoftBox>
+        </div>
+      </section>
 
-          {/* Carousel card */}
-          <SoftBox className="order-2">
-            <TikTokCarousel index={heroIndex} onIndexChange={setHeroIndex} showDots={false} />
+      {/* ACTION VIDEOS — TikTok carousel moved BELOW hero; centered with its own dots; width constrained */}
+      <section className="overflow-hidden">
+        <div className="container max-w-5xl px-3 sm:px-4">
+          <SoftBox>
+            <div className="mx-auto max-w-[420px] sm:max-w-[760px]">
+              <TikTokCarousel index={heroIndex} onIndexChange={setHeroIndex} />
+            </div>
           </SoftBox>
         </div>
       </section>
@@ -477,9 +470,9 @@ export default function Home() {
             </SoftBox>
           ))}
         </div>
-
+        {/* Centered CTA buttons */}
         <SoftBox className="mt-6">
-          <div className="flex gap-3 flex-wrap justify-center md:justify-start">
+          <div className="flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
             <a
               href={smsHref("+14328424578", "Tow request. Please include GPS and callback.")}
@@ -547,9 +540,9 @@ export default function Home() {
 
       {/* Contact */}
       <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
-        {/* Buttons ABOVE the form */}
+        {/* Centered buttons ABOVE the form (as requested) */}
         <SoftBox className="mb-4">
-          <div className="flex gap-3 flex-wrap justify-center md:justify-start">
+          <div className="flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
             <a
               href={smsHref("+14328424578", "Tow request. Please include GPS and callback.")}
@@ -565,7 +558,7 @@ export default function Home() {
         </SoftBox>
       </Section>
 
-      {/* Brand slab (bottom) — bright like the top */}
+      {/* Brand slab (bottom) — bright to match top */}
       <div className="container max-w-7xl pb-2">
         <BrandSlab as="h2" size="md" />
       </div>
@@ -737,7 +730,8 @@ function ContactSection() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-3 mt-2">
+          {/* These two buttons (inside the form) intentionally NOT centered per your instruction */}
+          <div className="flex flex-wrap gap-3 mt-2 justify-start">
             <PhoneCTA />
             <a
               href={smsHref("+14328424578", smsBody)}

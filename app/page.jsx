@@ -171,13 +171,15 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
 }
 
 /* ===================== TikTok Frames & Carousel ===================== */
+/* Shorter on desktop: keep tall on phones (9/16), but reduce aspect height on md+ */
 function FramedTikTok({ url, id, caption }) {
   return (
     <div className="mx-auto w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px]">
       <div className="relative rounded-[1.6rem] p-0.5 sm:p-1 bg-gradient-to-r from-ahRed via-white to-ahBlue shadow-2xl">
         <div className="rounded-[1.4rem] bg-black p-1.5 sm:p-2">
           <div className="mx-auto mb-1.5 h-2.5 w-20 rounded-b-xl bg-black/60" />
-          <div className="relative w-full aspect-[9/16] overflow-hidden rounded-[1rem]">
+          {/* Responsive aspect: tall on mobile, shorter on desktop */}
+          <div className="relative w-full aspect-[9/16] md:aspect-[7/12] lg:aspect-[2/3] overflow-hidden rounded-[1rem]">
             <div className="absolute inset-0 overflow-hidden">
               <blockquote
                 className="tiktok-embed h-full w-full"
@@ -418,6 +420,10 @@ export default function Home() {
       {/* ACTION VIDEOS — TikTok carousel below hero */}
       <section className="overflow-hidden">
         <div className="container max-w-5xl px-3 sm:px-4">
+          {/* New heading above the top video */}
+          <h3 className="text-center font-extrabold text-blue-900 underline underline-offset-4 mb-3">
+            Watch Us Work on TikTok!
+          </h3>
           <SoftBox>
             <div className="mx-auto max-w-[420px] sm:max-w-[760px]">
               <TikTokCarousel index={heroIndex} onIndexChange={setHeroIndex} />
@@ -541,7 +547,6 @@ export default function Home() {
             </SoftBox>
           ))}
         </div>
-        {/* (Tip removed as requested) */}
       </Section>
 
       {/* Contact */}

@@ -345,13 +345,17 @@ export default function Home() {
             <video
               className="absolute inset-0 h-full w-full object-cover"
               muted
+              defaultMuted
               playsInline
               autoPlay
               loop
-              preload="metadata"
+              preload="auto"
               poster="/videos/fallback.jpg"
               controls={false}
               disablePictureInPicture
+              onError={(e) => console.error("Hero video failed to load", e)}
+              onWaiting={() => console.log("Hero video buffering…")}
+              onCanPlay={() => console.log("Hero video can play")}
             >
               <source src="/videos/tow1.mp4" type="video/mp4" />
               <img

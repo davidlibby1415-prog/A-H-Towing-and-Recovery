@@ -251,7 +251,7 @@ function TopLocationsMarquee() {
         .diamond-panel {
           background-image:
             linear-gradient(135deg, rgba(59,130,246,0.12), rgba(244,63,94,0.12)),
-            url("/diamond-steel.jpg");
+            url("/diamond-plate.jpg");
           background-size: cover, 220px 220px;
           background-repeat: no-repeat, repeat;
           background-position: center, center;
@@ -263,8 +263,9 @@ function TopLocationsMarquee() {
   );
 }
 
-/* ===================== Video wrapper (content on top) ===================== */
+/* ===================== Video wrapper (with debug + poster) ===================== */
 function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", children }) {
+  const [videoError, setVideoError] = useState(false);
   return (
     <section
       className={`relative isolate w-full overflow-hidden ${extraClass}`}
@@ -277,9 +278,16 @@ function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", ch
         autoPlay
         loop
         preload="metadata"
-        controls={false}
+        /* TEMP: show controls while debugging video load */
+        controls
+        onError={(e) => {
+          console.warn("Video failed to load:", src, e?.currentTarget?.error);
+          setVideoError(true);
+        }}
+        poster="/videos/fallback.jpg"
         disablePictureInPicture
       >
+        {/* IMPORTANT: public/videos/... is requested as /videos/... */}
         <source src={src} type="video/mp4" />
       </video>
 
@@ -290,12 +298,18 @@ function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", ch
       <div className="relative z-20">
         {showBrand && (
           <div className="absolute bottom-[12%] left-1/2 -translate-x-1/2 w-full px-4 pointer-events-none z-[999]">
-            {/* Smaller slab on the lower third of tow1 video */}
             <BrandSlabTop />
           </div>
         )}
         {children}
       </div>
+
+      {/* Visible debug message if the video fails to load */}
+      {videoError && (
+        <div className="absolute bottom-3 left-3 z-30 rounded-md bg-red-600/90 text-white px-3 py-1 text-xs shadow">
+          Video failed to load: {src}. Check that the file exists at /public{src}
+        </div>
+      )}
     </section>
   );
 }
@@ -350,6 +364,17 @@ export default function Home() {
           </div>
         </header>
 
+        {/* ===== TEMP DEBUG BAR (remove when videos confirmed) ===== */}
+        <div className="container max-w-7xl">
+          <div className="px-3 py-2 text-xs text-ahCharcoal/80">
+            <span className="font-semibold">Debug:</span>{" "}
+            <a className="underline mr-3" href="/videos/tow1.mp4" target="_blank" rel="noreferrer">Open tow1.mp4</a>
+            <a className="underline mr-3" href="/videos/tow2.mp4" target="_blank" rel="noreferrer">Open tow2.mp4</a>
+            <a className="underline" href="/videos/tow3.mp4" target="_blank" rel="noreferrer">Open tow3.mp4</a>
+          </div>
+        </div>
+        {/* ========================================================= */}
+
         {/* =================== NEW TOP BRAND BANNER on RED DIAMOND STEEL =================== */}
         <section
           className="relative z-[60] w-full overflow-hidden"
@@ -366,7 +391,6 @@ export default function Home() {
             }}
           />
           <div className="relative z-[70] h-full w-full flex items-end justify-center px-4 pb-8">
-            {/* Big outlined brand centered near the lower third of this steel banner */}
             <BrandSlabTop />
           </div>
         </section>
@@ -786,3 +810,4 @@ function ContactSection() {
     </div>
   );
 }
+

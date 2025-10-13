@@ -26,23 +26,27 @@ function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", 
   );
 }
 
-/* Red CTA used everywhere EXCEPT the form; this only scrolls to the form */
+/* Red CTA used everywhere EXCEPT the form; this only scrolls to the form instructions */
 function ScrollToFormCTA({
   className = "",
   label = "Text Dispatch (Include GPS)",
-  targetId = "dispatch-form",
+  targetId = "form-start",
 }) {
   const onClick = (e) => {
     e.preventDefault();
-    const el = document.getElementById(targetId) || document.getElementById("contact");
+    const el = document.getElementById(targetId) || document.getElementById("dispatch-form");
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
       setTimeout(() => {
-        const first = el.querySelector("input, textarea, select, button");
+        const first = document.querySelector("#dispatch-form input, #dispatch-form textarea, #dispatch-form select, #dispatch-form button");
         first?.focus();
-      }, 500);
+      }, 600);
     } else {
       window.location.hash = "#contact";
+      setTimeout(() => {
+        const first = document.querySelector("#dispatch-form input, #dispatch-form textarea, #dispatch-form select, #dispatch-form button");
+        first?.focus();
+      }, 600);
     }
   };
   return (
@@ -229,7 +233,10 @@ function TikTokCarousel({ index, onIndexChange }) {
       let best = Infinity;
       children.forEach((el, i) => {
         const dist = Math.abs(el.offsetLeft - scrollLeft);
-        if (dist < best) nearest = i, best = dist;
+        if (dist < best) {
+          best = dist;
+          nearest = i;
+        }
       });
       onIndexChange(nearest);
     };
@@ -320,6 +327,16 @@ function TopLocationsMarquee() {
 export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0);
 
+  /* Force page to open at the very top and ignore browser scroll restore */
+  useEffect(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" in window ? "instant" : "auto" });
+    // Fallback in case fonts/images shift layout after first paint
+    setTimeout(() => window.scrollTo(0, 0), 0);
+  }, []);
+
   return (
     <main className="text-ahCharcoal min-h-screen bg-diamond">
       {/* Diamond-plate image background */}
@@ -402,7 +419,7 @@ export default function Home() {
             <div className="mt-3"><StatsCompact /></div>
             <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
               <PhoneCTA />
-              {/* RED buttons now just bring customers to the form */}
+              {/* RED buttons now just bring customers to the form (to the top / instructions) */}
               <ScrollToFormCTA />
             </div>
           </SoftBox>
@@ -481,7 +498,7 @@ export default function Home() {
           ))}
         </div>
 
-        {/* Centered CTAs; red scrolls to the form */}
+        {/* Centered CTAs; red scrolls to the top of the form */}
         <SoftBox className="mt-6">
           <div className="flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
@@ -543,7 +560,7 @@ export default function Home() {
 
       {/* Contact */}
       <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
-        {/* Centered buttons ABOVE the form — red just scrolls to the form */}
+        {/* Centered buttons ABOVE the form — red just scrolls to the form instructions */}
         <SoftBox className="mb-4">
           <div className="flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
@@ -708,6 +725,9 @@ function ContactSection() {
     <div className="grid md:grid-cols-2 gap-8" id="contact">
       <SoftBox strip={false} className="p-0">
         <AccentStrip />
+
+        {/* Anchor at the very TOP of the form area so scroll lands here */}
+        <div id="form-start" className="h-0 w-full" aria-hidden="true" />
 
         {/* === Instruction text above the form === */}
         <div className="px-5 pt-5 md:px-6">

@@ -154,15 +154,15 @@ function IconClock(props) {
   );
 }
 
-/* Brand slab (overlay on tow1) — diamond plate + faint red */
+/* Brand slab — OLD company styling on diamond plate (used top & bottom) */
 function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   const sizes = { lg: "text-4xl md:text-6xl", md: "text-2xl md:text-4xl" };
   return (
     <div
-      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
+      className="mx-auto max-w-fit rounded-3xl border border-white/10 bg-[#0b0f14]/90 px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
       style={{
         backgroundImage:
-          `linear-gradient(0deg, rgba(244,63,94,0.22), rgba(244,63,94,0.22)), url("/diamond-plate.jpg")`,
+          `linear-gradient(0deg, rgba(244,63,94,0.15), rgba(244,63,94,0.15)), url("/diamond-plate.jpg")`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -171,11 +171,13 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
       <Tag
         className={`text-center ${sizes[size]} font-black leading-[1.05] tracking-tight`}
         style={{
-          color: "rgba(244,63,94,0.9)",
-          textShadow: "0 1px 2px rgba(0,0,0,.35), 0 6px 16px rgba(0,0,0,.35)",
+          WebkitTextStroke: "1.5px #0b0f14",
+          textShadow: "0 1px 1px rgba(0,0,0,.4), 0 6px 16px rgba(0,0,0,.35)",
         }}
       >
-        A&amp;H TOWING &amp; RECOVERY, LLC
+        <span className="bg-gradient-to-b from-zinc-50 via-zinc-200 to-zinc-300 bg-clip-text text-transparent">
+          A&amp;H TOWING &amp; RECOVERY, LLC
+        </span>
       </Tag>
     </div>
   );
@@ -246,37 +248,31 @@ function TopLocationsMarquee() {
   );
 }
 
-/* ===================== Reusable Video Wrapper (can host children) ===================== */
+/* ===================== Reusable Video Wrapper (hosts children) ===================== */
 function VideoSection({ src, showBrand = false, minVH = 100, children }) {
   return (
     <section className="relative w-full overflow-hidden" style={{ minHeight: `min(${minVH}vh, 1200px)` }}>
       <video
         className="absolute inset-0 w-full h-full object-cover"
         muted
-        defaultMuted
         playsInline
         autoPlay
         loop
-        preload="auto"
-        poster="/videos/fallback.jpg"
+        preload="metadata"
         controls={false}
         disablePictureInPicture
       >
         <source src={src} type="video/mp4" />
-        <img
-          src="/videos/fallback.jpg"
-          alt="Towing background"
-          className="h-full w-full object-cover"
-        />
       </video>
 
-      {/* Cinematic vignette for legibility */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_45%,rgba(0,0,0,0.35)_70%,rgba(0,0,0,0.55)_100%)]" />
+      {/* Lighter vignette so it doesn't look like a gray blur */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.22)_78%,rgba(0,0,0,0.35)_100%)]" />
 
       {/* Content on top of video */}
       <div className="relative z-10">
         {showBrand && (
-          <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 w-full px-4">
+          <div className="absolute bottom-[2%] left-1/2 -translate-x-1/2 w-full px-4">
+            {/* Lowered to avoid sitting up near header */}
             <BrandSlab as="h1" size="lg" />
           </div>
         )}
@@ -418,7 +414,7 @@ export default function Home() {
         {/* Color separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-slate-200 via-rose-200/40 to-sky-200" />
 
-        {/* =================== Coverage (clean, no video) =================== */}
+        {/* =================== Coverage (clean) =================== */}
         <Section id="coverage" title="Service Area" subtitle="Pecos, TX and Surrounding West Texas Region">
           <div className="grid md:grid-cols-3 gap-6 items-start">
             <SoftBox className="md:col-span-2 p-0" strip={false}>
@@ -458,7 +454,7 @@ export default function Home() {
           <Section
             id="proof"
             title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
-            subtitle="No fluff, just capability. Here’s how we operate."
+            subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves. Watch our videos below to learn more!"
           >
             <div className="grid md:grid-cols-3 gap-6">
               {[
@@ -492,7 +488,7 @@ export default function Home() {
           </SoftBox>
         </Section>
 
-        {/* Brand slab (bottom) */}
+        {/* Brand slab (bottom) — old font on steel */}
         <div className="container max-w-7xl pb-2">
           <BrandSlab as="h2" size="md" />
         </div>
@@ -751,3 +747,4 @@ function ContactSection() {
     </div>
   );
 }
+

@@ -331,9 +331,11 @@ export default function Home() {
           </div>
         </header>
 
+        {/* Force large gap under sticky header (≈15–20 lines) */}
+        <div aria-hidden className="h-[420px] sm:h-[480px]" />
+
         {/* =================== tow1: full screen banner with brand bottom-center =================== */}
-        {/* extraClass adds top margin so header never overlaps brand */}
-        <VideoSection src="/videos/tow1.mp4" showBrand minVH={100} extraClass="mt-20 md:mt-28" />
+        <VideoSection src="/videos/tow1.mp4" showBrand minVH={100} extraClass="" />
 
         {/* Color separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />
@@ -747,5 +749,3 @@ function ContactSection() {
     </div>
   );
 }
-
-

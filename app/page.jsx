@@ -154,11 +154,11 @@ function IconClock(props) {
   );
 }
 
-/* Brand slab */
+/* Brand slab (used as overlay on first video) */
 function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   const sizes = { lg: "text-4xl md:text-6xl", md: "text-2xl md:text-4xl" };
   return (
-    <div className="mx-auto max-w-fit rounded-3xl border border-white/10 bg-[#0b0f14] px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+    <div className="mx-auto max-w-fit rounded-3xl border border-white/10 bg-[#0b0f14]/90 px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
       <Tag
         className={`text-center ${sizes[size]} font-black leading-[1.05] tracking-tight`}
         style={{
@@ -239,6 +239,42 @@ function TopLocationsMarquee() {
   );
 }
 
+/* ===================== Full-viewport Video Section ===================== */
+function VideoSection({ src, showBrand = false }) {
+  return (
+    <section className="relative w-full min-h-[100vh] overflow-hidden">
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        muted
+        defaultMuted
+        playsInline
+        autoPlay
+        loop
+        preload="auto"
+        poster="/videos/fallback.jpg"
+        controls={false}
+        disablePictureInPicture
+      >
+        <source src={src} type="video/mp4" />
+        <img
+          src="/videos/fallback.jpg"
+          alt="Towing background"
+          className="h-full w-full object-cover"
+        />
+      </video>
+
+      {/* Cinematic vignette for legibility */}
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_45%,rgba(0,0,0,0.35)_70%,rgba(0,0,0,0.55)_100%)]" />
+
+      {showBrand && (
+        <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 w-full px-4">
+          <BrandSlab as="h1" size="lg" />
+        </div>
+      )}
+    </section>
+  );
+}
+
 /* ============================== Page ============================== */
 export default function Home() {
   useEffect(() => {
@@ -289,21 +325,15 @@ export default function Home() {
           </div>
         </header>
 
-        {/* Brand slab */}
-        <div className="container max-w-7xl pt-5 md:pt-6">
-          <BrandSlab as="h1" size="lg" />
-        </div>
+        {/* =================== STACKED FULL-SCREEN VIDEOS =================== */}
+        <VideoSection src="/videos/tow1.mp4" showBrand />
+        <VideoSection src="/videos/tow2.mp4" />
+        <VideoSection src="/videos/tow3.mp4" />
 
-        {/* Spacer between brand slab and hero */}
-        <div className="container max-w-7xl">
-          <div className="h-10 md:h-16 lg:h-20" />
-        </div>
-
-        {/* =================== HERO (static; no video) =================== */}
+        {/* =================== HERO (content section after videos) =================== */}
         <section className="overflow-hidden">
           <div className="container max-w-7xl">
             <div className="relative rounded-3xl overflow-hidden min-h-[50vh] md:min-h-[60vh] grid place-items-center bg-gradient-to-br from-zinc-200 via-zinc-100 to-white">
-              {/* Foreground content only */}
               <div className="relative z-10 px-3 sm:px-4 py-6 md:py-8 w-full">
                 <SoftBox>
                   <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center">
@@ -487,9 +517,7 @@ export default function Home() {
             </div>
             <div>
               <div className="font-semibold text-white">Social</div>
-              <ul className="mt-2 space-y-1">
-                {/* Social links (no TikTok) */}
-              </ul>
+              <ul className="mt-2 space-y-1">{/* no external embeds */}</ul>
             </div>
             <div>
               <div className="font-semibold text-white">Contact</div>

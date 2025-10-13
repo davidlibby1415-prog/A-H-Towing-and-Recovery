@@ -326,45 +326,55 @@ function TopLocationsMarquee() {
 /* =========== Fixed Rotating Background Video (follows scroll) =========== */
 function BackgroundVideoRotator() {
   const sources = ["/videos/tow1.mp4", "/videos/tow2.mp4", "/videos/tow3.mp4"];
-  const [active, setActive] = useState(0); // index of visible video
+  const [active, setActive] = useState(0);
   const vidsRef = useRef([]);
 
-  // Ensure autoplay on load & cross-fade rotation
+  // Try to play all on mount, rotate every X seconds, and on 'ended'
   useEffect(() => {
     const vids = vidsRef.current.filter(Boolean);
-    vids.forEach((v) => {
+
+    const ensurePlay = (v) => {
       try {
         v.muted = true;
         v.volume = 0;
         v.playsInline = true;
-        const playPromise = v.play();
-        if (playPromise && typeof playPromise.then === "function") {
-          playPromise.catch(() => {/* ignore autoplay block - we retry on canplay */});
-        }
+        v.disablePictureInPicture = true;
+        v.setAttribute("playsinline", "");
+        v.setAttribute("muted", "");
+        const p = v.play();
+        if (p && typeof p.then === "function") p.catch(() => {});
       } catch {}
+    };
+
+    vids.forEach((v) => {
+      v.addEventListener("canplay", () => ensurePlay(v), { once: true });
+      ensurePlay(v);
     });
 
-    // On ended, advance to next; also advance on interval for continuous cycling
     const advance = () => setActive((i) => (i + 1) % sources.length);
-
     const handlers = vids.map((v) => {
       const h = () => advance();
       v.addEventListener("ended", h);
-      v.addEventListener("canplay", () => {
-        // retry play when it becomes ready
-        v.play().catch(() => {});
-      });
       return { v, h };
     });
 
-    const interval = setInterval(advance, 15000); // 15s per clip; tweak as needed
+    // rotate every 15s regardless of video length
+    const interval = setInterval(advance, 15000);
+
+    // user-gesture fallback for autoplay policies
+    const kick = () => vids.forEach((v) => ensurePlay(v));
+    window.addEventListener("pointerdown", kick, { once: true });
+    window.addEventListener("scroll", kick, { once: true });
+
     return () => {
       handlers.forEach(({ v, h }) => v.removeEventListener("ended", h));
       clearInterval(interval);
+      window.removeEventListener("pointerdown", kick);
+      window.removeEventListener("scroll", kick);
     };
   }, [sources.length]);
 
-  // Pause background videos when page is hidden (power/network friendly)
+  // Pause when tab hidden
   useEffect(() => {
     const onVis = () => {
       const vids = vidsRef.current.filter(Boolean);
@@ -375,26 +385,32 @@ function BackgroundVideoRotator() {
     return () => document.removeEventListener("visibilitychange", onVis);
   }, []);
 
+  const commonProps = {
+    muted: true,
+    playsInline: true,
+    autoPlay: true,
+    loop: true,
+    preload: "auto",
+    poster: "/fallback.jpg",
+    tabIndex: -1,
+  };
+
   return (
     <div className="fixed inset-0 z-[-1] pointer-events-none">
-      {/* Subtle dark overlay for contrast */}
       <div className="absolute inset-0 bg-black/35" />
-      {/* Three stacked videos; active one fades in */}
       {sources.map((src, idx) => (
         <video
           key={src}
           ref={(el) => (vidsRef.current[idx] = el)}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-linear ${active === idx ? "opacity-100" : "opacity-0"}`}
           src={src}
-          poster="/fallback.jpg"
-          muted
-          autoPlay
-          loop
-          playsInline
-          preload="metadata"
+          {...commonProps}
+          onError={() => {
+            // if a video fails, skip to next
+            setActive((i) => (i + 1) % sources.length);
+          }}
         >
           <source src={src} type="video/mp4" />
-          <img src="/fallback.jpg" alt="Background" className="w-full h-full object-cover" />
         </video>
       ))}
     </div>
@@ -486,12 +502,13 @@ export default function Home() {
       {/* ===== HERO content over the background video ===== */}
       <section className="relative overflow-hidden min-h-[70vh] flex items-center justify-center">
         <div className="relative z-10 container max-w-5xl px-4">
-          <SoftBox className="bg-white/20 backdrop-blur-md border-white/10">
-            <h2 className="text-2xl md:text-4xl leading-tight drop-shadow text-center text-fuchsia-500">
+          {/* Aqua blue box + bold red hero text */}
+          <SoftBox className="bg-cyan-200/70 backdrop-blur-md border-cyan-300">
+            <h2 className="text-2xl md:text-4xl leading-tight drop-shadow text-center text-red-600">
               Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
               Towing — From Small Cars to Heavy Duty Tows
             </h2>
-            <p className="mt-3 text-base md:text-lg text-center text-fuchsia-400">
+            <p className="mt-3 text-base md:text-lg text-center text-red-600">
               Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows,
               winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
               <strong> Click below to call or text us direct!</strong>
@@ -499,7 +516,6 @@ export default function Home() {
             <div className="mt-3"><StatsCompact /></div>
             <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
               <PhoneCTA />
-              {/* RED button scrolls to the form instructions */}
               <ScrollToFormCTA />
             </div>
           </SoftBox>

@@ -34,38 +34,17 @@ async function requestGPS(setStatus) {
   });
 }
 
-/* SMS button that grabs GPS before opening the Messages app */
-function SmsGPSButton({ className = "", label = "Text Dispatch (Include GPS)" }) {
-  const [status, setStatus] = useState("");
-  const onClick = async (e) => {
-    e.preventDefault();
-    const c = await requestGPS(setStatus);
-    const loc = c
-      ? `GPS: ${c.lat.toFixed(5)}, ${c.lng.toFixed(5)} https://www.google.com/maps?q=${c.lat},${c.lng}`
-      : "GPS: (share manually)";
-    const body = `Tow request. ${loc}. Reply to confirm.`;
-    window.location.href = smsHref("+14328424578", body);
-  };
-  return (
-    <a
-      href="#"
-      onClick={onClick}
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] ${className}`}
-    >
-      {label}
-    </a>
-  );
-}
-
 /* ====================== Small UI Helpers / Icons ====================== */
-function PhoneCTA({ className = "" }) {
+function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", fullWidth = false }) {
+  // fullWidth=true makes it fit nicely on mobile where we place it under the big title
+  const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
   return (
     <a
       href="tel:+14328424578"
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] ${className}`}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className}`}
       aria-label="Call A&H Towing & Recovery"
     >
-      Call Dispatch Now! 24/7 Services
+      {label}
     </a>
   );
 }
@@ -160,7 +139,7 @@ function IconClock(props) {
   );
 }
 
-/* Brand slab (matches top & bottom) */
+/* Brand slab (matches top & bottom, bright) */
 function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   const sizes = { lg: "text-4xl md:text-6xl", md: "text-2xl md:text-4xl" };
   return (
@@ -172,7 +151,7 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
           textShadow: "0 1px 1px rgba(0,0,0,.4), 0 6px 16px rgba(0,0,0,.35)",
         }}
       >
-        <span className="bg-gradient-to-b from-zinc-100 via-zinc-200 to-zinc-300 bg-clip-text text-transparent">
+        <span className="bg-gradient-to-b from-zinc-50 via-zinc-200 to-zinc-300 bg-clip-text text-transparent">
           A&amp;H TOWING &amp; RECOVERY, LLC
         </span>
       </Tag>
@@ -183,7 +162,7 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
 /* ===================== TikTok Frames & Carousel ===================== */
 function FramedTikTok({ url, id, caption }) {
   return (
-    <div className="mx-auto w-full max-w-[340px] sm:max-w-[380px] md:max-w-[420px]">
+    <div className="mx-auto w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px]">
       <div className="relative rounded-[1.6rem] p-0.5 sm:p-1 bg-gradient-to-r from-ahRed via-white to-ahBlue shadow-2xl">
         <div className="rounded-[1.4rem] bg-black p-1.5 sm:p-2">
           <div className="mx-auto mb-1.5 h-2.5 w-20 rounded-b-xl bg-black/60" />
@@ -210,9 +189,8 @@ function FramedTikTok({ url, id, caption }) {
   );
 }
 
-function TikTokCarousel() {
+function TikTokCarousel({ index, onIndexChange, showDots = true }) {
   const railRef = useRef(null);
-  const [index, setIndex] = useState(0);
   const items = [
     { id: "7215414816326880554", url: "https://www.tiktok.com/@285302ditchking/video/7215414816326880554", caption: "Don’t Drink & Drive — we’ll get you and your vehicle home safe." },
     { id: "6886898181007822086", url: "https://www.tiktok.com/@285302ditchking/video/6886898181007822086", caption: "Classic Car • Light Tow • Professional care and secure transport." },
@@ -230,6 +208,10 @@ function TikTokCarousel() {
   };
 
   useEffect(() => {
+    scrollToIndex(index);
+  }, [index]);
+
+  useEffect(() => {
     const rail = railRef.current;
     if (!rail) return;
     const onScroll = () => {
@@ -244,25 +226,17 @@ function TikTokCarousel() {
           nearest = i;
         }
       });
-      setIndex(nearest);
+      onIndexChange(nearest);
     };
     rail.addEventListener("scroll", onScroll, { passive: true });
     return () => rail.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const manual = (dirOrExact) => {
-    let next = index;
-    if (typeof dirOrExact === "number") next = dirOrExact;
-    else next = (index + dirOrExact + items.length) % items.length;
-    setIndex(next);
-    scrollToIndex(next);
-  };
+  }, [onIndexChange]);
 
   return (
     <div className="relative">
       <div
         ref={railRef}
-        className="grid grid-flow-col auto-cols-[min(360px,100%)] sm:auto-cols-[min(380px,100%)] md:auto-cols-[min(420px,100%)] gap-4 sm:gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-1.5"
+        className="grid grid-flow-col auto-cols-[min(320px,100%)] sm:auto-cols-[min(360px,100%)] md:auto-cols-[min(400px,100%)] gap-4 sm:gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-1.5"
       >
         {items.map((v) => (
           <div key={v.id} className="snap-start">
@@ -270,17 +244,37 @@ function TikTokCarousel() {
           </div>
         ))}
       </div>
-      <div className="mt-2 flex items-center justify-center gap-2">
-        {items.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => manual(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={`h-2 w-2 rounded-full transition-all ${i === index ? "w-5 bg-ahBlue" : "bg-black/30 hover:bg-black/50"}`}
-          />
-        ))}
-      </div>
+
+      {showDots && (
+        <div className="mt-2 flex items-center justify-center gap-2">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => onIndexChange(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-2 w-2 rounded-full transition-all ${i === index ? "w-5 bg-ahBlue" : "bg-black/30 hover:bg-black/50"}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* Dots bar we can place under the intro */
+function CarouselDots({ count, index, onClick }) {
+  return (
+    <div className="mt-2 flex items-center justify-center gap-2">
+      {[...Array(count)].map((_, i) => (
+        <button
+          key={i}
+          type="button"
+          onClick={() => onClick(i)}
+          aria-label={`Go to slide ${i + 1}`}
+          className={`h-2 w-2 rounded-full transition-all ${i === index ? "w-5 bg-ahBlue" : "bg-black/30 hover:bg-black/50"}`}
+        />
+      ))}
     </div>
   );
 }
@@ -337,6 +331,8 @@ function TopLocationsMarquee() {
 
 /* ============================== Page ============================== */
 export default function Home() {
+  const [heroIndex, setHeroIndex] = useState(0);
+
   return (
     <main className="text-ahCharcoal min-h-screen bg-diamond">
       {/* Diamond-plate image background (served from /public/diamond-plate.jpg) */}
@@ -357,7 +353,7 @@ export default function Home() {
       {/* Marquee */}
       <TopLocationsMarquee />
 
-      {/* Header */}
+      {/* Header (hide call button on mobile so it doesn't push layout) */}
       <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
         <div className="container max-w-7xl flex items-center gap-6 py-3">
           <div className="flex items-center gap-3">
@@ -378,7 +374,7 @@ export default function Home() {
             <a href="#proof" className="hover:opacity-80">Training & Proof</a>
             <a href="#contact" className="hover:opacity-80">Contact</a>
           </nav>
-          <PhoneCTA />
+          <PhoneCTA className="hidden sm:inline-flex" />
         </div>
       </header>
 
@@ -387,10 +383,18 @@ export default function Home() {
         <BrandSlab as="h1" size="lg" />
       </div>
 
-      {/* HERO: intro + carousel */}
+      {/* NEW: Top call button centered under the big name */}
+      <div className="container max-w-7xl pt-3 pb-2">
+        <div className="max-w-md mx-auto">
+          <PhoneCTA fullWidth label="Click to Call for Service" />
+        </div>
+      </div>
+
+      {/* HERO: intro first, then carousel; tightened widths for mobile */}
       <section className="overflow-hidden">
-        <div className="container max-w-7xl grid gap-6 lg:grid-cols-2 lg:gap-10 items-start pt-6 md:pt-8 pb-10">
-          <SoftBox>
+        <div className="container max-w-7xl grid gap-6 lg:grid-cols-2 lg:gap-10 items-start pt-4 md:pt-6 pb-10">
+          {/* Intro card */}
+          <SoftBox className="order-1">
             <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow">
               Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
               Towing — From Small Cars to Heavy Duty Tows
@@ -400,14 +404,18 @@ export default function Home() {
               winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
             </p>
             <div className="mt-3"><StatsCompact /></div>
-            <div className="mt-4 flex flex-wrap items-center gap-3">
+
+            {/* Centered carousel dots placed directly under the intro (controls the hero carousel) */}
+            <CarouselDots count={6} index={heroIndex} onClick={setHeroIndex} />
+
+            <div className="mt-4 flex flex-wrap items-center gap-3 justify-center md:justify-start">
               <PhoneCTA />
-              <SmsGPSButton />
             </div>
           </SoftBox>
 
-          <SoftBox>
-            <TikTokCarousel />
+          {/* Carousel card */}
+          <SoftBox className="order-2">
+            <TikTokCarousel index={heroIndex} onIndexChange={setHeroIndex} showDots={false} />
           </SoftBox>
         </div>
       </section>
@@ -473,7 +481,12 @@ export default function Home() {
         <SoftBox className="mt-6">
           <div className="flex gap-3 flex-wrap justify-center md:justify-start">
             <PhoneCTA />
-            <SmsGPSButton />
+            <a
+              href={smsHref("+14328424578", "Tow request. Please include GPS and callback.")}
+              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px]"
+            >
+              Text Dispatch (Include GPS)
+            </a>
           </div>
         </SoftBox>
       </Section>
@@ -499,9 +512,11 @@ export default function Home() {
               <li>Fort Stockton • Monahans • Kermit</li>
               <li>Balmorhea • Pyote • Toyah • Grandfalls • Wink</li>
               <li>Midland/Odessa Metro &amp; I-20 corridor</li>
-              <li>US-285 • TX-17 • Oilfield routes</li>
-              <li className="pt-2 text-ahBlue">
-                Professional coverage beyond this region is available — call to arrange long-distance transport.
+              <li>US-285 • TX-17 • Oilfield Routes</li>
+              <li className="pt-2">
+                <a className="text-ahBlue underline font-semibold" href="tel:+14328424578">
+                  Professional coverage beyond this region is available — call to arrange long-distance transport.
+                </a>
               </li>
             </ul>
           </SoftBox>
@@ -511,7 +526,7 @@ export default function Home() {
       {/* Proof / Training */}
       <Section
         id="proof"
-        title="Training & Community — Why Professionals Trust A&H"
+        title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
         subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves."
       >
         <div className="grid md:grid-cols-3 gap-6">
@@ -532,12 +547,25 @@ export default function Home() {
 
       {/* Contact */}
       <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
+        {/* Buttons ABOVE the form */}
+        <SoftBox className="mb-4">
+          <div className="flex gap-3 flex-wrap justify-center md:justify-start">
+            <PhoneCTA />
+            <a
+              href={smsHref("+14328424578", "Tow request. Please include GPS and callback.")}
+              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px]"
+            >
+              Text Dispatch (Include GPS)
+            </a>
+          </div>
+        </SoftBox>
+
         <SoftBox>
           <ContactSection />
         </SoftBox>
       </Section>
 
-      {/* Brand slab (bottom) */}
+      {/* Brand slab (bottom) — bright like the top */}
       <div className="container max-w-7xl pb-2">
         <BrandSlab as="h2" size="md" />
       </div>

@@ -48,7 +48,7 @@ function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", 
   );
 }
 
-/* New: Text button that **grabs GPS** first (for hero, services, top contact-CTA row) */
+/* Text buttons that grab GPS first (for hero/services top CTAs) */
 function TextGPSCTA({
   className = "",
   label = "Text Dispatch (Include GPS)",
@@ -187,7 +187,6 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
 }
 
 /* ===================== TikTok Frames & Carousel ===================== */
-/* Shorter on desktop: keep tall on phones, reduce height on md+ */
 function FramedTikTok({ url, id, caption }) {
   return (
     <div className="mx-auto w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px]">
@@ -423,9 +422,9 @@ export default function Home() {
               <strong> Click below to call or text us direct!</strong>
             </p>
             <div className="mt-3"><StatsCompact /></div>
-            {/* Center hero buttons: Call + Text side by side (Text grabs GPS) */}
             <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
               <PhoneCTA />
+              {/* GPS-enabled quick text */}
               <TextGPSCTA />
             </div>
           </SoftBox>
@@ -435,7 +434,6 @@ export default function Home() {
       {/* ACTION VIDEOS — TikTok carousel below hero */}
       <section className="overflow-hidden">
         <div className="container max-w-5xl px-3 sm:px-4">
-          {/* Heading above the top video */}
           <h3 className="text-center font-extrabold text-blue-900 underline underline-offset-4 mb-3">
             Watch Us Work on TikTok!
           </h3>
@@ -570,7 +568,6 @@ export default function Home() {
         <SoftBox className="mb-4">
           <div className="flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
-            {/* This top contact CTA also grabs GPS */}
             <TextGPSCTA />
           </div>
         </SoftBox>
@@ -699,7 +696,7 @@ function ContactSection() {
 
   const handleTextWithGPS = async (e) => {
     e.preventDefault();
-    const c = (await requestLocation()) || coords;
+    const c = (await requestLocation()) || coords; // capture fresh GPS, fallback to existing
     const href = smsHref("+14328424578", buildSMSBody(c || coords));
     window.location.href = href;
   };
@@ -753,7 +750,7 @@ function ContactSection() {
             </div>
           </div>
 
-          {/* Keep these NOT centered per your instruction; still GPS-enabled */}
+          {/* Not centered per your instruction; GPS-enabled */}
           <div className="flex flex-wrap gap-3 mt-2 justify-start">
             <PhoneCTA />
             <a
@@ -761,7 +758,8 @@ function ContactSection() {
               onClick={handleTextWithGPS}
               className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px]"
             >
-              Text Dispatch (Include GPS)
+              {/* relabeled per your request */}
+              Send Text to Dispatch
             </a>
           </div>
           <p className="text-xs opacity-70">The red button grabs GPS and then opens your SMS app with coordinates included.</p>

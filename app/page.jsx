@@ -154,7 +154,7 @@ function IconClock(props) {
   );
 }
 
-/* Brand slab — darker, larger, charcoal text, on diamond plate */
+/* Brand slab — darkened, larger, charcoal text, on diamond plate; sits above all */
 function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   const sizes = {
     lg: "text-5xl md:text-7xl",
@@ -162,19 +162,19 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   };
   return (
     <div
-      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-5 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
+      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-5 shadow-[0_12px_40px_rgba(0,0,0,0.6)] pointer-events-none"
       style={{
         backgroundImage:
-          `linear-gradient(0deg, rgba(244,63,94,0.18), rgba(244,63,94,0.18)), url("/diamond-plate.jpg")`,
-        backgroundSize: "cover",
+          `linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), linear-gradient(0deg, rgba(244,63,94,0.18), rgba(244,63,94,0.18)), url("/diamond-plate.jpg")`,
+        backgroundSize: "cover, cover, cover",
         backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
+        backgroundPosition: "center, center, center",
       }}
     >
       <Tag
         className={`text-center ${sizes[size]} font-black leading-[1.04] tracking-tight text-ahCharcoal`}
         style={{
-          textShadow: "0 1px 1px rgba(0,0,0,.35), 0 6px 16px rgba(0,0,0,.35)",
+          textShadow: "0 1px 1px rgba(0,0,0,.45), 0 6px 16px rgba(0,0,0,.45)",
         }}
       >
         A&amp;H TOWING &amp; RECOVERY, LLC
@@ -274,7 +274,7 @@ function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", ch
       {/* Content on top of video */}
       <div className="relative z-20">
         {showBrand && (
-          <div className="absolute bottom-[6%] left-1/2 -translate-x-1/2 w-full px-4 pointer-events-none z-[60]">
+          <div className="absolute bottom-[8%] left-1/2 -translate-x-1/2 w-full px-4 pointer-events-none z-[999]">
             <BrandSlab as="h1" size="lg" />
           </div>
         )}
@@ -334,11 +334,8 @@ export default function Home() {
           </div>
         </header>
 
-        {/* Force large gap under sticky header (≈15–20 lines) */}
-        <div aria-hidden className="h-[420px] sm:h-[480px]" />
-
-        {/* =================== tow1: full screen banner with brand bottom-center =================== */}
-        <VideoSection src="/videos/tow1.mp4" showBrand minVH={100} extraClass="" />
+        {/* =================== tow1: full screen banner with brand bottom-center (NO white spacer) =================== */}
+        <VideoSection src="/videos/tow1.mp4" showBrand minVH={100} />
 
         {/* Color separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />

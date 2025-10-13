@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
-import Script from "next/script";
+import React, { useState, useEffect } from "react";
 
 /* ============================ Utilities ============================ */
 function smsHref(number, body) {
@@ -70,9 +69,7 @@ function AccentStrip({ color = "from-ahBlue to-ahRed" }) {
   return <div className={`h-1 w-full bg-gradient-to-r ${color}`} />;
 }
 
-/* Box shell
-   - Default bgClass uses a faint blue→red diamond-steel texture (panel finish).
-*/
+/* Box shell with faint blue→red diamond steel texture */
 function SoftBox({ children, className = "", strip = true, bgClass = "diamond-panel" }) {
   return (
     <div className={`rounded-2xl border border-black/10 shadow-xl ${bgClass} backdrop-blur ${className}`}>
@@ -82,7 +79,7 @@ function SoftBox({ children, className = "", strip = true, bgClass = "diamond-pa
   );
 }
 
-/* Section wrapper: headline panel (also soft) + content */
+/* Section wrapper */
 function Section({ id, title, subtitle, children }) {
   return (
     <section id={id} className="py-12 md:py-16">
@@ -157,7 +154,7 @@ function IconClock(props) {
   );
 }
 
-/* Brand slab (bright like top & bottom) */
+/* Brand slab */
 function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   const sizes = { lg: "text-4xl md:text-6xl", md: "text-2xl md:text-4xl" };
   return (
@@ -173,36 +170,6 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
           A&amp;H TOWING &amp; RECOVERY, LLC
         </span>
       </Tag>
-    </div>
-  );
-}
-
-/* ===================== TikTok Frames (kept for Proof section) ===================== */
-function FramedTikTok({ url, id, caption }) {
-  return (
-    <div className="mx-auto w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px]">
-      <div className="relative rounded-[1.6rem] p-0.5 sm:p-1 bg-gradient-to-r from-ahRed via-white to-ahBlue shadow-2xl">
-        <div className="rounded-[1.4rem] bg-black p-1.5 sm:p-2">
-          <div className="mx-auto mb-1.5 h-2.5 w-20 rounded-b-xl bg-black/60" />
-          <div className="relative w-full aspect-[9/16] md:aspect-[7/12] lg:aspect-[2/3] overflow-hidden rounded-[1rem]">
-            <div className="absolute inset-0 overflow-hidden">
-              <blockquote
-                className="tiktok-embed h-full w-full"
-                cite={url}
-                data-video-id={id}
-                style={{ maxWidth: "100%", minWidth: 260, height: "100%", background: "transparent" }}
-              >
-                <section>
-                  <a target="_blank" rel="noreferrer" href="https://www.tiktok.com/@285302ditchking">
-                    @285302ditchking
-                  </a>
-                  <p className="text-white/90">{caption}</p>
-                </section>
-              </blockquote>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
@@ -256,10 +223,7 @@ function TopLocationsMarquee() {
         .marquee { display: inline-flex; min-width: 200%; animation: marquee-x 30s linear infinite; }
         @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
 
-        /* === Diamond-steel panel finish for all SoftBox containers ===
-           - subtle blue→red tint over a repeating diamond-steel texture
-           - slightly translucent so the content feels “soft”
-        */
+        /* Diamond-steel panel finish for all SoftBox containers */
         .diamond-panel {
           background-image:
             linear-gradient(135deg, rgba(59,130,246,0.12), rgba(244,63,94,0.12)),
@@ -267,7 +231,6 @@ function TopLocationsMarquee() {
           background-size: cover, 220px 220px;
           background-repeat: no-repeat, repeat;
           background-position: center, center;
-          /* a touch of translucency like before */
           background-color: rgba(255,255,255,0.6);
           background-blend-mode: overlay, normal;
         }
@@ -278,8 +241,6 @@ function TopLocationsMarquee() {
 
 /* ============================== Page ============================== */
 export default function Home() {
-
-  /* Force page to open at the very top and ignore browser scroll restore */
   useEffect(() => {
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
@@ -290,11 +251,7 @@ export default function Home() {
 
   return (
     <>
-      {/* Removed bg-diamond class → solid, clean page background */}
       <main className="text-ahCharcoal min-h-screen">
-        {/* TikTok script is still needed for framed videos in Proof section */}
-        <Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" />
-
         {/* Marquee */}
         <TopLocationsMarquee />
 
@@ -337,42 +294,17 @@ export default function Home() {
           <BrandSlab as="h1" size="lg" />
         </div>
 
-        {/* WIDE spacer between brand slab and hero */}
+        {/* Spacer between brand slab and hero */}
         <div className="container max-w-7xl">
           <div className="h-10 md:h-16 lg:h-20" />
         </div>
 
-        {/* =================== HERO with SINGLE LOOPING VIDEO =================== */}
+        {/* =================== HERO (static; no video) =================== */}
         <section className="overflow-hidden">
           <div className="container max-w-7xl">
-            {/* Taller hero to fill most of the screen within margins */}
-            <div className="relative rounded-3xl overflow-hidden min-h-[70vh] md:min-h-[80vh]">
-              {/* Unframed background video (tow1.mp4) */}
-              <video
-                className="absolute inset-0 h-full w-full object-cover"
-                muted
-                defaultMuted
-                playsInline
-                autoPlay
-                loop
-                preload="auto"
-                poster="/videos/fallback.jpg"
-                controls={false}
-                disablePictureInPicture
-              >
-                <source src="/videos/tow1.mp4" type="video/mp4" />
-                <img
-                  src="/videos/fallback.jpg"
-                  alt="Towing background"
-                  className="h-full w-full object-cover"
-                />
-              </video>
-
-              {/* darken for legibility */}
-              <div className="absolute inset-0 bg-black/25 pointer-events-none" />
-
-              {/* Foreground content */}
-              <div className="relative z-10 px-3 sm:px-4 py-6 md:py-8">
+            <div className="relative rounded-3xl overflow-hidden min-h-[50vh] md:min-h-[60vh] grid place-items-center bg-gradient-to-br from-zinc-200 via-zinc-100 to-white">
+              {/* Foreground content only */}
+              <div className="relative z-10 px-3 sm:px-4 py-6 md:py-8 w-full">
                 <SoftBox>
                   <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center">
                     Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
@@ -452,7 +384,7 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Centered CTAs; red scrolls to the top of the form */}
+          {/* Centered CTAs */}
           <SoftBox className="mt-6">
             <div className="flex gap-3 flex-wrap justify-center">
               <PhoneCTA />
@@ -461,8 +393,7 @@ export default function Home() {
           </SoftBox>
         </Section>
 
-        {/* Coverage */
-        }
+        {/* Coverage */}
         <Section id="coverage" title="Service Area" subtitle="Pecos, TX and Surrounding West Texas Region">
           <div className="grid md:grid-cols-3 gap-6 items-start">
             <SoftBox className="md:col-span-2 p-0" strip={false}>
@@ -494,20 +425,22 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* Proof / Training */}
+        {/* Proof / Training (text-only; no media) */}
         <Section
           id="proof"
           title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
-          subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves. Watch our videos below to learn more!"
+          subtitle="No fluff, just capability. Here’s how we operate."
         >
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { url: "https://www.tiktok.com/@285302ditchking/video/7501393555433262367", id: "7501393555433262367", caption: "Heavy hauling training — precision, safety, and control." },
-              { url: "https://www.tiktok.com/@285302ditchking/video/7500641039896628510", id: "7500641039896628510", caption: "A&H operators exercise with local first responders — teamwork in action." },
-              { url: "https://www.tiktok.com/@285302ditchking/video/7480739591905938719", id: "7480739591905938719", caption: "Oilfield hauling — Pulling Unit move. No job too big." },
-            ].map((v) => (
-              <SoftBox key={v.id}>
-                <FramedTikTok url={v.url} id={v.id} caption={v.caption} />
+              { title: "Heavy Hauling Readiness", desc: "Operators trained for complex recoveries and oilfield moves using proper rigging and safety protocols." },
+              { title: "First Responder Coordination", desc: "Regular coordination with local responders ensures safe, fast scene management when it matters most." },
+              { title: "Equipment & Care", desc: "Modern gear, careful handling, and clear communication from dispatch to drop-off." },
+            ].map(({ title, desc }) => (
+              <SoftBox key={title}>
+                <div className="-mt-6 -mx-6 mb-4"><AccentStrip /></div>
+                <div className="font-semibold">{title}</div>
+                <div className="text-sm opacity-80 mt-1">{desc}</div>
               </SoftBox>
             ))}
           </div>
@@ -515,7 +448,7 @@ export default function Home() {
 
         {/* Contact */}
         <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
-          {/* Centered buttons ABOVE the form — red just scrolls to the form instructions */}
+          {/* Centered buttons ABOVE the form */}
           <SoftBox className="mb-4">
             <div className="flex gap-3 flex-wrap justify-center">
               <PhoneCTA />
@@ -529,7 +462,7 @@ export default function Home() {
           </SoftBox>
         </Section>
 
-        {/* Brand slab (bottom) — bright to match top */}
+        {/* Brand slab (bottom) */}
         <div className="container max-w-7xl pb-2">
           <BrandSlab as="h2" size="md" />
         </div>
@@ -555,11 +488,7 @@ export default function Home() {
             <div>
               <div className="font-semibold text-white">Social</div>
               <ul className="mt-2 space-y-1">
-                <li>
-                  <a className="underline" href="https://www.tiktok.com/@285302ditchking" target="_blank" rel="noreferrer">
-                    TikTok
-                  </a>
-                </li>
+                {/* Social links (no TikTok) */}
               </ul>
             </div>
             <div>
@@ -607,7 +536,7 @@ export default function Home() {
                 { "@type": "AdministrativeArea", name: "West Texas oilfields" },
               ],
               openingHours: "Mo-Su 00:00-23:59",
-              sameAs: ["https://www.tiktok.com/@285302ditchking"],
+              sameAs: [],
             }),
           }}
         />
@@ -626,7 +555,6 @@ function ContactSection() {
   const [coords, setCoords] = useState(null);
   const [locStatus, setLocStatus] = useState("Idle");
 
-  // The ONLY button that actually sends the SMS lives here.
   const handleSendText = (e) => {
     e.preventDefault();
 
@@ -682,10 +610,9 @@ function ContactSection() {
       <SoftBox strip={false} className="p-0">
         <AccentStrip />
 
-        {/* Anchor at the very TOP of the form area so scroll lands here */}
+        {/* Anchor for scroll */}
         <div id="form-start" className="h-0 w-full" aria-hidden="true" />
 
-        {/* === Instruction text above the form === */}
         <div className="px-5 pt-5 md:px-6">
           <div className="rounded-xl bg-blue-50/80 border border-blue-200 px-4 py-3 text-sm text-ahCharcoal">
             <strong>Instructions: </strong>
@@ -758,7 +685,6 @@ function ContactSection() {
             </div>
           </div>
 
-          {/* Only submit button that actually sends SMS */}
           <div className="flex flex-wrap gap-3 mt-2 justify-start">
             <PhoneCTA />
             <button
@@ -775,7 +701,6 @@ function ContactSection() {
         </form>
       </SoftBox>
 
-      {/* Bottom map/info — not centered */}
       <SoftBox>
         <div className="font-semibold">Call or Visit</div>
         <p className="mt-2 text-sm">

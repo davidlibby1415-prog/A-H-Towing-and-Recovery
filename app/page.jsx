@@ -37,13 +37,11 @@ function ScrollToFormCTA({
     const el = document.getElementById(targetId) || document.getElementById("contact");
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
-      // small delay to let scroll finish, then focus first field
       setTimeout(() => {
         const first = el.querySelector("input, textarea, select, button");
         first?.focus();
       }, 500);
     } else {
-      // fallback to hash if element not found
       window.location.hash = "#contact";
     }
   };
@@ -231,10 +229,7 @@ function TikTokCarousel({ index, onIndexChange }) {
       let best = Infinity;
       children.forEach((el, i) => {
         const dist = Math.abs(el.offsetLeft - scrollLeft);
-        if (dist < best) {
-          best = dist;
-          nearest = i;
-        }
+        if (dist < best) nearest = i, best = dist;
       });
       onIndexChange(nearest);
     };
@@ -659,7 +654,6 @@ function ContactSection() {
   const [locStatus, setLocStatus] = useState("Idle");
 
   // The ONLY button that actually sends the SMS lives here.
-  // It uses a race: try GPS quickly; if slow, send without GPS so SMS still opens.
   const handleSendText = (e) => {
     e.preventDefault();
 
@@ -682,7 +676,6 @@ function ContactSection() {
       window.location.href = smsHref("+14328424578", body);
     };
 
-    // Fallback timer (~2.5s): opens SMS without GPS if slow/blocked
     const fallback = setTimeout(() => openSMS(build(null)), 2500);
 
     if (navigator?.geolocation) {
@@ -715,6 +708,16 @@ function ContactSection() {
     <div className="grid md:grid-cols-2 gap-8" id="contact">
       <SoftBox strip={false} className="p-0">
         <AccentStrip />
+
+        {/* === Instruction text above the form === */}
+        <div className="px-5 pt-5 md:px-6">
+          <div className="rounded-xl bg-blue-50/80 border border-blue-200 px-4 py-3 text-sm text-ahCharcoal">
+            <strong>Instructions: </strong>
+            Please complete the form below for services and to send your GPS information to our towing and emergency services dispatcher.
+            Press the red button below to submit the form to text for services.
+          </div>
+        </div>
+
         <form id="dispatch-form" className="grid gap-4 p-5 md:p-6" onSubmit={(e) => e.preventDefault()}>
           <label className="grid gap-1">
             <span className="text-sm">Name</span>
@@ -744,7 +747,6 @@ function ContactSection() {
           <div className="grid gap-2 rounded-2xl border p-3 bg-white/80 backdrop-blur">
             <div className="flex items-center justify-between">
               <span className="text-sm font-medium">Share GPS Location</span>
-              {/* Optional pre-capture GPS button (not required to send) */}
               <button
                 type="button"
                 onClick={() => {
@@ -810,7 +812,7 @@ function ContactSection() {
           <iframe title="Shop Map (OpenStreetMap)" className="w-full h-[220px]" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik" />
           <div className="text-xs p-2 bg-white/90">
             Prefer Google?{" "}
-            <a className="underline" href="https://www.google.com/maps?q=2712%20W%20F%20Street%2C%20Pecos,%20TX%2079772" target="_blank" rel="noreferrer">
+            <a className="underline" href="https://www.google.com/maps?q=2712%20W%20F%20Street,%20Pecos,%20TX%2079772" target="_blank" rel="noreferrer">
               Open in Google Maps
             </a>
           </div>

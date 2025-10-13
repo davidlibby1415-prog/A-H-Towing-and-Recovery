@@ -339,13 +339,13 @@ function TopLocationsMarquee() {
 export default function Home() {
   return (
     <main className="text-ahCharcoal min-h-screen bg-diamond">
-      {/* Diamond-plate image background (place /public/diamond-plate.jpg) */}
+      {/* Diamond-plate image background (served from /public/diamond-plate.jpg) */}
       <style jsx global>{`
         .bg-diamond {
           background-image:
             linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)),
             url("/diamond-plate.jpg");
-          background-size: cover, 320px 320px; /* tone overlay, then repeating plate */
+          background-size: cover, 320px 320px; /* overlay, then repeating plate */
           background-repeat: no-repeat, repeat;
           background-attachment: fixed;
           background-position: center top, center;
@@ -387,7 +387,7 @@ export default function Home() {
         <BrandSlab as="h1" size="lg" />
       </div>
 
-      {/* HERO: intro + carousel in soft boxes; stacks on mobile, 2-col on desktop */}
+      {/* HERO: intro + carousel */}
       <section className="overflow-hidden">
         <div className="container max-w-7xl grid gap-6 lg:grid-cols-2 lg:gap-10 items-start pt-6 md:pt-8 pb-10">
           <SoftBox>
@@ -412,7 +412,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Trust banner — each card inside SoftBox for consistency */}
+      {/* Trust banner */}
       <div className="container max-w-7xl py-8 md:py-[calc(1rem*1.618)]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {[
@@ -422,7 +422,7 @@ export default function Home() {
             { title: "Trains w/ First Responders", sub: "Safety. Speed. Coordination.", icon: IconBolt, color: "from-violet-500 to-indigo-600" },
           ].map(({ title, sub, icon: I, color }, idx) => (
             <SoftBox key={idx}>
-              <div className={`-mt-6 -mx-6 mb-4`}> <AccentStrip color={color} /> </div>
+              <div className="-mt-6 -mx-6 mb-4"><AccentStrip color={color} /></div>
               <div className="flex items-start gap-3">
                 <div className={`h-10 w-10 rounded-xl bg-gradient-to-br ${color} grid place-items-center text-white`}>
                   <I className="h-6 w-6" />
@@ -515,7 +515,7 @@ export default function Home() {
         subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves."
       >
         <div className="grid md:grid-cols-3 gap-6">
-          {[ // three framed tiktoks inside SoftBox for spacing/blur consistency
+          {[
             { url: "https://www.tiktok.com/@285302ditchking/video/7501393555433262367", id: "7501393555433262367", caption: "Heavy hauling training — precision, safety, and control." },
             { url: "https://www.tiktok.com/@285302ditchking/video/7500641039896628510", id: "7500641039896628510", caption: "A&H operators exercise with local first responders — teamwork in action." },
             { url: "https://www.tiktok.com/@285302ditchking/video/7480739591905938719", id: "7480739591905938719", caption: "Oilfield hauling — Pulling Unit move. No job too big." },
@@ -542,7 +542,7 @@ export default function Home() {
         <BrandSlab as="h2" size="md" />
       </div>
 
-      {/* Footer (address emphasized) */}
+      {/* Footer */}
       <footer className="bg-ahCharcoal text-ahText mt-6">
         <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-10 text-sm">
           <div>

@@ -154,30 +154,30 @@ function IconClock(props) {
   );
 }
 
-/* Brand slab — OLD company styling on diamond plate (used top & bottom) */
+/* Brand slab — larger, darker, charcoal text, on diamond plate */
 function BrandSlab({ as: Tag = "h1", size = "lg" }) {
-  const sizes = { lg: "text-4xl md:text-6xl", md: "text-2xl md:text-4xl" };
+  const sizes = {
+    lg: "text-5xl md:text-7xl",
+    md: "text-3xl md:text-5xl",
+  };
   return (
     <div
-      className="mx-auto max-w-fit rounded-3xl border border-white/10 bg-[#0b0f14]/90 px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
+      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-5 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
       style={{
         backgroundImage:
-          `linear-gradient(0deg, rgba(244,63,94,0.15), rgba(244,63,94,0.15)), url("/diamond-plate.jpg")`,
+          `linear-gradient(0deg, rgba(244,63,94,0.18), rgba(244,63,94,0.18)), url("/diamond-plate.jpg")`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
       }}
     >
       <Tag
-        className={`text-center ${sizes[size]} font-black leading-[1.05] tracking-tight`}
+        className={`text-center ${sizes[size]} font-black leading-[1.04] tracking-tight text-ahCharcoal`}
         style={{
-          WebkitTextStroke: "1.5px #0b0f14",
-          textShadow: "0 1px 1px rgba(0,0,0,.4), 0 6px 16px rgba(0,0,0,.35)",
+          textShadow: "0 1px 1px rgba(0,0,0,.35), 0 6px 16px rgba(0,0,0,.35)",
         }}
       >
-        <span className="bg-gradient-to-b from-zinc-50 via-zinc-200 to-zinc-300 bg-clip-text text-transparent">
-          A&amp;H TOWING &amp; RECOVERY, LLC
-        </span>
+        A&amp;H TOWING &amp; RECOVERY, LLC
       </Tag>
     </div>
   );
@@ -249,9 +249,9 @@ function TopLocationsMarquee() {
 }
 
 /* ===================== Reusable Video Wrapper (hosts children) ===================== */
-function VideoSection({ src, showBrand = false, minVH = 100, children }) {
+function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", children }) {
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: `min(${minVH}vh, 1200px)` }}>
+    <section className={`relative w-full overflow-hidden ${extraClass}`} style={{ minHeight: `min(${minVH}vh, 1200px)` }}>
       <video
         className="absolute inset-0 w-full h-full object-cover"
         muted
@@ -266,13 +266,12 @@ function VideoSection({ src, showBrand = false, minVH = 100, children }) {
       </video>
 
       {/* Lighter vignette so it doesn't look like a gray blur */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.22)_78%,rgba(0,0,0,0.35)_100%)]" />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.2)_78%,rgba(0,0,0,0.32)_100%)]" />
 
       {/* Content on top of video */}
       <div className="relative z-10">
         {showBrand && (
-          <div className="absolute bottom-[2%] left-1/2 -translate-x-1/2 w-full px-4">
-            {/* Lowered to avoid sitting up near header */}
+          <div className="absolute bottom-[6%] left-1/2 -translate-x-1/2 w-full px-4">
             <BrandSlab as="h1" size="lg" />
           </div>
         )}
@@ -333,7 +332,8 @@ export default function Home() {
         </header>
 
         {/* =================== tow1: full screen banner with brand bottom-center =================== */}
-        <VideoSection src="/videos/tow1.mp4" showBrand minVH={100} />
+        {/* extraClass adds top margin so header never overlaps brand */}
+        <VideoSection src="/videos/tow1.mp4" showBrand minVH={100} extraClass="mt-20 md:mt-28" />
 
         {/* Color separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />
@@ -488,7 +488,7 @@ export default function Home() {
           </SoftBox>
         </Section>
 
-        {/* Brand slab (bottom) — old font on steel */}
+        {/* Brand slab (bottom) — charcoal on steel */}
         <div className="container max-w-7xl pb-2">
           <BrandSlab as="h2" size="md" />
         </div>
@@ -747,4 +747,5 @@ function ContactSection() {
     </div>
   );
 }
+
 

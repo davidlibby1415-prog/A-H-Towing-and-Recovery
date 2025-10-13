@@ -156,7 +156,7 @@ function IconClock(props) {
 
 /* ===== Brand slabs ===== */
 
-/* Bottom slab (unchanged look) */
+/* Bottom slab */
 function BrandSlabBottom({ as: Tag = "h2", size = "md" }) {
   const sizes = { md: "text-3xl md:text-5xl" };
   return (
@@ -184,14 +184,14 @@ function BrandSlabBottom({ as: Tag = "h2", size = "md" }) {
   );
 }
 
-/* TOP slab: match bottom style, silver text w/ black outline */
+/* TOP slab: silver text w/ black outline, matches bottom */
 function BrandSlabTop({ as: Tag = "h1" }) {
   return (
     <Tag
       className="text-center font-black leading-[1.03] tracking-tight"
       style={{
         fontSize: "clamp(36px, 6vw, 88px)",
-        color: "#dfe3e8",          // silver
+        color: "#dfe3e8",
         WebkitTextStroke: "2.5px #000",
         textShadow: "0 2px 2px rgba(0,0,0,.5), 0 10px 24px rgba(0,0,0,.45)",
       }}
@@ -252,8 +252,8 @@ function TopLocationsMarquee() {
 
         /* GLOBAL: darken + embolden body text for crispness */
         body { color: #0b0f14; font-weight: 600; }
-        :where(p, li, span, small, label, a, button, dt, dd, td, th) {
-          color: #0b0f14; font-weight: 600;
+        :where(p, li, span, small, label, a, button, dt, dd, td, th, h1, h2, h3, h4, h5, h6) {
+          color: #0b0f14; font-weight: 700;
         }
 
         /* Diamond-steel panel finish for all SoftBox containers */
@@ -287,11 +287,11 @@ function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", ch
         autoPlay
         loop
         preload="metadata"
-        poster="/videos/fallback.jpg"
+        poster="/fallback.jpg"
         onError={() => setVideoError(true)}
         disablePictureInPicture
       >
-        {/* IMPORTANT: Place files at public/videos/*.mp4; served as /videos/*.mp4 */}
+        {/* IMPORTANT: Files are in /public/Videos/*.mp4 (capital V) */}
         <source src={src} type="video/mp4" />
       </video>
 
@@ -388,7 +388,7 @@ export default function Home() {
         </section>
 
         {/* ========== tow1 background (frameless) with small duplicate brand ========== */}
-        <VideoSection src="/videos/tow1.mp4" showBrand minVH={100} />
+        <VideoSection src="/Videos/tow1.mp4" showBrand minVH={100} />
 
         {/* Separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />
@@ -423,7 +423,7 @@ export default function Home() {
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahRed via-white to-ahBlue" />
 
         {/* =================== tow2 behind Services =================== */}
-        <VideoSection src="/videos/tow2.mp4" minVH={90}>
+        <VideoSection src="/Videos/tow2.mp4" minVH={90}>
           <Section
             id="services"
             title="24/7 Towing & Roadside — Built for West Texas and Oilfield Conditions"
@@ -505,7 +505,7 @@ export default function Home() {
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-white to-ahRed" />
 
         {/* =================== tow3 behind Training & Community =================== */}
-        <VideoSection src="/videos/tow3.mp4" minVH={90}>
+        <VideoSection src="/Videos/tow3.mp4" minVH={90}>
           <Section
             id="proof"
             title="Training & Community — Why Professionals Trust A&H Towing and Recovery"

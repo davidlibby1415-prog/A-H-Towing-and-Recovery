@@ -1,5 +1,7 @@
 import "./globals.css";
+
 export const metadata = {
+  metadataBase: new URL("https://a-h-towing-and-recovery.vercel.app"),
   title: "A&H Towing & Recovery, LLC | Pecos, Texas",
   description:
     "24/7 Towing, Recovery, and Roadside Assistance serving Pecos, TX and Reeves County. Fast, friendly, and local — call (432) 842-4578 today!",
@@ -9,7 +11,7 @@ export const metadata = {
     title: "A&H Towing & Recovery, LLC",
     description:
       "Fast, friendly, and professional towing & recovery serving Pecos and Reeves County, TX.",
-    url: "https://ahtowing.vercel.app",
+    url: "https://a-h-towing-and-recovery.vercel.app",
     siteName: "A&H Towing & Recovery",
     locale: "en_US",
     type: "website",

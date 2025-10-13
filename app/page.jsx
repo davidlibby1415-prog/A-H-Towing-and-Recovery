@@ -154,21 +154,28 @@ function IconClock(props) {
   );
 }
 
-/* Brand slab (used as overlay on first video) */
+/* Brand slab (overlay on tow1) — diamond plate + faint red */
 function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   const sizes = { lg: "text-4xl md:text-6xl", md: "text-2xl md:text-4xl" };
   return (
-    <div className="mx-auto max-w-fit rounded-3xl border border-white/10 bg-[#0b0f14]/90 px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]">
+    <div
+      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
+      style={{
+        backgroundImage:
+          `linear-gradient(0deg, rgba(244,63,94,0.22), rgba(244,63,94,0.22)), url("/diamond-plate.jpg")`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+      }}
+    >
       <Tag
         className={`text-center ${sizes[size]} font-black leading-[1.05] tracking-tight`}
         style={{
-          WebkitTextStroke: "1.5px #0b0f14",
-          textShadow: "0 1px 1px rgba(0,0,0,.4), 0 6px 16px rgba(0,0,0,.35)",
+          color: "rgba(244,63,94,0.9)",
+          textShadow: "0 1px 2px rgba(0,0,0,.35), 0 6px 16px rgba(0,0,0,.35)",
         }}
       >
-        <span className="bg-gradient-to-b from-zinc-50 via-zinc-200 to-zinc-300 bg-clip-text text-transparent">
-          A&amp;H TOWING &amp; RECOVERY, LLC
-        </span>
+        A&amp;H TOWING &amp; RECOVERY, LLC
       </Tag>
     </div>
   );
@@ -239,10 +246,10 @@ function TopLocationsMarquee() {
   );
 }
 
-/* ===================== Full-viewport Video Section ===================== */
-function VideoSection({ src, showBrand = false }) {
+/* ===================== Reusable Video Wrapper (can host children) ===================== */
+function VideoSection({ src, showBrand = false, minVH = 100, children }) {
   return (
-    <section className="relative w-full min-h-[100vh] overflow-hidden">
+    <section className="relative w-full overflow-hidden" style={{ minHeight: `min(${minVH}vh, 1200px)` }}>
       <video
         className="absolute inset-0 w-full h-full object-cover"
         muted
@@ -266,11 +273,15 @@ function VideoSection({ src, showBrand = false }) {
       {/* Cinematic vignette for legibility */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_45%,rgba(0,0,0,0.35)_70%,rgba(0,0,0,0.55)_100%)]" />
 
-      {showBrand && (
-        <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 w-full px-4">
-          <BrandSlab as="h1" size="lg" />
-        </div>
-      )}
+      {/* Content on top of video */}
+      <div className="relative z-10">
+        {showBrand && (
+          <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 w-full px-4">
+            <BrandSlab as="h1" size="lg" />
+          </div>
+        )}
+        {children}
+      </div>
     </section>
   );
 }
@@ -325,12 +336,13 @@ export default function Home() {
           </div>
         </header>
 
-        {/* =================== STACKED FULL-SCREEN VIDEOS =================== */}
-        <VideoSection src="/videos/tow1.mp4" showBrand />
-        <VideoSection src="/videos/tow2.mp4" />
-        <VideoSection src="/videos/tow3.mp4" />
+        {/* =================== tow1: full screen banner with brand bottom-center =================== */}
+        <VideoSection src="/videos/tow1.mp4" showBrand minVH={100} />
 
-        {/* =================== HERO (content section after videos) =================== */}
+        {/* Color separator */}
+        <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />
+
+        {/* =================== HERO (intro content) =================== */}
         <section className="overflow-hidden">
           <div className="container max-w-7xl">
             <div className="relative rounded-3xl overflow-hidden min-h-[50vh] md:min-h-[60vh] grid place-items-center bg-gradient-to-br from-zinc-200 via-zinc-100 to-white">
@@ -356,74 +368,57 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Trust banner */}
-        <div className="container max-w-7xl py-8 md:py-[calc(1rem*1.618)]">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { title: "Licensed & Insured", sub: "Fully compliant. Professional operators.", icon: IconShield, color: "from-ahBlue to-blue-500" },
-              { title: "24/7 Dispatch", sub: "Call anytime — we roll now.", icon: IconClock, color: "from-ahRed to-red-500" },
-              { title: "Light • Medium • Heavy", sub: "Cars to oilfield equipment.", icon: IconTruck, color: "from-emerald-500 to-green-600" },
-              { title: "Trains w/ First Responders", sub: "Safety. Speed. Coordination.", icon: IconBolt, color: "from-violet-500 to-indigo-600" },
-            ].map(({ title, sub, icon: I, color }, idx) => (
-              <SoftBox key={idx}>
-                <div className="-mt-6 -mx-6 mb-4"><AccentStrip color={color} /></div>
-                <div className="flex items-start gap-3">
-                  <div className={`h-10 w-10 rounded-xl bg-gradient-to-br ${color} grid place-items-center text-white`}>
-                    <I className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <div className="font-semibold">{title}</div>
-                    <div className="text-xs opacity-80">{sub}</div>
-                  </div>
-                </div>
-              </SoftBox>
-            ))}
-          </div>
-        </div>
+        {/* Color separator */}
+        <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahRed via-white to-ahBlue" />
 
-        {/* Services */}
-        <Section
-          id="services"
-          title="24/7 Towing & Roadside — Built for West Texas and Oilfield Conditions"
-          subtitle="From small tows to equipment moves, we’re ready when you need us."
-        >
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups", color: "from-ahBlue to-blue-400" },
-              { icon: IconTruck, title: "Heavy Duty & Commercial", desc: "Oilfield & fleet", color: "from-ahRed to-red-500" },
-              { icon: IconFlatbed, title: "Flatbed / Rollback", desc: "Damage-free transport", color: "from-amber-500 to-orange-500" },
-              { icon: IconBolt, title: "Jumpstarts", desc: "12V & roadside checks", color: "from-yellow-400 to-amber-500" },
-              { icon: IconLock, title: "Lockouts", desc: "Fast entry, no damage", color: "from-emerald-500 to-green-600" },
-              { icon: IconHook, title: "Winching / Recovery", desc: "Off-road, mud, sand", color: "from-violet-500 to-indigo-600" },
-              { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel", color: "from-cyan-500 to-sky-500" },
-              { icon: IconTruck, title: "Long & Short Distance", desc: "Local & state-to-state", color: "from-slate-500 to-slate-700" },
-              { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional", color: "from-rose-500 to-pink-600" },
-            ].map(({ icon: Ico, title, desc, color }) => (
-              <SoftBox key={title}>
-                <div className="-mt-6 -mx-6 mb-4"><AccentStrip color={color} /></div>
-                <div className="flex items-start gap-4">
-                  <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${color} grid place-items-center flex-shrink-0`}>
-                    <Ico className="h-7 w-7 text-white" />
+        {/* =================== tow2: centered behind the Services area =================== */}
+        <VideoSection src="/videos/tow2.mp4" minVH={90}>
+          <Section
+            id="services"
+            title="24/7 Towing & Roadside — Built for West Texas and Oilfield Conditions"
+            subtitle="From small tows to equipment moves, we’re ready when you need us."
+          >
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups", color: "from-ahBlue to-blue-400" },
+                { icon: IconTruck, title: "Heavy Duty & Commercial", desc: "Oilfield & fleet", color: "from-ahRed to-red-500" },
+                { icon: IconFlatbed, title: "Flatbed / Rollback", desc: "Damage-free transport", color: "from-amber-500 to-orange-500" },
+                { icon: IconBolt, title: "Jumpstarts", desc: "12V & roadside checks", color: "from-yellow-400 to-amber-500" },
+                { icon: IconLock, title: "Lockouts", desc: "Fast entry, no damage", color: "from-emerald-500 to-green-600" },
+                { icon: IconHook, title: "Winching / Recovery", desc: "Off-road, mud, sand", color: "from-violet-500 to-indigo-600" },
+                { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel", color: "from-cyan-500 to-sky-500" },
+                { icon: IconTruck, title: "Long & Short Distance", desc: "Local & state-to-state", color: "from-slate-500 to-slate-700" },
+                { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional", color: "from-rose-500 to-pink-600" },
+              ].map(({ icon: Ico, title, desc, color }) => (
+                <SoftBox key={title}>
+                  <div className="-mt-6 -mx-6 mb-4"><AccentStrip color={color} /></div>
+                  <div className="flex items-start gap-4">
+                    <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${color} grid place-items-center flex-shrink-0`}>
+                      <Ico className="h-7 w-7 text-white" />
+                    </div>
+                    <div>
+                      <div className="font-semibold">{title}</div>
+                      <div className="text-sm opacity-80">{desc}</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="font-semibold">{title}</div>
-                    <div className="text-sm opacity-80">{desc}</div>
-                  </div>
-                </div>
-              </SoftBox>
-            ))}
-          </div>
-
-          {/* Centered CTAs */}
-          <SoftBox className="mt-6">
-            <div className="flex gap-3 flex-wrap justify-center">
-              <PhoneCTA />
-              <ScrollToFormCTA />
+                </SoftBox>
+              ))}
             </div>
-          </SoftBox>
-        </Section>
 
-        {/* Coverage */}
+            {/* Centered CTAs */}
+            <SoftBox className="mt-6">
+              <div className="flex gap-3 flex-wrap justify-center">
+                <PhoneCTA />
+                <ScrollToFormCTA />
+              </div>
+            </SoftBox>
+          </Section>
+        </VideoSection>
+
+        {/* Color separator */}
+        <div className="h-6 md:h-8 w-full bg-gradient-to-r from-slate-200 via-rose-200/40 to-sky-200" />
+
+        {/* =================== Coverage (clean, no video) =================== */}
         <Section id="coverage" title="Service Area" subtitle="Pecos, TX and Surrounding West Texas Region">
           <div className="grid md:grid-cols-3 gap-6 items-start">
             <SoftBox className="md:col-span-2 p-0" strip={false}>
@@ -455,26 +450,31 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* Proof / Training (text-only; no media) */}
-        <Section
-          id="proof"
-          title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
-          subtitle="No fluff, just capability. Here’s how we operate."
-        >
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { title: "Heavy Hauling Readiness", desc: "Operators trained for complex recoveries and oilfield moves using proper rigging and safety protocols." },
-              { title: "First Responder Coordination", desc: "Regular coordination with local responders ensures safe, fast scene management when it matters most." },
-              { title: "Equipment & Care", desc: "Modern gear, careful handling, and clear communication from dispatch to drop-off." },
-            ].map(({ title, desc }) => (
-              <SoftBox key={title}>
-                <div className="-mt-6 -mx-6 mb-4"><AccentStrip /></div>
-                <div className="font-semibold">{title}</div>
-                <div className="text-sm opacity-80 mt-1">{desc}</div>
-              </SoftBox>
-            ))}
-          </div>
-        </Section>
+        {/* Color separator */}
+        <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-white to-ahRed" />
+
+        {/* =================== tow3: starts behind Training & Community =================== */}
+        <VideoSection src="/videos/tow3.mp4" minVH={90}>
+          <Section
+            id="proof"
+            title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
+            subtitle="No fluff, just capability. Here’s how we operate."
+          >
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                { title: "Heavy Hauling Readiness", desc: "Operators trained for complex recoveries and oilfield moves using proper rigging and safety protocols." },
+                { title: "First Responder Coordination", desc: "Regular coordination with local responders ensures safe, fast scene management when it matters most." },
+                { title: "Equipment & Care", desc: "Modern gear, careful handling, and clear communication from dispatch to drop-off." },
+              ].map(({ title, desc }) => (
+                <SoftBox key={title}>
+                  <div className="-mt-6 -mx-6 mb-4"><AccentStrip /></div>
+                  <div className="font-semibold">{title}</div>
+                  <div className="text-sm opacity-80 mt-1">{desc}</div>
+                </SoftBox>
+              ))}
+            </div>
+          </Section>
+        </VideoSection>
 
         {/* Contact */}
         <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">

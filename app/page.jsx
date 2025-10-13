@@ -171,14 +171,14 @@ function BrandSlab({ as: Tag = "h1", size = "lg" }) {
   );
 }
 
-/* ===================== TikTok Frames & Carousel ===================== */
+/* ===================== TikTok Frame ===================== */
 function FramedTikTok({ url, id, caption }) {
   return (
     <div className="mx-auto w-full max-w-[320px] sm:max-w-[360px] md:max-w-[400px]">
       <div className="relative rounded-[1.6rem] p-0.5 sm:p-1 bg-gradient-to-r from-ahRed via-white to-ahBlue shadow-2xl">
         <div className="rounded-[1.4rem] bg-black p-1.5 sm:p-2">
           <div className="mx-auto mb-1.5 h-2.5 w-20 rounded-b-xl bg-black/60" />
-          <div className="relative w-full aspect-[9/16] md:aspect-[7/12] lg:aspect-[2/3] overflow-hidden rounded-[1rem]">
+          <div className="relative w-full aspect-[9/16] overflow-hidden rounded-[1rem]">
             <div className="absolute inset-0 overflow-hidden">
               <blockquote
                 className="tiktok-embed h-full w-full"
@@ -197,128 +197,6 @@ function FramedTikTok({ url, id, caption }) {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-function TikTokCarousel({ index, onIndexChange }) {
-  const railRef = useRef(null);
-  const items = [
-    { id: "7215414816326880554", url: "https://www.tiktok.com/@285302ditchking/video/7215414816326880554", caption: "Don’t Drink & Drive — we’ll get you and your vehicle home safe." },
-    { id: "6886898181007822086", url: "https://www.tiktok.com/@285302ditchking/video/6886898181007822086", caption: "Classic Car • Light Tow • Professional care and secure transport." },
-    { id: "7322804972259790110", url: "https://www.tiktok.com/@285302ditchking/video/7322804972259790110", caption: "Rolling Down In The Deep — recovery done right." },
-    { id: "7320362428586396958", url: "https://www.tiktok.com/@285302ditchking/video/7320362428586396958", caption: "Another Roll Over — rapid response and safety first." },
-    { id: "7318154070307491103", url: "https://www.tiktok.com/@285302ditchking/video/7318154070307491103", caption: "Heavy Lifting! — oilfield muscle, professional control." },
-    { id: "7277341945796611371", url: "https://www.tiktok.com/@285302ditchking/video/7277341945796611371", caption: "Drive with Caution! — we’re ready when things go wrong." },
-  ];
-
-  const scrollToIndex = (i) => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const child = rail.children[i];
-    if (child?.scrollIntoView) child.scrollIntoView({ behavior: "smooth", inline: "start" });
-  };
-
-  useEffect(() => {
-    scrollToIndex(index);
-  }, [index]);
-
-  useEffect(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-    const onScroll = () => {
-      const children = Array.from(rail.children);
-      const { scrollLeft } = rail;
-      let nearest = 0;
-      let best = Infinity;
-      children.forEach((el, i) => {
-        const dist = Math.abs(el.offsetLeft - scrollLeft);
-        if (dist < best) {
-          best = dist;
-          nearest = i;
-        }
-      });
-      onIndexChange(nearest);
-    };
-    rail.addEventListener("scroll", onScroll, { passive: true });
-    return () => rail.removeEventListener("scroll", onScroll);
-  }, [onIndexChange]);
-
-  return (
-    <div className="relative">
-      <div
-        ref={railRef}
-        className="grid grid-flow-col auto-cols-[min(320px,100%)] sm:auto-cols-[min(360px,100%)] md:auto-cols-[min(400px,100%)] gap-4 sm:gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory pb-1.5"
-      >
-        {items.map((v) => (
-          <div key={v.id} className="snap-start">
-            <FramedTikTok url={v.url} id={v.id} caption={v.caption} />
-          </div>
-        ))}
-      </div>
-
-      {/* Dots tied to THIS carousel */}
-      <div className="mt-2 flex items-center justify-center gap-2">
-        {items.map((_, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={() => onIndexChange(i)}
-            aria-label={`Go to slide ${i + 1}`}
-            className={`h-2 w-2 rounded-full transition-all ${i === index ? "w-5 bg-ahBlue" : "bg-black/30 hover:bg-black/50"}`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ========================= Stats (compact) ========================= */
-function StatMini({ value, label }) {
-  return (
-    <div className="text-center md:text-left">
-      <div className="text-[clamp(18px,2.4vw,24px)] leading-none">{value}</div>
-      <div className="text-[clamp(10px,1.2vw,12px)] opacity-90" style={{ marginTop: "calc(.75rem/1.618)" }}>
-        {label}
-      </div>
-    </div>
-  );
-}
-function StatsCompact() {
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-2.5 mt-3">
-      <StatMini value="< 30 min" label="Professional Response" />
-      <StatMini value="24/7/365" label="Operating" />
-      <div className="col-span-2 md:col-span-1">
-        <StatMini value="Pecos, TX & West Texas Region" label="Service Area" />
-      </div>
-    </div>
-  );
-}
-
-/* ========================= Top Marquee ========================= */
-function TopLocationsMarquee() {
-  const text =
-    "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • Oilfield Routes";
-  return (
-    <div className="w-full bg-ahCharcoal text-ahText text-sm">
-      <div className="container max-w-7xl py-2">
-        <div className="relative overflow-hidden">
-          <div className="marquee whitespace-nowrap tracking-tight">
-            <span className="inline-block pr-12">{text}</span>
-            <span className="inline-block pr-12">{text}</span>
-            <span className="inline-block pr-12">{text}</span>
-          </div>
-        </div>
-      </div>
-      <style jsx global>{`
-        @keyframes marquee-x {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .marquee { display: inline-flex; min-width: 200%; animation: marquee-x 30s linear infinite; }
-        @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
-      `}</style>
     </div>
   );
 }
@@ -372,7 +250,7 @@ function BackgroundVideoRotator() {
       window.removeEventListener("pointerdown", kick);
       window.removeEventListener("scroll", kick);
     };
-  }, [sources.length]);
+  }, []);
 
   // Pause when tab hidden
   useEffect(() => {
@@ -397,7 +275,8 @@ function BackgroundVideoRotator() {
 
   return (
     <div className="fixed inset-0 z-[-1] pointer-events-none">
-      <div className="absolute inset-0 bg-black/35" />
+      {/* Lighten overlay so the videos are easier to see */}
+      <div className="absolute inset-0 bg-black/20" />
       {sources.map((src, idx) => (
         <video
           key={src}
@@ -405,10 +284,7 @@ function BackgroundVideoRotator() {
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-linear ${active === idx ? "opacity-100" : "opacity-0"}`}
           src={src}
           {...commonProps}
-          onError={() => {
-            // if a video fails, skip to next
-            setActive((i) => (i + 1) % sources.length);
-          }}
+          onError={() => setActive((i) => (i + 1) % sources.length)}
         >
           <source src={src} type="video/mp4" />
         </video>
@@ -419,8 +295,6 @@ function BackgroundVideoRotator() {
 
 /* ============================== Page ============================== */
 export default function Home() {
-  const [heroIndex, setHeroIndex] = useState(0);
-
   /* Force page to open at the very top and ignore browser scroll restore */
   useEffect(() => {
     if ("scrollRestoration" in history) {
@@ -499,7 +373,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ===== HERO content over the background video ===== */}
+      {/* ===== HERO content over the background video (no TikToks here) ===== */}
       <section className="relative overflow-hidden min-h-[70vh] flex items-center justify-center">
         <div className="relative z-10 container max-w-5xl px-4">
           {/* Aqua blue box + bold red hero text */}
@@ -517,20 +391,6 @@ export default function Home() {
             <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
               <PhoneCTA />
               <ScrollToFormCTA />
-            </div>
-          </SoftBox>
-        </div>
-      </section>
-
-      {/* ACTION VIDEOS — TikTok carousel below hero */}
-      <section className="overflow-hidden">
-        <div className="container max-w-5xl px-3 sm:px-4">
-          <h3 className="text-center text-blue-900 underline underline-offset-4 mb-3">
-            Watch Us Work on TikTok!
-          </h3>
-          <SoftBox>
-            <div className="mx-auto max-w-[420px] sm:max-w-[760px]">
-              <TikTokCarousel index={heroIndex} onIndexChange={setHeroIndex} />
             </div>
           </SoftBox>
         </div>
@@ -635,12 +495,13 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Proof / Training */}
+      {/* Proof / Training — ALL TikToks grouped here */}
       <Section
         id="proof"
         title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
-        subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves. Watch our videos below to learn more!"
+        subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves."
       >
+        {/* Top row (original three) */}
         <div className="grid md:grid-cols-3 gap-6">
           {[
             { url: "https://www.tiktok.com/@285302ditchking/video/7501393555433262367", id: "7501393555433262367", caption: "Heavy hauling training — precision, safety, and control." },
@@ -652,6 +513,23 @@ export default function Home() {
             </SoftBox>
           ))}
         </div>
+
+        {/* Bottom row: former carousel positions 1, 4, 5 */}
+        <div className="grid md:grid-cols-3 gap-6 mt-6">
+          {[
+            { id: "7215414816326880554", url: "https://www.tiktok.com/@285302ditchking/video/7215414816326880554", caption: "Don’t Drink & Drive — we’ll get you and your vehicle home safe." }, // #1
+            { id: "7320362428586396958", url: "https://www.tiktok.com/@285302ditchking/video/7320362428586396958", caption: "Another Roll Over — rapid response and safety first." }, // #4
+            { id: "7318154070307491103", url: "https://www.tiktok.com/@285302ditchking/video/7318154070307491103", caption: "Heavy Lifting! — oilfield muscle, professional control." }, // #5
+          ].map((v) => (
+            <SoftBox key={v.id}>
+              <FramedTikTok url={v.url} id={v.id} caption={v.caption} />
+            </SoftBox>
+          ))}
+        </div>
+
+        <p className="mt-4 text-xs opacity-70">
+          Tip: If videos don’t appear, enable third-party scripts or replace with uploaded MP4s.
+        </p>
       </Section>
 
       {/* Contact */}
@@ -753,6 +631,33 @@ export default function Home() {
         }}
       />
     </main>
+  );
+}
+
+/* ========================= Top Marquee (after Home to avoid hoist noise) ========================= */
+function TopLocationsMarquee() {
+  const text =
+    "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • Oilfield Routes";
+  return (
+    <div className="w-full bg-ahCharcoal text-ahText text-sm">
+      <div className="container max-w-7xl py-2">
+        <div className="relative overflow-hidden">
+          <div className="marquee whitespace-nowrap tracking-tight">
+            <span className="inline-block pr-12">{text}</span>
+            <span className="inline-block pr-12">{text}</span>
+            <span className="inline-block pr-12">{text}</span>
+          </div>
+        </div>
+      </div>
+      <style jsx global>{`
+        @keyframes marquee-x {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .marquee { display: inline-flex; min-width: 200%; animation: marquee-x 30s linear infinite; }
+        @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
+      `}</style>
+    </div>
   );
 }
 

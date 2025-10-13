@@ -48,6 +48,18 @@ function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", 
   );
 }
 
+function TextCTA({ className = "", body = "Tow request. Please include GPS and callback." }) {
+  return (
+    <a
+      href={smsHref("+14328424578", body)}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] ${className}`}
+      aria-label="Text A&H Dispatch"
+    >
+      Text Dispatch (Include GPS)
+    </a>
+  );
+}
+
 /* Accent strip used on every content box */
 function AccentStrip({ color = "from-ahBlue to-ahRed" }) {
   return <div className={`h-1 w-full bg-gradient-to-r ${color}`} />;
@@ -69,9 +81,9 @@ function Section({ id, title, subtitle, children }) {
     <section id={id} className="py-12 md:py-16">
       <div className="container max-w-7xl">
         <SoftBox className="mb-5 md:mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-ahCharcoal">{title}</h2>
+          <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-ahCharcoal text-center">{title}</h2>
           {subtitle && (
-            <p className="mt-2 text-base md:text-lg opacity-90">
+            <p className="mt-2 text-base md:text-lg opacity-90 text-center">
               <strong>{subtitle}</strong>
             </p>
           )}
@@ -334,7 +346,7 @@ export default function Home() {
       {/* Marquee */}
       <TopLocationsMarquee />
 
-      {/* Gold tagline centered under marquee, inside a thin bar */}
+      {/* Gold tagline centered under marquee */}
       <div className="w-full bg-ahCharcoal">
         <div className="container max-w-7xl">
           <p className="text-center text-[13px] sm:text-sm font-semibold tracking-tight text-yellow-400 py-1">
@@ -343,7 +355,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Header (keep header call button; do not center-shift it) */}
+      {/* Header */}
       <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
         <div className="container max-w-7xl flex items-center gap-6 py-3">
           <div className="flex items-center gap-3">
@@ -364,7 +376,6 @@ export default function Home() {
             <a href="#proof" className="hover:opacity-80">Training & Proof</a>
             <a href="#contact" className="hover:opacity-80">Contact</a>
           </nav>
-          {/* header button stays as-is per instruction */}
           <PhoneCTA className="hidden sm:inline-flex" />
         </div>
       </header>
@@ -381,28 +392,30 @@ export default function Home() {
         </div>
       </div>
 
-      {/* HERO (intro only now) — tightened, centered buttons */}
+      {/* HERO (intro only) */}
       <section className="overflow-hidden">
         <div className="container max-w-7xl pt-4 md:pt-6 pb-6">
           <SoftBox>
-            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center md:text-left">
+            <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center">
               Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
               Towing — From Small Cars to Heavy Duty Tows
             </h2>
-            <p className="mt-3 text-base md:text-lg opacity-95 text-center md:text-left">
+            <p className="mt-3 text-base md:text-lg opacity-95 text-center">
               Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows,
               winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
+              <strong> Click below to call or text us direct!</strong>
             </p>
             <div className="mt-3"><StatsCompact /></div>
+            {/* Center hero buttons: Call + Text side by side */}
             <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
-              {/* center all buttons except header and bottom-two-in-form */}
               <PhoneCTA />
+              <TextCTA />
             </div>
           </SoftBox>
         </div>
       </section>
 
-      {/* ACTION VIDEOS — TikTok carousel moved BELOW hero; centered with its own dots; width constrained */}
+      {/* ACTION VIDEOS — TikTok carousel below hero */}
       <section className="overflow-hidden">
         <div className="container max-w-5xl px-3 sm:px-4">
           <SoftBox>
@@ -470,16 +483,11 @@ export default function Home() {
             </SoftBox>
           ))}
         </div>
-        {/* Centered CTA buttons */}
+
         <SoftBox className="mt-6">
           <div className="flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
-            <a
-              href={smsHref("+14328424578", "Tow request. Please include GPS and callback.")}
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px]"
-            >
-              Text Dispatch (Include GPS)
-            </a>
+            <TextCTA />
           </div>
         </SoftBox>
       </Section>
@@ -533,26 +541,20 @@ export default function Home() {
             </SoftBox>
           ))}
         </div>
-        <SoftBox className="mt-4">
-          <p className="text-xs opacity-70">Tip: If videos don’t appear, enable third-party scripts or upload MP4s as a fallback.</p>
-        </SoftBox>
+        {/* (Tip removed as requested) */}
       </Section>
 
       {/* Contact */}
       <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
-        {/* Centered buttons ABOVE the form (as requested) */}
+        {/* Centered buttons ABOVE the form */}
         <SoftBox className="mb-4">
           <div className="flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
-            <a
-              href={smsHref("+14328424578", "Tow request. Please include GPS and callback.")}
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px]"
-            >
-              Text Dispatch (Include GPS)
-            </a>
+            <TextCTA />
           </div>
         </SoftBox>
 
+        {/* Do NOT center the form or the bottom map area */}
         <SoftBox>
           <ContactSection />
         </SoftBox>
@@ -730,7 +732,7 @@ function ContactSection() {
             </div>
           </div>
 
-          {/* These two buttons (inside the form) intentionally NOT centered per your instruction */}
+          {/* Keep these NOT centered per your instruction */}
           <div className="flex flex-wrap gap-3 mt-2 justify-start">
             <PhoneCTA />
             <a
@@ -745,6 +747,7 @@ function ContactSection() {
         </form>
       </SoftBox>
 
+      {/* Bottom map/info — also NOT centered */}
       <SoftBox>
         <div className="font-semibold">Call or Visit</div>
         <p className="mt-2 text-sm">

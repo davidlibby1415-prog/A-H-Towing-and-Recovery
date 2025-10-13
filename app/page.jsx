@@ -70,8 +70,10 @@ function AccentStrip({ color = "from-ahBlue to-ahRed" }) {
   return <div className={`h-1 w-full bg-gradient-to-r ${color}`} />;
 }
 
-/* Box shell (bg class can be overridden) */
-function SoftBox({ children, className = "", strip = true, bgClass = "bg-white/90" }) {
+/* Box shell
+   - Default bgClass uses a faint blue→red diamond-steel texture (panel finish).
+*/
+function SoftBox({ children, className = "", strip = true, bgClass = "diamond-panel" }) {
   return (
     <div className={`rounded-2xl border border-black/10 shadow-xl ${bgClass} backdrop-blur ${className}`}>
       {strip && <AccentStrip />}
@@ -253,6 +255,22 @@ function TopLocationsMarquee() {
         }
         .marquee { display: inline-flex; min-width: 200%; animation: marquee-x 30s linear infinite; }
         @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
+
+        /* === Diamond-steel panel finish for all SoftBox containers ===
+           - subtle blue→red tint over a repeating diamond-steel texture
+           - slightly translucent so the content feels “soft”
+        */
+        .diamond-panel {
+          background-image:
+            linear-gradient(135deg, rgba(59,130,246,0.12), rgba(244,63,94,0.12)),
+            url("/diamond-steel.jpg");
+          background-size: cover, 220px 220px;
+          background-repeat: no-repeat, repeat;
+          background-position: center, center;
+          /* a touch of translucency like before */
+          background-color: rgba(255,255,255,0.6);
+          background-blend-mode: overlay, normal;
+        }
       `}</style>
     </div>
   );
@@ -271,20 +289,8 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="text-ahCharcoal min-h-screen bg-diamond">
-      {/* Diamond-plate image background */}
-      <style jsx global>{`
-        .bg-diamond {
-          background-image:
-            linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)),
-            url("/diamond-plate.jpg");
-          background-size: cover, 320px 320px;
-          background-repeat: no-repeat, repeat;
-          background-attachment: fixed;
-          background-position: center top, center;
-        }
-      `}</style>
-
+    {/* Removed bg-diamond class → solid, clean page background */}
+    <main className="text-ahCharcoal min-h-screen">
       {/* TikTok script is still needed for framed videos in Proof section */}
       <Script src="https://www.tiktok.com/embed.js" strategy="afterInteractive" />
 
@@ -330,17 +336,16 @@ export default function Home() {
         <BrandSlab as="h1" size="lg" />
       </div>
 
-      {/* Top call button: perfectly centered under big name */}
-      <div className="container max-w-7xl pt-3 pb-2">
-        <div className="flex justify-center w-full">
-          <PhoneCTA label="Click to Call for Service" />
-        </div>
+      {/* WIDE spacer between brand slab and hero */}
+      <div className="container max-w-7xl">
+        <div className="h-10 md:h-16 lg:h-20" />
       </div>
 
       {/* =================== HERO with SINGLE LOOPING VIDEO =================== */}
       <section className="overflow-hidden">
         <div className="container max-w-7xl">
-          <div className="relative rounded-3xl overflow-hidden min-h-[420px] md:min-h-[480px]">
+          {/* Taller hero to fill most of the screen within margins */}
+          <div className="relative rounded-3xl overflow-hidden min-h-[70vh] md:min-h-[80vh]">
             {/* Unframed background video (tow1.mp4) */}
             <video
               className="absolute inset-0 h-full w-full object-cover"
@@ -353,9 +358,6 @@ export default function Home() {
               poster="/videos/fallback.jpg"
               controls={false}
               disablePictureInPicture
-              onError={(e) => console.error("Hero video failed to load", e)}
-              onWaiting={() => console.log("Hero video buffering…")}
-              onCanPlay={() => console.log("Hero video can play")}
             >
               <source src="/videos/tow1.mp4" type="video/mp4" />
               <img
@@ -365,12 +367,12 @@ export default function Home() {
               />
             </video>
 
-            {/* darken a touch for legibility */}
+            {/* darken for legibility */}
             <div className="absolute inset-0 bg-black/25 pointer-events-none" />
 
             {/* Foreground content */}
             <div className="relative z-10 px-3 sm:px-4 py-6 md:py-8">
-              <SoftBox bgClass="bg-white/50">
+              <SoftBox>
                 <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center">
                   Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
                   Towing — From Small Cars to Heavy Duty Tows
@@ -383,7 +385,6 @@ export default function Home() {
                 <div className="mt-3"><StatsCompact /></div>
                 <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
                   <PhoneCTA />
-                  {/* RED button scrolls to the form instructions */}
                   <ScrollToFormCTA />
                 </div>
               </SoftBox>
@@ -391,8 +392,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* (Removed) ACTION VIDEOS — TikTok carousel below hero */}
 
       {/* Trust banner */}
       <div className="container max-w-7xl py-8 md:py-[calc(1rem*1.618)]">

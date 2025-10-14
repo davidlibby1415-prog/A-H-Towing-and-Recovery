@@ -25,7 +25,6 @@ function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", 
   );
 }
 
-/* Red CTA scrolls to the form */
 function ScrollToFormCTA({
   className = "",
   label = "Text Dispatch (Include GPS)",
@@ -85,9 +84,11 @@ function Section({ id, title, subtitle, children }) {
     <section id={id} className="py-12 md:py-16">
       <div className="container max-w-7xl">
         <SoftBox className="mb-5 md:mb-8">
-          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-ahCharcoal text-center">{title}</h2>
+          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-ahCharcoal text-center stronger">
+            {title}
+          </h2>
           {subtitle && (
-            <p className="mt-2 text-base md:text-lg opacity-90 text-center font-bold">
+            <p className="mt-2 text-base md:text-lg opacity-90 text-center stronger">
               <strong>{subtitle}</strong>
             </p>
           )}
@@ -156,25 +157,26 @@ function IconClock(props) {
 
 /* ===== Brand slabs ===== */
 
-/* Bottom slab */
-function BrandSlabBottom({ as: Tag = "h2", size = "md" }) {
-  const sizes = { md: "text-3xl md:text-5xl" };
+/* Bottom slab — reduced height, larger text */
+function BrandSlabBottom({ as: Tag = "h2" }) {
   return (
     <div
-      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-5 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
+      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
       style={{
-        backgroundImage:
-          `linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("/diamond-plate.jpg")`,
+        backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("/diamond-plate.jpg")`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
       }}
     >
       <Tag
-        className={`${sizes[size]} text-center font-black leading-[1.04] tracking-tight`}
+        className="text-center font-black leading-[1.02] tracking-tight"
         style={{
+          fontFamily:
+            'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+          fontSize: "clamp(32px, 5.6vw, 84px)",
           color: "#dfe3e8", // silver
-          WebkitTextStroke: "2.5px #000", // black outline
+          WebkitTextStroke: "2.5px #000",
           textShadow: "0 1px 1px rgba(0,0,0,.5), 0 6px 16px rgba(0,0,0,.45)",
         }}
       >
@@ -184,20 +186,32 @@ function BrandSlabBottom({ as: Tag = "h2", size = "md" }) {
   );
 }
 
-/* TOP slab: silver text w/ black outline, matches bottom */
+/* TOP slab — enlarged, reduced steel height, professional system font */
 function BrandSlabTop({ as: Tag = "h1" }) {
   return (
-    <Tag
-      className="text-center font-black leading-[1.03] tracking-tight"
+    <div
+      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
       style={{
-        fontSize: "clamp(36px, 6vw, 88px)",
-        color: "#dfe3e8",
-        WebkitTextStroke: "2.5px #000",
-        textShadow: "0 2px 2px rgba(0,0,0,.5), 0 10px 24px rgba(0,0,0,.45)",
+        backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("/diamond-plate.jpg")`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
       }}
     >
-      A&amp;H TOWING &amp; RECOVERY, LLC
-    </Tag>
+      <Tag
+        className="text-center font-black leading-[1.02] tracking-tight"
+        style={{
+          fontFamily:
+            'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+          fontSize: "clamp(42px, 7vw, 104px)",
+          color: "#dfe3e8",
+          WebkitTextStroke: "2.5px #000",
+          textShadow: "0 2px 2px rgba(0,0,0,.5), 0 10px 24px rgba(0,0,0,.45)",
+        }}
+      >
+        A&amp;H TOWING &amp; RECOVERY, LLC
+      </Tag>
+    </div>
   );
 }
 
@@ -205,11 +219,8 @@ function BrandSlabTop({ as: Tag = "h1" }) {
 function StatMini({ value, label }) {
   return (
     <div className="text-center md:text-left">
-      <div className="text-[clamp(18px,2.4vw,24px)] font-extrabold leading-none">{value}</div>
-      <div
-        className="text-[clamp(10px,1.2vw,12px)] font-bold opacity-90"
-        style={{ marginTop: "calc(.75rem/1.618)" }}
-      >
+      <div className="text-[clamp(18px,2.4vw,24px)] font-extrabold leading-none stronger">{value}</div>
+      <div className="text-[clamp(10px,1.2vw,12px)] font-extrabold opacity-90 stronger" style={{ marginTop: "calc(.75rem/1.618)" }}>
         {label}
       </div>
     </div>
@@ -227,15 +238,15 @@ function StatsCompact() {
   );
 }
 
-/* ========================= Top Marquee + GLOBAL TEXT TWEAKS ========================= */
+/* ========================= Top Marquee (white bar + silver text) ========================= */
 function TopLocationsMarquee() {
   const text =
     "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • Oilfield Routes";
   return (
-    <div className="w-full bg-ahCharcoal text-[#c0c0c0] text-sm [text-shadow:0_1px_2px_rgba(0,0,0,.35)]">
+    <div className="w-full bg-white text-sm">
       <div className="container max-w-7xl py-2">
         <div className="relative overflow-hidden">
-          <div className="marquee whitespace-nowrap font-extrabold tracking-tight">
+          <div className="marquee whitespace-nowrap font-extrabold tracking-tight marquee-text">
             <span className="inline-block pr-12">{text}</span>
             <span className="inline-block pr-12">{text}</span>
             <span className="inline-block pr-12">{text}</span>
@@ -250,11 +261,15 @@ function TopLocationsMarquee() {
         .marquee { display: inline-flex; min-width: 200%; animation: marquee-x 30s linear infinite; }
         @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
 
-        /* GLOBAL: darken + embolden body text for crispness */
-        body { color: #0b0f14; font-weight: 600; }
-        :where(p, li, span, small, label, a, button, dt, dd, td, th, h1, h2, h3, h4, h5, h6) {
-          color: #0b0f14; font-weight: 700;
+        /* Marquee text: bright silver with subtle stroke for contrast on white */
+        .marquee-text {
+          color: #e6edf3;
+          -webkit-text-stroke: 0.6px #111;
+          text-shadow: 0 1px 2px rgba(0,0,0,.6);
         }
+
+        /* GLOBAL: darker + bolder body text (utility class) */
+        .stronger { color: #000000; font-weight: 800; }
 
         /* Diamond-steel panel finish for all SoftBox containers */
         .diamond-panel {
@@ -273,7 +288,7 @@ function TopLocationsMarquee() {
 }
 
 /* ===================== Video wrapper (frameless background) ===================== */
-function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", children }) {
+function VideoSection({ src, minVH = 100, extraClass = "", children, overlayTop }) {
   const [videoError, setVideoError] = useState(false);
   return (
     <section
@@ -291,22 +306,21 @@ function VideoSection({ src, showBrand = false, minVH = 100, extraClass = "", ch
         onError={() => setVideoError(true)}
         disablePictureInPicture
       >
-        {/* IMPORTANT: Files are in /public/Videos/*.mp4 (capital V) */}
         <source src={src} type="video/mp4" />
       </video>
 
       {/* Vignette overlay for legibility */}
-      <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.2)_78%,rgba(0,0,0,0.32)_100%)]" />
+      <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.2)_78%,rgba(0,0,0,0.35)_100%)]" />
+
+      {/* Optional overlay at top (e.g., tagline over tow1) */}
+      {overlayTop && (
+        <div className="absolute top-[12%] left-1/2 -translate-x-1/2 z-20 w-full px-4">
+          {overlayTop}
+        </div>
+      )}
 
       {/* Content on top of video */}
-      <div className="relative z-20">
-        {showBrand && (
-          <div className="absolute bottom-[12%] left-1/2 -translate-x-1/2 w-full px-4 pointer-events-none z-[999]">
-            <BrandSlabTop />
-          </div>
-        )}
-        {children}
-      </div>
+      <div className="relative z-20">{children}</div>
 
       {videoError && (
         <div className="absolute bottom-3 left-3 z-30 rounded-md bg-red-600/90 text-white px-3 py-1 text-xs shadow">
@@ -333,15 +347,6 @@ export default function Home() {
         {/* Marquee */}
         <TopLocationsMarquee />
 
-        {/* Silver tagline centered under marquee (UPDATED) */}
-        <div className="w-full bg-ahCharcoal">
-          <div className="container max-w-7xl">
-            <p className="text-center text-[13px] sm:text-sm font-extrabold tracking-tight text-[#dfe3e8] py-1">
-              Handle with Care • Fast Response • West Texas Tough
-            </p>
-          </div>
-        </div>
-
         {/* Header */}
         <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
           <div className="container max-w-7xl flex items-center gap-6 py-3">
@@ -367,28 +372,33 @@ export default function Home() {
           </div>
         </header>
 
-        {/* ===== TOP BRAND BANNER on DIAMOND STEEL (matches bottom style) ===== */}
-        <section
-          className="relative z-[60] w-full overflow-hidden"
-          style={{ minHeight: "clamp(220px, 35vh, 520px)" }}
-        >
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage:
-                `linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("/diamond-plate.jpg")`,
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center",
-            }}
-          />
-          <div className="relative z-[70] h-full w-full flex items-end justify-center px-4 pb-8">
+        {/* ===== TOP steel banner (reduced height, enlarged pro font, only one big name) ===== */}
+        <section className="relative z-[60] w-full overflow-hidden" style={{ minHeight: "clamp(160px, 22vh, 340px)" }}>
+          <div className="relative z-[70] h-full w-full flex items-center justify-center px-4 py-6">
             <BrandSlabTop />
           </div>
         </section>
 
-        {/* ========== tow1 background (frameless) with small duplicate brand ========== */}
-        <VideoSection src="/Videos/tow1.mp4" showBrand minVH={100} />
+        {/* ========== tow1 background (frameless) with floating tagline near top ========== */}
+        <VideoSection
+          src="/Videos/tow1.mp4"
+          minVH={100}
+          overlayTop={
+            <div className="mx-auto max-w-fit rounded-2xl px-4 py-2 bg-black/40 backdrop-blur-sm">
+              <div
+                className="text-center font-extrabold tracking-tight"
+                style={{
+                  fontSize: "clamp(16px, 2.6vw, 28px)",
+                  color: "#e6edf3",
+                  WebkitTextStroke: "0.6px #111",
+                  textShadow: "0 1px 2px rgba(0,0,0,.65)",
+                }}
+              >
+                Handle with Care • Fast Response • West Texas Tough
+              </div>
+            </div>
+          }
+        />
 
         {/* Separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />
@@ -399,11 +409,11 @@ export default function Home() {
             <div className="relative rounded-3xl overflow-hidden min-h-[50vh] md:min-h-[60vh] grid place-items-center bg-gradient-to-br from-zinc-200 via-zinc-100 to-white">
               <div className="relative z-10 px-3 sm:px-4 py-6 md:py-8 w-full">
                 <SoftBox>
-                  <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center">
+                  <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center stronger">
                     Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
                     Towing — <span className="whitespace-nowrap">Handle with Care</span>
                   </h2>
-                  <p className="mt-3 text-base md:text-lg opacity-95 text-center">
+                  <p className="mt-3 text-base md:text-lg opacity-95 text-center stronger">
                     Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows,
                     winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
                     <strong> Click below to call or text us direct!</strong>
@@ -448,8 +458,8 @@ export default function Home() {
                       <Ico className="h-7 w-7 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold">{title}</div>
-                      <div className="text-sm opacity-80">{desc}</div>
+                      <div className="font-extrabold stronger">{title}</div>
+                      <div className="text-sm opacity-90 stronger">{desc}</div>
                     </div>
                   </div>
                 </SoftBox>
@@ -469,67 +479,71 @@ export default function Home() {
         {/* Separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-slate-200 via-rose-200/40 to-sky-200" />
 
-        {/* =================== Coverage =================== */}
-        <Section id="coverage" title="Service Area" subtitle="Pecos, TX and Surrounding West Texas Region">
-          <div className="grid md:grid-cols-3 gap-6 items-start">
-            <SoftBox className="md:col-span-2 p-0" strip={false}>
-              <AccentStrip />
-              <iframe
-                title="Coverage Map"
-                className="w-full h-[360px] rounded-b-2xl"
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                allowFullScreen
-                src="https://www.openstreetmap.org/export/embed.html?bbox=-104.2%2C30.9%2C-101.8%2C32.1&layer=mapnik"
-              />
-            </SoftBox>
-
-            <SoftBox>
-              <ul className="space-y-3 list-disc pl-5 text-base md:text-lg font-semibold text-ahCharcoal">
-                <li>Pecos (Home Base) • Reeves County</li>
-                <li>Fort Stockton • Monahans • Kermit</li>
-                <li>Balmorhea • Pyote • Toyah • Grandfalls • Wink</li>
-                <li>Midland/Odessa Metro &amp; I-20 Corridor</li>
-                <li>US-285 • TX-17 • Oilfield Routes</li>
-                <li className="pt-2">
-                  <a className="text-ahBlue underline font-semibold" href="tel:+14328424578">
+        {/* =================== Condensed Service Area =================== */}
+        <Section id="coverage" title="Service Area — Pecos & West Texas" subtitle={null}>
+          <SoftBox strip={false}>
+            <div className="-mt-6 -mx-6 mb-4"><AccentStrip /></div>
+            <div className="grid md:grid-cols-2 gap-4 items-start">
+              <div className="rounded-2xl overflow-hidden border border-black/10">
+                <iframe
+                  title="Coverage Map"
+                  className="w-full h-[260px]"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                  allowFullScreen
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=-104.2%2C30.9%2C-101.8%2C32.1&layer=mapnik"
+                />
+              </div>
+              <div className="text-sm md:text-base stronger">
+                <div className="font-extrabold mb-2">Core Cities & Routes</div>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-6 list-disc pl-5">
+                  <li>Pecos (Home Base) • Reeves County</li>
+                  <li>Fort Stockton • Monahans • Kermit</li>
+                  <li>Balmorhea • Pyote • Toyah • Grandfalls • Wink</li>
+                  <li>Midland/Odessa Metro &amp; I-20 Corridor</li>
+                  <li>US-285 • TX-17 • Oilfield Routes</li>
+                </ul>
+                <div className="mt-3">
+                  <a className="underline font-extrabold" href="tel:+14328424578">
                     Professional coverage beyond this region is available — call to arrange long-distance transport.
                   </a>
-                </li>
-              </ul>
-            </SoftBox>
-          </div>
+                </div>
+              </div>
+            </div>
+          </SoftBox>
         </Section>
 
         {/* Separator */}
         <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-white to-ahRed" />
 
-        {/* =================== tow3 behind Training & Community =================== */}
-        <VideoSection src="/Videos/tow3.mp4" minVH={90}>
-          <Section
-            id="proof"
-            title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
-            subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves. Watch our videos below to learn more!"
-          >
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { title: "Heavy Hauling Readiness", desc: "Operators trained for complex recoveries and oilfield moves using proper rigging and safety protocols." },
-                { title: "First Responder Coordination", desc: "Regular coordination with local responders ensures safe, fast scene management when it matters most." },
-                { title: "Equipment & Care", desc: "Modern gear, careful handling, and clear communication from dispatch to drop-off." },
-              ].map(({ title, desc }) => (
-                <SoftBox key={title}>
-                  <div className="-mt-6 -mx-6 mb-4"><AccentStrip /></div>
-                  <div className="font-semibold">{title}</div>
-                  <div className="text-sm opacity-80 mt-1">{desc}</div>
-                </SoftBox>
-              ))}
-            </div>
-          </Section>
-        </VideoSection>
+        {/* =================== Training & Community — moved ABOVE tow4 =================== */}
+        <Section
+          id="proof"
+          title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
+          subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves. Watch our videos below to learn more!"
+        >
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { title: "Heavy Hauling Readiness", desc: "Operators trained for complex recoveries and oilfield moves using proper rigging and safety protocols." },
+              { title: "First Responder Coordination", desc: "Regular coordination with local responders ensures safe, fast scene management when it matters most." },
+              { title: "Equipment & Care", desc: "Modern gear, careful handling, and clear communication from dispatch to drop-off." },
+            ].map(({ title, desc }) => (
+              <SoftBox key={title}>
+                <div className="-mt-6 -mx-6 mb-4"><AccentStrip /></div>
+                <div className="font-extrabold stronger">{title}</div>
+                <div className="text-sm opacity-90 mt-1 stronger">{desc}</div>
+              </SoftBox>
+            ))}
+          </div>
+        </Section>
+
+        {/* =================== tow3 and tow4 videos =================== */}
+        <VideoSection src="/Videos/tow3.mp4" minVH={90} />
+        <div className="h-4 md:h-6" />
+        <VideoSection src="/Videos/tow4.mp4" minVH={90} />
 
         {/* Contact */}
         <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
-          {/* Centered buttons ABOVE the form */}
           <SoftBox className="mb-4">
             <div className="flex gap-3 flex-wrap justify-center">
               <PhoneCTA />
@@ -537,13 +551,12 @@ export default function Home() {
             </div>
           </SoftBox>
 
-          {/* Form + bottom map */}
           <SoftBox>
             <ContactSection />
           </SoftBox>
         </Section>
 
-        {/* Bottom brand on steel */}
+        {/* Bottom steel brand — reduced height, enlarged text like top */}
         <div className="container max-w-7xl pb-2">
           <BrandSlabBottom />
         </div>
@@ -688,12 +701,10 @@ function ContactSection() {
     <div className="grid md:grid-cols-2 gap-8" id="contact">
       <SoftBox strip={false} className="p-0">
         <AccentStrip />
-
-        {/* Anchor for scroll */}
         <div id="form-start" className="h-0 w-full" aria-hidden="true" />
 
         <div className="px-5 pt-5 md:px-6">
-          <div className="rounded-xl bg-blue-50/80 border border-blue-200 px-4 py-3 text-sm text-ahCharcoal">
+          <div className="rounded-xl bg-blue-50/80 border border-blue-200 px-4 py-3 text-sm text-ahCharcoal stronger">
             <strong>Instructions: </strong>
             Please complete the form below for services and to send your GPS information to our towing and emergency services dispatcher.
             Press the red button below to submit the form to text for services.
@@ -702,33 +713,33 @@ function ContactSection() {
 
         <form id="dispatch-form" className="grid gap-4 p-5 md:p-6" onSubmit={(e) => e.preventDefault()}>
           <label className="grid gap-1">
-            <span className="text-sm">Name</span>
-            <input className="rounded-xl border px-3 py-2" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
+            <span className="text-sm stronger">Name</span>
+            <input className="rounded-xl border px-3 py-2 stronger" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
           </label>
 
           <label className="grid gap-1">
-            <span className="text-sm">Callback Phone</span>
-            <input className="rounded-xl border px-3 py-2" inputMode="tel" placeholder="(###) ###-####" value={callback} onChange={(e) => setCallback(e.target.value)} required />
+            <span className="text-sm stronger">Callback Phone</span>
+            <input className="rounded-xl border px-3 py-2 stronger" inputMode="tel" placeholder="(###) ###-####" value={callback} onChange={(e) => setCallback(e.target.value)} required />
           </label>
 
           <label className="grid gap-1">
-            <span className="text-sm">Vehicle</span>
-            <input className="rounded-xl border px-3 py-2" placeholder="Year / Make / Model" value={vehicle} onChange={(e) => setVehicle(e.target.value)} />
+            <span className="text-sm stronger">Vehicle</span>
+            <input className="rounded-xl border px-3 py-2 stronger" placeholder="Year / Make / Model" value={vehicle} onChange={(e) => setVehicle(e.target.value)} />
           </label>
 
           <label className="grid gap-1">
-            <span className="text-sm">Number of Passengers</span>
-            <input type="number" min="1" max="8" className="rounded-xl border px-3 py-2" placeholder="e.g., 2" value={passengers} onChange={(e) => setPassengers(e.target.value)} />
+            <span className="text-sm stronger">Number of Passengers</span>
+            <input type="number" min="1" max="8" className="rounded-xl border px-3 py-2 stronger" placeholder="e.g., 2" value={passengers} onChange={(e) => setPassengers(e.target.value)} />
           </label>
 
           <label className="grid gap-1">
-            <span className="text-sm">Issue</span>
-            <textarea className="rounded-2xl border px-3 py-2" rows={3} placeholder="Flat tire, no-start, accident, stuck, etc." value={issue} onChange={(e) => setIssue(e.target.value)} />
+            <span className="text-sm stronger">Issue</span>
+            <textarea className="rounded-2xl border px-3 py-2 stronger" rows={3} placeholder="Flat tire, no-start, accident, stuck, etc." value={issue} onChange={(e) => setIssue(e.target.value)} />
           </label>
 
-          <div className="grid gap-2 rounded-2xl border p-3 bg-white/80 backdrop-blur">
+          <div className="grid gap-2 rounded-2xl border p-3 bg-white/80 backdrop-blur stronger">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">Share GPS Location</span>
+              <span className="text-sm font-extrabold">Share GPS Location</span>
               <button
                 type="button"
                 onClick={() => {
@@ -752,7 +763,7 @@ function ContactSection() {
                 Use my GPS
               </button>
             </div>
-            <div className="text-xs opacity-80">
+            <div className="text-xs opacity-90">
               Status: {locStatus}
               {coords && (
                 <>
@@ -774,30 +785,30 @@ function ContactSection() {
               Send Text to Dispatch
             </button>
           </div>
-          <p className="text-xs opacity-70">
+          <p className="text-xs opacity-90 stronger">
             The red button composes a text with your details and GPS (if available) in your Messages app.
           </p>
         </form>
       </SoftBox>
 
       <SoftBox>
-        <div className="font-semibold">Call or Visit</div>
-        <p className="mt-2 text-sm">
+        <div className="font-extrabold stronger">Call or Visit</div>
+        <p className="mt-2 text-sm stronger">
           Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578</a><br />
           Email: <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a>
         </p>
-        <p className="mt-4 text-sm">Address: 2712 W F Street, Pecos, TX 79772</p>
-        <p className="mt-2 text-sm">Hours: 24/7 Dispatch</p>
+        <p className="mt-4 text-sm stronger">Address: 2712 W F Street, Pecos, TX 79772</p>
+        <p className="mt-2 text-sm stronger">Hours: 24/7 Dispatch</p>
         <div className="mt-6 rounded-xl overflow-hidden border border-black/10">
           <iframe title="Shop Map (OpenStreetMap)" className="w-full h-[220px]" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik" />
-          <div className="text-xs p-2 bg-white/90">
+          <div className="text-xs p-2 bg-white/90 stronger">
             Prefer Google?{" "}
             <a className="underline" href="https://www.google.com/maps?q=2712%20W%20F%20Street,%20Pecos,%20TX%2079772" target="_blank" rel="noreferrer">
               Open in Google Maps
             </a>
           </div>
         </div>
-        <div className="mt-6 text-xs opacity-80">24/7 Professional Service — Call or Text Us!</div>
+        <div className="mt-6 text-xs opacity-90 stronger">24/7 Professional Service — Call or Text Us!</div>
       </SoftBox>
     </div>
   );

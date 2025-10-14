@@ -83,8 +83,8 @@ function BubbleBlock({ children, className = "" }) {
 }
 
 /* Thin gradient strip */
-function AccentStrip({ color = "from-ahBlue to-ahRed" }) {
-  return <div className={`h-1 w-full bg-gradient-to-r ${color}`} />;
+function AccentStrip({ color = "from-ahBlue to-ahRed", className = "" }) {
+  return <div className={`h-1 w-full bg-gradient-to-r ${color} ${className}`} />;
 }
 
 /* Steel panel container (background only) */
@@ -97,7 +97,7 @@ function SteelPanel({ children, className = "", padded = true, borderColor = "rg
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        borderColor, // <— control frame color here
+        borderColor,
       }}
     >
       {children}
@@ -170,35 +170,65 @@ function IconClock(props) {
   );
 }
 
-/* ===== Company name on steel (HOT ROD RED frame + black outline text) ===== */
+/* ===== Company name on steel (gradient border, no white halo) ===== */
 function BrandSlab({ Tag = "h1" }) {
   return (
-    <SteelPanel padded={false} className="px-2 py-1" borderColor="#e10600">
-      <Tag
-        className="text-center font-black tracking-tight"
-        style={{
-          fontFamily:
-            'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-          fontSize: "clamp(40px, 7vw, 96px)",
-          color: "#e9edf1",            // silver fill
-          WebkitTextStroke: "1px #000", // black outline (no white)
-          textShadow: "0 1px 1px rgba(0,0,0,.35), 0 8px 18px rgba(0,0,0,.4)",
-          lineHeight: 1.05,
-        }}
-      >
-        A&amp;H TOWING &amp; RECOVERY, LLC
-      </Tag>
-    </SteelPanel>
+    <div className="bg-gradient-to-r from-ahBlue via-ahRed to-ahBlue p-[6px] rounded-[28px] shadow-[0_10px_28px_rgba(0,0,0,0.45)]">
+      <SteelPanel padded={false} className="px-2 py-1 rounded-[22px] border-transparent">
+        <Tag
+          className="text-center font-black tracking-tight"
+          style={{
+            fontFamily:
+              'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+            fontSize: "clamp(40px, 7vw, 96px)",
+            color: "#e9edf1",            // silver fill
+            WebkitTextStroke: "1px #000", // black outline (no white)
+            textShadow:
+              "0 1px 1px rgba(0,0,0,.35), 0 4px 10px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.4)",
+            lineHeight: 1.05,
+          }}
+        >
+          A&amp;H TOWING &amp; RECOVERY, LLC
+        </Tag>
+      </SteelPanel>
+    </div>
   );
 }
 
-/* ========================= Stats (compact bubbles) ========================= */
-function StatBubbles() {
+/* ========================= Golden award badges ========================= */
+function MedalBadge({ title, lines = [] }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3 justify-items-center">
-      <BubbleBlock>&lt; 30 min • Professional Response</BubbleBlock>
-      <BubbleBlock>24 Hrs. / 7 Days a Week / 365 Days a Year • Operating</BubbleBlock>
-      <BubbleBlock>Pecos, TX &amp; West Texas Region • Service Area</BubbleBlock>
+    <div className="w-full sm:w-auto px-2">
+      <div className="relative mx-auto w-56 h-56 grid place-items-center">
+        {/* ribbons */}
+        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+          <div className="w-6 h-10 bg-ahRed clip-ribbon shadow-md" />
+          <div className="w-6 h-10 bg-ahBlue clip-ribbon shadow-md" />
+        </div>
+        {/* medal */}
+        <div className="w-48 h-48 rounded-full bg-[radial-gradient(circle_at_30%_30%,#fff59d, #f59e0b_40%,#b45309_75%)] shadow-2xl border-4 border-yellow-400 grid place-items-center text-center p-6">
+          <div>
+            <div className="text-sm font-extrabold uppercase tracking-wide text-yellow-900">
+              {title}
+            </div>
+            <div className="mt-2 text-base font-bold text-yellow-950 leading-snug">
+              {lines.map((l, i) => (
+                <div key={i}>{l}</div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function GoldenFacts() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 justify-items-center">
+      <MedalBadge title="Response Time?" lines={["< 30 Minutes •", "Professional"]} />
+      <MedalBadge title="Operating?" lines={["24 Hrs. / 7 Days a Week", "365 Day a Year"]} />
+      <MedalBadge title="Service Area?" lines={["From Pecos, TX", "To the Surrounding", "West Texas Region"]} />
     </div>
   );
 }
@@ -214,7 +244,7 @@ function TopLocationsMarquee() {
           <div
             className="marquee whitespace-nowrap font-extrabold tracking-tight"
             style={{
-              color: "#f5f7fa",
+              color: "#e10600", // letters in the top banner to red
               WebkitTextStroke: "0.4px rgba(0,0,0,.9)",
               textShadow: "0 1px 2px rgba(0,0,0,.7)",
               fontFamily:
@@ -263,6 +293,7 @@ function TopLocationsMarquee() {
           background-color: rgba(255,255,255,0.6);
           background-blend-mode: overlay, normal;
         }
+        .clip-ribbon { clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%); }
       `}</style>
     </div>
   );
@@ -338,9 +369,13 @@ export default function Home() {
         <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
           <div className="container max-w-7xl flex items-center gap-6 py-3">
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-black text-white grid place-items-center font-bold shadow-cta">A&amp;H</div>
+              {/* small logo letters switched to red */}
+              <div className="h-10 w-10 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
+                <span className="text-[15px] font-extrabold" style={{ color: "#e10600" }}>A&amp;H</span>
+              </div>
               <div className="leading-tight">
-                <div className="font-bold text-white drop-shadow">A&amp;H Towing & Recovery, LLC</div>
+                {/* brand letters in header switched to red */}
+                <div className="font-bold drop-shadow text-red-600">A&amp;H Towing & Recovery, LLC</div>
                 <div className="text-xs opacity-90">2712 W F Street, Pecos, TX 79772</div>
                 <div className="text-xs">
                   <a className="underline underline-offset-4 hover:opacity-100" href="mailto:ah.towing.recovery23@gmail.com">
@@ -358,52 +393,94 @@ export default function Home() {
           </div>
         </header>
 
-        {/* ===== Top steel banner (HOT ROD RED frame) ===== */}
+        {/* ===== Top steel banner (gradient border, no white halo) ===== */}
         <section className="relative z-[60] w-full overflow-hidden" style={{ minHeight: "clamp(110px, 15vh, 200px)" }}>
           <div className="relative z-[70] h-full w-full flex items-center justify-center px-2 py-0.5">
             <BrandSlab Tag="h1" />
           </div>
         </section>
 
-        {/* ========== Tow1 (slightly shorter), tagline above cab ========== */}
+        {/* ========== Tow1 (slightly shorter), tagline above cab (faded blue) ========== */}
         <VideoSection
           src="/Videos/tow1.mp4"
           minVH={78}
           tagline={
-            <Chip className="text-[clamp(18px,3.2vw,36px)] px-4 py-2">
+            <Chip className="text-[clamp(18px,3.2vw,36px)] px-4 py-2 bg-blue-500/45">
               Handle with Care • Fast Response • West Texas Tough
             </Chip>
           }
           taglinePos={{ top: "12%" }}
         />
 
-        {/* Thin line */}
-        <div className="h-[6px] w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />
+        {/* Thicker red/blue strip before stranded block */}
+        <AccentStrip className="h-[10px]" color="from-ahBlue via-rose-300/60 to-ahRed" />
 
-        {/* =================== HERO on STEEL + bubbles =================== */}
-        <Section>
-          <SteelPanel>
-            <div className="text-center space-y-3">
-              <BubbleBlock className="max-w-5xl">
-                Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows, winch-outs,
-                accident recovery, and oilfield transport. Trained operators. Clear pricing. Click below to call or text us direct!
-              </BubbleBlock>
+        {/* =================== HERO on STEEL: 3D text + gradient border + red surroundings =================== */}
+        <Section className="bg-ahRed">
+          <div className="bg-gradient-to-r from-ahBlue via-ahRed to-ahBlue p-[6px] rounded-[28px]">
+            <SteelPanel className="rounded-[22px] text-center">
+              {/* 3D headline */}
+              <h2
+                className="text-[clamp(26px,4.2vw,50px)] font-black tracking-tight"
+                style={{
+                  color: "#ffffff",
+                  textShadow:
+                    "0 1px 0 #d1d5db, 0 2px 0 #9ca3af, 0 3px 0 #6b7280, 0 4px 0 #374151, 0 8px 16px rgba(0,0,0,.45)",
+                }}
+              >
+                Stranded on I-20 or US-285?
+              </h2>
+              <p
+                className="mt-2 font-extrabold text-white/95"
+                style={{ textShadow: "0 1px 2px rgba(0,0,0,.35)" }}
+              >
+                We dispatch immediately for light, medium &amp; heavy-duty tows, winch-outs, accident recovery, and oilfield transport.
+                Trained operators. Clear pricing.
+              </p>
 
-              <div className="mt-1 flex flex-wrap items-center gap-3 justify-center">
+              {/* Buttons with centered line in between */}
+              <div className="mt-4 flex items-center justify-center gap-3 flex-wrap">
                 <PhoneCTA />
+                <span className="text-white/95 font-semibold text-sm sm:text-base text-center">
+                  Click below to call or text us direct!
+                </span>
                 <ScrollToFormCTA />
               </div>
 
-              <StatBubbles />
-            </div>
-          </SteelPanel>
+              {/* Golden awards below buttons (same area/sizing behavior) */}
+              <GoldenFacts />
+            </SteelPanel>
+          </div>
         </Section>
 
-        {/* Zero bottom space to butt against services */}
-        <div className="h-[4px] w-full bg-gradient-to-r from-ahRed via-white to-ahBlue" />
+        {/* Thicker gradient divider before Services */}
+        <AccentStrip className="h-[12px]" color="from-ahRed via-white to-ahBlue" />
 
-        {/* =================== SERVICES (steel card + small text bubble) =================== */}
+        {/* =================== SERVICES (heading bubble + categories) =================== */}
         <Section id="services">
+          {/* Light green transparent heading bubble on steel with thicker red/blue border */}
+          <div className="bg-gradient-to-r from-ahBlue via-ahRed to-ahBlue p-[6px] rounded-[28px] mb-4">
+            <SteelPanel className="rounded-[22px] text-center">
+              <div className="inline-block rounded-2xl px-5 py-2 bg-green-300/35 backdrop-blur-sm">
+                <h3 className="text-2xl md:text-3xl font-extrabold text-white drop-shadow">
+                  Services Provided
+                </h3>
+              </div>
+            </SteelPanel>
+          </div>
+
+          {/* Two main sub-categories (bold + underline) */}
+          <div className="grid md:grid-cols-2 gap-6 mb-3">
+            <div className="text-center">
+              <span className="font-extrabold underline text-lg">
+                Towing Services (Light Duty to Heavy Duty) (Oilfield and Commercial)
+              </span>
+            </div>
+            <div className="text-center">
+              <span className="font-extrabold underline text-lg">Roadside Services</span>
+            </div>
+          </div>
+
           <div className="grid md:grid-cols-3 gap-4">
             {[
               { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups" },
@@ -468,7 +545,7 @@ export default function Home() {
               </div>
               <div className="text-sm md:text-base text-white/95 text-center">
                 <div className="mb-2">
-                  <Chip>Service Area — Pecos &amp; West Texas</Chip>
+                  <BubbleBlock className="mb-1">Service Area — Pecos &amp; West Texas</BubbleBlock>
                 </div>
                 <p className="mt-2"><Chip className="mb-2">Pecos (Home Base) • Reeves County</Chip></p>
                 <p className="mt-2"><Chip className="mb-2">Fort Stockton • Monahans • Kermit</Chip></p>
@@ -511,7 +588,7 @@ export default function Home() {
           </SteelPanel>
         </Section>
 
-        {/* Bottom steel brand (HOT ROD RED frame too) */}
+        {/* Bottom steel brand (gradient border too) */}
         <div className="container max-w-7xl pb-2">
           <BrandSlab Tag="h2" />
         </div>

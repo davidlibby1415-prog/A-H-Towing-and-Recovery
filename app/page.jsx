@@ -88,15 +88,16 @@ function AccentStrip({ color = "from-ahBlue to-ahRed" }) {
 }
 
 /* Steel panel container (background only) */
-function SteelPanel({ children, className = "", padded = true }) {
+function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.40)" }) {
   return (
     <div
-      className={`rounded-3xl border border-white/40 shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
+      className={`rounded-3xl border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
       style={{
         backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")`,
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
+        borderColor, // <— control frame color here
       }}
     >
       {children}
@@ -169,18 +170,18 @@ function IconClock(props) {
   );
 }
 
-/* ===== Company name on steel (tighter, thinner white lines) ===== */
+/* ===== Company name on steel (HOT ROD RED frame + black outline text) ===== */
 function BrandSlab({ Tag = "h1" }) {
   return (
-    <SteelPanel padded={false} className="px-2 py-1">
+    <SteelPanel padded={false} className="px-2 py-1" borderColor="#e10600">
       <Tag
         className="text-center font-black tracking-tight"
         style={{
           fontFamily:
             'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
           fontSize: "clamp(40px, 7vw, 96px)",
-          color: "#e9edf1",
-          WebkitTextStroke: "0.75px #ffffff",
+          color: "#e9edf1",            // silver fill
+          WebkitTextStroke: "1px #000", // black outline (no white)
           textShadow: "0 1px 1px rgba(0,0,0,.35), 0 8px 18px rgba(0,0,0,.4)",
           lineHeight: 1.05,
         }}
@@ -227,7 +228,7 @@ function TopLocationsMarquee() {
         </div>
       </div>
 
-      {/* tighter gap */}
+      {/* tight gap */}
       <div className="h-[2px]" />
       <div className="w-full">
         <div className="container max-w-7xl">
@@ -357,14 +358,14 @@ export default function Home() {
           </div>
         </header>
 
-        {/* ===== Top steel banner (tighter) ===== */}
+        {/* ===== Top steel banner (HOT ROD RED frame) ===== */}
         <section className="relative z-[60] w-full overflow-hidden" style={{ minHeight: "clamp(110px, 15vh, 200px)" }}>
           <div className="relative z-[70] h-full w-full flex items-center justify-center px-2 py-0.5">
             <BrandSlab Tag="h1" />
           </div>
         </section>
 
-        {/* ========== Tow1 (slightly shorter to show wheels), tagline above cab ========== */}
+        {/* ========== Tow1 (slightly shorter), tagline above cab ========== */}
         <VideoSection
           src="/Videos/tow1.mp4"
           minVH={78}
@@ -401,7 +402,7 @@ export default function Home() {
         {/* Zero bottom space to butt against services */}
         <div className="h-[4px] w-full bg-gradient-to-r from-ahRed via-white to-ahBlue" />
 
-        {/* =================== SERVICES (reverted steel card + small text bubble) =================== */}
+        {/* =================== SERVICES (steel card + small text bubble) =================== */}
         <Section id="services">
           <div className="grid md:grid-cols-3 gap-4">
             {[
@@ -437,21 +438,21 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* Tight line, then Tow2: **narrower & taller** column for vertical POV */}
+        {/* Tight line, then Tow2: narrower & taller for vertical POV */}
         <div className="h-[6px] w-full bg-gradient-to-r from-slate-200 via-rose-200/40 to-sky-200" />
         <VideoSection
           src="/Videos/tow2.mp4"
-          minVH={98} /* taller */
+          minVH={98}
           innerWrapperClass="grid place-items-center"
           videoStyle={{
-            width: "min(68vw, 520px)", /* narrower */
+            width: "min(68vw, 520px)",
             height: "100%",
             objectFit: "cover",
             objectPosition: "center",
           }}
         />
 
-        {/* =================== Condensed Service Area on STEEL (centered + bubble link) =================== */}
+        {/* =================== Condensed Service Area on STEEL =================== */}
         <Section id="coverage">
           <SteelPanel>
             <div className="grid md:grid-cols-2 gap-4 items-start">
@@ -510,12 +511,12 @@ export default function Home() {
           </SteelPanel>
         </Section>
 
-        {/* Bottom steel brand */}
+        {/* Bottom steel brand (HOT ROD RED frame too) */}
         <div className="container max-w-7xl pb-2">
           <BrandSlab Tag="h2" />
         </div>
 
-        {/* Payments (CENTERED) + centered TikTok */}
+        {/* Payments + TikTok */}
         <div className="container max-w-7xl py-4">
           <div className="w-full flex justify-center">
             <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/20 via-rose-500/20 to-amber-400/20 border border-black/10 max-w-fit">
@@ -798,5 +799,3 @@ function ContactSection() {
     </div>
   );
 }
-
-

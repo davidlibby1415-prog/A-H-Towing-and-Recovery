@@ -84,7 +84,6 @@ function AccentStrip({ color = "from-ahBlue to-ahRed", className = "" }) {
 }
 
 /* =================== GLOBAL Animated Border (red↔blue) =================== */
-/* Use for EVERY steel panel wrapper so borders match sitewide */
 function AnimBorder({ children, className = "" }) {
   return (
     <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>
@@ -172,7 +171,7 @@ function BrandSlab({ Tag = "h1" }) {
             fontFamily:
               'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
             fontSize: "clamp(40px, 7vw, 96px)",
-            color: "#e10600",            // RED letters (top & bottom)
+            color: "#e10600",
             WebkitTextStroke: "1.5px #000",
             textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
             lineHeight: 1.05,
@@ -185,15 +184,24 @@ function BrandSlab({ Tag = "h1" }) {
   );
 }
 
-/* ========================= Golden award badges (bright gold + shimmer) ========================= */
+/* ========================= Golden award badges (radiant ears + long ribbons) ========================= */
 function MedalBadge({ title, lines = [] }) {
   return (
     <div className="w-full sm:w-auto px-2">
-      <div className="relative mx-auto w-56 h-56 grid place-items-center">
-        {/* ribbons */}
-        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-          <div className="w-6 h-10 bg-ahRed clip-ribbon shadow-md" />
-          <div className="w-6 h-10 bg-ahBlue clip-ribbon shadow-md" />
+      <div className="relative mx-auto w-56 h-64 grid place-items-center">
+        {/* radiant ears ring */}
+        <div
+          className="absolute w-52 h-52 rounded-full"
+          style={{
+            background:
+              "repeating-conic-gradient(from 0deg, rgba(255,215,0,0.45) 0deg 6deg, transparent 6deg 12deg)",
+            filter: "blur(0.6px)",
+          }}
+        />
+        {/* ribbons (longer + gold outline) */}
+        <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-3">
+          <div className="w-7 h-20 bg-ahRed clip-ribbon shadow-md border-2 border-yellow-300" />
+          <div className="w-7 h-20 bg-ahBlue clip-ribbon shadow-md border-2 border-yellow-300" />
         </div>
         {/* medal */}
         <div
@@ -242,7 +250,7 @@ function TopLocationsMarquee() {
           <div
             className="marquee whitespace-nowrap font-extrabold tracking-tight"
             style={{
-              color: "#f5f7fa", // light silver, bold
+              color: "#f5f7fa",
               WebkitTextStroke: "0.4px rgba(0,0,0,.9)",
               textShadow: "0 1px 2px rgba(0,0,0,.7)",
               fontFamily:
@@ -316,7 +324,7 @@ function VideoSection({
   taglinePos = { bottom: "18%" },
   videoStyle = {},
   innerWrapperClass = "",
-  overlayStrength = 0.35, // control vignette
+  overlayStrength = 0.35,
 }) {
   const [videoError, setVideoError] = useState(false);
   return (
@@ -338,7 +346,6 @@ function VideoSection({
         </video>
       </div>
 
-      {/* vignette */}
       <div
         className="absolute inset-0 pointer-events-none z-10"
         style={{
@@ -373,7 +380,7 @@ export default function Home() {
     setTimeout(() => window.scrollTo(0, 0), 0);
   }, []);
 
-  /* Alphabetized locations for the list */
+  /* Alphabetized locations for the list (kept) */
   const locations = [
     "Balmorhea",
     "Fort Stockton",
@@ -392,6 +399,25 @@ export default function Home() {
     "US-285",
     "Wink",
   ].sort((a, b) => a.localeCompare(b));
+
+  /* Services split by subcategory — rendered as steel cards */
+  const towingServices = [
+    { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups" },
+    { icon: IconTruck, title: "Heavy Duty & Commercial Towing", desc: "Oilfield & fleet" },
+    { icon: IconTruck, title: "Oilfield Routes Tow Service", desc: "Lease roads • remote access" },
+    { icon: IconTruck, title: "Long & Short Distance Tows", desc: "Local & state-to-state" },
+    { icon: IconFlatbed, title: "Equipment Transport", desc: "Light equipment & tools" },
+    { icon: IconFlatbed, title: "Flatbed / Rollback Services", desc: "Damage-free transport" },
+  ];
+  const roadside = [
+    { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel" },
+    { icon: IconBolt, title: "Jumpstarts", desc: "12V & roadside checks" },
+    { icon: IconLock, title: "Lockouts", desc: "Fast entry, no damage" },
+  ];
+  const accident = [
+    { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional" },
+    { icon: IconHook, title: "Winching / Recovery", desc: "Off-road, mud, sand" },
+  ];
 
   return (
     <>
@@ -432,24 +458,27 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ========== Tow1 (darker bubble for clarity) ========== */}
+        {/* ========== Tow1 (show full wrecker; darker bubble by 15%) ========== */}
         <VideoSection
           src="/Videos/tow1.mp4"
-          minVH={78}
+          minVH={76}
           overlayStrength={0.2}
           tagline={
-            <Chip className="text-[clamp(18px,3.2vw,36px)] px-4 py-2 bg-blue-900/55">
+            <Chip className="text-[clamp(18px,3.2vw,36px)] px-4 py-2 bg-blue-900/70">
               Handle with Care • Fast Response • West Texas Tough
             </Chip>
           }
           taglinePos={{ top: "12%" }}
+          videoStyle={{
+            objectPosition: "center bottom",
+          }}
         />
 
-        {/* Space so wheels are clearly visible */}
-        <div className="h-6" />
+        {/* Space so wheels are clearly visible before next section */}
+        <div className="h-7" />
 
         {/* =================== STRANDED SECTION =================== */}
-        <Section className="mt-4 bg-red-800">
+        <Section className="mt-2 bg-red-800">
           <AnimBorder>
             <SteelPanel className="text-center">
               <h2
@@ -470,12 +499,15 @@ export default function Home() {
                 </BubbleBlock>
               </div>
 
-              {/* Instruction line ABOVE buttons */}
-              <div className="mt-4 mb-1">
-                <span className="block text-white/95 font-bold">
+              {/* Instruction line in caution-yellow bubble + extra space before buttons */}
+              <div className="mt-4">
+                <BubbleBlock className="!bg-yellow-400/45 !text-black">
                   Click below to call or text us direct!
-                </span>
+                </BubbleBlock>
               </div>
+
+              {/* extra line of space */}
+              <div className="h-5" />
 
               {/* Buttons */}
               <div className="flex items-center justify-center gap-3 flex-wrap">
@@ -491,7 +523,7 @@ export default function Home() {
         {/* =================== Tow2 + Google Reviews (two-column) =================== */}
         <Section className="bg-red-900/80">
           <div className="grid md:grid-cols-2 gap-6 items-stretch">
-            {/* Taller Tow2 to catch the front of the 18-wheeler earlier */}
+            {/* Taller Tow2 */}
             <div className="rounded-[22px] overflow-hidden">
               <VideoSection
                 src="/Videos/tow2.mp4"
@@ -507,7 +539,7 @@ export default function Home() {
               />
             </div>
 
-            {/* Google Customer Reviews block with matching red↔blue animated border */}
+            {/* Google Customer Reviews block */}
             <AnimBorder>
               <SteelPanel className="h-full grid">
                 <div className="place-self-center text-center max-w-md">
@@ -533,7 +565,7 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* =================== SERVICES =================== */}
+        {/* =================== SERVICES (steel cards under subcategories) =================== */}
         <Section id="services" className="bg-red-800/90">
           <AnimBorder>
             <SteelPanel className="text-center">
@@ -550,45 +582,81 @@ export default function Home() {
                 </h3>
               </div>
 
-              {/* Subheadings with bubbles and EXACT lists */}
-              <div className="mt-6 grid md:grid-cols-2 gap-8 text-left">
-                <div>
-                  <div className="text-center mb-2">
-                    <BubbleBlock className="!px-4 !py-2">
-                      <span className="font-extrabold underline text-lg">Towing Services</span>
-                    </BubbleBlock>
-                  </div>
-                  <ul className="mt-3 space-y-1 list-disc list-inside">
-                    <li>Light Duty Towing</li>
-                    <li>Heavy Duty & Commercial Towing</li>
-                    <li>Oilfield Routes Tow Service</li>
-                    <li>Long & Short Distance Tows</li>
-                    <li>Equipment Transport</li>
-                    <li>Flatbed / Rollback Services</li>
-                  </ul>
+              {/* Towing Services */}
+              <div className="mt-6">
+                <BubbleBlock className="!px-4 !py-2 mb-3">
+                  <span className="font-extrabold underline text-lg">Towing Services</span>
+                </BubbleBlock>
+                <div className="grid md:grid-cols-3 gap-4">
+                  {towingServices.map(({ icon: Ico, title, desc }) => (
+                    <AnimBorder key={title}>
+                      <SteelPanel className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
+                            <Ico className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <BubbleBlock className="!px-3 !py-2">
+                              <div className="font-extrabold">{title}</div>
+                              <div className="text-sm text-white/95 mt-0.5">{desc}</div>
+                            </BubbleBlock>
+                          </div>
+                        </div>
+                      </SteelPanel>
+                    </AnimBorder>
+                  ))}
                 </div>
+              </div>
 
-                <div>
-                  <div className="text-center mb-2">
-                    <BubbleBlock className="!px-4 !py-2">
-                      <span className="font-extrabold underline text-lg">Emergency Roadside Assistance</span>
-                    </BubbleBlock>
-                  </div>
-                  <ul className="mt-3 space-y-1 list-disc list-inside">
-                    <li>Fuel Delivery</li>
-                    <li>Jumpstarts</li>
-                    <li>Lockouts</li>
-                  </ul>
+              {/* Emergency Roadside Assistance */}
+              <div className="mt-8">
+                <BubbleBlock className="!px-4 !py-2 mb-3">
+                  <span className="font-extrabold underline text-lg">Emergency Roadside Assistance</span>
+                </BubbleBlock>
+                <div className="grid md:grid-cols-3 gap-4">
+                  {roadside.map(({ icon: Ico, title, desc }) => (
+                    <AnimBorder key={title}>
+                      <SteelPanel className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
+                            <Ico className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <BubbleBlock className="!px-3 !py-2">
+                              <div className="font-extrabold">{title}</div>
+                              <div className="text-sm text-white/95 mt-0.5">{desc}</div>
+                            </BubbleBlock>
+                          </div>
+                        </div>
+                      </SteelPanel>
+                    </AnimBorder>
+                  ))}
+                </div>
+              </div>
 
-                  <div className="text-center mt-6 mb-2">
-                    <BubbleBlock className="!px-4 !py-2">
-                      <span className="font-extrabold underline text-lg">Accident?</span>
-                    </BubbleBlock>
-                  </div>
-                  <ul className="mt-3 space-y-1 list-disc list-inside">
-                    <li>Accident Removal</li>
-                    <li>Winching / Recovery</li>
-                  </ul>
+              {/* Accident? */}
+              <div className="mt-8">
+                <BubbleBlock className="!px-4 !py-2 mb-3">
+                  <span className="font-extrabold underline text-lg">Accident?</span>
+                </BubbleBlock>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {accident.map(({ icon: Ico, title, desc }) => (
+                    <AnimBorder key={title}>
+                      <SteelPanel className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
+                            <Ico className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <BubbleBlock className="!px-3 !py-2">
+                              <div className="font-extrabold">{title}</div>
+                              <div className="text-sm text-white/95 mt-0.5">{desc}</div>
+                            </BubbleBlock>
+                          </div>
+                        </div>
+                      </SteelPanel>
+                    </AnimBorder>
+                  ))}
                 </div>
               </div>
 
@@ -600,13 +668,13 @@ export default function Home() {
           </AnimBorder>
         </Section>
 
-        {/* =================== SERVICE AREA (Dark map + heading + alphabetical list) =================== */}
+        {/* =================== SERVICE AREA (bigger heading + one grouped bubble) =================== */}
         <Section id="coverage" className="bg-red-900/80">
           <AnimBorder>
             <SteelPanel>
-              <div className="text-center mb-4">
-                <BubbleBlock className="!px-5 !py-2">
-                  <span className="font-extrabold text-xl">Service Area</span>
+              <div className="text-center mb-5">
+                <BubbleBlock className="!px-6 !py-3">
+                  <span className="font-extrabold text-[clamp(28px,5vw,56px)]">Service Area</span>
                 </BubbleBlock>
               </div>
 
@@ -621,25 +689,16 @@ export default function Home() {
                     allowFullScreen
                     src="https://www.openstreetmap.org/export/embed.html?bbox=-104.2%2C30.9%2C-101.8%2C32.1&layer=mapnik"
                     style={{
-                      filter: "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)", // darken the map
+                      filter: "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
                     }}
                   />
                 </div>
 
-                {/* Alphabetized list */}
-                <div className="text-sm md:text-base text-white/95">
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-6">
-                    {locations.map((loc) => (
-                      <li key={loc} className="font-semibold">• {loc}</li>
-                    ))}
-                  </ul>
-                  <div className="mt-3 text-center">
-                    <BubbleBlock>
-                      <a className="underline font-extrabold text-white" href="tel:+14328424578">
-                        Long-distance transport available — call to arrange.
-                      </a>
-                    </BubbleBlock>
-                  </div>
+                {/* One grouped bubble for all locations */}
+                <div className="text-center md:text-left flex items-center justify-center">
+                  <BubbleBlock className="!px-5 !py-4 max-w-xl text-base md:text-lg leading-relaxed">
+                    {locations.join(" • ")}
+                  </BubbleBlock>
                 </div>
               </div>
             </SteelPanel>
@@ -651,7 +710,7 @@ export default function Home() {
           <VideoSection
             src="/Videos/tow3.mp4"
             minVH={86}
-            videoStyle={{ filter: "contrast(1.12) saturate(1.1) sharpness(0.2)" }}
+            videoStyle={{ filter: "contrast(1.12) saturate(1.1)" }}
           />
         </Section>
 
@@ -930,7 +989,7 @@ function ContactSection() {
           </a>
         </div>
         <div className="p-3 text-sm font-extrabold text-center">
-          Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578</a><br />
+          Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578)</a><br />
           Email: <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
           Address: 2712 W F Street, Pecos, TX 79772<br />
           Hours: 24/7 Dispatch

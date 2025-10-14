@@ -1,6 +1,4 @@
-"use client";
-
-import React, { useState, useEffect } from "react";
+"import React, { useState, useEffect } from "react";
 
 /* ============================ Utilities ============================ */
 function smsHref(number, body) {
@@ -482,19 +480,21 @@ export default function Home() {
               {/* Entire block grouped inside the yellow callout (no stripe texture in letters) */}
               <div className="flex justify-center">
                 <StripedCallout className="max-w-5xl w-full">
-                  {/* Clean block letters: solid yellow, crisp outline, slight spacing */}
-                  <div
-                    className="font-black tracking-tight"
+                  {/* 🔹 Updated headline styling for a more professional look */}
+                  <h2
+                    className="font-extrabold tracking-tight leading-[1.1]"
                     style={{
-                      fontSize: "clamp(28px,4.6vw,56px)",
-                      color: "#fde047",              // solid yellow fill
-                      WebkitTextStroke: "1.5px #000",// crisp black outline
-                      textShadow: "0 6px 14px rgba(0,0,0,.55)",
-                      letterSpacing: "0.4px",        // avoid “glued together” look
+                      fontFamily:
+                        '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                      fontSize: 'clamp(30px,4.4vw,54px)',
+                      color: '#111827',
+                      letterSpacing: '0.02em',
+                      WebkitTextStroke: '0.5px rgba(0,0,0,0.55)',
+                      textShadow: '0 1px 2px rgba(0,0,0,0.25)',
                     }}
                   >
                     Stranded on the Side of the Road???
-                  </div>
+                  </h2>
 
                   {/* Description: darker text for clarity */}
                   <div
@@ -666,12 +666,12 @@ export default function Home() {
                           <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
                             <Ico className="h-6 w-6 text-white" />
                           </div>
-                          <div>
-                            <BubbleBlock className="!px-3 !py-2">
-                              <div className="font-extrabold">{title}</div>
-                              <div className="text-sm text-white/95 mt-0.5">{desc}</div>
-                            </BubbleBlock>
-                          </div>
+                            <div>
+                              <BubbleBlock className="!px-3 !py-2">
+                                <div className="font-extrabold">{title}</div>
+                                <div className="text-sm text-white/95 mt-0.5">{desc}</div>
+                              </BubbleBlock>
+                            </div>
                         </div>
                       </SteelPanel>
                     </AnimBorder>

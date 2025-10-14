@@ -235,7 +235,7 @@ function TopLocationsMarquee() {
     <div className="w-full bg-ahCharcoal text-[#c0c0c0] text-sm [text-shadow:0_1px_2px_rgba(0,0,0,.35)]">
       <div className="container max-w-7xl py-2">
         <div className="relative overflow-hidden">
-          <div className="marquee whitespace-nowrap font-semibold tracking-tight">
+          <div className="marquee whitespace-nowrap font-extrabold tracking-tight">
             <span className="inline-block pr-12">{text}</span>
             <span className="inline-block pr-12">{text}</span>
             <span className="inline-block pr-12">{text}</span>
@@ -333,11 +333,11 @@ export default function Home() {
         {/* Marquee */}
         <TopLocationsMarquee />
 
-        {/* Gold tagline centered under marquee */}
+        {/* Silver tagline centered under marquee (UPDATED) */}
         <div className="w-full bg-ahCharcoal">
           <div className="container max-w-7xl">
-            <p className="text-center text-[13px] sm:text-sm font-bold tracking-tight text-yellow-400 py-1">
-              Providing Towing, Recovery Services, and Emergency Roadside Assistance for West Texas
+            <p className="text-center text-[13px] sm:text-sm font-extrabold tracking-tight text-[#dfe3e8] py-1">
+              Handle with Care • Fast Response • West Texas Tough
             </p>
           </div>
         </div>
@@ -401,7 +401,7 @@ export default function Home() {
                 <SoftBox>
                   <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center">
                     Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
-                    Towing — From Small Cars to Heavy Duty Tows
+                    Towing — <span className="whitespace-nowrap">Handle with Care</span>
                   </h2>
                   <p className="mt-3 text-base md:text-lg opacity-95 text-center">
                     Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows,

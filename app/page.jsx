@@ -458,7 +458,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ========== Tow1 (show full wrecker; darker bubble by 15%) ========== */}
+        {/* ========== Tow1 (show full wrecker) ========== */}
         <VideoSection
           src="/Videos/tow1.mp4"
           minVH={76}
@@ -481,12 +481,17 @@ export default function Home() {
         <Section className="mt-2 bg-red-800">
           <AnimBorder>
             <SteelPanel className="text-center">
+              {/* Caution-striped text */}
               <h2
-                className="text-[clamp(26px,4.2vw,50px)] font-black tracking-tight underline underline-offset-4"
+                className="text-[clamp(28px,4.6vw,56px)] font-black tracking-tight underline underline-offset-4"
                 style={{
-                  color: "#ffffff",
-                  WebkitTextStroke: "1.5px #00e5ff",
-                  textShadow: "0 1px 0 #93c5fd, 0 6px 12px rgba(0,0,0,.45)",
+                  backgroundImage:
+                    "repeating-linear-gradient(-45deg, #fde047 0 16px, #111827 16px 26px)",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                  WebkitTextStroke: "1.5px #000",
+                  textShadow: "0 6px 14px rgba(0,0,0,.55)",
                 }}
               >
                 Stranded on the Side of the Road???
@@ -523,8 +528,8 @@ export default function Home() {
         {/* =================== Tow2 + Google Reviews (two-column) =================== */}
         <Section className="bg-red-900/80">
           <div className="grid md:grid-cols-2 gap-6 items-stretch">
-            {/* Taller Tow2 */}
-            <div className="rounded-[22px] overflow-hidden">
+            {/* Left: Taller Tow2, with quip overlay on sky (right side) */}
+            <div className="rounded-[22px] overflow-hidden relative">
               <VideoSection
                 src="/Videos/tow2.mp4"
                 minVH={110}
@@ -536,10 +541,32 @@ export default function Home() {
                   objectPosition: "center",
                 }}
                 overlayStrength={0.15}
-              />
+              >
+                <div
+                  className="absolute z-30 right-6 top-[14%] max-w-[60%] md:max-w-[48%] px-4 py-2 rounded-2xl"
+                  style={{
+                    background: "rgba(2, 6, 23, 0.45)",
+                    border: "1px solid rgba(255,255,255,0.25)",
+                    backdropFilter: "blur(2px)",
+                  }}
+                >
+                  <div
+                    className="font-extrabold leading-snug"
+                    style={{
+                      fontFamily:
+                        '"Segoe UI", "Trebuchet MS", system-ui, -apple-system, Roboto, Arial',
+                      fontSize: "clamp(18px,3.2vw,32px)",
+                      color: "#e2f0ff",
+                      textShadow: "0 2px 8px rgba(0,0,0,.6)",
+                    }}
+                  >
+                    When You Call, We Roll Out!
+                  </div>
+                </div>
+              </VideoSection>
             </div>
 
-            {/* Google Customer Reviews block */}
+            {/* Right: Google Customer Reviews block */}
             <AnimBorder>
               <SteelPanel className="h-full grid">
                 <div className="place-self-center text-center max-w-md">
@@ -569,13 +596,17 @@ export default function Home() {
         <Section id="services" className="bg-red-800/90">
           <AnimBorder>
             <SteelPanel className="text-center">
-              <div className="inline-block rounded-2xl px-5 py-2 bg-green-300/25 backdrop-blur-sm">
+              {/* Updated “Services Provided” heading: professional font + steel-blue color */}
+              <div className="inline-block rounded-2xl px-5 py-2 bg-black/20 backdrop-blur-sm">
                 <h3
-                  className="text-[clamp(28px,5vw,56px)] font-black"
+                  className="text-[clamp(30px,5.4vw,60px)] font-extrabold"
                   style={{
-                    color: "#dfe4ea",
-                    WebkitTextStroke: "2px #000",
-                    textShadow: "0 2px 0 #9ca3af, 0 4px 0 #6b7280, 0 10px 18px rgba(0,0,0,.45)",
+                    fontFamily:
+                      '"Segoe UI", "Inter", "Helvetica Neue", system-ui, -apple-system, Arial',
+                    color: "#8EC5FF", // steel blue (not white)
+                    WebkitTextStroke: "1.5px #0b1220",
+                    textShadow: "0 2px 0 #1f2937, 0 10px 18px rgba(0,0,0,.45)",
+                    letterSpacing: "0.5px",
                   }}
                 >
                   Services Provided
@@ -714,13 +745,33 @@ export default function Home() {
           />
         </Section>
 
-        {/* =================== Request a Tow (mint form + yellow instructions) =================== */}
+        {/* =================== Request a Tow (bigger, sunset-themed inviting heading) =================== */}
         <Section id="contact" className="bg-red-900/90">
           <AnimBorder>
             <SteelPanel>
               <div className="text-center">
-                <BubbleBlock className="text-lg md:text-2xl mb-3">Request a Tow</BubbleBlock>
+                <div className="inline-block rounded-2xl px-6 py-3 bg-black/20 backdrop-blur-sm">
+                  <div
+                    className="font-extrabold"
+                    style={{
+                      fontFamily:
+                        '"Gill Sans", "Trebuchet MS", "Segoe UI", system-ui, -apple-system, Arial',
+                      fontSize: "clamp(32px,5.6vw,64px)",
+                      backgroundImage:
+                        "linear-gradient(180deg, #ffb36b 0%, #ff7e5f 40%, #f94d6a 90%)",
+                      WebkitBackgroundClip: "text",
+                      backgroundClip: "text",
+                      color: "transparent",
+                      WebkitTextStroke: "1.25px rgba(0,0,0,.85)",
+                      textShadow: "0 14px 26px rgba(0,0,0,.55)",
+                      letterSpacing: "0.6px",
+                    }}
+                  >
+                    Request a Tow
+                  </div>
+                </div>
               </div>
+
               <div className="mt-3 flex gap-3 flex-wrap justify-center">
                 <PhoneCTA />
                 <ScrollToFormCTA label="Text Dispatch (Include GPS)" />
@@ -989,7 +1040,7 @@ function ContactSection() {
           </a>
         </div>
         <div className="p-3 text-sm font-extrabold text-center">
-          Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578)</a><br />
+          Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578</a><br />
           Email: <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
           Address: 2712 W F Street, Pecos, TX 79772<br />
           Hours: 24/7 Dispatch

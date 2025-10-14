@@ -232,7 +232,7 @@ function TopLocationsMarquee() {
   const text =
     "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • Oilfield Routes";
   return (
-    <div className="w-full bg-ahCharcoal text-ahText text-sm">
+    <div className="w-full bg-ahCharcoal text-[#c0c0c0] text-sm [text-shadow:0_1px_2px_rgba(0,0,0,.35)]">
       <div className="container max-w-7xl py-2">
         <div className="relative overflow-hidden">
           <div className="marquee whitespace-nowrap font-semibold tracking-tight">
@@ -612,7 +612,7 @@ export default function Home() {
                 { "@type": "City", name: "Wink" },
                 { "@type": "City", name: "Midland" },
                 { "@type": "City", name: "Odessa" },
-                { "@type": "AdministrativeArea", name: "West Texas oilfields" },
+                { "@type": "AdministrativeArea", name: "West Texas Oilfields" },
               ],
               openingHours: "Mo-Su 00:00-23:59",
               sameAs: [],

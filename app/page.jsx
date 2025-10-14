@@ -63,9 +63,21 @@ function ScrollToFormCTA({
   );
 }
 
-/* Accent strip used on every content box */
+/* Accent strip */
 function AccentStrip({ color = "from-ahBlue to-ahRed" }) {
   return <div className={`h-1 w-full bg-gradient-to-r ${color}`} />;
+}
+
+/* Chip (boxed word) */
+function Chip({ children, className = "" }) {
+  return (
+    <span
+      className={`inline-block rounded-xl px-3 py-1 text-[0.95em] font-extrabold bg-black/40 text-white shadow [text-shadow:0_1px_1px_rgba(0,0,0,.55)] ${className}`}
+      style={{ WebkitTextStroke: "0.25px rgba(0,0,0,.75)" }}
+    >
+      {children}
+    </span>
+  );
 }
 
 /* Box shell with faint blue→red diamond steel texture */
@@ -78,21 +90,25 @@ function SoftBox({ children, className = "", strip = true, bgClass = "diamond-pa
   );
 }
 
-/* Section wrapper */
+/* Section wrapper — tighter defaults */
 function Section({ id, title, subtitle, children }) {
   return (
-    <section id={id} className="py-12 md:py-16">
+    <section id={id} className="py-8 md:py-10">
       <div className="container max-w-7xl">
-        <SoftBox className="mb-5 md:mb-8">
-          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-ahCharcoal text-center stronger">
-            {title}
-          </h2>
-          {subtitle && (
-            <p className="mt-2 text-base md:text-lg opacity-90 text-center stronger">
-              <strong>{subtitle}</strong>
-            </p>
-          )}
-        </SoftBox>
+        {(title || subtitle) && (
+          <SoftBox className="mb-4 md:mb-5">
+            {title && (
+              <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-ahCharcoal text-center stronger">
+                {title}
+              </h2>
+            )}
+            {subtitle && (
+              <p className="mt-2 text-base md:text-lg opacity-90 text-center stronger">
+                <strong>{subtitle}</strong>
+              </p>
+            )}
+          </SoftBox>
+        )}
         {children}
       </div>
     </section>
@@ -155,13 +171,11 @@ function IconClock(props) {
   );
 }
 
-/* ===== Brand slabs ===== */
-
-/* Bottom slab — reduced height, larger text */
+/* ===== Brand slabs (reduced vertical space) ===== */
 function BrandSlabBottom({ as: Tag = "h2" }) {
   return (
     <div
-      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
+      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
       style={{
         backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("/diamond-plate.jpg")`,
         backgroundSize: "cover",
@@ -174,9 +188,9 @@ function BrandSlabBottom({ as: Tag = "h2" }) {
         style={{
           fontFamily:
             'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-          fontSize: "clamp(32px, 5.6vw, 84px)",
-          color: "#dfe3e8", // silver
-          WebkitTextStroke: "2.5px #000",
+          fontSize: "clamp(32px, 5.2vw, 80px)",
+          color: "#e9edf1",
+          WebkitTextStroke: "2px #000",
           textShadow: "0 1px 1px rgba(0,0,0,.5), 0 6px 16px rgba(0,0,0,.45)",
         }}
       >
@@ -186,11 +200,10 @@ function BrandSlabBottom({ as: Tag = "h2" }) {
   );
 }
 
-/* TOP slab — enlarged, reduced steel height, professional system font */
 function BrandSlabTop({ as: Tag = "h1" }) {
   return (
     <div
-      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-4 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
+      className="mx-auto max-w-fit rounded-3xl border border-white/10 px-6 py-3 shadow-[0_12px_40px_rgba(0,0,0,0.6)]"
       style={{
         backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("/diamond-plate.jpg")`,
         backgroundSize: "cover",
@@ -203,9 +216,9 @@ function BrandSlabTop({ as: Tag = "h1" }) {
         style={{
           fontFamily:
             'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-          fontSize: "clamp(42px, 7vw, 104px)",
-          color: "#dfe3e8",
-          WebkitTextStroke: "2.5px #000",
+          fontSize: "clamp(40px, 7vw, 96px)",
+          color: "#e9edf1",
+          WebkitTextStroke: "2px #000",
           textShadow: "0 2px 2px rgba(0,0,0,.5), 0 10px 24px rgba(0,0,0,.45)",
         }}
       >
@@ -238,12 +251,12 @@ function StatsCompact() {
   );
 }
 
-/* ========================= Top Marquee (white bar + silver text) ========================= */
+/* ========================= Top Marquee (inverted color) ========================= */
 function TopLocationsMarquee() {
   const text =
     "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • Oilfield Routes";
   return (
-    <div className="w-full bg-white text-sm">
+    <div className="w-full bg-[#0b0f14] text-sm">
       <div className="container max-w-7xl py-2">
         <div className="relative overflow-hidden">
           <div className="marquee whitespace-nowrap font-extrabold tracking-tight marquee-text">
@@ -253,6 +266,25 @@ function TopLocationsMarquee() {
           </div>
         </div>
       </div>
+
+      {/* two blank lines, then the yellow sentence */}
+      <div className="h-6" />
+      <div className="h-6" />
+      <div className="w-full">
+        <div className="container max-w-7xl">
+          <p
+            className="text-center font-extrabold"
+            style={{
+              fontFamily:
+                'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+              color: "#ffd54a",
+            }}
+          >
+            Providing Towing, Recovery Services, and Emergency Roadside Assistance to West Texas
+          </p>
+        </div>
+      </div>
+
       <style jsx global>{`
         @keyframes marquee-x {
           0% { transform: translateX(0); }
@@ -261,17 +293,18 @@ function TopLocationsMarquee() {
         .marquee { display: inline-flex; min-width: 200%; animation: marquee-x 30s linear infinite; }
         @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
 
-        /* Marquee text: bright silver with subtle stroke for contrast on white */
+        /* Inverted: clean white-silver on charcoal */
         .marquee-text {
-          color: #e6edf3;
-          -webkit-text-stroke: 0.6px #111;
-          text-shadow: 0 1px 2px rgba(0,0,0,.6);
+          color: #f5f7fa;
+          -webkit-text-stroke: 0.4px rgba(0,0,0,.9);
+          text-shadow: 0 1px 2px rgba(0,0,0,.7);
+          font-family: ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
         }
 
         /* GLOBAL: darker + bolder body text (utility class) */
         .stronger { color: #000000; font-weight: 800; }
 
-        /* Diamond-steel panel finish for all SoftBox containers */
+        /* Diamond-steel panel finish for SoftBox containers */
         .diamond-panel {
           background-image:
             linear-gradient(135deg, rgba(59,130,246,0.12), rgba(244,63,94,0.12)),
@@ -344,7 +377,7 @@ export default function Home() {
   return (
     <>
       <main className="text-ahCharcoal min-h-screen">
-        {/* Marquee */}
+        {/* Marquee + yellow line */}
         <TopLocationsMarquee />
 
         {/* Header */}
@@ -372,24 +405,26 @@ export default function Home() {
           </div>
         </header>
 
-        {/* ===== TOP steel banner (reduced height, enlarged pro font, only one big name) ===== */}
-        <section className="relative z-[60] w-full overflow-hidden" style={{ minHeight: "clamp(160px, 22vh, 340px)" }}>
-          <div className="relative z-[70] h-full w-full flex items-center justify-center px-4 py-6">
+        {/* ===== TOP steel banner (reduced height, static) ===== */}
+        <section className="relative z-[60] w-full overflow-hidden" style={{ minHeight: "clamp(130px, 18vh, 280px)" }}>
+          <div className="relative z-[70] h-full w-full flex items-center justify-center px-4 py-2">
             <BrandSlabTop />
           </div>
         </section>
 
-        {/* ========== tow1 background (frameless) with floating tagline near top ========== */}
+        {/* ========== tow1 background (slightly shorter) with larger tagline ========== */}
         <VideoSection
           src="/Videos/tow1.mp4"
-          minVH={100}
+          minVH={92}
           overlayTop={
             <div className="mx-auto max-w-fit rounded-2xl px-4 py-2 bg-black/40 backdrop-blur-sm">
               <div
                 className="text-center font-extrabold tracking-tight"
                 style={{
-                  fontSize: "clamp(16px, 2.6vw, 28px)",
-                  color: "#e6edf3",
+                  fontFamily:
+                    'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+                  fontSize: "clamp(20px, 3.2vw, 36px)",
+                  color: "#f5f7fa",
                   WebkitTextStroke: "0.6px #111",
                   textShadow: "0 1px 2px rgba(0,0,0,.65)",
                 }}
@@ -400,59 +435,61 @@ export default function Home() {
           }
         />
 
-        {/* Separator */}
-        <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />
+        {/* Thin separator line */}
+        <div className="h-[6px] w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />
 
-        {/* =================== HERO (intro content) =================== */}
-        <section className="overflow-hidden">
+        {/* =================== HERO on STEEL (butted under tow1) =================== */}
+        <section className="py-4">
           <div className="container max-w-7xl">
-            <div className="relative rounded-3xl overflow-hidden min-h-[50vh] md:min-h-[60vh] grid place-items-center bg-gradient-to-br from-zinc-200 via-zinc-100 to-white">
-              <div className="relative z-10 px-3 sm:px-4 py-6 md:py-8 w-full">
-                <SoftBox>
-                  <h2 className="text-2xl md:text-4xl font-extrabold leading-tight drop-shadow text-center stronger">
-                    Fast, Friendly, <span className="underline decoration-ahAccent decoration-4 underline-offset-4">Professional</span>{" "}
-                    Towing — <span className="whitespace-nowrap">Handle with Care</span>
-                  </h2>
-                  <p className="mt-3 text-base md:text-lg opacity-95 text-center stronger">
-                    Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows,
-                    winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
-                    <strong> Click below to call or text us direct!</strong>
-                  </p>
-                  <div className="mt-3"><StatsCompact /></div>
-                  <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
-                    <PhoneCTA />
-                    <ScrollToFormCTA />
-                  </div>
-                </SoftBox>
+            <SoftBox className="p-0" strip={false}>
+              <AccentStrip />
+              <div className="px-4 py-5 md:px-6 md:py-6">
+                <h2 className="text-2xl md:text-4xl font-extrabold text-center stronger space-x-2">
+                  <Chip>Fast</Chip>{" "}
+                  <Chip>Friendly</Chip>{" "}
+                  <Chip>Professional</Chip>{" "}
+                  <span className="inline-block">Towing —</span>{" "}
+                  <Chip className="bg-black/60">Handle&nbsp;with&nbsp;Care</Chip>
+                </h2>
+                <p className="mt-3 text-base md:text-lg text-center stronger">
+                  Stranded on I-20 or US-285? <Chip className="mx-1">We dispatch immediately</Chip> for light, medium &amp; heavy-duty tows,
+                  winch-outs, accident recovery, and oilfield transport. Trained operators. Clear pricing.
+                  <strong> Click below to call or text us direct!</strong>
+                </p>
+                <div className="mt-3"><StatsCompact /></div>
+                <div className="mt-4 flex flex-wrap items-center gap-3 justify-center">
+                  <PhoneCTA />
+                  <ScrollToFormCTA />
+                </div>
               </div>
-            </div>
+            </SoftBox>
           </div>
         </section>
 
-        {/* Separator */}
-        <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahRed via-white to-ahBlue" />
+        {/* Zero bottom space to butt against services */}
+        <div className="h-[4px] w-full bg-gradient-to-r from-ahRed via-white to-ahBlue" />
 
-        {/* =================== tow2 behind Services =================== */}
-        <VideoSection src="/Videos/tow2.mp4" minVH={90}>
-          <Section
-            id="services"
-            title="24/7 Towing & Roadside — Built for West Texas and Oilfield Conditions"
-            subtitle="From small tows to equipment moves, we’re ready when you need us."
-          >
-            <div className="grid md:grid-cols-3 gap-6">
-              {[
-                { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups", color: "from-ahBlue to-blue-400" },
-                { icon: IconTruck, title: "Heavy Duty & Commercial", desc: "Oilfield & fleet", color: "from-ahRed to-red-500" },
-                { icon: IconFlatbed, title: "Flatbed / Rollback", desc: "Damage-free transport", color: "from-amber-500 to-orange-500" },
-                { icon: IconBolt, title: "Jumpstarts", desc: "12V & roadside checks", color: "from-yellow-400 to-amber-500" },
-                { icon: IconLock, title: "Lockouts", desc: "Fast entry, no damage", color: "from-emerald-500 to-green-600" },
-                { icon: IconHook, title: "Winching / Recovery", desc: "Off-road, mud, sand", color: "from-violet-500 to-indigo-600" },
-                { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel", color: "from-cyan-500 to-sky-500" },
-                { icon: IconTruck, title: "Long & Short Distance", desc: "Local & state-to-state", color: "from-slate-500 to-slate-700" },
-                { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional", color: "from-rose-500 to-pink-600" },
-              ].map(({ icon: Ico, title, desc, color }) => (
-                <SoftBox key={title}>
-                  <div className="-mt-6 -mx-6 mb-4"><AccentStrip color={color} /></div>
+        {/* =================== SERVICES =================== */}
+        <Section
+          id="services"
+          title="24/7 Towing & Roadside — Built for West Texas and Oilfield Conditions"
+          subtitle="From small tows to equipment moves, we’re ready when you need us."
+        >
+          <div className="grid md:grid-cols-3 gap-4">
+            {[
+              { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups", color: "from-ahBlue to-blue-400" },
+              { icon: IconTruck, title: "Heavy Duty & Commercial", desc: "Oilfield & fleet", color: "from-ahRed to-red-500" },
+              { icon: IconFlatbed, title: "Flatbed / Rollback", desc: "Damage-free transport", color: "from-amber-500 to-orange-500" },
+              { icon: IconBolt, title: "Jumpstarts", desc: "12V & roadside checks", color: "from-yellow-400 to-amber-500" },
+              { icon: IconLock, title: "Lockouts", desc: "Fast entry, no damage", color: "from-emerald-500 to-green-600" },
+              { icon: IconHook, title: "Winching / Recovery", desc: "Off-road, mud, sand", color: "from-violet-500 to-indigo-600" },
+              { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel", color: "from-cyan-500 to-sky-500" },
+              { icon: IconTruck, title: "Long & Short Distance", desc: "Local & state-to-state", color: "from-slate-500 to-slate-700" },
+              { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional", color: "from-rose-500 to-pink-600" },
+            ].map(({ icon: Ico, title, desc, color }) => (
+              <SoftBox key={title} className="p-0">
+                <div className="-mt-0 -mx-0 mb-3"><AccentStrip color={color} /></div>
+                <div className="px-4 pb-5">
                   <div className="flex items-start gap-4">
                     <div className={`h-12 w-12 rounded-xl bg-gradient-to-br ${color} grid place-items-center flex-shrink-0`}>
                       <Ico className="h-7 w-7 text-white" />
@@ -462,24 +499,25 @@ export default function Home() {
                       <div className="text-sm opacity-90 stronger">{desc}</div>
                     </div>
                   </div>
-                </SoftBox>
-              ))}
+                </div>
+              </SoftBox>
+            ))}
+          </div>
+
+          {/* Centered CTAs — tight */}
+          <SoftBox className="mt-4 p-0">
+            <div className="px-4 py-4 flex gap-3 flex-wrap justify-center">
+              <PhoneCTA />
+              <ScrollToFormCTA />
             </div>
+          </SoftBox>
+        </Section>
 
-            {/* Centered CTAs */}
-            <SoftBox className="mt-6">
-              <div className="flex gap-3 flex-wrap justify-center">
-                <PhoneCTA />
-                <ScrollToFormCTA />
-              </div>
-            </SoftBox>
-          </Section>
-        </VideoSection>
+        {/* Tight line, then tow2 (unobstructed) */}
+        <div className="h-[6px] w-full bg-gradient-to-r from-slate-200 via-rose-200/40 to-sky-200" />
+        <VideoSection src="/Videos/tow2.mp4" minVH={88} />
 
-        {/* Separator */}
-        <div className="h-6 md:h-8 w-full bg-gradient-to-r from-slate-200 via-rose-200/40 to-sky-200" />
-
-        {/* =================== Condensed Service Area =================== */}
+        {/* =================== Condensed Service Area (tight) =================== */}
         <Section id="coverage" title="Service Area — Pecos & West Texas" subtitle={null}>
           <SoftBox strip={false}>
             <div className="-mt-6 -mx-6 mb-4"><AccentStrip /></div>
@@ -487,7 +525,7 @@ export default function Home() {
               <div className="rounded-2xl overflow-hidden border border-black/10">
                 <iframe
                   title="Coverage Map"
-                  className="w-full h-[260px]"
+                  className="w-full h-[240px]"
                   loading="lazy"
                   referrerPolicy="no-referrer"
                   allowFullScreen
@@ -505,7 +543,7 @@ export default function Home() {
                 </ul>
                 <div className="mt-3">
                   <a className="underline font-extrabold" href="tel:+14328424578">
-                    Professional coverage beyond this region is available — call to arrange long-distance transport.
+                    Long-distance transport available — call to arrange.
                   </a>
                 </div>
               </div>
@@ -513,39 +551,14 @@ export default function Home() {
           </SoftBox>
         </Section>
 
-        {/* Separator */}
-        <div className="h-6 md:h-8 w-full bg-gradient-to-r from-ahBlue via-white to-ahRed" />
+        {/* Tight line, then tow3 (unobstructed) */}
+        <div className="h-[6px] w-full bg-gradient-to-r from-ahBlue via-white to-ahRed" />
+        <VideoSection src="/Videos/tow3.mp4" minVH={88} />
 
-        {/* =================== Training & Community — moved ABOVE tow4 =================== */}
-        <Section
-          id="proof"
-          title="Training & Community — Why Professionals Trust A&H Towing and Recovery"
-          subtitle="We train for heavy hauling, exercise with first responders, and handle oilfield moves. Watch our videos below to learn more!"
-        >
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { title: "Heavy Hauling Readiness", desc: "Operators trained for complex recoveries and oilfield moves using proper rigging and safety protocols." },
-              { title: "First Responder Coordination", desc: "Regular coordination with local responders ensures safe, fast scene management when it matters most." },
-              { title: "Equipment & Care", desc: "Modern gear, careful handling, and clear communication from dispatch to drop-off." },
-            ].map(({ title, desc }) => (
-              <SoftBox key={title}>
-                <div className="-mt-6 -mx-6 mb-4"><AccentStrip /></div>
-                <div className="font-extrabold stronger">{title}</div>
-                <div className="text-sm opacity-90 mt-1 stronger">{desc}</div>
-              </SoftBox>
-            ))}
-          </div>
-        </Section>
-
-        {/* =================== tow3 and tow4 videos =================== */}
-        <VideoSection src="/Videos/tow3.mp4" minVH={90} />
-        <div className="h-4 md:h-6" />
-        <VideoSection src="/Videos/tow4.mp4" minVH={90} />
-
-        {/* Contact */}
+        {/* =================== Request a Tow — directly under tow3, minimal spacing =================== */}
         <Section id="contact" title="Request a Tow" subtitle="Fastest: Call or Text. Share your exact location and key details in one tap.">
-          <SoftBox className="mb-4">
-            <div className="flex gap-3 flex-wrap justify-center">
+          <SoftBox className="mb-3 p-0">
+            <div className="px-4 py-4 flex gap-3 flex-wrap justify-center">
               <PhoneCTA />
               <ScrollToFormCTA label="Text Dispatch (Include GPS)" />
             </div>
@@ -556,14 +569,50 @@ export default function Home() {
           </SoftBox>
         </Section>
 
-        {/* Bottom steel brand — reduced height, enlarged text like top */}
+        {/* Bottom steel brand — reduced height */}
         <div className="container max-w-7xl pb-2">
           <BrandSlabBottom />
         </div>
 
+        {/* Payments + Social above footer */}
+        <div className="container max-w-7xl py-4">
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="font-extrabold stronger">We accept:</div>
+            {/* Cash icon */}
+            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+              <span className="stronger">Cash</span>
+            </div>
+            {/* Credit Cards icon */}
+            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+              <span className="stronger">All Major Credit Cards</span>
+            </div>
+            {/* EFS icon */}
+            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18l-2 12H5L3 6Z"/><path d="M7 10h10M6 14h12"/></svg>
+              <span className="stronger">EFS Services</span>
+            </div>
+          </div>
+          <div className="mt-3">
+            <a
+              className="inline-flex items-center gap-2 rounded-xl px-3 py-2 bg-black text-white font-semibold"
+              href="https://www.tiktok.com/@"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {/* Simple TikTok glyph */}
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c-3.37-.54-6.27 2.02-6.27 5.13 0 2.85 2.34 5.17 5.23 5.17 2.88 0 5.23-2.32 5.23-5.17v-5.2c.94.5 2 .76 3.12.76Z"/>
+              </svg>
+              <span>Follow us on TikTok</span>
+            </a>
+          </div>
+        </div>
+
         {/* Footer */}
-        <footer className="bg-ahCharcoal text-ahText mt-6">
-          <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-10 text-sm">
+        <footer className="bg-ahCharcoal text-ahText mt-4">
+          <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-8 text-sm">
             <div>
               <div className="font-extrabold text-white drop-shadow-sm">A&amp;H Towing &amp; Recovery, LLC</div>
               <p className="mt-2 font-bold text-amber-200">
@@ -575,13 +624,14 @@ export default function Home() {
               <ul className="mt-2 space-y-1">
                 <li><a className="underline" href="#services">Services</a></li>
                 <li><a className="underline" href="#coverage">Coverage</a></li>
-                <li><a className="underline" href="#proof">Training & Proof</a></li>
-                <li><a className="underline" href="#contact">Contact</a></li>
+                <li><a className="underline" href="#contact">Request a Tow</a></li>
               </ul>
             </div>
             <div>
               <div className="font-semibold text-white">Social</div>
-              <ul className="mt-2 space-y-1">{/* no external embeds */}</ul>
+              <ul className="mt-2 space-y-1">
+                <li><a className="underline" href="https://www.tiktok.com/@" target="_blank" rel="noreferrer">TikTok</a></li>
+              </ul>
             </div>
             <div>
               <div className="font-semibold text-white">Contact</div>

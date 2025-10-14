@@ -85,7 +85,7 @@ function StripedCallout({ children, className = "" }) {
       className={`inline-block rounded-xl p-[3px] ${className}`}
       style={{
         backgroundImage:
-          "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)",
+          "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)", // stripes on border only
       }}
     >
       <div className="rounded-lg px-4 py-3 text-center" style={{ backgroundColor: "#fde047" }}>
@@ -417,25 +417,6 @@ export default function Home() {
     "Wink",
   ].sort((a, b) => a.localeCompare(b));
 
-  /* Services split by subcategory — rendered as steel cards */
-  const towingServices = [
-    { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups" },
-    { icon: IconTruck, title: "Heavy Duty & Commercial Towing", desc: "Oilfield & fleet" },
-    { icon: IconTruck, title: "Oilfield Routes Tow Service", desc: "Lease roads • remote access" },
-    { icon: IconTruck, title: "Long & Short Distance Tows", desc: "Local & state-to-state" },
-    { icon: IconFlatbed, title: "Equipment Transport", desc: "Light equipment & tools" },
-    { icon: IconFlatbed, title: "Flatbed / Rollback Services", desc: "Damage-free transport" },
-  ];
-  const roadside = [
-    { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel" },
-    { icon: IconBolt, title: "Jumpstarts", desc: "12V & roadside checks" },
-    { icon: IconLock, title: "Lockouts", desc: "Fast entry, no damage" },
-  ];
-  const accident = [
-    { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional" },
-    { icon: IconHook, title: "Winching / Recovery", desc: "Off-road, mud, sand" },
-  ];
-
   return (
     <>
       <main className="min-h-screen bg-neutral-950">
@@ -506,10 +487,10 @@ export default function Home() {
                     className="font-black tracking-tight"
                     style={{
                       fontSize: "clamp(28px,4.6vw,56px)",
-                      color: "#fde047",
-                      WebkitTextStroke: "1.5px #000",
+                      color: "#fde047",              // solid yellow fill
+                      WebkitTextStroke: "1.5px #000",// crisp black outline
                       textShadow: "0 6px 14px rgba(0,0,0,.55)",
-                      letterSpacing: "0.4px",
+                      letterSpacing: "0.4px",        // avoid “glued together” look
                     }}
                   >
                     Stranded on the Side of the Road???
@@ -534,7 +515,7 @@ export default function Home() {
                 <BubbleBlock className="!text-black" >
                   <span
                     style={{
-                      backgroundColor: "rgba(250, 204, 21, 0.65)",
+                      backgroundColor: "rgba(250, 204, 21, 0.65)", // yellow-400 @ 65% opacity
                       display: "inline-block",
                       borderRadius: "12px",
                       padding: "6px 10px",
@@ -559,100 +540,40 @@ export default function Home() {
           </AnimBorder>
         </Section>
 
-        {/* =================== Tow2 + Google Reviews (two-column) =================== */}
-        <Section className="bg-red-900/80">
-          <div className="grid md:grid-cols-2 gap-6 items-stretch">
-            {/* Left: Taller Tow2 with in-frame quip (kept inside video) */}
-            <div className="rounded-[22px] overflow-hidden relative">
-              <VideoSection
-                src="/Videos/tow2.mp4"
-                minVH={110}
-                innerWrapperClass="grid place-items-center"
-                videoStyle={{
-                  width: "min(70vw, 560px)",
-                  height: "100%",
-                  objectFit: "cover",
-                  objectPosition: "center",
-                }}
-                overlayStrength={0.15}
-              >
-                {/* This bubble stays INSIDE the video frame */}
-                <div
-                  className="absolute z-30 right-6 top-[14%] max-w-[60%] md:max-w-[48%] px-4 py-2 rounded-2xl"
-                  style={{
-                    background: "rgba(2, 6, 23, 0.45)",
-                    border: "1px solid rgba(255,255,255,0.25)",
-                    backdropFilter: "blur(2px)",
-                  }}
-                >
-                  <div
-                    className="font-extrabold leading-snug"
-                    style={{
-                      fontFamily:
-                        '"Segoe UI", "Trebuchet MS", system-ui, -apple-system, Roboto, Arial',
-                      fontSize: "clamp(18px,3.2vw,32px)",
-                      color: "#2563eb",
-                      textShadow: "0 2px 8px rgba(0,0,0,.6)",
-                    }}
-                  >
-                    When You Call, We Roll Out!
-                  </div>
-                </div>
-              </VideoSection>
-            </div>
-
-            {/* Right: Google Customer Reviews block */}
-            <AnimBorder>
-              <SteelPanel className="h-full grid">
-                <div className="place-self-center text-center max-w-md">
-                  <BubbleBlock className="mb-3">Google Customer Reviews</BubbleBlock>
-                  <p className="text-white/90 text-sm mb-3">
-                    We value your feedback. See what customers are saying and share your experience.
-                  </p>
-                  <a
-                    href="#contact"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const el = document.getElementById("dispatch-form");
-                      el?.scrollIntoView({ behavior: "smooth", block: "start" });
-                      setTimeout(() => document.getElementById("name-input")?.focus(), 600);
-                    }}
-                    className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-bold shadow-cta text-white bg-gradient-to-r from-ahBlue to-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm"
-                  >
-                    Request a Tow / Leave a Review Later
-                  </a>
-                </div>
-              </SteelPanel>
-            </AnimBorder>
-          </div>
-        </Section>
-
         {/* =================== SERVICES (steel cards under subcategories) =================== */}
         <Section id="services" className="bg-red-800/90">
           <AnimBorder>
             <SteelPanel className="text-center">
-              {/* “Services Provided” heading: professional font + steel-blue color */}
+              {/* Services Provided — clean solid sans, blue */}
               <div className="inline-block rounded-2xl px-5 py-2 bg-black/20 backdrop-blur-sm">
                 <h3
-                  className="text-[clamp(30px,5.4vw,60px)] font-extrabold"
+                  className="text-[clamp(32px,5.2vw,56px)] font-black leading-tight tracking-tight"
                   style={{
                     fontFamily:
-                      '"Segoe UI", "Inter", "Helvetica Neue", system-ui, -apple-system, Arial',
-                    color: "#8EC5FF",
-                    WebkitTextStroke: "1.5px #0b1220",
-                    textShadow: "0 2px 0 #1f2937, 0 10px 18px rgba(0,0,0,.45)",
-                    letterSpacing: "0.5px",
+                      '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                    color: "#60a5fa",              // solid blue
+                    textShadow: "0 2px 14px rgba(0,0,0,.45)",
+                    letterSpacing: "0.2px",
                   }}
                 >
                   Services Provided
                 </h3>
               </div>
 
-              {/* Towing Services */}
+              {/* Tow Services */}
               <div className="mt-6">
-                <BubbleBlock className="!px-4 !py-2 mb-3">
-                  <span className="font-extrabold underline text-lg">Towing Services</span>
-                </BubbleBlock>
+                <div className="mb-3">
+                  <h4
+                    className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
+                    style={{
+                      fontFamily:
+                        '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                      color: "#60a5fa",
+                    }}
+                  >
+                    Tow Services
+                  </h4>
+                </div>
                 <div className="grid md:grid-cols-3 gap-4">
                   {[
                     { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups" },
@@ -683,9 +604,18 @@ export default function Home() {
 
               {/* Emergency Roadside Assistance */}
               <div className="mt-8">
-                <BubbleBlock className="!px-4 !py-2 mb-3">
-                  <span className="font-extrabold underline text-lg">Emergency Roadside Assistance</span>
-                </BubbleBlock>
+                <div className="mb-3">
+                  <h4
+                    className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
+                    style={{
+                      fontFamily:
+                        '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                      color: "#60a5fa",
+                    }}
+                  >
+                    Emergency Roadside Assistance
+                  </h4>
+                </div>
                 <div className="grid md:grid-cols-3 gap-4">
                   {[
                     { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel" },
@@ -711,11 +641,20 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Accident? */}
+              {/* Accidents */}
               <div className="mt-8">
-                <BubbleBlock className="!px-4 !py-2 mb-3">
-                  <span className="font-extrabold underline text-lg">Accident?</span>
-                </BubbleBlock>
+                <div className="mb-3">
+                  <h4
+                    className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
+                    style={{
+                      fontFamily:
+                        '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                      color: "#60a5fa",
+                    }}
+                  >
+                    Accidents
+                  </h4>
+                </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   {[
                     { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional" },

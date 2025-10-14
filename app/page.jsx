@@ -16,7 +16,13 @@ function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", 
   const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
   return (
     <a
-      href="tel:+14328424578"
+      href="#contact"
+      onClick={(e) => {
+        e.preventDefault();
+        const el = document.getElementById("dispatch-form");
+        el?.scrollIntoView({ behavior: "smooth", block: "start" });
+        setTimeout(() => document.getElementById("name-input")?.focus(), 600);
+      }}
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className}`}
       aria-label="Call A&H Towing & Recovery"
     >
@@ -25,26 +31,16 @@ function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", 
   );
 }
 
-function ScrollToFormCTA({ className = "", label = "Text Dispatch (Include GPS)", targetId = "form-start" }) {
+function ScrollToFormCTA({ className = "", label = "Text Dispatch (Include GPS)", targetId = "dispatch-form" }) {
   const onClick = (e) => {
     e.preventDefault();
-    const el = document.getElementById(targetId) || document.getElementById("dispatch-form");
+    const el = document.getElementById(targetId);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
-      setTimeout(() => {
-        const first = document.querySelector(
-          "#dispatch-form input, #dispatch-form textarea, #dispatch-form select, #dispatch-form button"
-        );
-        first?.focus();
-      }, 600);
+      setTimeout(() => document.getElementById("name-input")?.focus(), 600);
     } else {
       window.location.hash = "#contact";
-      setTimeout(() => {
-        const first = document.querySelector(
-          "#dispatch-form input, #dispatch-form textarea, #dispatch-form select, #dispatch-form button"
-        );
-        first?.focus();
-      }, 600);
+      setTimeout(() => document.getElementById("name-input")?.focus(), 600);
     }
   };
   return (
@@ -87,11 +83,21 @@ function AccentStrip({ color = "from-ahBlue to-ahRed", className = "" }) {
   return <div className={`h-1 w-full bg-gradient-to-r ${color} ${className}`} />;
 }
 
+/* =================== GLOBAL Animated Border (red↔blue) =================== */
+/* Use for EVERY steel panel wrapper so borders match sitewide */
+function AnimBorder({ children, className = "" }) {
+  return (
+    <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>
+      {children}
+    </div>
+  );
+}
+
 /* Steel panel container (background only) */
-function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.40)" }) {
+function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
   return (
     <div
-      className={`rounded-3xl border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
       style={{
         backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")`,
         backgroundSize: "cover",
@@ -154,48 +160,32 @@ const IconFuel = (props) => (
     <path d="M13 10h2l3 3v6a2 2 0 0 0 2 2h1" />
   </svg>
 );
-function IconShield(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
-      <path d="M12 3l7 3v5a10 10 0 0 1-7 9 10 10 0 0 1-7-9V6l7-3z" />
-    </svg>
-  );
-}
-function IconClock(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v6l4 2" />
-    </svg>
-  );
-}
 
-/* ===== Company name on steel (gradient border, no white halo) ===== */
+/* ===== Company name on steel (animated red↔blue border; RED letters) ===== */
 function BrandSlab({ Tag = "h1" }) {
   return (
-    <div className="bg-gradient-to-r from-ahBlue via-ahRed to-ahBlue p-[6px] rounded-[28px] shadow-[0_10px_28px_rgba(0,0,0,0.45)]">
-      <SteelPanel padded={false} className="px-2 py-1 rounded-[22px] border-transparent">
+    <AnimBorder>
+      <SteelPanel padded={false} className="px-2 py-1 text-center">
         <Tag
-          className="text-center font-black tracking-tight"
+          className="font-black tracking-tight"
           style={{
             fontFamily:
               'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
             fontSize: "clamp(40px, 7vw, 96px)",
-            color: "#e9edf1",            // silver fill
-            WebkitTextStroke: "1px #000", // black outline (no white)
-            textShadow:
-              "0 1px 1px rgba(0,0,0,.35), 0 4px 10px rgba(0,0,0,.45), 0 12px 28px rgba(0,0,0,.4)",
+            color: "#e10600",            // RED letters (top & bottom)
+            WebkitTextStroke: "1.5px #000",
+            textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
             lineHeight: 1.05,
           }}
         >
           A&amp;H TOWING &amp; RECOVERY, LLC
         </Tag>
       </SteelPanel>
-    </div>
+    </AnimBorder>
   );
 }
 
-/* ========================= Golden award badges ========================= */
+/* ========================= Golden award badges (bright gold + shimmer) ========================= */
 function MedalBadge({ title, lines = [] }) {
   return (
     <div className="w-full sm:w-auto px-2">
@@ -206,12 +196,20 @@ function MedalBadge({ title, lines = [] }) {
           <div className="w-6 h-10 bg-ahBlue clip-ribbon shadow-md" />
         </div>
         {/* medal */}
-        <div className="w-48 h-48 rounded-full bg-[radial-gradient(circle_at_30%_30%,#fff59d, #f59e0b_40%,#b45309_75%)] shadow-2xl border-4 border-yellow-400 grid place-items-center text-center p-6">
-          <div>
-            <div className="text-sm font-extrabold uppercase tracking-wide text-yellow-900">
+        <div
+          className="relative w-48 h-48 rounded-full shadow-2xl border-4 border-yellow-300 grid place-items-center text-center p-6"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 30% 30%, #fff7b1, #ffd84a 45%, #f59e0b 70%, #b45309 90%)",
+          }}
+        >
+          {/* shimmer sweep */}
+          <div className="pointer-events-none absolute inset-0 rounded-full opacity-35 bg-[conic-gradient(from_0deg,transparent,rgba(255,255,255,0.65),transparent_30%)] animate-spin-slow" />
+          <div className="relative">
+            <div className="text-sm font-black uppercase tracking-wide text-yellow-900">
               {title}
             </div>
-            <div className="mt-2 text-base font-bold text-yellow-950 leading-snug">
+            <div className="mt-2 text-base font-black text-yellow-950 leading-snug">
               {lines.map((l, i) => (
                 <div key={i}>{l}</div>
               ))}
@@ -244,11 +242,12 @@ function TopLocationsMarquee() {
           <div
             className="marquee whitespace-nowrap font-extrabold tracking-tight"
             style={{
-              color: "#e10600", // letters in the top banner to red
+              color: "#f5f7fa", // light silver, bold
               WebkitTextStroke: "0.4px rgba(0,0,0,.9)",
               textShadow: "0 1px 2px rgba(0,0,0,.7)",
               fontFamily:
                 'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+              fontWeight: 900,
             }}
           >
             <span className="inline-block pr-12">{text}</span>
@@ -260,10 +259,10 @@ function TopLocationsMarquee() {
 
       {/* tight gap */}
       <div className="h-[2px]" />
-      <div className="w-full">
+      <div className="w-full bg-red-700/90">
         <div className="container max-w-7xl">
           <p
-            className="text-center font-extrabold"
+            className="text-center font-extrabold py-1"
             style={{
               fontFamily:
                 'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
@@ -283,17 +282,25 @@ function TopLocationsMarquee() {
         .marquee { display: inline-flex; min-width: 200%; animation: marquee-x 30s linear infinite; }
         @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
 
-        .diamond-panel {
-          background-image:
-            linear-gradient(135deg, rgba(59,130,246,0.12), rgba(244,63,94,0.12)),
-            url("/diamond-plate.jpg");
-          background-size: cover, 220px 220px;
-          background-repeat: no-repeat, repeat;
-          background-position: center, center;
-          background-color: rgba(255,255,255,0.6);
-          background-blend-mode: overlay, normal;
-        }
         .clip-ribbon { clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%); }
+
+        /* ===== Global animated red↔blue border (smooth angle animation) ===== */
+        @property --angle {
+          syntax: "<angle>";
+          initial-value: 0deg;
+          inherits: false;
+        }
+        @keyframes rb-rotate {
+          to { --angle: 360deg; }
+        }
+        .rb-border {
+          --angle: 0deg;
+          background: conic-gradient(from var(--angle), #3b82f6 0%, #ef4444 50%, #3b82f6 100%);
+          animation: rb-rotate 24s linear infinite;
+        }
+
+        .animate-spin-slow { animation: spin 6s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
     </div>
   );
@@ -309,6 +316,7 @@ function VideoSection({
   taglinePos = { bottom: "18%" },
   videoStyle = {},
   innerWrapperClass = "",
+  overlayStrength = 0.35, // control vignette
 }) {
   const [videoError, setVideoError] = useState(false);
   return (
@@ -330,7 +338,13 @@ function VideoSection({
         </video>
       </div>
 
-      <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.2)_78%,rgba(0,0,0,0.35)_100%)]" />
+      {/* vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none z-10"
+        style={{
+          background: `radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,${overlayStrength * 0.57}) 78%, rgba(0,0,0,${overlayStrength}) 100%)`,
+        }}
+      />
 
       {tagline && (
         <div className="absolute left-1/2 -translate-x-1/2 z-20 w-full px-4" style={taglinePos}>
@@ -359,22 +373,40 @@ export default function Home() {
     setTimeout(() => window.scrollTo(0, 0), 0);
   }, []);
 
+  /* Alphabetized locations for the list */
+  const locations = [
+    "Balmorhea",
+    "Fort Stockton",
+    "Grandfalls",
+    "Kermit",
+    "Midland",
+    "Midland/Odessa Metro & I-20 Corridor",
+    "Monahans",
+    "Odessa",
+    "Oilfield Routes",
+    "Pecos (Home Base)",
+    "Pyote",
+    "Reeves County",
+    "TX-17",
+    "Toyah",
+    "US-285",
+    "Wink",
+  ].sort((a, b) => a.localeCompare(b));
+
   return (
     <>
-      <main className="min-h-screen">
-        {/* Marquee + yellow line */}
+      <main className="min-h-screen bg-neutral-950">
+        {/* Marquee */}
         <TopLocationsMarquee />
 
         {/* Header */}
         <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
           <div className="container max-w-7xl flex items-center gap-6 py-3">
             <div className="flex items-center gap-3">
-              {/* small logo letters switched to red */}
               <div className="h-10 w-10 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
                 <span className="text-[15px] font-extrabold" style={{ color: "#e10600" }}>A&amp;H</span>
               </div>
               <div className="leading-tight">
-                {/* brand letters in header switched to red */}
                 <div className="font-bold drop-shadow text-red-600">A&amp;H Towing & Recovery, LLC</div>
                 <div className="text-xs opacity-90">2712 W F Street, Pecos, TX 79772</div>
                 <div className="text-xs">
@@ -393,221 +425,278 @@ export default function Home() {
           </div>
         </header>
 
-        {/* ===== Top steel banner (gradient border, no white halo) ===== */}
+        {/* ===== Top steel banner ===== */}
         <section className="relative z-[60] w-full overflow-hidden" style={{ minHeight: "clamp(110px, 15vh, 200px)" }}>
           <div className="relative z-[70] h-full w-full flex items-center justify-center px-2 py-0.5">
             <BrandSlab Tag="h1" />
           </div>
         </section>
 
-        {/* ========== Tow1 (slightly shorter), tagline above cab (faded blue) ========== */}
+        {/* ========== Tow1 (darker bubble for clarity) ========== */}
         <VideoSection
           src="/Videos/tow1.mp4"
           minVH={78}
+          overlayStrength={0.2}
           tagline={
-            <Chip className="text-[clamp(18px,3.2vw,36px)] px-4 py-2 bg-blue-500/45">
+            <Chip className="text-[clamp(18px,3.2vw,36px)] px-4 py-2 bg-blue-900/55">
               Handle with Care • Fast Response • West Texas Tough
             </Chip>
           }
           taglinePos={{ top: "12%" }}
         />
 
-        {/* Thicker red/blue strip before stranded block */}
-        <AccentStrip className="h-[10px]" color="from-ahBlue via-rose-300/60 to-ahRed" />
+        {/* Space so wheels are clearly visible */}
+        <div className="h-6" />
 
-        {/* =================== HERO on STEEL: 3D text + gradient border + red surroundings =================== */}
-        <Section className="bg-ahRed">
-          <div className="bg-gradient-to-r from-ahBlue via-ahRed to-ahBlue p-[6px] rounded-[28px]">
-            <SteelPanel className="rounded-[22px] text-center">
-              {/* 3D headline */}
+        {/* =================== STRANDED SECTION =================== */}
+        <Section className="mt-4 bg-red-800">
+          <AnimBorder>
+            <SteelPanel className="text-center">
               <h2
-                className="text-[clamp(26px,4.2vw,50px)] font-black tracking-tight"
+                className="text-[clamp(26px,4.2vw,50px)] font-black tracking-tight underline underline-offset-4"
                 style={{
                   color: "#ffffff",
-                  textShadow:
-                    "0 1px 0 #d1d5db, 0 2px 0 #9ca3af, 0 3px 0 #6b7280, 0 4px 0 #374151, 0 8px 16px rgba(0,0,0,.45)",
+                  WebkitTextStroke: "1.5px #00e5ff",
+                  textShadow: "0 1px 0 #93c5fd, 0 6px 12px rgba(0,0,0,.45)",
                 }}
               >
-                Stranded on I-20 or US-285?
+                Stranded on the Side of the Road???
               </h2>
-              <p
-                className="mt-2 font-extrabold text-white/95"
-                style={{ textShadow: "0 1px 2px rgba(0,0,0,.35)" }}
-              >
-                We dispatch immediately for light, medium &amp; heavy-duty tows, winch-outs, accident recovery, and oilfield transport.
-                Trained operators. Clear pricing.
-              </p>
 
-              {/* Buttons with centered line in between */}
-              <div className="mt-4 flex items-center justify-center gap-3 flex-wrap">
-                <PhoneCTA />
-                <span className="text-white/95 font-semibold text-sm sm:text-base text-center">
+              <div className="mt-3">
+                <BubbleBlock>
+                  We dispatch immediately for light, medium &amp; heavy-duty tows, winch-outs, accident recovery,
+                  and oilfield transport. Trained operators. Clear pricing.
+                </BubbleBlock>
+              </div>
+
+              {/* Instruction line ABOVE buttons */}
+              <div className="mt-4 mb-1">
+                <span className="block text-white/95 font-bold">
                   Click below to call or text us direct!
                 </span>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex items-center justify-center gap-3 flex-wrap">
+                <PhoneCTA />
                 <ScrollToFormCTA />
               </div>
 
-              {/* Golden awards below buttons (same area/sizing behavior) */}
               <GoldenFacts />
             </SteelPanel>
+          </AnimBorder>
+        </Section>
+
+        {/* =================== Tow2 + Google Reviews (two-column) =================== */}
+        <Section className="bg-red-900/80">
+          <div className="grid md:grid-cols-2 gap-6 items-stretch">
+            {/* Taller Tow2 to catch the front of the 18-wheeler earlier */}
+            <div className="rounded-[22px] overflow-hidden">
+              <VideoSection
+                src="/Videos/tow2.mp4"
+                minVH={110}
+                innerWrapperClass="grid place-items-center"
+                videoStyle={{
+                  width: "min(70vw, 560px)",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "center",
+                }}
+                overlayStrength={0.15}
+              />
+            </div>
+
+            {/* Google Customer Reviews block with matching red↔blue animated border */}
+            <AnimBorder>
+              <SteelPanel className="h-full grid">
+                <div className="place-self-center text-center max-w-md">
+                  <BubbleBlock className="mb-3">Google Customer Reviews</BubbleBlock>
+                  <p className="text-white/90 text-sm mb-3">
+                    We value your feedback. See what customers are saying and share your experience.
+                  </p>
+                  <a
+                    href="#contact"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const el = document.getElementById("dispatch-form");
+                      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+                      setTimeout(() => document.getElementById("name-input")?.focus(), 600);
+                    }}
+                    className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-bold shadow-cta text-white bg-gradient-to-r from-ahBlue to-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm"
+                  >
+                    Request a Tow / Leave a Review Later
+                  </a>
+                </div>
+              </SteelPanel>
+            </AnimBorder>
           </div>
         </Section>
 
-        {/* Thicker gradient divider before Services */}
-        <AccentStrip className="h-[12px]" color="from-ahRed via-white to-ahBlue" />
-
-        {/* =================== SERVICES (heading bubble + categories) =================== */}
-        <Section id="services">
-          {/* Light green transparent heading bubble on steel with thicker red/blue border */}
-          <div className="bg-gradient-to-r from-ahBlue via-ahRed to-ahBlue p-[6px] rounded-[28px] mb-4">
-            <SteelPanel className="rounded-[22px] text-center">
-              <div className="inline-block rounded-2xl px-5 py-2 bg-green-300/35 backdrop-blur-sm">
-                <h3 className="text-2xl md:text-3xl font-extrabold text-white drop-shadow">
+        {/* =================== SERVICES =================== */}
+        <Section id="services" className="bg-red-800/90">
+          <AnimBorder>
+            <SteelPanel className="text-center">
+              <div className="inline-block rounded-2xl px-5 py-2 bg-green-300/25 backdrop-blur-sm">
+                <h3
+                  className="text-[clamp(28px,5vw,56px)] font-black"
+                  style={{
+                    color: "#dfe4ea",
+                    WebkitTextStroke: "2px #000",
+                    textShadow: "0 2px 0 #9ca3af, 0 4px 0 #6b7280, 0 10px 18px rgba(0,0,0,.45)",
+                  }}
+                >
                   Services Provided
                 </h3>
               </div>
-            </SteelPanel>
-          </div>
 
-          {/* Two main sub-categories (bold + underline) */}
-          <div className="grid md:grid-cols-2 gap-6 mb-3">
-            <div className="text-center">
-              <span className="font-extrabold underline text-lg">
-                Towing Services (Light Duty to Heavy Duty) (Oilfield and Commercial)
-              </span>
-            </div>
-            <div className="text-center">
-              <span className="font-extrabold underline text-lg">Roadside Services</span>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups" },
-              { icon: IconTruck, title: "Heavy Duty & Commercial", desc: "Oilfield & fleet" },
-              { icon: IconFlatbed, title: "Flatbed / Rollback", desc: "Damage-free transport" },
-              { icon: IconBolt, title: "Jumpstarts", desc: "12V & roadside checks" },
-              { icon: IconLock, title: "Lockouts", desc: "Fast entry, no damage" },
-              { icon: IconHook, title: "Winching / Recovery", desc: "Off-road, mud, sand" },
-              { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel" },
-              { icon: IconTruck, title: "Long & Short Distance", desc: "Local & state-to-state" },
-              { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional" },
-            ].map(({ icon: Ico, title, desc }) => (
-              <SteelPanel key={title} className="p-4">
-                <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
-                    <Ico className="h-6 w-6 text-white" />
+              {/* Subheadings with bubbles and EXACT lists */}
+              <div className="mt-6 grid md:grid-cols-2 gap-8 text-left">
+                <div>
+                  <div className="text-center mb-2">
+                    <BubbleBlock className="!px-4 !py-2">
+                      <span className="font-extrabold underline text-lg">Towing Services</span>
+                    </BubbleBlock>
                   </div>
-                  <div>
-                    <BubbleBlock className="!px-3 !py-2">
-                      <div className="font-extrabold">{title}</div>
-                      <div className="text-sm text-white/95 mt-0.5">{desc}</div>
+                  <ul className="mt-3 space-y-1 list-disc list-inside">
+                    <li>Light Duty Towing</li>
+                    <li>Heavy Duty & Commercial Towing</li>
+                    <li>Oilfield Routes Tow Service</li>
+                    <li>Long & Short Distance Tows</li>
+                    <li>Equipment Transport</li>
+                    <li>Flatbed / Rollback Services</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <div className="text-center mb-2">
+                    <BubbleBlock className="!px-4 !py-2">
+                      <span className="font-extrabold underline text-lg">Emergency Roadside Assistance</span>
+                    </BubbleBlock>
+                  </div>
+                  <ul className="mt-3 space-y-1 list-disc list-inside">
+                    <li>Fuel Delivery</li>
+                    <li>Jumpstarts</li>
+                    <li>Lockouts</li>
+                  </ul>
+
+                  <div className="text-center mt-6 mb-2">
+                    <BubbleBlock className="!px-4 !py-2">
+                      <span className="font-extrabold underline text-lg">Accident?</span>
+                    </BubbleBlock>
+                  </div>
+                  <ul className="mt-3 space-y-1 list-disc list-inside">
+                    <li>Accident Removal</li>
+                    <li>Winching / Recovery</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div className="mt-6 flex gap-3 flex-wrap justify-center">
+                <PhoneCTA />
+                <ScrollToFormCTA />
+              </div>
+            </SteelPanel>
+          </AnimBorder>
+        </Section>
+
+        {/* =================== SERVICE AREA (Dark map + heading + alphabetical list) =================== */}
+        <Section id="coverage" className="bg-red-900/80">
+          <AnimBorder>
+            <SteelPanel>
+              <div className="text-center mb-4">
+                <BubbleBlock className="!px-5 !py-2">
+                  <span className="font-extrabold text-xl">Service Area</span>
+                </BubbleBlock>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-4 items-start">
+                {/* Dark-looking map via CSS filter over the embed */}
+                <div className="rounded-2xl overflow-hidden border border-white/15">
+                  <iframe
+                    title="Service Area Map (Dark)"
+                    className="w-full h-[260px]"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                    allowFullScreen
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=-104.2%2C30.9%2C-101.8%2C32.1&layer=mapnik"
+                    style={{
+                      filter: "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)", // darken the map
+                    }}
+                  />
+                </div>
+
+                {/* Alphabetized list */}
+                <div className="text-sm md:text-base text-white/95">
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-6">
+                    {locations.map((loc) => (
+                      <li key={loc} className="font-semibold">• {loc}</li>
+                    ))}
+                  </ul>
+                  <div className="mt-3 text-center">
+                    <BubbleBlock>
+                      <a className="underline font-extrabold text-white" href="tel:+14328424578">
+                        Long-distance transport available — call to arrange.
+                      </a>
                     </BubbleBlock>
                   </div>
                 </div>
-              </SteelPanel>
-            ))}
-          </div>
-
-          <div className="mt-4 flex gap-3 flex-wrap justify-center">
-            <PhoneCTA />
-            <ScrollToFormCTA />
-          </div>
-        </Section>
-
-        {/* Tight line, then Tow2: narrower & taller for vertical POV */}
-        <div className="h-[6px] w-full bg-gradient-to-r from-slate-200 via-rose-200/40 to-sky-200" />
-        <VideoSection
-          src="/Videos/tow2.mp4"
-          minVH={98}
-          innerWrapperClass="grid place-items-center"
-          videoStyle={{
-            width: "min(68vw, 520px)",
-            height: "100%",
-            objectFit: "cover",
-            objectPosition: "center",
-          }}
-        />
-
-        {/* =================== Condensed Service Area on STEEL =================== */}
-        <Section id="coverage">
-          <SteelPanel>
-            <div className="grid md:grid-cols-2 gap-4 items-start">
-              <div className="rounded-2xl overflow-hidden border border-white/25">
-                <iframe
-                  title="Coverage Map"
-                  className="w-full h-[240px]"
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                  allowFullScreen
-                  src="https://www.openstreetmap.org/export/embed.html?bbox=-104.2%2C30.9%2C-101.8%2C32.1&layer=mapnik"
-                />
               </div>
-              <div className="text-sm md:text-base text-white/95 text-center">
-                <div className="mb-2">
-                  <BubbleBlock className="mb-1">Service Area — Pecos &amp; West Texas</BubbleBlock>
-                </div>
-                <p className="mt-2"><Chip className="mb-2">Pecos (Home Base) • Reeves County</Chip></p>
-                <p className="mt-2"><Chip className="mb-2">Fort Stockton • Monahans • Kermit</Chip></p>
-                <p className="mt-2"><Chip className="mb-2">Balmorhea • Pyote • Toyah • Grandfalls • Wink</Chip></p>
-                <p className="mt-2"><Chip className="mb-2">Midland/Odessa Metro &amp; I-20 Corridor</Chip></p>
-                <p className="mt-2"><Chip className="mb-2">US-285 • TX-17 • Oilfield Routes</Chip></p>
-                <div className="mt-3">
-                  <BubbleBlock>
-                    <a className="underline font-extrabold text-white" href="tel:+14328424578">
-                      Long-distance transport available — call to arrange.
-                    </a>
-                  </BubbleBlock>
-                </div>
+            </SteelPanel>
+          </AnimBorder>
+        </Section>
+
+        {/* =================== Tow3 =================== */}
+        <Section className="bg-red-800/90">
+          <VideoSection
+            src="/Videos/tow3.mp4"
+            minVH={86}
+            videoStyle={{ filter: "contrast(1.12) saturate(1.1) sharpness(0.2)" }}
+          />
+        </Section>
+
+        {/* =================== Request a Tow (mint form + yellow instructions) =================== */}
+        <Section id="contact" className="bg-red-900/90">
+          <AnimBorder>
+            <SteelPanel>
+              <div className="text-center">
+                <BubbleBlock className="text-lg md:text-2xl mb-3">Request a Tow</BubbleBlock>
               </div>
-            </div>
-          </SteelPanel>
+              <div className="mt-3 flex gap-3 flex-wrap justify-center">
+                <PhoneCTA />
+                <ScrollToFormCTA label="Text Dispatch (Include GPS)" />
+              </div>
+
+              <div className="mt-4 rounded-2xl border border-white/15 bg-emerald-200/90 text-black p-4">
+                <ContactSection />
+              </div>
+            </SteelPanel>
+          </AnimBorder>
         </Section>
 
-        {/* Line, then Tow3 with a clarity boost */}
-        <div className="h-[6px] w-full bg-gradient-to-r from-ahBlue via-white to-ahRed" />
-        <VideoSection
-          src="/Videos/tow3.mp4"
-          minVH={86}
-          videoStyle={{ filter: "contrast(1.12) saturate(1.1) sharpness(0.2)" }}
-        />
-
-        {/* =================== Request a Tow =================== */}
-        <Section id="contact">
-          <SteelPanel>
-            <div className="text-center">
-              <BubbleBlock className="text-lg md:text-2xl mb-3">Request a Tow</BubbleBlock>
-            </div>
-            <div className="mt-3 flex gap-3 flex-wrap justify-center">
-              <PhoneCTA />
-              <ScrollToFormCTA label="Text Dispatch (Include GPS)" />
-            </div>
-            <div className="mt-4 rounded-2xl border border-white/15 bg-white/90 text-black p-4">
-              <ContactSection />
-            </div>
-          </SteelPanel>
-        </Section>
-
-        {/* Bottom steel brand (gradient border too) */}
+        {/* Bottom steel brand (RED letters) */}
         <div className="container max-w-7xl pb-2">
           <BrandSlab Tag="h2" />
         </div>
 
-        {/* Payments + TikTok */}
-        <div className="container max-w-7xl py-4">
+        {/* Payments + TikTok (more color) */}
+        <div className="container max-w-7xl py-4 bg-red-900/60 rounded-2xl">
           <div className="w-full flex justify-center">
-            <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/20 via-rose-500/20 to-amber-400/20 border border-black/10 max-w-fit">
+            <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/30 via-rose-500/30 to-amber-400/30 border border-black/10 max-w-fit">
               <div className="flex flex-wrap items-center justify-center gap-4">
-                <div className="font-extrabold">We accept:</div>
-                <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+                <div className="font-extrabold text-white">We accept:</div>
+
+                <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-yellow-50 to-amber-100">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
                   <span className="font-extrabold">Cash</span>
                 </div>
-                <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+
+                <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-sky-50 to-blue-100">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
                   <span className="font-extrabold">All Major Credit Cards</span>
                 </div>
-                <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+
+                <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-rose-50 to-red-100">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18l-2 12H5L3 6Z"/><path d="M7 10h10M6 14h12"/></svg>
                   <span className="font-extrabold">EFS Services</span>
                 </div>
@@ -623,7 +712,7 @@ export default function Home() {
               rel="noreferrer"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c-3.37-.54-6.27 2.02-6.27 5.13 0 2.85 2.34 5.17 5.23 5.17 2.88 0 5.23-2.32 5.23-5.17v-5.2c.94.5 2 .76 3.12.76Z"/>
+                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94.5 2 .76 3.12.76Z"/>
               </svg>
               <span>Follow us on TikTok</span>
             </a>
@@ -633,8 +722,9 @@ export default function Home() {
         {/* Footer */}
         <footer className="bg-ahCharcoal text-ahText mt-4">
           <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-8 text-sm">
-            <div>
-              <div className="font-extrabold text-white drop-shadow-sm">A&amp;H Towing &amp; Recovery, LLC</div>
+            <div className="text-center md:text-left">
+              <div className="font-extrabold text-white drop-shadow-sm">Call or Visit</div>
+              <div className="font-extrabold text-amber-200 mt-1">A&amp;H Towing &amp; Recovery, LLC</div>
               <p className="mt-2 font-bold text-amber-200">
                 Professional towing, recovery, and roadside assistance for Pecos &amp; oilfield routes.
               </p>
@@ -653,7 +743,7 @@ export default function Home() {
                 <li><a className="underline" href="https://www.tiktok.com/@" target="_blank" rel="noreferrer">TikTok</a></li>
               </ul>
             </div>
-            <div>
+            <div className="text-center md:text-left">
               <div className="font-semibold text-white">Contact</div>
               <p className="mt-2 text-white drop-shadow-sm">
                 <a className="underline font-semibold" href="tel:+14328424578">(432) 842-4578</a><br />
@@ -663,45 +753,6 @@ export default function Home() {
             </div>
           </div>
         </footer>
-
-        {/* JSON-LD */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "LocalBusiness",
-              name: "A&H Towing & Recovery, LLC",
-              telephone: "+14328424578",
-              email: "ah.towing.recovery23@gmail.com",
-              address: {
-                "@type": "PostalAddress",
-                streetAddress: "2712 W F Street",
-                addressLocality: "Pecos",
-                addressRegion: "TX",
-                postalCode: "79772",
-                addressCountry: "US",
-              },
-              areaServed: [
-                { "@type": "City", name: "Pecos" },
-                { "@type": "AdministrativeArea", name: "Reeves County" },
-                { "@type": "City", name: "Fort Stockton" },
-                { "@type": "City", name: "Monahans" },
-                { "@type": "City", name: "Kermit" },
-                { "@type": "City", name: "Balmorhea" },
-                { "@type": "City", name: "Pyote" },
-                { "@type": "City", name: "Toyah" },
-                { "@type": "City", name: "Grandfalls" },
-                { "@type": "City", name: "Wink" },
-                { "@type": "City", name: "Midland" },
-                { "@type": "City", name: "Odessa" },
-                { "@type": "AdministrativeArea", name: "West Texas Oilfields" },
-              ],
-              openingHours: "Mo-Su 00:00-23:59",
-              sameAs: [],
-            }),
-          }}
-        />
       </main>
     </>
   );
@@ -770,39 +821,41 @@ function ContactSection() {
   return (
     <div className="grid md:grid-cols-2 gap-6" id="contact">
       <div>
-        <div className="rounded-xl bg-blue-50/90 border border-blue-200 px-4 py-3 text-sm text-black font-extrabold mb-3">
+        {/* Yellow instruction box */}
+        <div className="rounded-xl bg-yellow-300/95 border border-yellow-600 px-4 py-3 text-sm text-black font-extrabold mb-3">
           <strong>Instructions: </strong>
           Please complete the form below for services and to send your GPS information to our towing and emergency services dispatcher.
           Press the red button below to submit the form to text for services.
         </div>
 
+        {/* FORM on mint green */}
         <form id="dispatch-form" className="grid gap-3" onSubmit={(e) => e.preventDefault()}>
           <label className="grid gap-1 text-black font-extrabold">
             <span className="text-sm">Name</span>
-            <input className="rounded-xl border px-3 py-2" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
+            <input id="name-input" className="rounded-xl border px-3 py-2 bg-emerald-50" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
           </label>
 
           <label className="grid gap-1 text-black font-extrabold">
             <span className="text-sm">Callback Phone</span>
-            <input className="rounded-xl border px-3 py-2" inputMode="tel" placeholder="(###) ###-####" value={callback} onChange={(e) => setCallback(e.target.value)} required />
+            <input className="rounded-xl border px-3 py-2 bg-emerald-50" inputMode="tel" placeholder="(###) ###-####" value={callback} onChange={(e) => setCallback(e.target.value)} required />
           </label>
 
           <label className="grid gap-1 text-black font-extrabold">
             <span className="text-sm">Vehicle</span>
-            <input className="rounded-xl border px-3 py-2" placeholder="Year / Make / Model" value={vehicle} onChange={(e) => setVehicle(e.target.value)} />
+            <input className="rounded-xl border px-3 py-2 bg-emerald-50" placeholder="Year / Make / Model" value={vehicle} onChange={(e) => setVehicle(e.target.value)} />
           </label>
 
           <label className="grid gap-1 text-black font-extrabold">
             <span className="text-sm">Number of Passengers</span>
-            <input type="number" min="1" max="8" className="rounded-xl border px-3 py-2" placeholder="e.g., 2" value={passengers} onChange={(e) => setPassengers(e.target.value)} />
+            <input type="number" min="1" max="8" className="rounded-xl border px-3 py-2 bg-emerald-50" placeholder="e.g., 2" value={passengers} onChange={(e) => setPassengers(e.target.value)} />
           </label>
 
           <label className="grid gap-1 text-black font-extrabold">
             <span className="text-sm">Issue</span>
-            <textarea className="rounded-2xl border px-3 py-2" rows={3} placeholder="Flat tire, no-start, accident, stuck, etc." value={issue} onChange={(e) => setIssue(e.target.value)} />
+            <textarea className="rounded-2xl border px-3 py-2 bg-emerald-50" rows={3} placeholder="Flat tire, no-start, accident, stuck, etc." value={issue} onChange={(e) => setIssue(e.target.value)} />
           </label>
 
-          <div className="grid gap-2 rounded-2xl border p-3 bg-white/90 backdrop-blur">
+          <div className="grid gap-2 rounded-2xl border p-3 bg-emerald-100/90 backdrop-blur">
             <div className="flex items-center justify-between">
               <span className="text-sm font-extrabold">Share GPS Location</span>
               <button
@@ -823,7 +876,7 @@ function ContactSection() {
                     { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
                   );
                 }}
-                className="rounded-xl border px-3 py-1 text-sm hover:bg-gray-50"
+                className="rounded-xl border px-3 py-1 text-sm hover:bg-emerald-50"
               >
                 Use my GPS
               </button>
@@ -857,15 +910,26 @@ function ContactSection() {
       </div>
 
       <div className="rounded-xl overflow-hidden border border-black/10">
-        <iframe title="Shop Map (OpenStreetMap)" className="w-full h-[260px]" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik" />
-        <div className="text-xs p-2 bg-white/90 text-black font-extrabold text-center">
+        {/* “Call or Visit” line break + centered company name */}
+        <div className="p-3 text-sm font-extrabold text-center bg-red-700/80 text-white rounded-t-xl">
+          Call or Visit<br />
+          <span className="text-amber-200">A&amp;H Towing &amp; Recovery, LLC</span>
+        </div>
+        {/* Use OSM embed and keep the same dark filter for consistency */}
+        <iframe
+          title="Shop Map (OpenStreetMap)"
+          className="w-full h-[260px]"
+          loading="lazy"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik"
+          style={{ filter: "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)" }}
+        />
+        <div className="text-xs p-2 bg-red-800/90 text-white font-extrabold text-center">
           Prefer Google?{" "}
           <a className="underline" href="https://www.google.com/maps?q=2712%20W%20F%20Street,%20Pecos,%20TX%2079772" target="_blank" rel="noreferrer">
             Open in Google Maps
           </a>
         </div>
         <div className="p-3 text-sm font-extrabold text-center">
-          Call or Visit A&H Towing & Recovery, LLC<br />
           Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578</a><br />
           Email: <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
           Address: 2712 W F Street, Pecos, TX 79772<br />

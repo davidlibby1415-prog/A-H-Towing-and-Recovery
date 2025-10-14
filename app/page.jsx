@@ -71,7 +71,6 @@ function Chip({ children, className = "" }) {
   );
 }
 
-/* A wider bubble for short paragraphs */
 function BubbleBlock({ children, className = "" }) {
   return (
     <div
@@ -170,10 +169,10 @@ function IconClock(props) {
   );
 }
 
-/* ===== Company name on steel (tight, thin white lines) ===== */
+/* ===== Company name on steel (tighter, thinner white lines) ===== */
 function BrandSlab({ Tag = "h1" }) {
   return (
-    <SteelPanel padded={false} className="px-3 py-2">
+    <SteelPanel padded={false} className="px-2 py-1">
       <Tag
         className="text-center font-black tracking-tight"
         style={{
@@ -181,7 +180,7 @@ function BrandSlab({ Tag = "h1" }) {
             'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
           fontSize: "clamp(40px, 7vw, 96px)",
           color: "#e9edf1",
-          WebkitTextStroke: "1px #ffffff",
+          WebkitTextStroke: "0.75px #ffffff",
           textShadow: "0 1px 1px rgba(0,0,0,.35), 0 8px 18px rgba(0,0,0,.4)",
           lineHeight: 1.05,
         }}
@@ -228,7 +227,7 @@ function TopLocationsMarquee() {
         </div>
       </div>
 
-      {/* one tight gap only */}
+      {/* tighter gap */}
       <div className="h-[2px]" />
       <div className="w-full">
         <div className="container max-w-7xl">
@@ -275,7 +274,7 @@ function VideoSection({
   extraClass = "",
   children,
   tagline,
-  taglinePos = { bottom: "18%" }, // can pass { top: "xx%" }
+  taglinePos = { bottom: "18%" },
   videoStyle = {},
   innerWrapperClass = "",
 }) {
@@ -299,10 +298,8 @@ function VideoSection({
         </video>
       </div>
 
-      {/* Vignette for legibility */}
       <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.2)_78%,rgba(0,0,0,0.35)_100%)]" />
 
-      {/* Tagline (if provided) */}
       {tagline && (
         <div className="absolute left-1/2 -translate-x-1/2 z-20 w-full px-4" style={taglinePos}>
           {tagline}
@@ -360,14 +357,14 @@ export default function Home() {
           </div>
         </header>
 
-        {/* ===== Top steel banner (tight, stays still) ===== */}
-        <section className="relative z-[60] w-full overflow-hidden" style={{ minHeight: "clamp(120px, 16vh, 240px)" }}>
-          <div className="relative z-[70] h-full w-full flex items-center justify-center px-4 py-1">
+        {/* ===== Top steel banner (tighter) ===== */}
+        <section className="relative z-[60] w-full overflow-hidden" style={{ minHeight: "clamp(110px, 15vh, 200px)" }}>
+          <div className="relative z-[70] h-full w-full flex items-center justify-center px-2 py-0.5">
             <BrandSlab Tag="h1" />
           </div>
         </section>
 
-        {/* ========== Tow1 (slightly shorter to show wheels), tagline moved ABOVE cab ========== */}
+        {/* ========== Tow1 (slightly shorter to show wheels), tagline above cab ========== */}
         <VideoSection
           src="/Videos/tow1.mp4"
           minVH={78}
@@ -376,13 +373,13 @@ export default function Home() {
               Handle with Care • Fast Response • West Texas Tough
             </Chip>
           }
-          taglinePos={{ top: "12%" }}  // <-- sits above the cab; adjust if needed
+          taglinePos={{ top: "12%" }}
         />
 
         {/* Thin line */}
         <div className="h-[6px] w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />
 
-        {/* =================== HERO on STEEL with one big paragraph bubble + stat bubbles =================== */}
+        {/* =================== HERO on STEEL + bubbles =================== */}
         <Section>
           <SteelPanel>
             <div className="text-center space-y-3">
@@ -404,7 +401,7 @@ export default function Home() {
         {/* Zero bottom space to butt against services */}
         <div className="h-[4px] w-full bg-gradient-to-r from-ahRed via-white to-ahBlue" />
 
-        {/* =================== SERVICES (reverted steel card + small bubble behind text only) =================== */}
+        {/* =================== SERVICES (reverted steel card + small text bubble) =================== */}
         <Section id="services">
           <div className="grid md:grid-cols-3 gap-4">
             {[
@@ -440,16 +437,21 @@ export default function Home() {
           </div>
         </Section>
 
-        {/* Tight line, then Tow2: narrower & taller column for vertical POV (no stretch) */}
+        {/* Tight line, then Tow2: **narrower & taller** column for vertical POV */}
         <div className="h-[6px] w-full bg-gradient-to-r from-slate-200 via-rose-200/40 to-sky-200" />
         <VideoSection
           src="/Videos/tow2.mp4"
-          minVH={92}
+          minVH={98} /* taller */
           innerWrapperClass="grid place-items-center"
-          videoStyle={{ width: "min(92vw, 720px)", height: "100%", objectFit: "cover", objectPosition: "center" }}
+          videoStyle={{
+            width: "min(68vw, 520px)", /* narrower */
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
         />
 
-        {/* =================== Condensed Service Area on STEEL (centered) =================== */}
+        {/* =================== Condensed Service Area on STEEL (centered + bubble link) =================== */}
         <Section id="coverage">
           <SteelPanel>
             <div className="grid md:grid-cols-2 gap-4 items-start">
@@ -473,9 +475,11 @@ export default function Home() {
                 <p className="mt-2"><Chip className="mb-2">Midland/Odessa Metro &amp; I-20 Corridor</Chip></p>
                 <p className="mt-2"><Chip className="mb-2">US-285 • TX-17 • Oilfield Routes</Chip></p>
                 <div className="mt-3">
-                  <a className="underline font-extrabold text-white" href="tel:+14328424578">
-                    Long-distance transport available — call to arrange.
-                  </a>
+                  <BubbleBlock>
+                    <a className="underline font-extrabold text-white" href="tel:+14328424578">
+                      Long-distance transport available — call to arrange.
+                    </a>
+                  </BubbleBlock>
                 </div>
               </div>
             </div>
@@ -487,10 +491,10 @@ export default function Home() {
         <VideoSection
           src="/Videos/tow3.mp4"
           minVH={86}
-          videoStyle={{ filter: "contrast(1.1) saturate(1.08)" }}
+          videoStyle={{ filter: "contrast(1.12) saturate(1.1) sharpness(0.2)" }}
         />
 
-        {/* =================== Request a Tow (steel title + form, centered map info) =================== */}
+        {/* =================== Request a Tow =================== */}
         <Section id="contact">
           <SteelPanel>
             <div className="text-center">
@@ -511,22 +515,24 @@ export default function Home() {
           <BrandSlab Tag="h2" />
         </div>
 
-        {/* Payments + centered TikTok + colorful banner */}
+        {/* Payments (CENTERED) + centered TikTok */}
         <div className="container max-w-7xl py-4">
-          <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/20 via-rose-500/20 to-amber-400/20 border border-black/10">
-            <div className="flex flex-wrap items-center gap-4">
-              <div className="font-extrabold">We accept:</div>
-              <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
-                <span className="font-extrabold">Cash</span>
-              </div>
-              <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-                <span className="font-extrabold">All Major Credit Cards</span>
-              </div>
-              <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18l-2 12H5L3 6Z"/><path d="M7 10h10M6 14h12"/></svg>
-                <span className="font-extrabold">EFS Services</span>
+          <div className="w-full flex justify-center">
+            <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/20 via-rose-500/20 to-amber-400/20 border border-black/10 max-w-fit">
+              <div className="flex flex-wrap items-center justify-center gap-4">
+                <div className="font-extrabold">We accept:</div>
+                <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+                  <span className="font-extrabold">Cash</span>
+                </div>
+                <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+                  <span className="font-extrabold">All Major Credit Cards</span>
+                </div>
+                <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18l-2 12H5L3 6Z"/><path d="M7 10h10M6 14h12"/></svg>
+                  <span className="font-extrabold">EFS Services</span>
+                </div>
               </div>
             </div>
           </div>
@@ -792,4 +798,5 @@ function ContactSection() {
     </div>
   );
 }
+
 

@@ -78,6 +78,32 @@ function BubbleBlock({ children, className = "" }) {
   );
 }
 
+/* Tight caution-striped callout (stripes outside, solid yellow behind text) */
+function StripedCallout({ children, className = "" }) {
+  return (
+    <div
+      className={`inline-block rounded-xl p-[3px] ${className}`}
+      style={{
+        backgroundImage:
+          "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)",
+      }}
+    >
+      <div className="rounded-lg px-4 py-3 text-center" style={{ backgroundColor: "#fde047" }}>
+        <div
+          className="font-extrabold"
+          style={{
+            color: "#fde047",
+            WebkitTextStroke: "1.25px #000",
+            textShadow: "0 2px 6px rgba(0,0,0,.35)",
+          }}
+        >
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* Thin gradient strip */
 function AccentStrip({ color = "from-ahBlue to-ahRed", className = "" }) {
   return <div className={`h-1 w-full bg-gradient-to-r ${color} ${className}`} />;
@@ -481,7 +507,7 @@ export default function Home() {
         <Section className="mt-2 bg-red-800">
           <AnimBorder>
             <SteelPanel className="text-center">
-              {/* Caution-striped text */}
+              {/* Caution-striped text heading */}
               <h2
                 className="text-[clamp(28px,4.6vw,56px)] font-black tracking-tight underline underline-offset-4"
                 style={{
@@ -497,11 +523,15 @@ export default function Home() {
                 Stranded on the Side of the Road???
               </h2>
 
-              <div className="mt-3">
-                <BubbleBlock>
-                  We dispatch immediately for light, medium &amp; heavy-duty tows, winch-outs, accident recovery,
-                  and oilfield transport. Trained operators. Clear pricing.
-                </BubbleBlock>
+              {/* Dispatch text: new lines + centered inside striped yellow box */}
+              <div className="mt-3 text-center">
+                <StripedCallout>
+                  We dispatch immediately for light, medium &amp; heavy-duty tows, winch-outs, accident recovery, and oilfield transport.
+                  <br />
+                  Trained operators.
+                  <br />
+                  Clear pricing.
+                </StripedCallout>
               </div>
 
               {/* Instruction line in caution-yellow bubble + extra space before buttons */}
@@ -556,7 +586,7 @@ export default function Home() {
                       fontFamily:
                         '"Segoe UI", "Trebuchet MS", system-ui, -apple-system, Roboto, Arial',
                       fontSize: "clamp(18px,3.2vw,32px)",
-                      color: "#e2f0ff",
+                      color: "#2563eb", // darker professional blue
                       textShadow: "0 2px 8px rgba(0,0,0,.6)",
                     }}
                   >
@@ -596,14 +626,14 @@ export default function Home() {
         <Section id="services" className="bg-red-800/90">
           <AnimBorder>
             <SteelPanel className="text-center">
-              {/* Updated “Services Provided” heading: professional font + steel-blue color */}
+              {/* “Services Provided” heading: professional font + steel-blue color */}
               <div className="inline-block rounded-2xl px-5 py-2 bg-black/20 backdrop-blur-sm">
                 <h3
                   className="text-[clamp(30px,5.4vw,60px)] font-extrabold"
                   style={{
                     fontFamily:
                       '"Segoe UI", "Inter", "Helvetica Neue", system-ui, -apple-system, Arial',
-                    color: "#8EC5FF", // steel blue (not white)
+                    color: "#8EC5FF", // steel blue
                     WebkitTextStroke: "1.5px #0b1220",
                     textShadow: "0 2px 0 #1f2937, 0 10px 18px rgba(0,0,0,.45)",
                     letterSpacing: "0.5px",
@@ -619,7 +649,14 @@ export default function Home() {
                   <span className="font-extrabold underline text-lg">Towing Services</span>
                 </BubbleBlock>
                 <div className="grid md:grid-cols-3 gap-4">
-                  {towingServices.map(({ icon: Ico, title, desc }) => (
+                  {[
+                    { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups" },
+                    { icon: IconTruck, title: "Heavy Duty & Commercial Towing", desc: "Oilfield & fleet" },
+                    { icon: IconTruck, title: "Oilfield Routes Tow Service", desc: "Lease roads • remote access" },
+                    { icon: IconTruck, title: "Long & Short Distance Tows", desc: "Local & state-to-state" },
+                    { icon: IconFlatbed, title: "Equipment Transport", desc: "Light equipment & tools" },
+                    { icon: IconFlatbed, title: "Flatbed / Rollback Services", desc: "Damage-free transport" },
+                  ].map(({ icon: Ico, title, desc }) => (
                     <AnimBorder key={title}>
                       <SteelPanel className="p-4">
                         <div className="flex items-start gap-3">
@@ -645,7 +682,11 @@ export default function Home() {
                   <span className="font-extrabold underline text-lg">Emergency Roadside Assistance</span>
                 </BubbleBlock>
                 <div className="grid md:grid-cols-3 gap-4">
-                  {roadside.map(({ icon: Ico, title, desc }) => (
+                  {[
+                    { icon: IconFuel, title: "Fuel Delivery", desc: "Gas & diesel" },
+                    { icon: IconBolt, title: "Jumpstarts", desc: "12V & roadside checks" },
+                    { icon: IconLock, title: "Lockouts", desc: "Fast entry, no damage" },
+                  ].map(({ icon: Ico, title, desc }) => (
                     <AnimBorder key={title}>
                       <SteelPanel className="p-4">
                         <div className="flex items-start gap-3">
@@ -671,7 +712,10 @@ export default function Home() {
                   <span className="font-extrabold underline text-lg">Accident?</span>
                 </BubbleBlock>
                 <div className="grid md:grid-cols-2 gap-4">
-                  {accident.map(({ icon: Ico, title, desc }) => (
+                  {[
+                    { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional" },
+                    { icon: IconHook, title: "Winching / Recovery", desc: "Off-road, mud, sand" },
+                  ].map(({ icon: Ico, title, desc }) => (
                     <AnimBorder key={title}>
                       <SteelPanel className="p-4">
                         <div className="flex items-start gap-3">
@@ -745,7 +789,7 @@ export default function Home() {
           />
         </Section>
 
-        {/* =================== Request a Tow (bigger, sunset-themed inviting heading) =================== */}
+        {/* =================== Request for Services (renamed; inviting heading) =================== */}
         <Section id="contact" className="bg-red-900/90">
           <AnimBorder>
             <SteelPanel>
@@ -758,7 +802,7 @@ export default function Home() {
                         '"Gill Sans", "Trebuchet MS", "Segoe UI", system-ui, -apple-system, Arial',
                       fontSize: "clamp(32px,5.6vw,64px)",
                       backgroundImage:
-                        "linear-gradient(180deg, #ffb36b 0%, #ff7e5f 40%, #f94d6a 90%)",
+                        "linear-gradient(180deg, #7db1ff 0%, #3b82f6 50%, #1e40af 100%)",
                       WebkitBackgroundClip: "text",
                       backgroundClip: "text",
                       color: "transparent",
@@ -767,7 +811,7 @@ export default function Home() {
                       letterSpacing: "0.6px",
                     }}
                   >
-                    Request a Tow
+                    Request for Services
                   </div>
                 </div>
               </div>
@@ -1013,7 +1057,7 @@ function ContactSection() {
               Send Text to Dispatch
             </button>
           </div>
-          <p className="text-xs">
+          <p className="text-xs font-extrabold">
             The red button composes a text with your details and GPS (if available) in your Messages app.
           </p>
         </form>
@@ -1039,13 +1083,11 @@ function ContactSection() {
             Open in Google Maps
           </a>
         </div>
-        <div className="p-3 text-sm font-extrabold text-center">
-          Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578</a><br />
-          Email: <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
-          Address: 2712 W F Street, Pecos, TX 79772<br />
-          Hours: 24/7 Dispatch
+        {/* Bolder + darker blue for visibility */}
+        <div className="p-3 text-sm font-extrabold text-center" style={{ color: "#1e3a8a" }}>
+          24/7 Professional Service — Call or Text Us!
         </div>
-        <div className="mt-2 text-xs opacity-80 px-3 pb-3 text-center">24/7 Professional Service — Call or Text Us!</div>
+        <div className="mt-2 text-xs opacity-80 px-3 pb-3 text-center">Thank you for choosing A&amp;H!</div>
       </div>
     </div>
   );

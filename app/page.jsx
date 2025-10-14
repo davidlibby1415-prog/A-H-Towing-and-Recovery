@@ -85,11 +85,11 @@ function StripedCallout({ children, className = "" }) {
       className={`inline-block rounded-xl p-[3px] ${className}`}
       style={{
         backgroundImage:
-          "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)", // stripes on the border only
+          "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)", // stripes on border only
       }}
     >
       <div className="rounded-lg px-4 py-3 text-center" style={{ backgroundColor: "#fde047" }}>
-        {children /* children control their own colors; no stripes in lettering */}
+        {children}
       </div>
     </div>
   );
@@ -498,17 +498,18 @@ export default function Home() {
         <Section className="mt-2 bg-red-800">
           <AnimBorder>
             <SteelPanel className="text-center">
-              {/* Entire block grouped inside the yellow callout (no stripes in lettering) */}
+              {/* Entire block grouped inside the yellow callout (no stripe texture in letters) */}
               <div className="flex justify-center">
                 <StripedCallout className="max-w-5xl w-full">
-                  {/* Heading: yellow letters with black outline, no stripe texture */}
+                  {/* Clean block letters: solid yellow, crisp outline, slight spacing */}
                   <div
                     className="font-black tracking-tight"
                     style={{
                       fontSize: "clamp(28px,4.6vw,56px)",
-                      color: "#fde047",
-                      WebkitTextStroke: "1.5px #000",
+                      color: "#fde047",              // solid yellow fill
+                      WebkitTextStroke: "1.5px #000",// crisp black outline
                       textShadow: "0 6px 14px rgba(0,0,0,.55)",
+                      letterSpacing: "0.4px",        // avoid “glued together” look
                     }}
                   >
                     Stranded on the Side of the Road???
@@ -528,10 +529,19 @@ export default function Home() {
                 </StripedCallout>
               </div>
 
-              {/* Instruction line in caution-yellow bubble + extra space before buttons */}
+              {/* Instruction line — 20% LESS translucent than before (0.45 ➜ 0.65) */}
               <div className="mt-4">
-                <BubbleBlock className="!bg-yellow-400/45 !text-black">
-                  Click below to call or text us direct!
+                <BubbleBlock className="!text-black" >
+                  <span
+                    style={{
+                      backgroundColor: "rgba(250, 204, 21, 0.65)", // yellow-400 @ 65% opacity
+                      display: "inline-block",
+                      borderRadius: "12px",
+                      padding: "6px 10px",
+                    }}
+                  >
+                    Click below to call or text us direct!
+                  </span>
                 </BubbleBlock>
               </div>
 
@@ -552,7 +562,7 @@ export default function Home() {
         {/* =================== Tow2 + Google Reviews (two-column) =================== */}
         <Section className="bg-red-900/80">
           <div className="grid md:grid-cols-2 gap-6 items-stretch">
-            {/* Left: Taller Tow2, with quip overlay on sky (right side) */}
+            {/* Left: Taller Tow2 with in-frame quip (kept inside video) */}
             <div className="rounded-[22px] overflow-hidden relative">
               <VideoSection
                 src="/Videos/tow2.mp4"
@@ -566,6 +576,7 @@ export default function Home() {
                 }}
                 overlayStrength={0.15}
               >
+                {/* This bubble stays INSIDE the video frame */}
                 <div
                   className="absolute z-30 right-6 top-[14%] max-w-[60%] md:max-w-[48%] px-4 py-2 rounded-2xl"
                   style={{
@@ -580,7 +591,7 @@ export default function Home() {
                       fontFamily:
                         '"Segoe UI", "Trebuchet MS", system-ui, -apple-system, Roboto, Arial',
                       fontSize: "clamp(18px,3.2vw,32px)",
-                      color: "#2563eb", // darker professional blue
+                      color: "#2563eb",
                       textShadow: "0 2px 8px rgba(0,0,0,.6)",
                     }}
                   >
@@ -627,7 +638,7 @@ export default function Home() {
                   style={{
                     fontFamily:
                       '"Segoe UI", "Inter", "Helvetica Neue", system-ui, -apple-system, Arial',
-                    color: "#8EC5FF", // steel blue
+                    color: "#8EC5FF",
                     WebkitTextStroke: "1.5px #0b1220",
                     textShadow: "0 2px 0 #1f2937, 0 10px 18px rgba(0,0,0,.45)",
                     letterSpacing: "0.5px",
@@ -903,6 +914,187 @@ export default function Home() {
         </footer>
       </main>
     </>
+  );
+}
+
+/* ========================= Contact Section ========================= */
+function ContactSection() {
+  const [name, setName] = useState("");
+  const [callback, setCallback] = useState("");
+  const [vehicle, setVehicle] = useState("");
+  const [passengers, setPassengers] = useState("");
+  const [issue, setIssue] = useState("");
+  const [coords, setCoords] = useState(null);
+  const [locStatus, setLocStatus] = useState("Idle");
+
+  const handleSendText = (e) => {
+    e.preventDefault();
+
+    let sent = false;
+    const build = (c) => {
+      const loc = c
+        ? `Location: ${c.lat.toFixed(5)}, ${c.lng.toFixed(5)} https://www.google.com/maps?q=${c.lat},${c.lng}`
+        : "Location: (share GPS)";
+      return (
+        `Tow request from ${name || "(name)"}; ` +
+        `Callback: ${callback || "(phone)"}; ` +
+        `Vehicle: ${vehicle || "(Y/M/M)"}; ` +
+        `Passengers: ${passengers || "(#)"}; ` +
+        `Issue: ${issue || "(describe)"}; ${loc}`
+      );
+    };
+    const openSMS = (body) => {
+      if (sent) return;
+      sent = true;
+      window.location.href = smsHref("+14328424578", body);
+    };
+
+    const fallback = setTimeout(() => openSMS(build(null)), 2500);
+
+    if (navigator?.geolocation) {
+      setLocStatus("Requesting location…");
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          clearTimeout(fallback);
+          const c = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          setCoords(c);
+          setLocStatus("Location captured");
+          openSMS(build(c));
+        },
+        (err) => {
+          clearTimeout(fallback);
+          setLocStatus("Location failed: " + err.message);
+          openSMS(build(null));
+        },
+        { enableHighAccuracy: true, timeout: 2000, maximumAge: 0 }
+      );
+    } else {
+      setLocStatus("Geolocation not supported");
+      clearTimeout(fallback);
+      openSMS(build(null));
+    }
+  };
+
+  const mapsLink = coords ? `https://www.google.com/maps?q=${coords.lat},${coords.lng}` : "";
+
+  return (
+    <div className="grid md:grid-cols-2 gap-6" id="contact">
+      <div>
+        {/* Yellow instruction box */}
+        <div className="rounded-xl bg-yellow-300/95 border border-yellow-600 px-4 py-3 text-sm text-black font-extrabold mb-3">
+          <strong>Instructions: </strong>
+          Please complete the form below for services and to send your GPS information to our towing and emergency services dispatcher.
+          Press the red button below to submit the form to text for services.
+        </div>
+
+        {/* FORM on mint green */}
+        <form id="dispatch-form" className="grid gap-3" onSubmit={(e) => e.preventDefault()}>
+          <label className="grid gap-1 text-black font-extrabold">
+            <span className="text-sm">Name</span>
+            <input id="name-input" className="rounded-xl border px-3 py-2 bg-emerald-50" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
+          </label>
+
+          <label className="grid gap-1 text-black font-extrabold">
+            <span className="text-sm">Callback Phone</span>
+            <input className="rounded-xl border px-3 py-2 bg-emerald-50" inputMode="tel" placeholder="(###) ###-####" value={callback} onChange={(e) => setCallback(e.target.value)} required />
+          </label>
+
+          <label className="grid gap-1 text-black font-extrabold">
+            <span className="text-sm">Vehicle</span>
+            <input className="rounded-xl border px-3 py-2 bg-emerald-50" placeholder="Year / Make / Model" value={vehicle} onChange={(e) => setVehicle(e.target.value)} />
+          </label>
+
+          <label className="grid gap-1 text-black font-extrabold">
+            <span className="text-sm">Number of Passengers</span>
+            <input type="number" min="1" max="8" className="rounded-xl border px-3 py-2 bg-emerald-50" placeholder="e.g., 2" value={passengers} onChange={(e) => setPassengers(e.target.value)} />
+          </label>
+
+          <label className="grid gap-1 text-black font-extrabold">
+            <span className="text-sm">Issue</span>
+            <textarea className="rounded-2xl border px-3 py-2 bg-emerald-50" rows={3} placeholder="Flat tire, no-start, accident, stuck, etc." value={issue} onChange={(e) => setIssue(e.target.value)} />
+          </label>
+
+          <div className="grid gap-2 rounded-2xl border p-3 bg-emerald-100/90 backdrop-blur">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-extrabold">Share GPS Location</span>
+              <button
+                type="button"
+                onClick={() => {
+                  if (!navigator?.geolocation) {
+                    setLocStatus("Geolocation not supported");
+                    return;
+                  }
+                  setLocStatus("Requesting location…");
+                  navigator.geolocation.getCurrentPosition(
+                    (pos) => {
+                      const c = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                      setCoords(c);
+                      setLocStatus("Location captured");
+                    },
+                    (err) => setLocStatus("Location failed: " + err.message),
+                    { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+                  );
+                }}
+                className="rounded-xl border px-3 py-1 text-sm hover:bg-emerald-50"
+              >
+                Use my GPS
+              </button>
+            </div>
+            <div className="text-xs">
+              Status: {locStatus}
+              {coords && (
+                <>
+                  <br />
+                  Captured: {coords.lat.toFixed(5)}, {coords.lng.toFixed(5)}{" "}
+                  <a className="underline" href={mapsLink} target="_blank" rel="noreferrer">Open map</a>
+                </>
+              )}
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-3 mt-2 justify-start">
+            <PhoneCTA />
+            <button
+              type="button"
+              onClick={handleSendText}
+              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px]"
+            >
+              Send Text to Dispatch
+            </button>
+          </div>
+          <p className="text-xs font-extrabold">
+            The red button composes a text with your details and GPS (if available) in your Messages app.
+          </p>
+        </form>
+      </div>
+
+      <div className="rounded-xl overflow-hidden border border-black/10">
+        {/* “Call or Visit” line break + centered company name */}
+        <div className="p-3 text-sm font-extrabold text-center bg-red-700/80 text-white rounded-t-xl">
+          Call or Visit<br />
+          <span className="text-amber-200">A&amp;H Towing &amp; Recovery, LLC</span>
+        </div>
+        {/* Use OSM embed and keep the same dark filter for consistency */}
+        <iframe
+          title="Shop Map (OpenStreetMap)"
+          className="w-full h-[260px]"
+          loading="lazy"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik"
+          style={{ filter: "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)" }}
+        />
+        <div className="text-xs p-2 bg-red-800/90 text-white font-extrabold text-center">
+          Prefer Google?{" "}
+          <a className="underline" href="https://www.google.com/maps?q=2712%20W%20F%20Street,%20Pecos,%20TX%2079772" target="_blank" rel="noreferrer">
+            Open in Google Maps
+          </a>
+        </div>
+        {/* Bolder + darker blue for visibility */}
+        <div className="p-3 text-sm font-extrabold text-center" style={{ color: "#1e3a8a" }}>
+          24/7 Professional Service — Call or Text Us!
+        </div>
+        <div className="mt-2 text-xs opacity-80 px-3 pb-3 text-center">Thank you for choosing A&amp;H!</div>
+      </div>
+    </div>
   );
 }
 

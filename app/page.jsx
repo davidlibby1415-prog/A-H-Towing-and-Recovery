@@ -78,27 +78,18 @@ function BubbleBlock({ children, className = "" }) {
   );
 }
 
-/* Tight caution-striped callout (stripes outside, solid yellow behind text) */
+/* Tight caution callout (striped border, solid yellow body; text styles set by children) */
 function StripedCallout({ children, className = "" }) {
   return (
     <div
       className={`inline-block rounded-xl p-[3px] ${className}`}
       style={{
         backgroundImage:
-          "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)",
+          "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)", // stripes on the border only
       }}
     >
       <div className="rounded-lg px-4 py-3 text-center" style={{ backgroundColor: "#fde047" }}>
-        <div
-          className="font-extrabold"
-          style={{
-            color: "#fde047",
-            WebkitTextStroke: "1.25px #000",
-            textShadow: "0 2px 6px rgba(0,0,0,.35)",
-          }}
-        >
-          {children}
-        </div>
+        {children /* children control their own colors; no stripes in lettering */}
       </div>
     </div>
   );
@@ -503,34 +494,37 @@ export default function Home() {
         {/* Space so wheels are clearly visible before next section */}
         <div className="h-7" />
 
-        {/* =================== STRANDED SECTION =================== */}
+        {/* =================== STRANDED SECTION (GROUPED IN YELLOW BOX) =================== */}
         <Section className="mt-2 bg-red-800">
           <AnimBorder>
             <SteelPanel className="text-center">
-              {/* Caution-striped text heading */}
-              <h2
-                className="text-[clamp(28px,4.6vw,56px)] font-black tracking-tight underline underline-offset-4"
-                style={{
-                  backgroundImage:
-                    "repeating-linear-gradient(-45deg, #fde047 0 16px, #111827 16px 26px)",
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  color: "transparent",
-                  WebkitTextStroke: "1.5px #000",
-                  textShadow: "0 6px 14px rgba(0,0,0,.55)",
-                }}
-              >
-                Stranded on the Side of the Road???
-              </h2>
+              {/* Entire block grouped inside the yellow callout (no stripes in lettering) */}
+              <div className="flex justify-center">
+                <StripedCallout className="max-w-5xl w-full">
+                  {/* Heading: yellow letters with black outline, no stripe texture */}
+                  <div
+                    className="font-black tracking-tight"
+                    style={{
+                      fontSize: "clamp(28px,4.6vw,56px)",
+                      color: "#fde047",
+                      WebkitTextStroke: "1.5px #000",
+                      textShadow: "0 6px 14px rgba(0,0,0,.55)",
+                    }}
+                  >
+                    Stranded on the Side of the Road???
+                  </div>
 
-              {/* Dispatch text: new lines + centered inside striped yellow box */}
-              <div className="mt-3 text-center">
-                <StripedCallout>
-                  We dispatch immediately for light, medium &amp; heavy-duty tows, winch-outs, accident recovery, and oilfield transport.
-                  <br />
-                  Trained operators.
-                  <br />
-                  Clear pricing.
+                  {/* Description: darker text for clarity */}
+                  <div
+                    className="mt-2 font-extrabold leading-snug"
+                    style={{ color: "#0b1220" }}
+                  >
+                    We dispatch immediately for light, medium &amp; heavy-duty tows, winch-outs, accident recovery, and oilfield transport.
+                    <br />
+                    Trained operators.
+                    <br />
+                    Clear pricing.
+                  </div>
                 </StripedCallout>
               </div>
 

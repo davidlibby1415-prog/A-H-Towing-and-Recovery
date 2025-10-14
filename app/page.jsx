@@ -59,7 +59,7 @@ function ScrollToFormCTA({ className = "", label = "Text Dispatch (Include GPS)"
   );
 }
 
-/* Small translucent chip (inline “bubble”) */
+/* ===== Tiny translucent “bubble” helpers ===== */
 function Chip({ children, className = "" }) {
   return (
     <span
@@ -68,6 +68,18 @@ function Chip({ children, className = "" }) {
     >
       {children}
     </span>
+  );
+}
+
+/* A wider bubble for short paragraphs */
+function BubbleBlock({ children, className = "" }) {
+  return (
+    <div
+      className={`inline-block rounded-2xl px-4 py-3 bg-black/45 text-white font-extrabold shadow ${className}`}
+      style={{ WebkitTextStroke: "0.25px rgba(0,0,0,.7)", textShadow: "0 1px 2px rgba(0,0,0,.6)" }}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -94,9 +106,9 @@ function SteelPanel({ children, className = "", padded = true }) {
 }
 
 /* Section wrapper (tight) */
-function Section({ id, children }) {
+function Section({ id, children, className = "" }) {
   return (
-    <section id={id} className="py-7 md:py-8">
+    <section id={id} className={`py-7 md:py-8 ${className}`}>
       <div className="container max-w-7xl">{children}</div>
     </section>
   );
@@ -168,7 +180,7 @@ function BrandSlab({ Tag = "h1" }) {
           fontFamily:
             'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
           fontSize: "clamp(40px, 7vw, 96px)",
-          color: "#e9edf1", // silver
+          color: "#e9edf1",
           WebkitTextStroke: "1px #ffffff",
           textShadow: "0 1px 1px rgba(0,0,0,.35), 0 8px 18px rgba(0,0,0,.4)",
           lineHeight: 1.05,
@@ -180,30 +192,18 @@ function BrandSlab({ Tag = "h1" }) {
   );
 }
 
-/* ========================= Stats (compact) ========================= */
-function StatMini({ value, label }) {
+/* ========================= Stats (compact bubbles) ========================= */
+function StatBubbles() {
   return (
-    <div className="text-center md:text-left">
-      <div className="text-[clamp(18px,2.4vw,24px)] font-extrabold leading-none text-white">{value}</div>
-      <div className="text-[clamp(10px,1.2vw,12px)] font-extrabold text-white/95" style={{ marginTop: "calc(.75rem/1.618)" }}>
-        {label}
-      </div>
-    </div>
-  );
-}
-function StatsCompact() {
-  return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-2.5 mt-3">
-      <StatMini value="< 30 min" label="Professional Response" />
-      <StatMini value="24/7/365" label="Operating" />
-      <div className="col-span-2 md:col-span-1">
-        <StatMini value="Pecos, TX & West Texas Region" label="Service Area" />
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3 justify-items-center">
+      <BubbleBlock>&lt; 30 min • Professional Response</BubbleBlock>
+      <BubbleBlock>24 Hrs. / 7 Days a Week / 365 Days a Year • Operating</BubbleBlock>
+      <BubbleBlock>Pecos, TX &amp; West Texas Region • Service Area</BubbleBlock>
     </div>
   );
 }
 
-/* ========================= Top Marquee (gap squeezed) ========================= */
+/* ========================= Top Marquee ========================= */
 function TopLocationsMarquee() {
   const text =
     "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • Oilfield Routes";
@@ -228,8 +228,8 @@ function TopLocationsMarquee() {
         </div>
       </div>
 
-      {/* gap squeezed: removed an extra line */}
-      <div className="h-1" />
+      {/* one tight gap only */}
+      <div className="h-[2px]" />
       <div className="w-full">
         <div className="container max-w-7xl">
           <p
@@ -253,7 +253,6 @@ function TopLocationsMarquee() {
         .marquee { display: inline-flex; min-width: 200%; animation: marquee-x 30s linear infinite; }
         @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
 
-        /* Steel texture used by SteelPanel where needed */
         .diamond-panel {
           background-image:
             linear-gradient(135deg, rgba(59,130,246,0.12), rgba(244,63,94,0.12)),
@@ -270,34 +269,42 @@ function TopLocationsMarquee() {
 }
 
 /* ===================== Video wrapper ===================== */
-function VideoSection({ src, minVH = 100, extraClass = "", children, tagline, videoStyle = {} }) {
+function VideoSection({
+  src,
+  minVH = 100,
+  extraClass = "",
+  children,
+  tagline,
+  taglinePos = { bottom: "18%" }, // can pass { top: "xx%" }
+  videoStyle = {},
+  innerWrapperClass = "",
+}) {
   const [videoError, setVideoError] = useState(false);
   return (
-    <section
-      className={`relative isolate w-full overflow-hidden ${extraClass}`}
-      style={{ minHeight: `min(${minVH}vh, 1200px)` }}
-    >
-      <video
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        muted
-        playsInline
-        autoPlay
-        loop
-        preload="metadata"
-        poster="/fallback.jpg"
-        onError={() => setVideoError(true)}
-        disablePictureInPicture
-        style={videoStyle}
-      >
-        <source src={src} type="video/mp4" />
-      </video>
+    <section className={`relative isolate w-full overflow-hidden ${extraClass}`} style={{ minHeight: `min(${minVH}vh, 1200px)` }}>
+      <div className={`absolute inset-0 ${innerWrapperClass}`}>
+        <video
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          muted
+          playsInline
+          autoPlay
+          loop
+          preload="metadata"
+          poster="/fallback.jpg"
+          onError={() => setVideoError(true)}
+          disablePictureInPicture
+          style={videoStyle}
+        >
+          <source src={src} type="video/mp4" />
+        </video>
+      </div>
 
       {/* Vignette for legibility */}
       <div className="absolute inset-0 pointer-events-none z-10 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.2)_78%,rgba(0,0,0,0.35)_100%)]" />
 
       {/* Tagline (if provided) */}
       {tagline && (
-        <div className="absolute bottom-[18%] left-1/2 -translate-x-1/2 z-20 w-full px-4">
+        <div className="absolute left-1/2 -translate-x-1/2 z-20 w-full px-4" style={taglinePos}>
           {tagline}
         </div>
       )}
@@ -353,14 +360,14 @@ export default function Home() {
           </div>
         </header>
 
-        {/* ===== Top steel banner (tight) ===== */}
+        {/* ===== Top steel banner (tight, stays still) ===== */}
         <section className="relative z-[60] w-full overflow-hidden" style={{ minHeight: "clamp(120px, 16vh, 240px)" }}>
           <div className="relative z-[70] h-full w-full flex items-center justify-center px-4 py-1">
             <BrandSlab Tag="h1" />
           </div>
         </section>
 
-        {/* ========== Tow1 (shorter to show wheels), tagline moved back ========== */}
+        {/* ========== Tow1 (slightly shorter to show wheels), tagline moved ABOVE cab ========== */}
         <VideoSection
           src="/Videos/tow1.mp4"
           minVH={78}
@@ -369,33 +376,27 @@ export default function Home() {
               Handle with Care • Fast Response • West Texas Tough
             </Chip>
           }
+          taglinePos={{ top: "12%" }}  // <-- sits above the cab; adjust if needed
         />
 
         {/* Thin line */}
         <div className="h-[6px] w-full bg-gradient-to-r from-ahBlue via-rose-300/40 to-ahRed" />
 
-        {/* =================== HERO on STEEL with inline translucent bubbles =================== */}
+        {/* =================== HERO on STEEL with one big paragraph bubble + stat bubbles =================== */}
         <Section>
           <SteelPanel>
             <div className="text-center space-y-3">
-              <div className="space-x-2">
-                <Chip>Fast</Chip>
-                <Chip>Friendly</Chip>
-                <Chip>Professional</Chip>
-                <Chip>Towing</Chip>
-              </div>
-              <div className="text-base md:text-lg text-white/95 font-extrabold">
-                <Chip className="mb-2">We dispatch immediately</Chip>{" "}
-                <span className="text-white/95 font-extrabold">
-                  for light, medium &amp; heavy-duty tows, winch-outs, accident recovery, and oilfield transport.
-                  Trained operators. Clear pricing. <strong>Click below to call or text us direct!</strong>
-                </span>
-              </div>
-              <StatsCompact />
-              <div className="mt-3 flex flex-wrap items-center gap-3 justify-center">
+              <BubbleBlock className="max-w-5xl">
+                Stranded on I-20 or US-285? We dispatch immediately for light, medium &amp; heavy-duty tows, winch-outs,
+                accident recovery, and oilfield transport. Trained operators. Clear pricing. Click below to call or text us direct!
+              </BubbleBlock>
+
+              <div className="mt-1 flex flex-wrap items-center gap-3 justify-center">
                 <PhoneCTA />
                 <ScrollToFormCTA />
               </div>
+
+              <StatBubbles />
             </div>
           </SteelPanel>
         </Section>
@@ -403,9 +404,9 @@ export default function Home() {
         {/* Zero bottom space to butt against services */}
         <div className="h-[4px] w-full bg-gradient-to-r from-ahRed via-white to-ahBlue" />
 
-        {/* =================== SERVICES (each card steel? no—use translucent bubble per card) =================== */}
+        {/* =================== SERVICES (reverted steel card + small bubble behind text only) =================== */}
         <Section id="services">
-          <div className="container max-w-7xl grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             {[
               { icon: IconTruck, title: "Light Duty Towing", desc: "Cars • SUVs • Pickups" },
               { icon: IconTruck, title: "Heavy Duty & Commercial", desc: "Oilfield & fleet" },
@@ -417,36 +418,38 @@ export default function Home() {
               { icon: IconTruck, title: "Long & Short Distance", desc: "Local & state-to-state" },
               { icon: IconTruck, title: "Accident Removal", desc: "Secure, professional" },
             ].map(({ icon: Ico, title, desc }) => (
-              <div key={title} className="rounded-2xl border border-white/15 bg-black/45 backdrop-blur-sm shadow-xl p-4">
-                <div className="flex items-start gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
-                    <Ico className="h-7 w-7 text-white" />
+              <SteelPanel key={title} className="p-4">
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
+                    <Ico className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <div className="font-extrabold text-white">{title}</div>
-                    <div className="text-sm text-white/95">{desc}</div>
+                    <BubbleBlock className="!px-3 !py-2">
+                      <div className="font-extrabold">{title}</div>
+                      <div className="text-sm text-white/95 mt-0.5">{desc}</div>
+                    </BubbleBlock>
                   </div>
                 </div>
-              </div>
+              </SteelPanel>
             ))}
           </div>
+
           <div className="mt-4 flex gap-3 flex-wrap justify-center">
             <PhoneCTA />
             <ScrollToFormCTA />
           </div>
         </Section>
 
-        {/* Tight line, then Tow2 with more vertical crop (no stretch) */}
+        {/* Tight line, then Tow2: narrower & taller column for vertical POV (no stretch) */}
         <div className="h-[6px] w-full bg-gradient-to-r from-slate-200 via-rose-200/40 to-sky-200" />
         <VideoSection
           src="/Videos/tow2.mp4"
-          minVH={84}
-          videoStyle={{
-            objectPosition: "center center",
-          }}
+          minVH={92}
+          innerWrapperClass="grid place-items-center"
+          videoStyle={{ width: "min(92vw, 720px)", height: "100%", objectFit: "cover", objectPosition: "center" }}
         />
 
-        {/* =================== Condensed Service Area on STEEL (one bubble per line groups) =================== */}
+        {/* =================== Condensed Service Area on STEEL (centered) =================== */}
         <Section id="coverage">
           <SteelPanel>
             <div className="grid md:grid-cols-2 gap-4 items-start">
@@ -460,25 +463,15 @@ export default function Home() {
                   src="https://www.openstreetmap.org/export/embed.html?bbox=-104.2%2C30.9%2C-101.8%2C32.1&layer=mapnik"
                 />
               </div>
-              <div className="text-sm md:text-base text-white/95">
+              <div className="text-sm md:text-base text-white/95 text-center">
                 <div className="mb-2">
                   <Chip>Service Area — Pecos &amp; West Texas</Chip>
                 </div>
-                <p className="mt-2">
-                  <Chip className="mb-2">Pecos (Home Base) • Reeves County</Chip>
-                </p>
-                <p className="mt-2">
-                  <Chip className="mb-2">Fort Stockton • Monahans • Kermit</Chip>
-                </p>
-                <p className="mt-2">
-                  <Chip className="mb-2">Balmorhea • Pyote • Toyah • Grandfalls • Wink</Chip>
-                </p>
-                <p className="mt-2">
-                  <Chip className="mb-2">Midland/Odessa Metro &amp; I-20 Corridor</Chip>
-                </p>
-                <p className="mt-2">
-                  <Chip className="mb-2">US-285 • TX-17 • Oilfield Routes</Chip>
-                </p>
+                <p className="mt-2"><Chip className="mb-2">Pecos (Home Base) • Reeves County</Chip></p>
+                <p className="mt-2"><Chip className="mb-2">Fort Stockton • Monahans • Kermit</Chip></p>
+                <p className="mt-2"><Chip className="mb-2">Balmorhea • Pyote • Toyah • Grandfalls • Wink</Chip></p>
+                <p className="mt-2"><Chip className="mb-2">Midland/Odessa Metro &amp; I-20 Corridor</Chip></p>
+                <p className="mt-2"><Chip className="mb-2">US-285 • TX-17 • Oilfield Routes</Chip></p>
                 <div className="mt-3">
                   <a className="underline font-extrabold text-white" href="tel:+14328424578">
                     Long-distance transport available — call to arrange.
@@ -489,19 +482,19 @@ export default function Home() {
           </SteelPanel>
         </Section>
 
-        {/* Line, then Tow3 with a small clarity boost */}
+        {/* Line, then Tow3 with a clarity boost */}
         <div className="h-[6px] w-full bg-gradient-to-r from-ahBlue via-white to-ahRed" />
         <VideoSection
           src="/Videos/tow3.mp4"
           minVH={86}
-          videoStyle={{ filter: "contrast(1.08) saturate(1.05)" }}
+          videoStyle={{ filter: "contrast(1.1) saturate(1.08)" }}
         />
 
-        {/* =================== Request a Tow (steel title + form) =================== */}
+        {/* =================== Request a Tow (steel title + form, centered map info) =================== */}
         <Section id="contact">
           <SteelPanel>
             <div className="text-center">
-              <Chip className="text-lg md:text-2xl mb-3">Request a Tow</Chip>
+              <BubbleBlock className="text-lg md:text-2xl mb-3">Request a Tow</BubbleBlock>
             </div>
             <div className="mt-3 flex gap-3 flex-wrap justify-center">
               <PhoneCTA />
@@ -518,23 +511,26 @@ export default function Home() {
           <BrandSlab Tag="h2" />
         </div>
 
-        {/* Payments + centered TikTok */}
+        {/* Payments + centered TikTok + colorful banner */}
         <div className="container max-w-7xl py-4">
-          <div className="flex flex-wrap items-center gap-4">
-            <div className="font-extrabold">We accept:</div>
-            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
-              <span className="font-extrabold">Cash</span>
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
-              <span className="font-extrabold">All Major Credit Cards</span>
-            </div>
-            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18l-2 12H5L3 6Z"/><path d="M7 10h10M6 14h12"/></svg>
-              <span className="font-extrabold">EFS Services</span>
+          <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/20 via-rose-500/20 to-amber-400/20 border border-black/10">
+            <div className="flex flex-wrap items-center gap-4">
+              <div className="font-extrabold">We accept:</div>
+              <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+                <span className="font-extrabold">Cash</span>
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+                <span className="font-extrabold">All Major Credit Cards</span>
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-white">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18l-2 12H5L3 6Z"/><path d="M7 10h10M6 14h12"/></svg>
+                <span className="font-extrabold">EFS Services</span>
+              </div>
             </div>
           </div>
+
           <div className="mt-3 flex justify-center">
             <a
               className="inline-flex items-center gap-2 rounded-xl px-3 py-2 bg-black text-white font-semibold"
@@ -778,21 +774,22 @@ function ContactSection() {
 
       <div className="rounded-xl overflow-hidden border border-black/10">
         <iframe title="Shop Map (OpenStreetMap)" className="w-full h-[260px]" loading="lazy" src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik" />
-        <div className="text-xs p-2 bg-white/90 text-black font-extrabold">
+        <div className="text-xs p-2 bg-white/90 text-black font-extrabold text-center">
           Prefer Google?{" "}
           <a className="underline" href="https://www.google.com/maps?q=2712%20W%20F%20Street,%20Pecos,%20TX%2079772" target="_blank" rel="noreferrer">
             Open in Google Maps
           </a>
         </div>
-        <div className="p-3 text-sm font-extrabold">
+        <div className="p-3 text-sm font-extrabold text-center">
           Call or Visit A&H Towing & Recovery, LLC<br />
           Phone: <a className="underline" href="tel:+14328424578">(432) 842-4578</a><br />
           Email: <a className="underline" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
           Address: 2712 W F Street, Pecos, TX 79772<br />
           Hours: 24/7 Dispatch
         </div>
-        <div className="mt-2 text-xs opacity-80 px-3 pb-3">24/7 Professional Service — Call or Text Us!</div>
+        <div className="mt-2 text-xs opacity-80 px-3 pb-3 text-center">24/7 Professional Service — Call or Text Us!</div>
       </div>
     </div>
   );
 }
+

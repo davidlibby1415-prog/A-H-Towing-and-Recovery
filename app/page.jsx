@@ -1,4 +1,6 @@
-"import React, { useState, useEffect } from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
 
 /* ============================ Utilities ============================ */
 function smsHref(number, body) {
@@ -83,7 +85,7 @@ function StripedCallout({ children, className = "" }) {
       className={`inline-block rounded-xl p-[3px] ${className}`}
       style={{
         backgroundImage:
-          "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)", // stripes on border only
+          "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)",
       }}
     >
       <div className="rounded-lg px-4 py-3 text-center" style={{ backgroundColor: "#fde047" }}>
@@ -477,10 +479,10 @@ export default function Home() {
         <Section className="mt-2 bg-red-800">
           <AnimBorder>
             <SteelPanel className="text-center">
-              {/* Entire block grouped inside the yellow callout (no stripe texture in letters) */}
+              {/* Entire block grouped inside the yellow callout */}
               <div className="flex justify-center">
                 <StripedCallout className="max-w-5xl w-full">
-                  {/* 🔹 Updated headline styling for a more professional look */}
+                  {/* Professional headline */}
                   <h2
                     className="font-extrabold tracking-tight leading-[1.1]"
                     style={{
@@ -496,7 +498,7 @@ export default function Home() {
                     Stranded on the Side of the Road???
                   </h2>
 
-                  {/* Description: darker text for clarity */}
+                  {/* Description */}
                   <div
                     className="mt-2 font-extrabold leading-snug"
                     style={{ color: "#0b1220" }}
@@ -510,12 +512,12 @@ export default function Home() {
                 </StripedCallout>
               </div>
 
-              {/* Instruction line — 20% LESS translucent than before (0.45 ➜ 0.65) */}
+              {/* Instruction line */}
               <div className="mt-4">
                 <BubbleBlock className="!text-black" >
                   <span
                     style={{
-                      backgroundColor: "rgba(250, 204, 21, 0.65)", // yellow-400 @ 65% opacity
+                      backgroundColor: "rgba(250, 204, 21, 0.65)",
                       display: "inline-block",
                       borderRadius: "12px",
                       padding: "6px 10px",
@@ -544,14 +546,14 @@ export default function Home() {
         <Section id="services" className="bg-red-800/90">
           <AnimBorder>
             <SteelPanel className="text-center">
-              {/* Services Provided — clean solid sans, blue */}
+              {/* Services Provided */}
               <div className="inline-block rounded-2xl px-5 py-2 bg-black/20 backdrop-blur-sm">
                 <h3
                   className="text-[clamp(32px,5.2vw,56px)] font-black leading-tight tracking-tight"
                   style={{
                     fontFamily:
                       '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
-                    color: "#60a5fa",              // solid blue
+                    color: "#60a5fa",
                     textShadow: "0 2px 14px rgba(0,0,0,.45)",
                     letterSpacing: "0.2px",
                   }}
@@ -666,12 +668,12 @@ export default function Home() {
                           <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
                             <Ico className="h-6 w-6 text-white" />
                           </div>
-                            <div>
-                              <BubbleBlock className="!px-3 !py-2">
-                                <div className="font-extrabold">{title}</div>
-                                <div className="text-sm text-white/95 mt-0.5">{desc}</div>
-                              </BubbleBlock>
-                            </div>
+                          <div>
+                            <BubbleBlock className="!px-3 !py-2">
+                              <div className="font-extrabold">{title}</div>
+                              <div className="text-sm text-white/95 mt-0.5">{desc}</div>
+                            </BubbleBlock>
+                          </div>
                         </div>
                       </SteelPanel>
                     </AnimBorder>
@@ -733,7 +735,7 @@ export default function Home() {
           />
         </Section>
 
-        {/* =================== Request for Services (renamed; inviting heading) =================== */}
+        {/* =================== Request for Services =================== */}
         <Section id="contact" className="bg-red-900/90">
           <AnimBorder>
             <SteelPanel>
@@ -777,7 +779,7 @@ export default function Home() {
           <BrandSlab Tag="h2" />
         </div>
 
-        {/* Payments + TikTok (more color) */}
+        {/* Payments + TikTok */}
         <div className="container max-w-7xl py-4 bg-red-900/60 rounded-2xl">
           <div className="w-full flex justify-center">
             <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/30 via-rose-500/30 to-amber-400/30 border border-black/10 max-w-fit">
@@ -810,7 +812,7 @@ export default function Home() {
               rel="noreferrer"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94.5 2 .76 3.12.76Z"/>
+                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94 .5 2 .76 3.12 .76Z"/>
               </svg>
               <span>Follow us on TikTok</span>
             </a>
@@ -1036,3 +1038,4 @@ function ContactSection() {
     </div>
   );
 }
+

@@ -1,7 +1,7 @@
 import ServicePage from "../../components/ServicePage";
 
 export const metadata = {
-  title: "Heavy Duty & Commercial Towing | A&H Towing & Recovery, LLC",
+  title: "Heavy Duty & Commercial Towing | A & H Towing & Recovery",
   description:
     "Oilfield & fleet support. Lease roads, remote access, winch-outs, and long/short distance heavy duty tows from Pecos and the surrounding West Texas region.",
 };
@@ -23,7 +23,7 @@ export default function HeavyDutyCommercialPage() {
         { label: "Fleet" },
         { label: "Remote Access" },
       ]}
-      heroVideoSrc="/videos/heavy-duty-bg.mp4"          // your heavy-duty video
+      heroVideoSrc="/Videos/heavy-duty-bg.mp4"  // <- updated file name
     />
   );
 }

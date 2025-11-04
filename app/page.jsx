@@ -440,11 +440,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
-              <a href="#services" className="hover:opacity-80">Services</a>
-              <a href="#coverage" className="hover:opacity-80">Coverage</a>
-              <a href="#contact" className="hover:opacity-80">Request a Tow</a>
-            </nav>
+           <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
+  <a href="#services" className="hover:opacity-80">Services</a>
+  <a href="#coverage" className="hover:opacity-80">Coverage</a>
+  <a href="/owners" className="hover:opacity-80">Owners</a>
+  <a href="#contact" className="hover:opacity-80">Request a Tow</a>
+</nav>
+
             <PhoneCTA className="hidden sm:inline-flex" />
           </div>
         </header>

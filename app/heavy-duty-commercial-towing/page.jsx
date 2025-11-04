@@ -1,3 +1,4 @@
+// app/heavy-duty-commercial-towing/page.jsx
 import ServicePage from "../../components/ServicePage";
 
 export const metadata = {
@@ -19,7 +20,7 @@ export default function HeavyDutyCommercialPage() {
         "Yard to yard, site to yard, and site to shop moves",
       ]}
       badges={[{ label: "Oilfield" }, { label: "Fleet" }, { label: "Remote Access" }]}
-      heroVideoSrc="/Videos/heavy-duty-bg.mp4"   {/* keep capital V to match your repo */}
+      heroVideoSrc="/Videos/heavy-duty-bg.mp4"
     />
   );
 }

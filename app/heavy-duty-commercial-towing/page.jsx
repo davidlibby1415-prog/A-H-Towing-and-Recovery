@@ -1,3 +1,4 @@
+// app/heavy-duty-commercial-towing/page.jsx
 import ServicePage from "../../components/ServicePage";
 
 export const metadata = {
@@ -23,7 +24,7 @@ export default function HeavyDutyCommercialPage() {
         { label: "Fleet" },
         { label: "Remote Access" },
       ]}
-      heroVideoSrc="/Videos/heavy-duty-bg.mp4"  // <- updated file name
+      heroVideoSrc="/videos/heavy-duty-bg.mp4"
     />
   );
 }

@@ -1,26 +1,23 @@
-// FILE: /app/light-duty-towing/page.jsx
-
 import ServicePage from "../../components/ServicePage";
 
 export const metadata = {
   title: "Light Duty Towing | A & H Towing & Recovery",
-  description:
-    "Cars, SUVs, and pickups — local & long-distance tows. Safe, insured, professional operators. 24/7 dispatch.",
+  description: "Cars, SUVs, and pickups. Fast local & long-distance light-duty towing in West Texas.",
 };
 
-export default function Page() {
+export default function LightDutyPage() {
   return (
     <ServicePage
       title="Light Duty Towing"
-      subtitle="Cars • SUVs • Pickups — Long & Short Distance Tows"
+      subtitle="Cars • SUVs • Pickups • Local & Long Distance"
       bullets={[
-        "Flatbed & wheel-lift options to protect drivetrains and body kits",
-        "Dealership, body shop, and home deliveries",
-        "After-hours impound release coordination",
-        "Breakdown tows from highway, shoulder, or parking lots",
-        "Battery-safe loading for EVs & hybrids (consult manufacturer points)",
+        "Safe hook-up and transport for daily drivers and family vehicles",
+        "Damage-minimizing procedures and securement",
+        "Local tows and out-of-town hauls",
+        "Immediate dispatch with live phone/SMS",
       ]}
-      badges={[{ label: "24/7" }, { label: "Insured" }, { label: "Local & Long" }]}
+      badges={[{ label: "24/7" }, { label: "Local + Long" }, { label: "Road-Safe" }]}
+      heroVideoSrc="/Videos/tow1.mp4"
     />
   );
 }

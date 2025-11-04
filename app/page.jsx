@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+
 /* ============================ Utilities ============================ */
 function smsHref(number, body) {
   const encoded = encodeURIComponent(body);
@@ -201,7 +202,7 @@ function BrandSlab({ Tag = "h1" }) {
   );
 }
 
-/* ========================= Golden award badges (radiant ears + long ribbons) ========================= */
+/* ========================= Golden award badges ========================= */
 function MedalBadge({ title, lines = [] }) {
   return (
     <div className="w-full sm:w-auto px-2">
@@ -215,7 +216,7 @@ function MedalBadge({ title, lines = [] }) {
             filter: "blur(0.6px)",
           }}
         />
-        {/* ribbons (longer + gold outline) */}
+        {/* ribbons */}
         <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-3">
           <div className="w-7 h-20 bg-ahRed clip-ribbon shadow-md border-2 border-yellow-300" />
           <div className="w-7 h-20 bg-ahBlue clip-ribbon shadow-md border-2 border-yellow-300" />
@@ -309,7 +310,7 @@ function TopLocationsMarquee() {
 
         .clip-ribbon { clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%); }
 
-        /* ===== Global animated red↔blue border (smooth angle animation) ===== */
+        /* ===== Global animated red↔blue border ===== */
         @property --angle {
           syntax: "<angle>";
           initial-value: 0deg;
@@ -440,12 +441,12 @@ export default function Home() {
                 </div>
               </div>
             </div>
-           <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
-  <a href="#services" className="hover:opacity-80">Services</a>
-  <a href="#coverage" className="hover:opacity-80">Coverage</a>
-  <a href="/owners" className="hover:opacity-80">Owners</a>
-  <a href="#contact" className="hover:opacity-80">Request a Tow</a>
-</nav>
+            <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
+              <a href="#services" className="hover:opacity-80">Services</a>
+              <a href="#coverage" className="hover:opacity-80">Coverage</a>
+              <a href="/owners" className="hover:opacity-80">Owners</a>
+              <a href="#contact" className="hover:opacity-80">Request a Tow</a>
+            </nav>
 
             <PhoneCTA className="hidden sm:inline-flex" />
           </div>
@@ -477,14 +478,12 @@ export default function Home() {
         {/* Space so wheels are clearly visible before next section */}
         <div className="h-7" />
 
-        {/* =================== STRANDED SECTION (GROUPED IN YELLOW BOX) =================== */}
+        {/* =================== STRANDED SECTION =================== */}
         <Section className="mt-2 bg-red-800">
           <AnimBorder>
             <SteelPanel className="text-center">
-              {/* Entire block grouped inside the yellow callout */}
               <div className="flex justify-center">
                 <StripedCallout className="max-w-5xl w-full">
-                  {/* Professional headline */}
                   <h2
                     className="font-extrabold tracking-tight leading-[1.1]"
                     style={{
@@ -500,7 +499,6 @@ export default function Home() {
                     Stranded on the Side of the Road???
                   </h2>
 
-                  {/* Description */}
                   <div
                     className="mt-2 font-extrabold leading-snug"
                     style={{ color: "#0b1220" }}
@@ -514,7 +512,6 @@ export default function Home() {
                 </StripedCallout>
               </div>
 
-              {/* Instruction line */}
               <div className="mt-4">
                 <BubbleBlock className="!text-black" >
                   <span
@@ -530,10 +527,8 @@ export default function Home() {
                 </BubbleBlock>
               </div>
 
-              {/* extra line of space */}
               <div className="h-5" />
 
-              {/* Buttons */}
               <div className="flex items-center justify-center gap-3 flex-wrap">
                 <PhoneCTA />
                 <ScrollToFormCTA />
@@ -544,7 +539,7 @@ export default function Home() {
           </AnimBorder>
         </Section>
 
-        {/* =================== SERVICES (steel cards under subcategories) =================== */}
+        {/* =================== SERVICES =================== */}
         <Section id="services" className="bg-red-800/90">
           <AnimBorder>
             <SteelPanel className="text-center">
@@ -564,203 +559,200 @@ export default function Home() {
                 </h3>
               </div>
 
-             {/* Tow Services */}
-<div className="mt-6">
-  <div className="mb-3">
-    <h4
-      className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
-      style={{
-        fontFamily:
-          '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
-        color: "#60a5fa",
-      }}
-    >
-      Tow Services
-    </h4>
-  </div>
-  <div className="grid md:grid-cols-3 gap-4">
-    {[
-      {
-        icon: IconTruck,
-        title: "Light Duty Towing",
-        desc: "Cars • SUVs • Pickups",
-        href: "/tow-services",
-      },
-      {
-        icon: IconTruck,
-        title: "Heavy Duty & Commercial Towing",
-        desc: "Oilfield & fleet",
-        href: "/tow-services",
-      },
-      {
-        icon: IconTruck,
-        title: "Oilfield Routes Tow Service",
-        desc: "Lease roads • remote access",
-        href: "/tow-services",
-      },
-      {
-        icon: IconTruck,
-        title: "Long & Short Distance Tows",
-        desc: "Local & state-to-state",
-        href: "/tow-services",
-      },
-      {
-        icon: IconFlatbed,
-        title: "Equipment Transport",
-        desc: "Light equipment & tools",
-        href: "/tow-services",
-      },
-      {
-        icon: IconFlatbed,
-        title: "Flatbed / Rollback Services",
-        desc: "Damage-free transport",
-        href: "/tow-services",
-      },
-    ].map(({ icon: Ico, title, desc, href }) => (
-      <AnimBorder key={title}>
-        <Link
-          href={href}
-          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
-        >
-          <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
-                <Ico className="h-6 w-6 text-white" />
+              {/* Tow Services */}
+              <div className="mt-6">
+                <div className="mb-3">
+                  <h4
+                    className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
+                    style={{
+                      fontFamily:
+                        '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                      color: "#60a5fa",
+                    }}
+                  >
+                    Tow Services
+                  </h4>
+                </div>
+                <div className="grid md:grid-cols-3 gap-4">
+                  {[
+                    {
+                      icon: IconTruck,
+                      title: "Light Duty Towing",
+                      desc: "Cars • SUVs • Pickups",
+                      href: "/tow-services",
+                    },
+                    {
+                      icon: IconTruck,
+                      title: "Heavy Duty & Commercial Towing",
+                      desc: "Oilfield & fleet",
+                      href: "/tow-services",
+                    },
+                    {
+                      icon: IconTruck,
+                      title: "Oilfield Routes Tow Service",
+                      desc: "Lease roads • remote access",
+                      href: "/tow-services",
+                    },
+                    {
+                      icon: IconTruck,
+                      title: "Long & Short Distance Tows",
+                      desc: "Local & state-to-state",
+                      href: "/tow-services",
+                    },
+                    {
+                      icon: IconFlatbed,
+                      title: "Equipment Transport",
+                      desc: "Light equipment & tools",
+                      href: "/tow-services",
+                    },
+                    {
+                      icon: IconFlatbed,
+                      title: "Flatbed / Rollback Services",
+                      desc: "Damage-free transport",
+                      href: "/tow-services",
+                    },
+                  ].map(({ icon: Ico, title, desc, href }) => (
+                    <AnimBorder key={title}>
+                      <Link
+                        href={href}
+                        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
+                      >
+                        <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
+                          <div className="flex items-start gap-3">
+                            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
+                              <Ico className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                              <BubbleBlock className="!px-3 !py-2">
+                                <div className="font-extrabold">{title}</div>
+                                <div className="text-sm text-white/95 mt-0.5">
+                                  {desc}
+                                </div>
+                              </BubbleBlock>
+                            </div>
+                          </div>
+                        </SteelPanel>
+                      </Link>
+                    </AnimBorder>
+                  ))}
+                </div>
               </div>
-              <div>
-                <BubbleBlock className="!px-3 !py-2">
-                  <div className="font-extrabold">{title}</div>
-                  <div className="text-sm text-white/95 mt-0.5">
-                    {desc}
-                  </div>
-                </BubbleBlock>
-              </div>
-            </div>
-          </SteelPanel>
-        </Link>
-      </AnimBorder>
-    ))}
-  </div>
-</div>
-
 
               {/* Emergency Roadside Assistance */}
-<div className="mt-8">
-  <div className="mb-3">
-    <h4
-      className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
-      style={{
-        fontFamily:
-          '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
-        color: "#60a5fa",
-      }}
-    >
-      Emergency Roadside Assistance
-    </h4>
-  </div>
-  <div className="grid md:grid-cols-3 gap-4">
-    {[
-      {
-        icon: IconFuel,
-        title: "Fuel Delivery",
-        desc: "Gas & diesel",
-        href: "/emergency-roadside-assistance",
-      },
-      {
-        icon: IconBolt,
-        title: "Jumpstarts",
-        desc: "12V & roadside checks",
-        href: "/emergency-roadside-assistance",
-      },
-      {
-        icon: IconLock,
-        title: "Lockouts",
-        desc: "Fast entry, no damage",
-        href: "/emergency-roadside-assistance",
-      },
-    ].map(({ icon: Ico, title, desc, href }) => (
-      <AnimBorder key={title}>
-        <Link
-          href={href}
-          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
-        >
-          <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
-                <Ico className="h-6 w-6 text-white" />
+              <div className="mt-8">
+                <div className="mb-3">
+                  <h4
+                    className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
+                    style={{
+                      fontFamily:
+                        '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                      color: "#60a5fa",
+                    }}
+                  >
+                    Emergency Roadside Assistance
+                  </h4>
+                </div>
+                <div className="grid md:grid-cols-3 gap-4">
+                  {[
+                    {
+                      icon: IconFuel,
+                      title: "Fuel Delivery",
+                      desc: "Gas & diesel",
+                      href: "/emergency-roadside-assistance",
+                    },
+                    {
+                      icon: IconBolt,
+                      title: "Jumpstarts",
+                      desc: "12V & roadside checks",
+                      href: "/emergency-roadside-assistance",
+                    },
+                    {
+                      icon: IconLock,
+                      title: "Lockouts",
+                      desc: "Fast entry, no damage",
+                      href: "/emergency-roadside-assistance",
+                    },
+                  ].map(({ icon: Ico, title, desc, href }) => (
+                    <AnimBorder key={title}>
+                      <Link
+                        href={href}
+                        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
+                      >
+                        <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
+                          <div className="flex items-start gap-3">
+                            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
+                              <Ico className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                              <BubbleBlock className="!px-3 !py-2">
+                                <div className="font-extrabold">{title}</div>
+                                <div className="text-sm text-white/95 mt-0.5">
+                                  {desc}
+                                </div>
+                              </BubbleBlock>
+                            </div>
+                          </div>
+                        </SteelPanel>
+                      </Link>
+                    </AnimBorder>
+                  ))}
+                </div>
               </div>
-              <div>
-                <BubbleBlock className="!px-3 !py-2">
-                  <div className="font-extrabold">{title}</div>
-                  <div className="text-sm text-white/95 mt-0.5">
-                    {desc}
-                  </div>
-                </BubbleBlock>
-              </div>
-            </div>
-          </SteelPanel>
-        </Link>
-      </AnimBorder>
-    ))}
-  </div>
-</div>
->
 
-             {/* Accidents */}
-<div className="mt-8">
-  <div className="mb-3">
-    <h4
-      className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
-      style={{
-        fontFamily:
-          '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
-        color: "#60a5fa",
-      }}
-    >
-      Accidents
-    </h4>
-  </div>
-  <div className="grid md:grid-cols-2 gap-4">
-    {[
-      {
-        icon: IconTruck,
-        title: "Accident Removal",
-        desc: "Secure, professional",
-        href: "/accidents-and-accident-removal",
-      },
-      {
-        icon: IconHook,
-        title: "Winching / Recovery",
-        desc: "Off-road, mud, sand",
-        href: "/winching-recovery",
-      },
-    ].map(({ icon: Ico, title, desc, href }) => (
-      <AnimBorder key={title}>
-        <Link
-          href={href}
-          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
-        >
-          <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
-                <Ico className="h-6 w-6 text-white" />
+              {/* Accidents */}
+              <div className="mt-8">
+                <div className="mb-3">
+                  <h4
+                    className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
+                    style={{
+                      fontFamily:
+                        '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                      color: "#60a5fa",
+                    }}
+                  >
+                    Accidents
+                  </h4>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {[
+                    {
+                      icon: IconTruck,
+                      title: "Accident Removal",
+                      desc: "Secure, professional",
+                      href: "/accidents-and-accident-removal",
+                    },
+                    {
+                      icon: IconHook,
+                      title: "Winching / Recovery",
+                      desc: "Off-road, mud, sand",
+                      href: "/winching-recovery",
+                    },
+                  ].map(({ icon: Ico, title, desc, href }) => (
+                    <AnimBorder key={title}>
+                      <Link
+                        href={href}
+                        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
+                      >
+                        <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
+                          <div className="flex items-start gap-3">
+                            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
+                              <Ico className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                              <BubbleBlock className="!px-3 !py-2">
+                                <div className="font-extrabold">{title}</div>
+                                <div className="text-sm text-white/95 mt-0.5">
+                                  {desc}
+                                </div>
+                              </BubbleBlock>
+                            </div>
+                          </div>
+                        </SteelPanel>
+                      </Link>
+                    </AnimBorder>
+                  ))}
+                </div>
               </div>
-              <div>
-                <BubbleBlock className="!px-3 !py-2">
-                  <div className="font-extrabold">{title}</div>
-                  <div className="text-sm text-white/95 mt-0.5">
-                    {desc}
-                  </div>
-                </BubbleBlock>
-              </div>
-            </div>
-          </SteelPanel>
-        </Link>
-      </AnimBorder>
-    ))}
-  </div>
-</div>
-
 
               <div className="mt-6 flex gap-3 flex-wrap justify-center">
                 <PhoneCTA />
@@ -770,7 +762,7 @@ export default function Home() {
           </AnimBorder>
         </Section>
 
-        {/* =================== SERVICE AREA (bigger heading + one grouped bubble) =================== */}
+        {/* =================== SERVICE AREA =================== */}
         <Section id="coverage" className="bg-red-900/80">
           <AnimBorder>
             <SteelPanel>
@@ -781,7 +773,6 @@ export default function Home() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-4 items-start">
-                {/* Dark-looking map via CSS filter over the embed */}
                 <div className="rounded-2xl overflow-hidden border border-white/15">
                   <iframe
                     title="Service Area Map (Dark)"
@@ -796,7 +787,6 @@ export default function Home() {
                   />
                 </div>
 
-                {/* One grouped bubble for all locations */}
                 <div className="text-center md:text-left flex items-center justify-center">
                   <BubbleBlock className="!px-5 !py-4 max-w-xl text-base md:text-lg leading-relaxed">
                     {locations.join(" • ")}
@@ -855,7 +845,7 @@ export default function Home() {
           </AnimBorder>
         </Section>
 
-        {/* Bottom steel brand (RED letters) */}
+        {/* Bottom steel brand */}
         <div className="container max-w-7xl pb-2">
           <BrandSlab Tag="h2" />
         </div>
@@ -1096,7 +1086,7 @@ function ContactSection() {
           Call or Visit<br />
           <span className="text-amber-200">A&amp;H Towing &amp; Recovery, LLC</span>
         </div>
-        {/* Use OSM embed and keep the same dark filter for consistency */}
+        {/* Map */}
         <iframe
           title="Shop Map (OpenStreetMap)"
           className="w-full h-[260px]"
@@ -1110,7 +1100,6 @@ function ContactSection() {
             Open in Google Maps
           </a>
         </div>
-        {/* Bolder + darker blue for visibility */}
         <div className="p-3 text-sm font-extrabold text-center" style={{ color: "#1e3a8a" }}>
           24/7 Professional Service — Call or Text Us!
         </div>
@@ -1119,4 +1108,3 @@ function ContactSection() {
     </div>
   );
 }
-

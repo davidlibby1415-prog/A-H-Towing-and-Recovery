@@ -1,27 +1,23 @@
-// FILE: /app/emergency-roadside-assistance/page.jsx
-
 import ServicePage from "../../components/ServicePage";
 
 export const metadata = {
   title: "Emergency Roadside Assistance | A & H Towing & Recovery",
-  description:
-    "Fuel delivery (gas & diesel), jumpstarts (12V), lockouts (fast, no damage), and roadside checks.",
+  description: "Jumpstarts, fuel delivery, lockouts, tire help, and quick checks.",
 };
 
-export default function Page() {
+export default function RoadsidePage() {
   return (
     <ServicePage
       title="Emergency Roadside Assistance"
-      subtitle="Fuel Delivery • Gas & Diesel • Jumpstarts (12V) • Roadside Checks • Lockouts (fast entry, no damage)"
+      subtitle="Fuel Delivery • Jumpstarts • Lockouts • Quick Checks"
       bullets={[
-        "Fuel delivery: gas & diesel — roadside and jobsite",
-        "Jumpstarts for 12V systems and battery checks",
-        "Lockouts with professional entry tools (no damage)",
-        "Tire inflations & spare installs (where safe)",
-        "On-scene assessment and tow if needed",
+        "Gas & diesel delivery to get you moving",
+        "12V jumpstarts and battery checks",
+        "Fast, no-damage vehicle entry for lockouts",
+        "Stranded support and safety-first procedures",
       ]}
-      badges={[{ label: "Fast Entry" }, { label: "No Damage" }, { label: "On-Scene" }]}
+      badges={[{ label: "Fuel" }, { label: "Jumps" }, { label: "Lockouts" }]}
+      heroVideoSrc="/Videos/tow3.mp4"
     />
   );
 }
-

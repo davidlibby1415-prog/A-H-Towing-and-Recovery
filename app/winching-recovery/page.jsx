@@ -1,9 +1,8 @@
-// FILE: /app/winching-recovery/page.tsx
+// FILE: /app/winching-recovery/page.jsx
 
-import type { Metadata as M4 } from "next";
 import ServicePage from "../../components/ServicePage";
 
-export const metadata: M4 = {
+export const metadata = {
   title: "Winching / Recovery | A & H Towing & Recovery",
   description:
     "Off-road recovery for mud, sand, and shoulder. Lease roads and remote access supported.",

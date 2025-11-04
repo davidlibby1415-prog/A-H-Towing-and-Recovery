@@ -89,7 +89,8 @@ export default function ServicePage({
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-6">
               <h2 className="text-xl font-semibold">Service Area</h2>
               <p className="mt-2 text-white/80">
-                Fast response across {siteConfig.serviceAreas.join(", ")}. 24/7 dispatch.
+                Fast response across {siteConfig.serviceAreas.join(", ")}. 24/7
+                dispatch.
               </p>
             </div>
           </div>
@@ -97,14 +98,16 @@ export default function ServicePage({
           <aside className="space-y-4">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
               <h3 className="font-semibold">Need help now?</h3>
-              <a href={siteConfig.phoneHref} className="mt-2 block text-2xl font-bold">
+              <a
+                href={siteConfig.phoneHref}
+                className="mt-2 block text-2xl font-bold"
+              >
                 {siteConfig.phone}
               </a>
               <p className="mt-2 text-sm text-white/70">
                 Save our number. We answer day and night.
               </p>
             </div>
-
             <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
               <h3 className="font-semibold">Email Dispatch</h3>
               <a
@@ -114,12 +117,4 @@ export default function ServicePage({
                 {siteConfig.email}
               </a>
               <p className="mt-2 text-sm text-white/70">
-                Send PO#, unit, location, and contact to expedite.
-              </p>
-            </div>
-          </aside>
-        </div>
-      </section>
-    </main>
-  );
-}
+                Send PO#, unit, location, and contact to

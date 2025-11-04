@@ -1,16 +1,16 @@
-// FILE: /app/owners/page.jsx
-
-"use client";
+// FILE: app/owners/page.jsx
 
 import React from "react";
 import Link from "next/link";
 
-// Simple animated red/blue border (same idea as home page)
+/* ========= Simple animated border (matches main site) ========= */
+
 function AnimBorder({ children, className = "" }) {
   return <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>{children}</div>;
 }
 
-// Steel panel using the same diamond-plate background
+/* ========= Steel panel using diamond plate background ========= */
+
 function SteelPanel({ children, className = "" }) {
   return (
     <div
@@ -29,6 +29,8 @@ function SteelPanel({ children, className = "" }) {
   );
 }
 
+/* ========= Reusable bubble label ========= */
+
 function Bubble({ children, className = "" }) {
   return (
     <div
@@ -42,6 +44,8 @@ function Bubble({ children, className = "" }) {
     </div>
   );
 }
+
+/* ========= Owner card ========= */
 
 function OwnerCard({ name, title, years, blurb, bullets = [] }) {
   return (
@@ -69,16 +73,20 @@ function OwnerCard({ name, title, years, blurb, bullets = [] }) {
   );
 }
 
+/* ========= Metadata (NOW ALLOWED – this is a server component) ========= */
+
 export const metadata = {
   title: "Meet the Owners | A & H Towing & Recovery",
   description:
     "Learn about the owners of A & H Towing & Recovery and why West Texas drivers, ranchers, and oilfield crews trust them.",
 };
 
+/* ========= Page component ========= */
+
 export default function OwnersPage() {
   return (
     <main className="min-h-screen bg-neutral-950 text-white">
-      {/* simple global styles for border animation reused from main page */}
+      {/* global styles for animated border (same as main page) */}
       <style jsx global>{`
         @property --angle {
           syntax: "<angle>";
@@ -102,12 +110,12 @@ export default function OwnersPage() {
         }
       `}</style>
 
-      {/* Top header strip similar to other pages */}
+      {/* Header strip (simple) */}
       <header className="bg-black/90 border-b border-black/60">
         <div className="container max-w-7xl flex items-center justify-between gap-4 py-3">
           <div className="text-xs md:text-sm">
             <div className="font-bold text-red-500">
-              A&H Towing & Recovery, LLC
+              A&amp;H Towing &amp; Recovery, LLC
             </div>
             <div>2712 W F Street, Pecos, TX 79772</div>
           </div>
@@ -169,7 +177,7 @@ export default function OwnersPage() {
         </div>
       </section>
 
-      {/* Story / Why We Started */}
+      {/* Why we started */}
       <section className="pb-10 md:pb-12">
         <div className="container max-w-7xl">
           <AnimBorder>
@@ -180,10 +188,12 @@ export default function OwnersPage() {
               <p className="text-sm md:text-base text-gray-100 leading-relaxed">
                 A&amp;H Towing &amp; Recovery was started with a simple idea:
                 West Texas deserves towing and recovery that is{" "}
-                <span className="font-semibold">professional, respectful, and
-                oilfield-tough</span>. Too many drivers and crews have dealt
-                with long wait times, unclear pricing, and unsafe practices on
-                the side of busy highways.
+                <span className="font-semibold">
+                  professional, respectful, and oilfield-tough
+                </span>
+                . Too many drivers and crews have dealt with long wait times,
+                unclear pricing, and unsafe practices on the side of busy
+                highways.
               </p>
               <p className="mt-3 text-sm md:text-base text-gray-100 leading-relaxed">
                 We built A&amp;H to be the opposite of that. Our trucks are

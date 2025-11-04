@@ -1,4 +1,4 @@
-import ServicePage from "@/components/ServicePage";
+import ServicePage from "../../components/ServicePage";
 
 export const metadata = {
   title: "Heavy Duty & Commercial Towing | A&H Towing & Recovery, LLC",
@@ -23,8 +23,8 @@ export default function HeavyDutyCommercialPage() {
         { label: "Fleet" },
         { label: "Remote Access" },
       ]}
-      heroVideoSrc="/videos/heavy-duty-bg.mp4"          // <-- your video file
-      heroVideoPoster="/videos/heavy-duty-bg-poster.jpg" // optional poster; remove if you don't create one
+      heroVideoSrc="/videos/heavy-duty-bg.mp4"          // your heavy-duty video
+      heroVideoPoster="/videos/heavy-duty-bg-poster.jpg" // optional; remove if you don't have this
     />
   );
 }

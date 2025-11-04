@@ -1,9 +1,8 @@
-// FILE: /app/accidents-and-accident-removal/page.tsx
+// FILE: /app/accidents-and-accident-removal/page.jsx
 
-import type { Metadata as M3 } from "next";
 import ServicePage from "../../components/ServicePage";
 
-export const metadata: M3 = {
+export const metadata = {
   title: "Accidents & Accident Removal | A & H Towing & Recovery",
   description:
     "Secure, professional scene management and vehicle removal. Coordination with law enforcement & insurers.",

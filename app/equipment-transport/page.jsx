@@ -1,9 +1,8 @@
-// FILE: /app/equipment-transport/page.tsx
+// FILE: /app/equipment-transport/page.jsx
 
-import type { Metadata as Meta } from "next";
 import ServicePage from "../../components/ServicePage";
 
-export const metadata: Meta = {
+export const metadata = {
   title: "Equipment Transport | A & H Towing & Recovery",
   description:
     "Light equipment & tools transport. Compressors, generators, welders, tool boxes, small forklifts.",

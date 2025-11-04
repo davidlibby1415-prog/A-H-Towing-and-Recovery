@@ -4,7 +4,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { siteConfig } from "@/lib/siteConfig";
+import { siteConfig } from "../lib/siteConfig";
 
 type Badge = { label: string };
 

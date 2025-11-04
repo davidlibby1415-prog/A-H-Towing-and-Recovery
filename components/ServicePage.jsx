@@ -1,45 +1,59 @@
-// FILE: /components/ServicePage.jsx
-
 "use client";
 
 import React from "react";
 import Link from "next/link";
-import { siteConfig } from "../lib/siteConfig";
+import { siteConfig } from "@/lib/siteConfig";
 
-export default function ServicePage({
+function ServicePage({
   title,
   subtitle,
   bullets,
   badges = [],
   heroImageUrl,
+  heroVideoSrc,
+  heroVideoPoster,
   CTA,
 }) {
-  const effectiveCTA =
-    CTA && CTA.href
-      ? CTA
-      : { label: "Call Now", href: siteConfig.phoneHref };
+  const cta = CTA || { label: "Call Now", href: siteConfig.phoneHref };
 
   return (
     <main className="min-h-screen bg-neutral-950 text-white">
-      {/* Hero */}
+      {/* Hero section with optional VIDEO background */}
       <section className="relative isolate overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-40"
-          style={{
-            backgroundImage: heroImageUrl
-              ? `url(${heroImageUrl})`
-              : "linear-gradient(135deg, #0a0a0a 0%, #1f2937 50%, #0a0a0a 100%)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
+        <div className="absolute inset-0 opacity-40">
+          {heroVideoSrc ? (
+            <video
+              className="w-full h-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={heroVideoPoster}
+            >
+              <source src={heroVideoSrc} type="video/mp4" />
+            </video>
+          ) : (
+            <div
+              className="w-full h-full"
+              style={{
+                backgroundImage: heroImageUrl
+                  ? `url(${heroImageUrl})`
+                  : "linear-gradient(135deg, #0a0a0a 0%, #1f2937 50%, #0a0a0a 100%)",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+          )}
+        </div>
+
+        {/* Hero content */}
         <div className="relative mx-auto max-w-6xl px-6 py-20">
-          {Array.isArray(badges) && badges.length > 0 && (
+          {badges && badges.length > 0 && (
             <div className="flex flex-wrap items-end gap-2">
               {badges.map((b, i) => (
                 <span
                   key={i}
-                  className="rounded-2xl border border-white/15 bg-white/5 px-3 py-1 text-xs tracking-wide"
+                  className="rounded-2xl border border-white/15 bg-black/40 px-3 py-1 text-xs tracking-wide uppercase"
                 >
                   {b.label}
                 </span>
@@ -57,26 +71,27 @@ export default function ServicePage({
             </p>
           )}
 
-          <div className="mt-8 flex gap-3 flex-wrap">
+          <div className="mt-8 flex flex-wrap gap-3">
             <a
-              href={effectiveCTA.href}
+              href={cta.href}
               className="rounded-2xl bg-emerald-500 px-5 py-3 font-semibold text-black shadow-lg transition hover:translate-y-[-1px] hover:bg-emerald-400 active:translate-y-[0px]"
             >
-              {effectiveCTA.label} • {siteConfig.phone}
+              {cta.label} • {siteConfig.phone}
             </a>
             <Link
-              href="/contact"
-              className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 font-semibold text-white/90 backdrop-blur transition hover:bg-white/10"
+              href="/#contact"
+              className="rounded-2xl border border-white/15 bg-black/40 px-5 py-3 font-semibold text-white/90 backdrop-blur transition hover:bg-white/10"
             >
-              Get a Quote
+              Request a Tow Online
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Content */}
+      {/* Content section */}
       <section className="mx-auto max-w-6xl px-6 py-14">
         <div className="grid gap-10 md:grid-cols-3">
+          {/* Main bullets */}
           <div className="md:col-span-2">
             <ul className="space-y-3">
               {bullets.map((item, i) => (
@@ -90,12 +105,13 @@ export default function ServicePage({
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-6">
               <h2 className="text-xl font-semibold">Service Area</h2>
               <p className="mt-2 text-white/80">
-                Fast response across{" "}
-                {siteConfig.serviceAreas.join(", ")}. 24/7 dispatch.
+                Fast response across {siteConfig.serviceAreas.join(", ")}.
+                24/7 dispatch.
               </p>
             </div>
           </div>
 
+          {/* Sidebar: contact info */}
           <aside className="space-y-4">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
               <h3 className="font-semibold">Need help now?</h3>
@@ -109,6 +125,7 @@ export default function ServicePage({
                 Save our number. We answer day and night.
               </p>
             </div>
+
             <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
               <h3 className="font-semibold">Email Dispatch</h3>
               <a
@@ -128,3 +145,4 @@ export default function ServicePage({
   );
 }
 
+export default ServicePage;

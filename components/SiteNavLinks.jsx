@@ -1,4 +1,4 @@
-// FILE: /components/SiteNavLinks.tsx
+// FILE: /components/SiteNavLinks.jsx
 
 import Link from "next/link";
 
@@ -27,3 +27,5 @@ export function SiteNavLinks() {
     </nav>
   );
 }
+
+export default SiteNavLinks;

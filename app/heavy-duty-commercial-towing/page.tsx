@@ -1,0 +1,27 @@
+// FILE: /app/heavy-duty-commercial-towing/page.tsx
+
+import type { Metadata as MD } from "next";
+import ServicePage from "@/components/ServicePage";
+
+export const metadata: MD = {
+  title: "Heavy Duty & Commercial Towing | A & H Towing & Recovery",
+  description:
+    "Oilfield & fleet support. Lease roads, remote access, winch-outs, and long/short distance HD tows.",
+};
+
+export default function Page() {
+  return (
+    <ServicePage
+      title="Heavy Duty & Commercial Towing"
+      subtitle="Oilfield & Fleet • Oilfield Routes Tow Service • Lease Roads • Remote Access • Long & Short Distance"
+      bullets={[
+        "Trucks, vans, service bodies, and loaded trailers (as permitted)",
+        "Stuck units: lease roads, caliche, sand, and remote pads",
+        "Fleet billing available with COI & W-9",
+        "Escort & route planning for oversize loads (with partners)",
+        "Yard to yard, site to yard, site to shop moves",
+      ]}
+      badges={[{ label: "Oilfield" }, { label: "Fleet" }, { label: "Remote Access" }]}
+    />
+  );
+}

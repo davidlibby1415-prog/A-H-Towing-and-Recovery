@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { siteConfig } from "@/lib/siteConfig";
+import { siteConfig } from "../lib/siteConfig"; // <--- fixed relative path
 
 function ServicePage({
   title,
@@ -105,8 +105,7 @@ function ServicePage({
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-6">
               <h2 className="text-xl font-semibold">Service Area</h2>
               <p className="mt-2 text-white/80">
-                Fast response across {siteConfig.serviceAreas.join(", ")}.
-                24/7 dispatch.
+                Fast response across {siteConfig.serviceAreas.join(", ")}. 24/7 dispatch.
               </p>
             </div>
           </div>

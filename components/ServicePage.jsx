@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { siteConfig } from "../lib/siteConfig"; // <--- fixed relative path
+import { siteConfig } from "../lib/siteConfig"; // IMPORTANT: relative path
 
 function ServicePage({
   title,
@@ -10,25 +10,25 @@ function ServicePage({
   bullets,
   badges = [],
   heroImageUrl,
-  heroVideoSrc,
-  heroVideoPoster,
+  heroVideoSrc, // <- NEW: optional background video
   CTA,
 }) {
   const cta = CTA || { label: "Call Now", href: siteConfig.phoneHref };
+  const hasVideo = !!heroVideoSrc;
 
   return (
     <main className="min-h-screen bg-neutral-950 text-white">
-      {/* Hero section with optional VIDEO background */}
+      {/* Hero (video OR image/gradient background) */}
       <section className="relative isolate overflow-hidden">
-        <div className="absolute inset-0 opacity-40">
-          {heroVideoSrc ? (
+        <div className="absolute inset-0">
+          {hasVideo ? (
             <video
               className="w-full h-full object-cover"
               autoPlay
               muted
-              loop
               playsInline
-              poster={heroVideoPoster}
+              loop
+              preload="metadata"
             >
               <source src={heroVideoSrc} type="video/mp4" />
             </video>
@@ -46,7 +46,9 @@ function ServicePage({
           )}
         </div>
 
-        {/* Hero content */}
+        {/* Dark overlay for contrast */}
+        <div className="absolute inset-0 bg-black/60" />
+
         <div className="relative mx-auto max-w-6xl px-6 py-20">
           {badges && badges.length > 0 && (
             <div className="flex flex-wrap items-end gap-2">
@@ -66,9 +68,7 @@ function ServicePage({
           </h1>
 
           {subtitle && (
-            <p className="mt-3 max-w-3xl text-lg text-white/80">
-              {subtitle}
-            </p>
+            <p className="mt-3 max-w-3xl text-lg text-white/80">{subtitle}</p>
           )}
 
           <div className="mt-8 flex flex-wrap gap-3">
@@ -88,7 +88,7 @@ function ServicePage({
         </div>
       </section>
 
-      {/* Content section */}
+      {/* Content */}
       <section className="mx-auto max-w-6xl px-6 py-14">
         <div className="grid gap-10 md:grid-cols-3">
           {/* Main bullets */}
@@ -105,12 +105,13 @@ function ServicePage({
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-6">
               <h2 className="text-xl font-semibold">Service Area</h2>
               <p className="mt-2 text-white/80">
-                Fast response across {siteConfig.serviceAreas.join(", ")}. 24/7 dispatch.
+                Fast response across {siteConfig.serviceAreas.join(", ")}. 24/7
+                dispatch.
               </p>
             </div>
           </div>
 
-          {/* Sidebar: contact info */}
+          {/* Sidebar contact */}
           <aside className="space-y-4">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
               <h3 className="font-semibold">Need help now?</h3>

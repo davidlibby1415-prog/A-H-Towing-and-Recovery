@@ -24,7 +24,6 @@ export default function HeavyDutyCommercialPage() {
         { label: "Remote Access" },
       ]}
       heroVideoSrc="/videos/heavy-duty-bg.mp4"          // your heavy-duty video
-      heroVideoPoster="/videos/heavy-duty-bg-poster.jpg" // optional; remove if you don't have this
     />
   );
 }

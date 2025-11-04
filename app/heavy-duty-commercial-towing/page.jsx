@@ -1,9 +1,8 @@
-// FILE: /app/heavy-duty-commercial-towing/page.tsx
+// FILE: /app/heavy-duty-commercial-towing/page.jsx
 
-import type { Metadata as MD } from "next";
 import ServicePage from "../../components/ServicePage";
 
-export const metadata: MD = {
+export const metadata = {
   title: "Heavy Duty & Commercial Towing | A & H Towing & Recovery",
   description:
     "Oilfield & fleet support. Lease roads, remote access, winch-outs, and long/short distance HD tows.",

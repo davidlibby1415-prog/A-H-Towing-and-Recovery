@@ -1,7 +1,7 @@
 // FILE: /app/heavy-duty-commercial-towing/page.tsx
 
 import type { Metadata as MD } from "next";
-import ServicePage from "@/components/ServicePage";
+import ServicePage from "../../components/ServicePage";
 
 export const metadata: MD = {
   title: "Heavy Duty & Commercial Towing | A & H Towing & Recovery",

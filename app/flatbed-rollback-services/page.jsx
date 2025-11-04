@@ -1,9 +1,8 @@
-// FILE: /app/flatbed-rollback-services/page.tsx
+// FILE: /app/flatbed-rollback-services/page.jsx
 
-import type { Metadata as M } from "next";
 import ServicePage from "../../components/ServicePage";
 
-export const metadata: M = {
+export const metadata = {
   title: "Flatbed / Rollback Services | A & H Towing & Recovery",
   description:
     "Low-profile loading, AWD/4x4 safe, equipment & motorcycle transport with secure tie-downs.",

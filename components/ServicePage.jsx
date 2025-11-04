@@ -1,4 +1,4 @@
-// FILE: /components/ServicePage.tsx
+// FILE: /components/ServicePage.jsx
 
 "use client";
 
@@ -6,25 +6,19 @@ import React from "react";
 import Link from "next/link";
 import { siteConfig } from "../lib/siteConfig";
 
-type Badge = { label: string };
-
-type ServicePageProps = {
-  title: string;
-  subtitle?: string;
-  bullets: string[];
-  badges?: Badge[];
-  heroImageUrl?: string;
-  CTA?: { label?: string; href?: string };
-};
-
 export default function ServicePage({
   title,
   subtitle,
   bullets,
   badges = [],
   heroImageUrl,
-  CTA = { label: "Call Now", href: siteConfig.phoneHref },
-}: ServicePageProps) {
+  CTA,
+}) {
+  const effectiveCTA =
+    CTA && CTA.href
+      ? CTA
+      : { label: "Call Now", href: siteConfig.phoneHref };
+
   return (
     <main className="min-h-screen bg-neutral-950 text-white">
       {/* Hero */}
@@ -40,28 +34,35 @@ export default function ServicePage({
           }}
         />
         <div className="relative mx-auto max-w-6xl px-6 py-20">
-          <div className="flex flex-wrap items-end gap-2">
-            {badges.map((b, i) => (
-              <span
-                key={i}
-                className="rounded-2xl border border-white/15 bg-white/5 px-3 py-1 text-xs tracking-wide"
-              >
-                {b.label}
-              </span>
-            ))}
-          </div>
+          {Array.isArray(badges) && badges.length > 0 && (
+            <div className="flex flex-wrap items-end gap-2">
+              {badges.map((b, i) => (
+                <span
+                  key={i}
+                  className="rounded-2xl border border-white/15 bg-white/5 px-3 py-1 text-xs tracking-wide"
+                >
+                  {b.label}
+                </span>
+              ))}
+            </div>
+          )}
+
           <h1 className="mt-4 text-4xl font-extrabold tracking-tight md:text-5xl">
             {title}
           </h1>
+
           {subtitle && (
-            <p className="mt-3 max-w-3xl text-lg text-white/80">{subtitle}</p>
+            <p className="mt-3 max-w-3xl text-lg text-white/80">
+              {subtitle}
+            </p>
           )}
+
           <div className="mt-8 flex gap-3 flex-wrap">
             <a
-              href={CTA.href}
+              href={effectiveCTA.href}
               className="rounded-2xl bg-emerald-500 px-5 py-3 font-semibold text-black shadow-lg transition hover:translate-y-[-1px] hover:bg-emerald-400 active:translate-y-[0px]"
             >
-              {CTA.label} • {siteConfig.phone}
+              {effectiveCTA.label} • {siteConfig.phone}
             </a>
             <Link
               href="/contact"
@@ -89,8 +90,8 @@ export default function ServicePage({
             <div className="mt-10 rounded-2xl border border-white/10 bg-white/5 p-6">
               <h2 className="text-xl font-semibold">Service Area</h2>
               <p className="mt-2 text-white/80">
-                Fast response across {siteConfig.serviceAreas.join(", ")}. 24/7
-                dispatch.
+                Fast response across{" "}
+                {siteConfig.serviceAreas.join(", ")}. 24/7 dispatch.
               </p>
             </div>
           </div>
@@ -117,4 +118,13 @@ export default function ServicePage({
                 {siteConfig.email}
               </a>
               <p className="mt-2 text-sm text-white/70">
-                Send PO#, unit, location, and contact to
+                Send PO#, unit, location, and contact to expedite.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+  );
+}
+

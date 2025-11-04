@@ -1,26 +1,23 @@
-// FILE: /app/winching-recovery/page.jsx
-
 import ServicePage from "../../components/ServicePage";
 
 export const metadata = {
   title: "Winching / Recovery | A & H Towing & Recovery",
-  description:
-    "Off-road recovery for mud, sand, and shoulder. Lease roads and remote access supported.",
+  description: "Off-road, mud, sand, and stuck vehicle recovery.",
 };
 
-export default function Page() {
+export default function WinchingRecoveryPage() {
   return (
     <ServicePage
       title="Winching / Recovery"
-      subtitle="Off-road • Mud • Sand"
+      subtitle="Off-Road • Mud • Sand • Ditches"
       bullets={[
-        "Stuck vehicles on lease roads, pads, ranch tracks",
-        "Mud, sand, and shoulder recoveries",
-        "Load shift assistance and re-secure (with partners)",
-        "Rigging with soft shackles and frame-safe points",
-        "Assessment, plan, and safe extraction",
+        "Lease roads, caliche, sand, and remote access",
+        "Controlled winch-outs with proper anchor points",
+        "Damage-minimizing recovery procedures",
+        "Access planning and spotter when needed",
       ]}
-      badges={[{ label: "Off-Road" }, { label: "Rigging" }, { label: "Remote" }]}
+      badges={[{ label: "Off-Road" }, { label: "Mud/Sand" }, { label: "Remote" }]}
+      heroVideoSrc="/Videos/tow3.mp4"
     />
   );
 }

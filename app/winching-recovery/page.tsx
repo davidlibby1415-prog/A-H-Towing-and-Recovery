@@ -1,7 +1,7 @@
 // FILE: /app/winching-recovery/page.tsx
 
 import type { Metadata as M4 } from "next";
-import ServicePage from "@/components/ServicePage";
+import ServicePage from "../../components/ServicePage";
 
 export const metadata: M4 = {
   title: "Winching / Recovery | A & H Towing & Recovery",

@@ -1,7 +1,7 @@
 // FILE: /app/flatbed-rollback-services/page.tsx
 
 import type { Metadata as M } from "next";
-import ServicePage from "@/components/ServicePage";
+import ServicePage from "../../components/ServicePage";
 
 export const metadata: M = {
   title: "Flatbed / Rollback Services | A & H Towing & Recovery",

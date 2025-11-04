@@ -1,7 +1,7 @@
 // FILE: /app/emergency-roadside-assistance/page.tsx
 
 import type { Metadata as M2 } from "next";
-import ServicePage from "@/components/ServicePage";
+import ServicePage from "../../components/ServicePage";
 
 export const metadata: M2 = {
   title: "Emergency Roadside Assistance | A & H Towing & Recovery",
@@ -25,3 +25,4 @@ export default function Page() {
     />
   );
 }
+

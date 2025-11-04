@@ -1,7 +1,7 @@
 // FILE: /app/light-duty-towing/page.tsx
 
 import type { Metadata } from "next";
-import ServicePage from "@/components/ServicePage";
+import ServicePage from "../../components/ServicePage";
 
 export const metadata: Metadata = {
   title: "Light Duty Towing | A & H Towing & Recovery",

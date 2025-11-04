@@ -1,9 +1,8 @@
-// FILE: /app/emergency-roadside-assistance/page.tsx
+// FILE: /app/emergency-roadside-assistance/page.jsx
 
-import type { Metadata as M2 } from "next";
 import ServicePage from "../../components/ServicePage";
 
-export const metadata: M2 = {
+export const metadata = {
   title: "Emergency Roadside Assistance | A & H Towing & Recovery",
   description:
     "Fuel delivery (gas & diesel), jumpstarts (12V), lockouts (fast, no damage), and roadside checks.",

@@ -1,9 +1,8 @@
-// FILE: /app/light-duty-towing/page.tsx
+// FILE: /app/light-duty-towing/page.jsx
 
-import type { Metadata } from "next";
 import ServicePage from "../../components/ServicePage";
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Light Duty Towing | A & H Towing & Recovery",
   description:
     "Cars, SUVs, and pickups — local & long-distance tows. Safe, insured, professional operators. 24/7 dispatch.",

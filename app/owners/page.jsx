@@ -109,7 +109,7 @@ export default function OwnersPage() {
                 </span>
               </Bubble>
 
-              <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-3">
+              <h1 className="text-2xl md:3xl font-black tracking-tight mb-3">
                 The Husband-and-Wife Team Behind A &amp; H
               </h1>
 
@@ -162,13 +162,13 @@ export default function OwnersPage() {
                 </Bubble>
 
                 <div className="grid gap-4 sm:grid-cols-2">
-                  {/* Wife / primary leader */}
+                  {/* Couple photo 1 (primary / leadership) */}
                   <div className="rounded-2xl overflow-hidden border border-amber-300/70 bg-black/60 shadow-lg">
                     <div className="aspect-[4/5] w-full overflow-hidden">
-                      {/* Update src to your actual file path in /public */}
+                      {/* Make sure this exists at /public/couple1.jpg */}
                       <img
-                        src="/owners-wife.jpg"
-                        alt="Owner - Woman leading A & H Towing & Recovery"
+                        src="/couple1.jpg"
+                        alt="Ownership couple of A & H Towing & Recovery"
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -180,21 +180,21 @@ export default function OwnersPage() {
                     </div>
                   </div>
 
-                  {/* Husband */}
+                  {/* Couple photo 2 (field / teamwork) */}
                   <div className="rounded-2xl overflow-hidden border border-slate-300/60 bg-black/60 shadow-lg">
                     <div className="aspect-[4/5] w-full overflow-hidden">
-                      {/* Update src to your actual file path in /public */}
+                      {/* Make sure this exists at /public/couple2.jpg */}
                       <img
-                        src="/owners-husband.jpg"
-                        alt="Owner - Husband at A & H Towing & Recovery"
+                        src="/couple2.jpg"
+                        alt="Husband-and-wife team at A & H Towing & Recovery"
                         className="w-full h-full object-cover"
                       />
                     </div>
                     <div className="px-3 py-2 text-center">
                       <div className="text-xs font-semibold tracking-wide text-slate-200 uppercase">
-                        Co-Owner • Field Support
+                        Co-Owners • Hands-On Team
                       </div>
-                      <div className="text-sm font-bold">Hands-On in the Field</div>
+                      <div className="text-sm font-bold">Out in the Field & Office</div>
                     </div>
                   </div>
                 </div>
@@ -230,19 +230,6 @@ export default function OwnersPage() {
           <div className="flex flex-wrap gap-3 justify-center md:justify-between items-center pt-4 border-t border-white/10">
             <a
               href={siteConfig.phoneHref}
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-black bg-amber-400 hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-300 text-sm md:text-base"
+              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text:black bg-amber-400 hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-300 text-sm md:text-base"
             >
-              Call Dispatch • {siteConfig.phone}
-            </a>
-            <a
-              href="/#contact"
-              className="text-sm md:text-base underline underline-offset-4 decoration-amber-300"
-            >
-              Back to Home &amp; Request Form
-            </a>
-          </div>
-        </div>
-      </section>
-    </main>
-  );
-}
+

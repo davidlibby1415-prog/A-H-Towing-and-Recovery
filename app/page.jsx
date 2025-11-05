@@ -19,7 +19,9 @@ function PhoneCTA({
   label = "Call Dispatch Now! 24/7 Services",
   fullWidth = false,
 }) {
-  const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
+  const widthClasses = fullWidth
+    ? "w-full sm:w-auto !min-w-0"
+    : "min-w-[240px]";
   return (
     <a
       href="#contact"
@@ -266,49 +268,46 @@ function BrandSlab({ Tag = "h1" }) {
   );
 }
 
-/* ========================= Golden award badges (upgraded) ========================= */
+/* ========================= Golden award badges ========================= */
 function MedalBadge({ title, lines = [] }) {
   return (
     <div className="w-full sm:w-auto px-2">
       <div className="relative mx-auto w-56 h-64 grid place-items-center">
-        {/* outer golden glow */}
+        {/* outer radiant ring with extra golden flair */}
         <div
-          className="absolute w-60 h-60 rounded-full"
+          className="absolute w-56 h-56 rounded-full"
           style={{
             background:
-              "radial-gradient(circle, rgba(253,224,71,0.42) 0%, rgba(250,204,21,0.06) 60%, transparent 80%)",
+              "conic-gradient(from 0deg, rgba(255,255,255,0.9), rgba(255,215,0,0.95), rgba(245,158,11,0.9), rgba(255,215,0,0.98), rgba(255,255,255,0.9))",
+            filter: "blur(1px)",
             boxShadow:
-              "0 0 40px rgba(250,204,21,0.9), 0 0 80px rgba(250,204,21,0.7)",
+              "0 0 18px rgba(250,204,21,0.9), 0 0 42px rgba(250,204,21,0.7)",
+          }}
+        />
+        {/* inner “ears” ring */}
+        <div
+          className="absolute w-48 h-48 rounded-full"
+          style={{
+            background:
+              "repeating-conic-gradient(from 0deg, rgba(255,215,0,0.75) 0deg 6deg, transparent 6deg 12deg)",
             filter: "blur(0.4px)",
           }}
         />
-
-        {/* radiant ears ring */}
-        <div
-          className="absolute w-52 h-52 rounded-full"
-          style={{
-            background:
-              "repeating-conic-gradient(from 0deg, rgba(255,215,0,0.55) 0deg 6deg, transparent 6deg 12deg)",
-            filter: "blur(0.6px)",
-          }}
-        />
-
         {/* ribbons */}
         <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-3">
           <div className="w-7 h-20 bg-ahRed clip-ribbon shadow-md border-2 border-yellow-300" />
           <div className="w-7 h-20 bg-ahBlue clip-ribbon shadow-md border-2 border-yellow-300" />
         </div>
-
         {/* medal */}
         <div
-          className="relative w-48 h-48 rounded-full shadow-2xl border-[5px] border-yellow-300/95 grid place-items-center text-center p-6"
+          className="relative w-44 h-44 rounded-full shadow-2xl border-4 border-yellow-300 grid place-items-center text-center p-6"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 30% 30%, #fffbe6, #ffe36b 40%, #f59e0b 70%, #b45309 92%)",
+              "radial-gradient(circle at 30% 30%, #fff9c4, #ffe066 45%, #fbbf24 70%, #b45309 90%)",
           }}
         >
           {/* shimmer sweep */}
-          <div className="pointer-events-none absolute inset-0 rounded-full opacity-35 bg-[conic-gradient(from_0deg,transparent,rgba(255,255,255,0.7),transparent_32%)] animate-spin-slow" />
+          <div className="pointer-events-none absolute inset-0 rounded-full opacity-35 bg-[conic-gradient(from_0deg,transparent,rgba(255,255,255,0.75),transparent_30%)] animate-spin-slow" />
           <div className="relative">
             <div className="text-sm font-black uppercase tracking-wide text-yellow-900">
               {title}
@@ -328,10 +327,7 @@ function MedalBadge({ title, lines = [] }) {
 function GoldenFacts() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 justify-items-center">
-      <MedalBadge
-        title="Response Time?"
-        lines={["< 30 Minutes •", "Professional"]}
-      />
+      <MedalBadge title="Response Time?" lines={["< 30 Minutes •", "Professional"]} />
       <MedalBadge
         title="Operating?"
         lines={["24 Hrs. / 7 Days a Week", "365 Day a Year"]}
@@ -370,6 +366,7 @@ function TopLocationsMarquee() {
         </div>
       </div>
 
+      {/* tight gap */}
       <div className="h-[2px]" />
       <div className="w-full bg-red-700/90">
         <div className="container max-w-7xl">
@@ -408,7 +405,13 @@ function TopLocationsMarquee() {
         }
 
         .clip-ribbon {
-          clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+          clip-path: polygon(
+            0 0,
+            100% 0,
+            100% 85%,
+            50% 100%,
+            0 85%
+          );
         }
 
         /* ===== Global animated red↔blue border ===== */
@@ -707,15 +710,15 @@ export default function Home() {
                 >
                   Services Provided
                 </h3>
-              </div>
-              <div className="mt-3 text-sm md:text-base font-semibold text-sky-100/90">
-                Click below for more information.
+                <p className="mt-1 text-xs md:text-sm font-extrabold text-amber-100">
+                  Click below for more information
+                </p>
               </div>
 
               {/* Tow Services */}
               <div className="mt-6">
-                <div className="mb-3 flex justify-center">
-                  <div className="inline-block rounded-2xl px-5 py-2 bg-black/20 backdrop-blur-sm">
+                <div className="mb-3">
+                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black/20 backdrop-blur-sm">
                     <h4
                       className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
                       style={{
@@ -790,8 +793,8 @@ export default function Home() {
 
               {/* Emergency Roadside Assistance */}
               <div className="mt-8">
-                <div className="mb-3 flex justify-center">
-                  <div className="inline-block rounded-2xl px-5 py-2 bg-black/20 backdrop-blur-sm">
+                <div className="mb-3">
+                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black/20 backdrop-blur-sm">
                     <h4
                       className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
                       style={{
@@ -853,8 +856,8 @@ export default function Home() {
 
               {/* Accidents */}
               <div className="mt-8">
-                <div className="mb-3 flex justify-center">
-                  <div className="inline-block rounded-2xl px-5 py-2 bg-black/20 backdrop-blur-sm">
+                <div className="mb-3">
+                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black/20 backdrop-blur-sm">
                     <h4
                       className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
                       style={{
@@ -931,16 +934,15 @@ export default function Home() {
               <div className="grid md:grid-cols-2 gap-4 items-start">
                 <div className="rounded-2xl overflow-hidden border border-white/15">
                   <iframe
-                    title="Service Area Map - Pecos, TX"
+                    title="Service Area Map (Dark)"
                     className="w-full h-[260px]"
                     loading="lazy"
-                    src="https://www.google.com/maps?q=Pecos,TX&z=11&output=embed"
-                    referrerPolicy="no-referrer-when-downgrade"
+                    referrerPolicy="no-referrer"
                     allowFullScreen
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=-103.8%2C31.3%2C-103.2%2C31.6&layer=mapnik&marker=31.42%2C-103.49"
                     style={{
                       filter:
-                        "invert(1) hue-rotate(180deg) saturate(0.7) brightness(0.8)",
-                      border: 0,
+                        "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
                     }}
                   />
                 </div>
@@ -1040,7 +1042,9 @@ export default function Home() {
                     <rect x="2" y="5" width="20" height="14" rx="2" />
                     <path d="M2 10h20" />
                   </svg>
-                  <span className="font-extrabold">All Major Credit Cards</span>
+                  <span className="font-extrabold">
+                    All Major Credit Cards
+                  </span>
                 </div>
 
                 <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-rose-50 to-red-100">
@@ -1073,7 +1077,7 @@ export default function Home() {
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
-                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94.5 2 .76 3.12.76Z" />
+                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94 .5 2 .76 3.12 .76Z" />
               </svg>
               <span>Follow us on TikTok</span>
             </a>
@@ -1383,7 +1387,8 @@ function ContactSection() {
           loading="lazy"
           src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik"
           style={{
-            filter: "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
+            filter:
+              "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
           }}
         />
         <div className="text-xs p-2 bg-red-800/90 text-white font-extrabold text-center">

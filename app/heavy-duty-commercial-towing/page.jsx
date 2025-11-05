@@ -1,27 +1,31 @@
+// FILE: app/heavy-duty-commercial-towing/page.jsx
+
 import ServicePage from "../../components/ServicePage";
 
 export const metadata = {
   title: "Heavy Duty & Commercial Towing | A & H Towing & Recovery",
   description:
-    "Heavy duty and commercial towing for oilfield trucks, work fleets, and big rigs in West Texas.",
+    "Oilfield & fleet support. Lease roads, remote access, winch-outs, and long/short distance HD tows.",
 };
 
 export default function HeavyDutyCommercialPage() {
   return (
     <ServicePage
       title="Heavy Duty & Commercial Towing"
-      subtitle="Oilfield & fleet units • Long & short distance"
+      subtitle="Oilfield & Fleet • Oilfield Routes Tow Service • Lease Roads • Remote Access • Long & Short Distance"
       bullets={[
-        "Heavy duty capability for work trucks, oilfield units, and commercial fleets.",
-        "Experienced operators who understand lease roads and West Texas conditions.",
-        "Coordinated towing to your preferred shop, yard, or staging location — local or long distance.",
-        "Fleet-friendly communication with clear updates and timing.",
+        "Trucks, vans, service bodies, and loaded trailers (as permitted)",
+        "Stuck units: lease roads, caliche, sand, and remote pads",
+        "Fleet billing available with COI & W-9",
+        "Escort & route planning for oversize loads (with partners)",
+        "Yard to yard, site to yard, site to shop moves",
       ]}
       badges={[
-        { label: "Heavy Duty" },
-        { label: "Commercial" },
+        { label: "Oilfield" },
         { label: "Fleet" },
+        { label: "Remote Access" },
       ]}
+      // This is the key line: puts the video as the hero background at the top
       heroVideoSrc="/Videos/heavy-duty-bg.mp4"
     />
   );

@@ -1,4 +1,4 @@
-// FILE: app/heavy-duty-commercial-towing/page.jsx
+// app/heavy-duty-commercial-towing/page.jsx
 
 import ServicePage from "../../components/ServicePage";
 
@@ -25,7 +25,6 @@ export default function HeavyDutyCommercialPage() {
         { label: "Fleet" },
         { label: "Remote Access" },
       ]}
-      // This is the key line: puts the video as the hero background at the top
       heroVideoSrc="/Videos/heavy-duty-bg.mp4"
     />
   );

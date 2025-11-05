@@ -1,152 +1,248 @@
-import Link from "next/link";
+// FILE: app/owners/page.jsx
+
+import { siteConfig } from "../../lib/siteConfig";
+
+// Simple animated gradient border (safe: no client-only imports)
+function AnimBorder({ children, className = "" }) {
+  return (
+    <div
+      className={`p-[3px] rounded-[26px] bg-gradient-to-r from-blue-500 via-red-500 to-blue-500 ${className}`}
+      style={{
+        backgroundSize: "200% 200%",
+        animation: "rb-slow 10s linear infinite",
+      }}
+    >
+      <style jsx>{`
+        @keyframes rb-slow {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
+        }
+      `}</style>
+      {children}
+    </div>
+  );
+}
+
+// Diamond-plate style panel
+function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
+  return (
+    <div
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
+        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
+      } ${className}`}
+      style={{
+        backgroundImage:
+          'linear-gradient(0deg, rgba(0,0,0,0.32), rgba(0,0,0,0.32)), url("/diamond-plate.jpg")',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        borderColor,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function Bubble({ children, className = "" }) {
+  return (
+    <div
+      className={`inline-block rounded-2xl px-4 py-3 bg-black/55 text-white font-extrabold shadow ${className}`}
+      style={{
+        WebkitTextStroke: "0.25px rgba(0,0,0,.7)",
+        textShadow: "0 1px 2px rgba(0,0,0,.6)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export const metadata = {
-  title: "Meet the Owners | A&H Towing & Recovery, LLC",
+  title: "Meet the Owners | A & H Towing & Recovery",
   description:
-    "Learn about the ownership behind A&H Towing & Recovery, LLC and why West Texas drivers, ranchers, and oilfield crews trust them 24/7.",
+    "Meet the husband-and-wife team behind A & H Towing & Recovery — a woman-led, family-run towing and recovery company serving Pecos and West Texas.",
 };
 
 export default function OwnersPage() {
   return (
     <main className="min-h-screen bg-neutral-950 text-white">
-      {/* Top bar / simple header */}
-      <header className="border-b border-black/40 bg-ahCharcoal">
-        <div className="container max-w-7xl mx-auto flex items-center justify-between gap-4 py-4 px-4 md:px-0">
-          <div>
-            <p className="text-[11px] font-semibold tracking-[0.18em] uppercase text-amber-300">
-              A&amp;H Towing &amp; Recovery, LLC
-            </p>
-            <h1 className="mt-1 text-xl md:text-2xl font-extrabold tracking-tight">
-              Meet the Owners
-            </h1>
+      <section className="py-12 md:py-16">
+        <div className="mx-auto max-w-6xl px-4 space-y-10">
+          {/* Company name + phone on diamond plate */}
+          <div className="flex justify-center">
+            <AnimBorder className="inline-block">
+              <SteelPanel padded={false} className="px-5 py-4 text-center bg-black/70">
+                <div className="text-[11px] md:text-xs font-semibold tracking-wide text-amber-300 uppercase">
+                  {siteConfig.businessName}
+                </div>
+                <div className="mt-1 text-lg md:text-xl font-extrabold tracking-tight text-white">
+                  Woman-Led • Family-Owned in Pecos, Texas
+                </div>
+                <div className="mt-2 text-base md:text-lg font-black text-amber-300">
+                  Dispatch:&nbsp;
+                  <a
+                    href={siteConfig.phoneHref}
+                    className="underline decoration-amber-400 decoration-2 underline-offset-4"
+                  >
+                    {siteConfig.phone}
+                  </a>
+                </div>
+              </SteelPanel>
+            </AnimBorder>
           </div>
-          <div className="flex items-center gap-3 text-sm">
-            <Link
-              href="/"
-              className="rounded-xl border border-white/15 px-3 py-1.5 hover:bg-white/10"
-            >
-              ← Back to Home
-            </Link>
-          </div>
-        </div>
-      </header>
 
-      {/* Main content */}
-      <section className="container max-w-5xl mx-auto px-4 md:px-0 py-10 md:py-14">
-        {/* Intro card */}
-        <div className="rounded-3xl border border-white/15 bg-gradient-to-br from-neutral-900/90 via-neutral-900/95 to-neutral-950/90 shadow-xl p-6 md:p-8">
-          <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight text-center">
-            West Texas Owned. West Texas Tough.
-          </h2>
-          <p className="mt-3 text-sm md:text-base text-center text-white/80 max-w-3xl mx-auto">
-            A&amp;H Towing &amp; Recovery, LLC is a locally owned company based in Pecos,
-            Texas. Every truck, every call, and every tow is overseen by owners who live
-            and work right here in the same communities they serve.
-          </p>
-        </div>
+          {/* Main layout: story + portraits */}
+          <div className="grid gap-8 md:grid-cols-2 items-start">
+            {/* Story / text side */}
+            <SteelPanel>
+              <Bubble className="!bg-black/65 mb-4">
+                <span className="text-[15px] md:text-lg font-extrabold">
+                  Meet the Owners
+                </span>
+              </Bubble>
 
-        {/* Story / background */}
-        <div className="mt-8 grid gap-8 md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] items-start">
-          {/* Left: story */}
-          <div className="space-y-6">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-6">
-              <h3 className="text-lg md:text-xl font-extrabold mb-2">
-                Built for Drivers, Ranchers, and Oilfield Crews
-              </h3>
-              <p className="text-sm md:text-base text-white/85 leading-relaxed">
-                A&amp;H Towing &amp; Recovery was built with one goal in mind:{" "}
-                <span className="font-semibold">
-                  answer the phone and get help moving quickly
+              <h1 className="text-2xl md:text-3xl font-black tracking-tight mb-3">
+                The Husband-and-Wife Team Behind A &amp; H
+              </h1>
+
+              <p className="text-sm md:text-base text-slate-100/90 leading-relaxed mb-3">
+                A &amp; H Towing &amp; Recovery is a{" "}
+                <span className="font-bold text-amber-300">
+                  woman-led, family-owned
                 </span>{" "}
-                when people need it the most. From local residents on errands in town to
-                oilfield hands on lease roads, the owners understand how tough West Texas
-                conditions can be—and how critical it is to get reliable help fast.
+                towing and recovery company based in Pecos, Texas. The business
+                is owned by a husband-and-wife team, with{" "}
+                <span className="font-semibold">
+                  the wife leading the company
+                </span>{" "}
+                as the primary decision-maker and face of the operation.
               </p>
-            </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-6">
-              <h3 className="text-lg md:text-xl font-extrabold mb-2">
-                Hands-On Leadership, 24/7
-              </h3>
-              <p className="text-sm md:text-base text-white/85 leading-relaxed">
-                The owners stay closely involved in{" "}
-                <span className="font-semibold">daily operations, training, and safety</span>.
-                That means trucks are properly equipped, operators are trained for roadway
-                and oilfield environments, and calls are handled with clear communication
-                from start to finish.
+              <p className="text-sm md:text-base text-slate-100/90 leading-relaxed mb-3">
+                Together, they built A &amp; H around{" "}
+                <span className="font-semibold">simple values</span>: show up
+                fast, treat people right, and handle every vehicle with the same
+                care they&apos;d want for their own family. From stranded
+                travelers on I-20 to oilfield crews out on lease roads, they
+                focus on keeping drivers safe and equipment moving.
               </p>
-              <p className="mt-3 text-sm md:text-base text-white/85 leading-relaxed">
-                When you call A&amp;H, you are connecting with a team that treats each
-                tow, recovery, or roadside call like it matters—because it does.
-              </p>
-            </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-5 md:p-6">
-              <h3 className="text-lg md:text-xl font-extrabold mb-2">
-                Commitment to Safety and Professionalism
-              </h3>
-              <p className="text-sm md:text-base text-white/85 leading-relaxed">
-                A&amp;H Towing &amp; Recovery emphasizes{" "}
-                <span className="font-semibold">safe loading, proper rigging, and scene management</span>{" "}
-                on every job. Whether it&apos;s a simple tow, a breakdown on the shoulder, or
-                an accident on a busy corridor, the owners expect every unit to show up
-                with the right gear and the right attitude.
+              <p className="text-sm md:text-base text-slate-100/90 leading-relaxed mb-3">
+                As a{" "}
+                <span className="font-semibold">woman-led towing company</span>
+                , A &amp; H brings a professional, organized, and
+                relationship-focused approach to every call — whether it&apos;s a
+                single vehicle tow or ongoing work with fleets and oilfield
+                partners.
               </p>
-              <p className="mt-3 text-sm md:text-base text-white/85 leading-relaxed">
-                That includes working alongside law enforcement, first responders, and
-                oilfield operators to keep scenes organized and as safe as possible.
+
+              <p className="text-sm md:text-base text-slate-100/90 leading-relaxed">
+                When you call A &amp; H Towing &amp; Recovery, you&apos;re not
+                just getting a truck. You&apos;re working directly with the
+                owners — people who live here, work here, and stand behind every
+                job with their family name.
               </p>
+            </SteelPanel>
+
+            {/* Portraits side */}
+            <div className="space-y-4">
+              <SteelPanel className="flex flex-col gap-4">
+                <Bubble className="!bg-black/65 mb-1">
+                  <span className="text-[14px] md:text-base font-extrabold">
+                    Owners
+                  </span>
+                </Bubble>
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {/* Wife / primary leader */}
+                  <div className="rounded-2xl overflow-hidden border border-amber-300/70 bg-black/60 shadow-lg">
+                    <div className="aspect-[4/5] w-full overflow-hidden">
+                      {/* Update src to your actual file path in /public */}
+                      <img
+                        src="/owners-wife.jpg"
+                        alt="Owner - Woman leading A & H Towing & Recovery"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="px-3 py-2 text-center">
+                      <div className="text-xs font-semibold tracking-wide text-amber-300 uppercase">
+                        Owner • Company Leader
+                      </div>
+                      <div className="text-sm font-bold">Woman-Owned Business</div>
+                    </div>
+                  </div>
+
+                  {/* Husband */}
+                  <div className="rounded-2xl overflow-hidden border border-slate-300/60 bg-black/60 shadow-lg">
+                    <div className="aspect-[4/5] w-full overflow-hidden">
+                      {/* Update src to your actual file path in /public */}
+                      <img
+                        src="/owners-husband.jpg"
+                        alt="Owner - Husband at A & H Towing & Recovery"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="px-3 py-2 text-center">
+                      <div className="text-xs font-semibold tracking-wide text-slate-200 uppercase">
+                        Co-Owner • Field Support
+                      </div>
+                      <div className="text-sm font-bold">Hands-On in the Field</div>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-xs md:text-sm text-slate-100/80 leading-relaxed">
+                  Photos: Husband-and-wife ownership team of A &amp; H Towing &amp; Recovery,
+                  serving Pecos and the surrounding West Texas region.
+                </p>
+              </SteelPanel>
+
+              <SteelPanel>
+                <h2 className="text-lg md:text-xl font-extrabold mb-2">
+                  Why Woman-Led Matters
+                </h2>
+                <p className="text-sm md:text-base text-slate-100/90 leading-relaxed mb-2">
+                  Being woman-led is more than a label — it shows up in how A
+                  &amp; H handles communication, timing, and follow-through.
+                  Details matter. Safety matters. Clear updates matter.
+                </p>
+                <p className="text-sm md:text-base text-slate-100/90 leading-relaxed">
+                  From first call to final drop-off, you can expect{" "}
+                  <span className="font-semibold">
+                    professional dispatch, clear expectations, and respectful
+                    service
+                  </span>{" "}
+                  for drivers, families, and crews.
+                </p>
+              </SteelPanel>
             </div>
           </div>
 
-          {/* Right: quick facts / trust box */}
-          <aside className="space-y-5">
-            <div className="rounded-2xl border border-amber-400/40 bg-amber-50/5 p-5">
-              <h3 className="text-base font-extrabold text-amber-300 tracking-wide uppercase mb-2">
-                Why Drivers Trust A&amp;H
-              </h3>
-              <ul className="space-y-2 text-sm text-white/85">
-                <li>• Locally owned and based in Pecos, TX</li>
-                <li>• Focus on West Texas highways, corridors, and oilfield routes</li>
-                <li>• 24/7 dispatch with real people answering the phone</li>
-                <li>• Training for heavy hauling, recovery, and roadside situations</li>
-                <li>• Professional, respectful treatment on every call</li>
-              </ul>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-              <h3 className="text-base font-extrabold mb-2">Need Help Now?</h3>
-              <p className="text-sm text-white/80 mb-3">
-                If you&apos;re stranded, in an accident, or need a unit moved, the A&amp;H
-                team is ready to help.
-              </p>
-              <div className="space-y-3">
-                <a
-                  href="tel:+14328424578"
-                  className="block w-full text-center rounded-2xl bg-ahRed px-4 py-2.5 text-sm font-semibold shadow-lg hover:brightness-110"
-                >
-                  Call Dispatch: (432) 842-4578
-                </a>
-                <Link
-                  href="/#contact"
-                  className="block w-full text-center rounded-2xl border border-white/25 px-4 py-2.5 text-sm font-semibold hover:bg-white/10"
-                >
-                  Request a Tow or Roadside Online
-                </Link>
-              </div>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-5 text-xs text-white/70">
-              <p>
-                A&amp;H Towing &amp; Recovery, LLC proudly serves Pecos, Reeves County,
-                and the surrounding West Texas region with professional towing, recovery,
-                and roadside assistance.
-              </p>
-            </div>
-          </aside>
+          {/* Back to home / contact */}
+          <div className="flex flex-wrap gap-3 justify-center md:justify-between items-center pt-4 border-t border-white/10">
+            <a
+              href={siteConfig.phoneHref}
+              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-black bg-amber-400 hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-300 text-sm md:text-base"
+            >
+              Call Dispatch • {siteConfig.phone}
+            </a>
+            <a
+              href="/#contact"
+              className="text-sm md:text-base underline underline-offset-4 decoration-amber-300"
+            >
+              Back to Home &amp; Request Form
+            </a>
+          </div>
         </div>
       </section>
     </main>
   );
 }
-

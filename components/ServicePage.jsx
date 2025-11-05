@@ -1,183 +1,311 @@
-// FILE: components/ServicePage.jsx
 "use client";
 
 import React from "react";
 import Link from "next/link";
-import { siteConfig } from "../lib/siteConfig";
+
+/* ========= Shared constants (match main page contact info) ========= */
+
+const SERVICE_PHONE_DISPLAY = "(432) 842-4578";
+const SERVICE_PHONE_HREF = "tel:+14328424578";
+const SERVICE_EMAIL = "ah.towing.recovery23@gmail.com";
+const SERVICE_AREAS = [
+  "Pecos (Home Base)",
+  "Reeves County",
+  "Fort Stockton",
+  "Monahans",
+  "Kermit",
+  "Balmorhea",
+  "Pyote",
+  "Toyah",
+  "Grandfalls",
+  "Wink",
+  "Midland/Odessa Metro & I-20 Corridor",
+  "US-285",
+  "TX-17",
+  "Oilfield Routes",
+];
+
+/* =================== Helpers matching main page style =================== */
+
+function AnimBorder({ children, className = "" }) {
+  return (
+    <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>
+      {children}
+      <style jsx global>{`
+        @property --angle {
+          syntax: "<angle>";
+          initial-value: 0deg;
+          inherits: false;
+        }
+        @keyframes rb-rotate {
+          to {
+            --angle: 360deg;
+          }
+        }
+        .rb-border {
+          --angle: 0deg;
+          background: conic-gradient(
+            from var(--angle),
+            #3b82f6 0%,
+            #ef4444 50%,
+            #3b82f6 100%
+          );
+          animation: rb-rotate 24s linear infinite;
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function SteelPanel({
+  children,
+  className = "",
+  padded = true,
+  borderColor = "rgba(255,255,255,0.18)",
+}) {
+  return (
+    <div
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
+        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
+      } ${className}`}
+      style={{
+        backgroundImage:
+          'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        borderColor,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function BubbleBlock({ children, className = "" }) {
+  return (
+    <div
+      className={`inline-block rounded-2xl px-4 py-3 bg-black/45 text-white font-extrabold shadow ${className}`}
+      style={{
+        WebkitTextStroke: "0.25px rgba(0,0,0,.7)",
+        textShadow: "0 1px 2px rgba(0,0,0,.6)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function BrandSlab({ Tag = "h1" }) {
+  return (
+    <AnimBorder>
+      <SteelPanel padded={false} className="px-2 py-1 text-center">
+        <Tag
+          className="font-black tracking-tight"
+          style={{
+            fontFamily:
+              'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+            fontSize: "clamp(32px, 5vw, 64px)",
+            color: "#e10600",
+            WebkitTextStroke: "1.5px #000",
+            textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
+            lineHeight: 1.05,
+          }}
+        >
+          A&amp;H TOWING &amp; RECOVERY, LLC
+        </Tag>
+      </SteelPanel>
+    </AnimBorder>
+  );
+}
+
+/* Simple CTA buttons */
+
+function CallNowButton({ className = "" }) {
+  return (
+    <a
+      href={SERVICE_PHONE_HREF}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[220px] ${className}`}
+    >
+      Call Now • {SERVICE_PHONE_DISPLAY}
+    </a>
+  );
+}
+
+function BackHomeButton({ className = "" }) {
+  return (
+    <Link
+      href="/"
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[180px] ${className}`}
+    >
+      ← Back to Main Page
+    </Link>
+  );
+}
+
+/* Video card (optional) */
+
+function HeroVideoCard({ src }) {
+  if (!src) return null;
+  return (
+    <AnimBorder>
+      <div className="rounded-[22px] overflow-hidden border border-white/15 bg-black">
+        <video
+          className="w-full h-full max-h-[420px] object-cover"
+          src={src}
+          muted
+          playsInline
+          autoPlay
+          loop
+          preload="metadata"
+          controls={false}
+        />
+      </div>
+    </AnimBorder>
+  );
+}
+
+/* ======================= Main ServicePage component ======================= */
 
 export default function ServicePage({
   title,
   subtitle,
-  bullets,
+  bullets = [],
   badges = [],
-  heroImageUrl,
-  CTA,
+  heroVideoSrc,
 }) {
-  const callToAction = CTA || { label: "Call Now", href: siteConfig.phoneHref };
-
   return (
     <main className="min-h-screen bg-neutral-950 text-white">
-      {/* Header strip with company name + phone (matches main page feel) */}
-      <header className="bg-ahCharcoal border-b border-black/50">
-        <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
-              <span
-                className="text-[15px] font-extrabold"
-                style={{ color: "#e10600" }}
-              >
-                A&amp;H
-              </span>
-            </div>
-            <div className="leading-tight">
-              <div className="font-bold text-red-500 drop-shadow">
-                A&amp;H Towing &amp; Recovery, LLC
-              </div>
-              <div className="text-xs opacity-90 text-zinc-200">
-                2712 W F Street, Pecos, TX 79772
-              </div>
-              <div className="text-xs text-zinc-200">
-                ah.towing.recovery23@gmail.com
-              </div>
-            </div>
-          </div>
-          <div className="text-right text-xs sm:text-sm">
-            <div className="font-semibold text-white">Dispatch 24/7</div>
+      {/* Top brand + quick contact line */}
+      <section className="pt-6 pb-3">
+        <div className="container max-w-6xl">
+          <BrandSlab Tag="h1" />
+          <p className="mt-3 text-center text-sm md:text-base font-extrabold text-amber-200 drop-shadow">
+            Professional towing, recovery, and roadside assistance for Pecos &amp; oilfield
+            routes across West Texas.
+          </p>
+          <p className="mt-1 text-center text-xs md:text-sm text-gray-200">
+            Call{" "}
             <a
-              href={siteConfig.phoneHref}
-              className="font-bold text-amber-300"
+              href={SERVICE_PHONE_HREF}
+              className="font-semibold underline underline-offset-4"
             >
-              {siteConfig.phone}
-            </a>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero section with diamond-plate styling */}
-      <section className="relative overflow-hidden">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: heroImageUrl
-              ? `linear-gradient(0deg, rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("${heroImageUrl}")`
-              : `linear-gradient(0deg, rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url("/diamond-plate.jpg")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <div className="relative mx-auto max-w-6xl px-6 py-16">
-          <div className="flex flex-wrap items-end gap-2">
-            {badges.map((b, i) => (
-              <span
-                key={i}
-                className="rounded-2xl border border-white/25 bg-black/40 px-3 py-1 text-xs tracking-wide"
-              >
-                {b.label}
-              </span>
-            ))}
-          </div>
-          <h1 className="mt-4 text-4xl font-extrabold tracking-tight md:text-5xl">
-            {title}
-          </h1>
-          {subtitle && (
-            <p className="mt-3 max-w-3xl text-lg text-slate-100/90">
-              {subtitle}
-            </p>
-          )}
-          <div className="mt-8 flex flex-wrap gap-3">
+              {SERVICE_PHONE_DISPLAY}
+            </a>{" "}
+            or email{" "}
             <a
-              href={callToAction.href}
-              className="rounded-2xl bg-emerald-500 px-5 py-3 font-semibold text-black shadow-lg transition hover:translate-y-[-1px] hover:bg-emerald-400 active:translate-y-[0px]"
+              href={`mailto:${SERVICE_EMAIL}`}
+              className="font-semibold underline underline-offset-4"
             >
-              {callToAction.label} • {siteConfig.phone}
+              {SERVICE_EMAIL}
             </a>
-            <Link
-              href="/"
-              className="rounded-2xl border border-white/25 bg-black/40 px-5 py-3 font-semibold text-white/90 backdrop-blur transition hover:bg-black/60"
-            >
-              Back to Main Page
-            </Link>
-          </div>
+            .
+          </p>
         </div>
       </section>
 
-      {/* Content with diamond-plate panels */}
-      <section className="mx-auto max-w-6xl px-6 py-12">
-        <div className="grid gap-10 md:grid-cols-3">
-          {/* main bullets */}
-          <div className="md:col-span-2 space-y-8">
-            <div
-              className="rounded-[22px] border border-white/15 p-6 md:p-7"
-              style={{
-                backgroundImage:
-                  'linear-gradient(0deg, rgba(0,0,0,0.82), rgba(0,0,0,0.82)), url("/diamond-plate.jpg")',
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              <ul className="space-y-3">
-                {bullets.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <span className="mt-1 inline-block h-2 w-2 shrink-0 rounded-full bg-emerald-400" />
-                    <span className="text-white/90">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+      {/* Main content */}
+      <section className="pb-14">
+        <div className="container max-w-6xl space-y-8">
+          {/* Text content / bullets */}
+          <AnimBorder>
+            <SteelPanel>
+              {/* Badges row */}
+              {badges && badges.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2 mb-4">
+                  {badges.map((b, i) => (
+                    <span
+                      key={i}
+                      className="rounded-2xl border border-white/20 bg-white/10 px-3 py-1 text-xs uppercase tracking-wide font-semibold"
+                    >
+                      {b.label}
+                    </span>
+                  ))}
+                </div>
+              )}
 
-            <div className="rounded-[22px] border border-white/15 bg-black/75 p-6">
-              <h2 className="text-xl font-semibold">Service Area</h2>
-              <p className="mt-2 text-white/80">
-                Fast response across {siteConfig.serviceAreas.join(", ")}. 24/7
-                dispatch.
-              </p>
-            </div>
+              {/* Title with same shading vibe as main page */}
+              <div className="inline-block rounded-2xl px-4 py-2 bg-black/20 backdrop-blur-sm mb-4">
+                <h1
+                  className="text-3xl md:text-4xl font-black leading-tight tracking-tight text-sky-300"
+                  style={{
+                    textShadow: "0 2px 14px rgba(0,0,0,.6)",
+                    letterSpacing: "0.02em",
+                  }}
+                >
+                  {title}
+                </h1>
+              </div>
+
+              {subtitle && (
+                <p className="text-base md:text-lg text-white/90 max-w-3xl">
+                  {subtitle}
+                </p>
+              )}
+
+              {bullets && bullets.length > 0 && (
+                <ul className="mt-5 space-y-3">
+                  {bullets.map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-1 inline-block h-2 w-2 shrink-0 rounded-full bg-emerald-400" />
+                      <span className="text-white/90 text-sm md:text-base">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <div className="mt-6 flex flex-wrap gap-3">
+                <CallNowButton />
+                <BackHomeButton />
+              </div>
+            </SteelPanel>
+          </AnimBorder>
+
+          {/* Hero video (if provided) */}
+          <HeroVideoCard src={heroVideoSrc} />
+
+          {/* Service area + dark-mode map centered on Pecos, TX */}
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* Service area text */}
+            <AnimBorder>
+              <SteelPanel>
+                <div className="text-center mb-3">
+                  <BubbleBlock className="!px-5 !py-2">
+                    <span className="font-extrabold text-[clamp(18px,3vw,24px)]">
+                      Service Area
+                    </span>
+                  </BubbleBlock>
+                </div>
+                <p className="text-sm md:text-base text-white/90 mb-3">
+                  Fast response across Pecos, surrounding towns, and key oilfield routes.
+                </p>
+                <p className="text-xs md:text-sm text-white/80 leading-relaxed">
+                  {SERVICE_AREAS.join(" • ")}
+                </p>
+              </SteelPanel>
+            </AnimBorder>
+
+            {/* Dark-mode OSM map pinned on Pecos, TX */}
+            <AnimBorder>
+              <SteelPanel padded={false} className="overflow-hidden">
+                <iframe
+                  title="Pecos, TX Service Map (Dark Mode)"
+                  className="w-full h-[260px]"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                  allowFullScreen
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=-103.8%2C31.3%2C-103.2%2C31.6&layer=mapnik&marker=31.42%2C-103.49"
+                  style={{
+                    filter:
+                      "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
+                    border: 0,
+                  }}
+                />
+              </SteelPanel>
+            </AnimBorder>
           </div>
-
-          {/* sidebar cards */}
-          <aside className="space-y-4">
-            <div
-              className="rounded-[22px] border border-white/15 p-5"
-              style={{
-                backgroundImage:
-                  'linear-gradient(0deg, rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url("/diamond-plate.jpg")',
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              <h3 className="font-semibold">Need help now?</h3>
-              <a
-                href={siteConfig.phoneHref}
-                className="mt-2 block text-2xl font-bold text-amber-300"
-              >
-                {siteConfig.phone}
-              </a>
-              <p className="mt-2 text-sm text-white/75">
-                Save our number. We answer day and night.
-              </p>
-            </div>
-
-            <div
-              className="rounded-[22px] border border-white/15 p-5"
-              style={{
-                backgroundImage:
-                  'linear-gradient(0deg, rgba(0,0,0,0.92), rgba(0,0,0,0.92)), url("/diamond-plate.jpg")',
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            >
-              <h3 className="font-semibold">Email Dispatch</h3>
-              <a
-                href={`mailto:${siteConfig.email}`}
-                className="mt-2 block underline"
-              >
-                {siteConfig.email}
-              </a>
-              <p className="mt-2 text-sm text-white/75">
-                Send PO#, unit, location, and contact to expedite.
-              </p>
-            </div>
-          </aside>
         </div>
       </section>
     </main>

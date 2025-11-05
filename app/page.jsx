@@ -559,84 +559,85 @@ export default function Home() {
                 </h3>
               </div>
 
-              {/* Tow Services */}
-              <div className="mt-6">
-                <div className="mb-3">
-                  <h4
-                    className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
-                    style={{
-                      fontFamily:
-                        '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
-                      color: "#60a5fa",
-                    }}
-                  >
-                    Tow Services
-                  </h4>
-                </div>
-                <div className="grid md:grid-cols-3 gap-4">
-                  {[
-                    {
-                      icon: IconTruck,
-                      title: "Light Duty Towing",
-                      desc: "Cars • SUVs • Pickups",
-                      href: "/tow-services",
-                    },
-                    {
-                      icon: IconTruck,
-                      title: "Heavy Duty & Commercial Towing",
-                      desc: "Oilfield & fleet",
-                      href: "/tow-services",
-                    },
-                    {
-                      icon: IconTruck,
-                      title: "Oilfield Routes Tow Service",
-                      desc: "Lease roads • remote access",
-                      href: "/tow-services",
-                    },
-                    {
-                      icon: IconTruck,
-                      title: "Long & Short Distance Tows",
-                      desc: "Local & state-to-state",
-                      href: "/tow-services",
-                    },
-                    {
-                      icon: IconFlatbed,
-                      title: "Equipment Transport",
-                      desc: "Light equipment & tools",
-                      href: "/tow-services",
-                    },
-                    {
-                      icon: IconFlatbed,
-                      title: "Flatbed / Rollback Services",
-                      desc: "Damage-free transport",
-                      href: "/tow-services",
-                    },
-                  ].map(({ icon: Ico, title, desc, href }) => (
-                    <AnimBorder key={title}>
-                      <Link
-                        href={href}
-                        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
-                      >
-                        <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
-                          <div className="flex items-start gap-3">
-                            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
-                              <Ico className="h-6 w-6 text-white" />
-                            </div>
-                            <div>
-                              <BubbleBlock className="!px-3 !py-2">
-                                <div className="font-extrabold">{title}</div>
-                                <div className="text-sm text-white/95 mt-0.5">
-                                  {desc}
-                                </div>
-                              </BubbleBlock>
-                            </div>
-                          </div>
-                        </SteelPanel>
-                      </Link>
-                    </AnimBorder>
-                  ))}
-                </div>
+            {/* Tow Services */}
+<div className="mt-6">
+  <div className="mb-3">
+    <h4
+      className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
+      style={{
+        fontFamily:
+          '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+        color: "#60a5fa",
+      }}
+    >
+      Tow Services
+    </h4>
+  </div>
+
+  <div className="grid md:grid-cols-3 gap-4">
+    {[
+      {
+        icon: IconTruck,
+        title: "Light Duty Towing",
+        desc: "Cars • SUVs • Pickups",
+        href: "/light-duty-towing",
+      },
+      {
+        icon: IconTruck,
+        title: "Heavy Duty & Commercial Towing",
+        desc: "Oilfield & fleet",
+        href: "/heavy-duty-commercial-towing",
+      },
+      {
+        icon: IconTruck,
+        title: "Oilfield Routes Tow Service",
+        desc: "Lease roads • remote access",
+        href: "/heavy-duty-commercial-towing",
+      },
+      {
+        icon: IconTruck,
+        title: "Long & Short Distance Tows",
+        desc: "Local & state-to-state",
+        href: "/light-duty-towing",
+      },
+      {
+        icon: IconFlatbed,
+        title: "Equipment Transport",
+        desc: "Light equipment & tools",
+        href: "/equipment-transport",
+      },
+      {
+        icon: IconFlatbed,
+        title: "Flatbed / Rollback Services",
+        desc: "Damage-free transport",
+        href: "/flatbed-rollback-services",
+      },
+    ].map(({ icon: Ico, title, desc, href }) => (
+      <AnimBorder key={title}>
+        <Link
+          href={href}
+          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
+        >
+          <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
+            <div className="flex items-start gap-3">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
+                <Ico className="h-6 w-6 text-white" />
               </div>
+              <div>
+                <BubbleBlock className="!px-3 !py-2">
+                  <div className="font-extrabold">{title}</div>
+                  <div className="text-sm text-white/95 mt-0.5">
+                    {desc}
+                  </div>
+                </BubbleBlock>
+              </div>
+            </div>
+          </SteelPanel>
+        </Link>
+      </AnimBorder>
+    ))}
+  </div>
+</div>
 
               {/* Emergency Roadside Assistance */}
               <div className="mt-8">

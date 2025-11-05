@@ -11,10 +11,10 @@ export default function RoadsidePage() {
       title="Emergency Roadside Assistance"
       subtitle="Fuel Delivery • Jumpstarts • Lockouts • Quick Checks"
       bullets={[
-        "Gas & diesel delivery to get you moving",
-        "12V jumpstarts and battery checks",
-        "Fast, no-damage vehicle entry for lockouts",
-        "Stranded support and safety-first procedures",
+        "Gas & diesel delivery to get you moving again when the tank runs dry.",
+        "12V jumpstarts and basic battery checks when your vehicle won’t crank.",
+        "Fast, no-damage vehicle entry for lockouts so you can get back on the road.",
+        "Support if you’re stranded roadside, with safety-first positioning and lighting.",
       ]}
       badges={[{ label: "Fuel" }, { label: "Jumps" }, { label: "Lockouts" }]}
       heroVideoSrc="/Videos/tow3.mp4"

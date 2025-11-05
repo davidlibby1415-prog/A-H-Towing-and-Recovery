@@ -2,22 +2,22 @@ import ServicePage from "../../components/ServicePage";
 
 export const metadata = {
   title: "Light Duty Towing | A & H Towing & Recovery",
-  description: "Cars, SUVs, and pickups. Fast local & long-distance light-duty towing in West Texas.",
+  description:
+    "Light duty towing for cars, SUVs, and pickups — local or long distance, 24/7.",
 };
 
-export default function LightDutyPage() {
+export default function LightDutyTowingPage() {
   return (
     <ServicePage
       title="Light Duty Towing"
-      subtitle="Cars • SUVs • Pickups • Local & Long Distance"
+      subtitle="Cars • SUVs • Pickups • Long & short distance"
       bullets={[
-        "Safe hook-up and transport for daily drivers and family vehicles",
-        "Damage-minimizing procedures and securement",
-        "Local tows and out-of-town hauls",
-        "Immediate dispatch with live phone/SMS",
+        "Safe, damage-conscious towing for everyday drivers and families.",
+        "Careful hook-ups, chains, and securement on every tow.",
+        "Local tows in and around Pecos, plus long-distance options when you need to get home or to a shop.",
+        "24/7 dispatch for breakdowns, no-starts, and accident towing.",
       ]}
-      badges={[{ label: "24/7" }, { label: "Local + Long" }, { label: "Road-Safe" }]}
-      heroVideoSrc="/Videos/tow1.mp4"
+      badges={[{ label: "Light Duty" }, { label: "Local & Long Distance" }]}
     />
   );
 }

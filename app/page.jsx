@@ -559,7 +559,7 @@ export default function Home() {
                 </h3>
               </div>
 
-            {/* Tow Services */}
+         {/* Tow Services */}
 <div className="mt-6">
   <div className="mb-3">
     <h4
@@ -579,37 +579,31 @@ export default function Home() {
       {
         icon: IconTruck,
         title: "Light Duty Towing",
-        desc: "Cars • SUVs • Pickups",
+        desc: "Cars • SUVs • Pickups • Long & short distance",
         href: "/light-duty-towing",
       },
       {
         icon: IconTruck,
         title: "Heavy Duty & Commercial Towing",
-        desc: "Oilfield & fleet",
+        desc: "Oilfield & fleet • Long & short distance",
         href: "/heavy-duty-commercial-towing",
       },
       {
         icon: IconTruck,
         title: "Oilfield Routes Tow Service",
-        desc: "Lease roads • remote access",
-        href: "/heavy-duty-commercial-towing",
-      },
-      {
-        icon: IconTruck,
-        title: "Long & Short Distance Tows",
-        desc: "Local & state-to-state",
-        href: "/light-duty-towing",
+        desc: "Lease roads • remote access • Long & short distance",
+        href: "/oilfield-routes-tow-service",
       },
       {
         icon: IconFlatbed,
         title: "Equipment Transport",
-        desc: "Light equipment & tools",
+        desc: "Light equipment & tools • Long & short distance",
         href: "/equipment-transport",
       },
       {
         icon: IconFlatbed,
         title: "Flatbed / Rollback Services",
-        desc: "Damage-free transport",
+        desc: "Damage-free transport • Long & short distance",
         href: "/flatbed-rollback-services",
       },
     ].map(({ icon: Ico, title, desc, href }) => (

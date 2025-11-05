@@ -7,13 +7,18 @@ import Link from "next/link";
 function smsHref(number, body) {
   const encoded = encodeURIComponent(body);
   const isiOS =
-    typeof navigator !== "undefined" && /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    typeof navigator !== "undefined" &&
+    /iPhone|iPad|iPod/i.test(navigator.userAgent);
   const sep = isiOS ? "&" : "?";
   return `sms:${number}${sep}body=${encoded}`;
 }
 
 /* ====================== Small UI Helpers / Icons ====================== */
-function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", fullWidth = false }) {
+function PhoneCTA({
+  className = "",
+  label = "Call Dispatch Now! 24/7 Services",
+  fullWidth = false,
+}) {
   const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
   return (
     <a
@@ -32,7 +37,11 @@ function PhoneCTA({ className = "", label = "Call Dispatch Now! 24/7 Services", 
   );
 }
 
-function ScrollToFormCTA({ className = "", label = "Text Dispatch (Include GPS)", targetId = "dispatch-form" }) {
+function ScrollToFormCTA({
+  className = "",
+  label = "Text Dispatch (Include GPS)",
+  targetId = "dispatch-form",
+}) {
   const onClick = (e) => {
     e.preventDefault();
     const el = document.getElementById(targetId);
@@ -61,7 +70,10 @@ function Chip({ children, className = "" }) {
   return (
     <span
       className={`inline-block rounded-xl px-3 py-1 bg-black/45 text-white font-extrabold shadow-sm align-middle ${className}`}
-      style={{ WebkitTextStroke: "0.25px rgba(0,0,0,.7)", textShadow: "0 1px 2px rgba(0,0,0,.6)" }}
+      style={{
+        WebkitTextStroke: "0.25px rgba(0,0,0,.7)",
+        textShadow: "0 1px 2px rgba(0,0,0,.6)",
+      }}
     >
       {children}
     </span>
@@ -72,7 +84,10 @@ function BubbleBlock({ children, className = "" }) {
   return (
     <div
       className={`inline-block rounded-2xl px-4 py-3 bg-black/45 text-white font-extrabold shadow ${className}`}
-      style={{ WebkitTextStroke: "0.25px rgba(0,0,0,.7)", textShadow: "0 1px 2px rgba(0,0,0,.6)" }}
+      style={{
+        WebkitTextStroke: "0.25px rgba(0,0,0,.7)",
+        textShadow: "0 1px 2px rgba(0,0,0,.6)",
+      }}
     >
       {children}
     </div>
@@ -89,7 +104,10 @@ function StripedCallout({ children, className = "" }) {
           "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)",
       }}
     >
-      <div className="rounded-lg px-4 py-3 text-center" style={{ backgroundColor: "#fde047" }}>
+      <div
+        className="rounded-lg px-4 py-3 text-center"
+        style={{ backgroundColor: "#fde047" }}
+      >
         {children}
       </div>
     </div>
@@ -98,7 +116,9 @@ function StripedCallout({ children, className = "" }) {
 
 /* Thin gradient strip */
 function AccentStrip({ color = "from-ahBlue to-ahRed", className = "" }) {
-  return <div className={`h-1 w-full bg-gradient-to-r ${color} ${className}`} />;
+  return (
+    <div className={`h-1 w-full bg-gradient-to-r ${color} ${className}`} />
+  );
 }
 
 /* =================== GLOBAL Animated Border (red↔blue) =================== */
@@ -111,12 +131,20 @@ function AnimBorder({ children, className = "" }) {
 }
 
 /* Steel panel container (background only) */
-function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
+function SteelPanel({
+  children,
+  className = "",
+  padded = true,
+  borderColor = "rgba(255,255,255,0.18)",
+}) {
   return (
     <div
-      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
+        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
+      } ${className}`}
       style={{
-        backgroundImage: `linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")`,
+        backgroundImage:
+          'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -139,7 +167,13 @@ function Section({ id, children, className = "" }) {
 
 /* Icons */
 const IconTruck = (props) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    {...props}
+  >
     <path d="M3 14h10V6H7L3 10v4Z" />
     <path d="M13 9h4l3 3v2h-7" />
     <circle cx="7.5" cy="17.5" r="2" />
@@ -147,7 +181,13 @@ const IconTruck = (props) => (
   </svg>
 );
 const IconFlatbed = (props) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    {...props}
+  >
     <path d="M2 14h13l4-3h3" />
     <path d="M2 14v3h3" />
     <circle cx="7" cy="18" r="2" />
@@ -155,24 +195,48 @@ const IconFlatbed = (props) => (
   </svg>
 );
 const IconLock = (props) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    {...props}
+  >
     <rect x="5" y="11" width="14" height="9" rx="2" />
     <path d="M8 11V8a4 4 0 1 1 8 0v3" />
   </svg>
 );
 const IconBolt = (props) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    {...props}
+  >
     <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
   </svg>
 );
 const IconHook = (props) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    {...props}
+  >
     <path d="M12 3v9a4 4 0 1 0 8 0" />
     <circle cx="12" cy="3" r="2" />
   </svg>
 );
 const IconFuel = (props) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...props}>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    {...props}
+  >
     <path d="M3 7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12H3V7Z" />
     <path d="M13 10h2l3 3v6a2 2 0 0 0 2 2h1" />
   </svg>
@@ -202,35 +266,49 @@ function BrandSlab({ Tag = "h1" }) {
   );
 }
 
-/* ========================= Golden award badges ========================= */
+/* ========================= Golden award badges (upgraded) ========================= */
 function MedalBadge({ title, lines = [] }) {
   return (
     <div className="w-full sm:w-auto px-2">
       <div className="relative mx-auto w-56 h-64 grid place-items-center">
+        {/* outer golden glow */}
+        <div
+          className="absolute w-60 h-60 rounded-full"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(253,224,71,0.42) 0%, rgba(250,204,21,0.06) 60%, transparent 80%)",
+            boxShadow:
+              "0 0 40px rgba(250,204,21,0.9), 0 0 80px rgba(250,204,21,0.7)",
+            filter: "blur(0.4px)",
+          }}
+        />
+
         {/* radiant ears ring */}
         <div
           className="absolute w-52 h-52 rounded-full"
           style={{
             background:
-              "repeating-conic-gradient(from 0deg, rgba(255,215,0,0.45) 0deg 6deg, transparent 6deg 12deg)",
+              "repeating-conic-gradient(from 0deg, rgba(255,215,0,0.55) 0deg 6deg, transparent 6deg 12deg)",
             filter: "blur(0.6px)",
           }}
         />
+
         {/* ribbons */}
         <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-3">
           <div className="w-7 h-20 bg-ahRed clip-ribbon shadow-md border-2 border-yellow-300" />
           <div className="w-7 h-20 bg-ahBlue clip-ribbon shadow-md border-2 border-yellow-300" />
         </div>
+
         {/* medal */}
         <div
-          className="relative w-48 h-48 rounded-full shadow-2xl border-4 border-yellow-300 grid place-items-center text-center p-6"
+          className="relative w-48 h-48 rounded-full shadow-2xl border-[5px] border-yellow-300/95 grid place-items-center text-center p-6"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 30% 30%, #fff7b1, #ffd84a 45%, #f59e0b 70%, #b45309 90%)",
+              "radial-gradient(circle at 30% 30%, #fffbe6, #ffe36b 40%, #f59e0b 70%, #b45309 92%)",
           }}
         >
           {/* shimmer sweep */}
-          <div className="pointer-events-none absolute inset-0 rounded-full opacity-35 bg-[conic-gradient(from_0deg,transparent,rgba(255,255,255,0.65),transparent_30%)] animate-spin-slow" />
+          <div className="pointer-events-none absolute inset-0 rounded-full opacity-35 bg-[conic-gradient(from_0deg,transparent,rgba(255,255,255,0.7),transparent_32%)] animate-spin-slow" />
           <div className="relative">
             <div className="text-sm font-black uppercase tracking-wide text-yellow-900">
               {title}
@@ -250,9 +328,18 @@ function MedalBadge({ title, lines = [] }) {
 function GoldenFacts() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 justify-items-center">
-      <MedalBadge title="Response Time?" lines={["< 30 Minutes •", "Professional"]} />
-      <MedalBadge title="Operating?" lines={["24 Hrs. / 7 Days a Week", "365 Day a Year"]} />
-      <MedalBadge title="Service Area?" lines={["From Pecos, TX", "To the Surrounding", "West Texas Region"]} />
+      <MedalBadge
+        title="Response Time?"
+        lines={["< 30 Minutes •", "Professional"]}
+      />
+      <MedalBadge
+        title="Operating?"
+        lines={["24 Hrs. / 7 Days a Week", "365 Day a Year"]}
+      />
+      <MedalBadge
+        title="Service Area?"
+        lines={["From Pecos, TX", "To the Surrounding", "West Texas Region"]}
+      />
     </div>
   );
 }
@@ -283,7 +370,6 @@ function TopLocationsMarquee() {
         </div>
       </div>
 
-      {/* tight gap */}
       <div className="h-[2px]" />
       <div className="w-full bg-red-700/90">
         <div className="container max-w-7xl">
@@ -295,20 +381,35 @@ function TopLocationsMarquee() {
               color: "#ffd54a",
             }}
           >
-            Providing Towing, Recovery Services, and Emergency Roadside Assistance to West Texas
+            Providing Towing, Recovery Services, and Emergency Roadside
+            Assistance to West Texas
           </p>
         </div>
       </div>
 
       <style jsx global>{`
         @keyframes marquee-x {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
         }
-        .marquee { display: inline-flex; min-width: 200%; animation: marquee-x 30s linear infinite; }
-        @media (prefers-reduced-motion: reduce) { .marquee { animation: none !important; } }
+        .marquee {
+          display: inline-flex;
+          min-width: 200%;
+          animation: marquee-x 30s linear infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .marquee {
+            animation: none !important;
+          }
+        }
 
-        .clip-ribbon { clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%); }
+        .clip-ribbon {
+          clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
+        }
 
         /* ===== Global animated red↔blue border ===== */
         @property --angle {
@@ -317,16 +418,29 @@ function TopLocationsMarquee() {
           inherits: false;
         }
         @keyframes rb-rotate {
-          to { --angle: 360deg; }
+          to {
+            --angle: 360deg;
+          }
         }
         .rb-border {
           --angle: 0deg;
-          background: conic-gradient(from var(--angle), #3b82f6 0%, #ef4444 50%, #3b82f6 100%);
+          background: conic-gradient(
+            from var(--angle),
+            #3b82f6 0%,
+            #ef4444 50%,
+            #3b82f6 100%
+          );
           animation: rb-rotate 24s linear infinite;
         }
 
-        .animate-spin-slow { animation: spin 6s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        .animate-spin-slow {
+          animation: spin 6s linear infinite;
+        }
+        @keyframes spin {
+          to {
+            transform: rotate(360deg);
+          }
+        }
       `}</style>
     </div>
   );
@@ -346,7 +460,10 @@ function VideoSection({
 }) {
   const [videoError, setVideoError] = useState(false);
   return (
-    <section className={`relative isolate w-full overflow-hidden ${extraClass}`} style={{ minHeight: `min(${minVH}vh, 1200px)` }}>
+    <section
+      className={`relative isolate w-full overflow-hidden ${extraClass}`}
+      style={{ minHeight: `min(${minVH}vh, 1200px)` }}
+    >
       <div className={`absolute inset-0 ${innerWrapperClass}`}>
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
@@ -367,12 +484,17 @@ function VideoSection({
       <div
         className="absolute inset-0 pointer-events-none z-10"
         style={{
-          background: `radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,${overlayStrength * 0.57}) 78%, rgba(0,0,0,${overlayStrength}) 100%)`,
+          background: `radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,${
+            overlayStrength * 0.57
+          }) 78%, rgba(0,0,0,${overlayStrength}) 100%)`,
         }}
       />
 
       {tagline && (
-        <div className="absolute left-1/2 -translate-x-1/2 z-20 w-full px-4" style={taglinePos}>
+        <div
+          className="absolute left-1/2 -translate-x-1/2 z-20 w-full px-4"
+          style={taglinePos}
+        >
           {tagline}
         </div>
       )}
@@ -394,7 +516,11 @@ export default function Home() {
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" in window ? "instant" : "auto" });
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant" in window ? "instant" : "auto",
+    });
     setTimeout(() => window.scrollTo(0, 0), 0);
   }, []);
 
@@ -429,23 +555,43 @@ export default function Home() {
           <div className="container max-w-7xl flex items-center gap-6 py-3">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
-                <span className="text-[15px] font-extrabold" style={{ color: "#e10600" }}>A&amp;H</span>
+                <span
+                  className="text-[15px] font-extrabold"
+                  style={{ color: "#e10600" }}
+                >
+                  A&amp;H
+                </span>
               </div>
               <div className="leading-tight">
-                <div className="font-bold drop-shadow text-red-600">A&amp;H Towing & Recovery, LLC</div>
-                <div className="text-xs opacity-90">2712 W F Street, Pecos, TX 79772</div>
+                <div className="font-bold drop-shadow text-red-600">
+                  A&amp;H Towing & Recovery, LLC
+                </div>
+                <div className="text-xs opacity-90">
+                  2712 W F Street, Pecos, TX 79772
+                </div>
                 <div className="text-xs">
-                  <a className="underline underline-offset-4 hover:opacity-100" href="mailto:ah.towing.recovery23@gmail.com">
+                  <a
+                    className="underline underline-offset-4 hover:opacity-100"
+                    href="mailto:ah.towing.recovery23@gmail.com"
+                  >
                     ah.towing.recovery23@gmail.com
                   </a>
                 </div>
               </div>
             </div>
             <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
-              <a href="#services" className="hover:opacity-80">Services</a>
-              <a href="#coverage" className="hover:opacity-80">Coverage</a>
-              <a href="/owners" className="hover:opacity-80">Owners</a>
-              <a href="#contact" className="hover:opacity-80">Request a Tow</a>
+              <a href="#services" className="hover:opacity-80">
+                Services
+              </a>
+              <a href="#coverage" className="hover:opacity-80">
+                Coverage
+              </a>
+              <a href="/owners" className="hover:opacity-80">
+                Owners
+              </a>
+              <a href="#contact" className="hover:opacity-80">
+                Request a Tow
+              </a>
             </nav>
 
             <PhoneCTA className="hidden sm:inline-flex" />
@@ -453,7 +599,10 @@ export default function Home() {
         </header>
 
         {/* ===== Top steel banner ===== */}
-        <section className="relative z-[60] w-full overflow-hidden" style={{ minHeight: "clamp(110px, 15vh, 200px)" }}>
+        <section
+          className="relative z-[60] w-full overflow-hidden"
+          style={{ minHeight: "clamp(110px, 15vh, 200px)" }}
+        >
           <div className="relative z-[70] h-full w-full flex items-center justify-center px-2 py-0.5">
             <BrandSlab Tag="h1" />
           </div>
@@ -489,11 +638,11 @@ export default function Home() {
                     style={{
                       fontFamily:
                         '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
-                      fontSize: 'clamp(30px,4.4vw,54px)',
-                      color: '#111827',
-                      letterSpacing: '0.02em',
-                      WebkitTextStroke: '0.5px rgba(0,0,0,0.55)',
-                      textShadow: '0 1px 2px rgba(0,0,0,0.25)',
+                      fontSize: "clamp(30px,4.4vw,54px)",
+                      color: "#111827",
+                      letterSpacing: "0.02em",
+                      WebkitTextStroke: "0.5px rgba(0,0,0,0.55)",
+                      textShadow: "0 1px 2px rgba(0,0,0,0.25)",
                     }}
                   >
                     Stranded on the Side of the Road???
@@ -503,7 +652,8 @@ export default function Home() {
                     className="mt-2 font-extrabold leading-snug"
                     style={{ color: "#0b1220" }}
                   >
-                    We dispatch immediately for light, medium &amp; heavy-duty tows, winch-outs, accident recovery, and oilfield transport.
+                    We dispatch immediately for light, medium &amp; heavy-duty
+                    tows, winch-outs, accident recovery, and oilfield transport.
                     <br />
                     Trained operators.
                     <br />
@@ -513,7 +663,7 @@ export default function Home() {
               </div>
 
               <div className="mt-4">
-                <BubbleBlock className="!text-black" >
+                <BubbleBlock className="!text-black">
                   <span
                     style={{
                       backgroundColor: "rgba(250, 204, 21, 0.65)",
@@ -558,94 +708,101 @@ export default function Home() {
                   Services Provided
                 </h3>
               </div>
-
-         {/* Tow Services */}
-<div className="mt-6">
-  <div className="mb-3">
-    <h4
-      className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
-      style={{
-        fontFamily:
-          '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
-        color: "#60a5fa",
-      }}
-    >
-      Tow Services
-    </h4>
-  </div>
-
-  <div className="grid md:grid-cols-3 gap-4">
-    {[
-      {
-        icon: IconTruck,
-        title: "Light Duty Towing",
-        desc: "Cars • SUVs • Pickups • Long & short distance",
-        href: "/light-duty-towing",
-      },
-      {
-        icon: IconTruck,
-        title: "Heavy Duty & Commercial Towing",
-        desc: "Oilfield & fleet • Long & short distance",
-        href: "/heavy-duty-commercial-towing",
-      },
-      {
-        icon: IconTruck,
-        title: "Oilfield Routes Tow Service",
-        desc: "Lease roads • remote access • Long & short distance",
-        href: "/oilfield-routes-tow-service",
-      },
-      {
-        icon: IconFlatbed,
-        title: "Equipment Transport",
-        desc: "Light equipment & tools • Long & short distance",
-        href: "/equipment-transport",
-      },
-      {
-        icon: IconFlatbed,
-        title: "Flatbed / Rollback Services",
-        desc: "Damage-free transport • Long & short distance",
-        href: "/flatbed-rollback-services",
-      },
-    ].map(({ icon: Ico, title, desc, href }) => (
-      <AnimBorder key={title}>
-        <Link
-          href={href}
-          className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
-        >
-          <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
-                <Ico className="h-6 w-6 text-white" />
+              <div className="mt-3 text-sm md:text-base font-semibold text-sky-100/90">
+                Click below for more information.
               </div>
-              <div>
-                <BubbleBlock className="!px-3 !py-2">
-                  <div className="font-extrabold">{title}</div>
-                  <div className="text-sm text-white/95 mt-0.5">
-                    {desc}
+
+              {/* Tow Services */}
+              <div className="mt-6">
+                <div className="mb-3 flex justify-center">
+                  <div className="inline-block rounded-2xl px-5 py-2 bg-black/20 backdrop-blur-sm">
+                    <h4
+                      className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
+                      style={{
+                        fontFamily:
+                          '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                        color: "#60a5fa",
+                      }}
+                    >
+                      Tow Services
+                    </h4>
                   </div>
-                </BubbleBlock>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-4">
+                  {[
+                    {
+                      icon: IconTruck,
+                      title: "Light Duty Towing",
+                      desc: "Cars • SUVs • Pickups • Long & short distance",
+                      href: "/light-duty-towing",
+                    },
+                    {
+                      icon: IconTruck,
+                      title: "Heavy Duty & Commercial Towing",
+                      desc: "Oilfield & fleet • Long & short distance",
+                      href: "/heavy-duty-commercial-towing",
+                    },
+                    {
+                      icon: IconTruck,
+                      title: "Oilfield Routes Tow Service",
+                      desc: "Lease roads • remote access • Long & short distance",
+                      href: "/oilfield-routes-tow-service",
+                    },
+                    {
+                      icon: IconFlatbed,
+                      title: "Equipment Transport",
+                      desc: "Light equipment & tools • Long & short distance",
+                      href: "/equipment-transport",
+                    },
+                    {
+                      icon: IconFlatbed,
+                      title: "Flatbed / Rollback Services",
+                      desc: "Damage-free transport • Long & short distance",
+                      href: "/flatbed-rollback-services",
+                    },
+                  ].map(({ icon: Ico, title, desc, href }) => (
+                    <AnimBorder key={title}>
+                      <Link
+                        href={href}
+                        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
+                      >
+                        <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
+                          <div className="flex items-start gap-3">
+                            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
+                              <Ico className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                              <BubbleBlock className="!px-3 !py-2">
+                                <div className="font-extrabold">{title}</div>
+                                <div className="text-sm text-white/95 mt-0.5">
+                                  {desc}
+                                </div>
+                              </BubbleBlock>
+                            </div>
+                          </div>
+                        </SteelPanel>
+                      </Link>
+                    </AnimBorder>
+                  ))}
+                </div>
               </div>
-            </div>
-          </SteelPanel>
-        </Link>
-      </AnimBorder>
-    ))}
-  </div>
-</div>
 
               {/* Emergency Roadside Assistance */}
               <div className="mt-8">
-                <div className="mb-3">
-                  <h4
-                    className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
-                    style={{
-                      fontFamily:
-                        '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
-                      color: "#60a5fa",
-                    }}
-                  >
-                    Emergency Roadside Assistance
-                  </h4>
+                <div className="mb-3 flex justify-center">
+                  <div className="inline-block rounded-2xl px-5 py-2 bg-black/20 backdrop-blur-sm">
+                    <h4
+                      className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
+                      style={{
+                        fontFamily:
+                          '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                        color: "#60a5fa",
+                      }}
+                    >
+                      Emergency Roadside Assistance
+                    </h4>
+                  </div>
                 </div>
                 <div className="grid md:grid-cols-3 gap-4">
                   {[
@@ -696,17 +853,19 @@ export default function Home() {
 
               {/* Accidents */}
               <div className="mt-8">
-                <div className="mb-3">
-                  <h4
-                    className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
-                    style={{
-                      fontFamily:
-                        '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
-                      color: "#60a5fa",
-                    }}
-                  >
-                    Accidents
-                  </h4>
+                <div className="mb-3 flex justify-center">
+                  <div className="inline-block rounded-2xl px-5 py-2 bg-black/20 backdrop-blur-sm">
+                    <h4
+                      className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
+                      style={{
+                        fontFamily:
+                          '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                        color: "#60a5fa",
+                      }}
+                    >
+                      Accidents
+                    </h4>
+                  </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   {[
@@ -763,21 +922,25 @@ export default function Home() {
             <SteelPanel>
               <div className="text-center mb-5">
                 <BubbleBlock className="!px-6 !py-3">
-                  <span className="font-extrabold text-[clamp(28px,5vw,56px)]">Service Area</span>
+                  <span className="font-extrabold text-[clamp(28px,5vw,56px)]">
+                    Service Area
+                  </span>
                 </BubbleBlock>
               </div>
 
               <div className="grid md:grid-cols-2 gap-4 items-start">
                 <div className="rounded-2xl overflow-hidden border border-white/15">
                   <iframe
-                    title="Service Area Map (Dark)"
+                    title="Service Area Map - Pecos, TX"
                     className="w-full h-[260px]"
                     loading="lazy"
-                    referrerPolicy="no-referrer"
+                    src="https://www.google.com/maps?q=Pecos,TX&z=11&output=embed"
+                    referrerPolicy="no-referrer-when-downgrade"
                     allowFullScreen
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=-104.2%2C30.9%2C-101.8%2C32.1&layer=mapnik"
                     style={{
-                      filter: "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
+                      filter:
+                        "invert(1) hue-rotate(180deg) saturate(0.7) brightness(0.8)",
+                      border: 0,
                     }}
                   />
                 </div>
@@ -853,17 +1016,44 @@ export default function Home() {
                 <div className="font-extrabold text-white">We accept:</div>
 
                 <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-yellow-50 to-amber-100">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <rect x="2" y="6" width="20" height="12" rx="2" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
                   <span className="font-extrabold">Cash</span>
                 </div>
 
                 <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-sky-50 to-blue-100">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <rect x="2" y="5" width="20" height="14" rx="2" />
+                    <path d="M2 10h20" />
+                  </svg>
                   <span className="font-extrabold">All Major Credit Cards</span>
                 </div>
 
                 <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-rose-50 to-red-100">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18l-2 12H5L3 6Z"/><path d="M7 10h10M6 14h12"/></svg>
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path d="M3 6h18l-2 12H5L3 6Z" />
+                    <path d="M7 10h10M6 14h12" />
+                  </svg>
                   <span className="font-extrabold">EFS Services</span>
                 </div>
               </div>
@@ -877,8 +1067,13 @@ export default function Home() {
               target="_blank"
               rel="noreferrer"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94 .5 2 .76 3.12 .76Z"/>
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94.5 2 .76 3.12.76Z" />
               </svg>
               <span>Follow us on TikTok</span>
             </a>
@@ -889,32 +1084,72 @@ export default function Home() {
         <footer className="bg-ahCharcoal text-ahText mt-4">
           <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-8 text-sm">
             <div className="text-center md:text-left">
-              <div className="font-extrabold text-white drop-shadow-sm">Call or Visit</div>
-              <div className="font-extrabold text-amber-200 mt-1">A&amp;H Towing &amp; Recovery, LLC</div>
+              <div className="font-extrabold text-white drop-shadow-sm">
+                Call or Visit
+              </div>
+              <div className="font-extrabold text-amber-200 mt-1">
+                A&amp;H Towing &amp; Recovery, LLC
+              </div>
               <p className="mt-2 font-bold text-amber-200">
-                Professional towing, recovery, and roadside assistance for Pecos &amp; oilfield routes.
+                Professional towing, recovery, and roadside assistance for Pecos
+                &amp; oilfield routes.
               </p>
             </div>
             <div>
               <div className="font-semibold text-white">Quick Links</div>
               <ul className="mt-2 space-y-1">
-                <li><a className="underline" href="#services">Services</a></li>
-                <li><a className="underline" href="#coverage">Coverage</a></li>
-                <li><a className="underline" href="#contact">Request a Tow</a></li>
+                <li>
+                  <a className="underline" href="#services">
+                    Services
+                  </a>
+                </li>
+                <li>
+                  <a className="underline" href="#coverage">
+                    Coverage
+                  </a>
+                </li>
+                <li>
+                  <a className="underline" href="#contact">
+                    Request a Tow
+                  </a>
+                </li>
               </ul>
             </div>
             <div>
               <div className="font-semibold text-white">Social</div>
               <ul className="mt-2 space-y-1">
-                <li><a className="underline" href="https://www.tiktok.com/@" target="_blank" rel="noreferrer">TikTok</a></li>
+                <li>
+                  <a
+                    className="underline"
+                    href="https://www.tiktok.com/@"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    TikTok
+                  </a>
+                </li>
               </ul>
             </div>
             <div className="text-center md:text-left">
               <div className="font-semibold text-white">Contact</div>
               <p className="mt-2 text-white drop-shadow-sm">
-                <a className="underline font-semibold" href="tel:+14328424578">(432) 842-4578</a><br />
-                <a className="underline font-semibold" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
-                <span className="font-extrabold text-amber-200">2712 W F Street, Pecos, TX 79772</span>
+                <a
+                  className="underline font-semibold"
+                  href="tel:+14328424578"
+                >
+                  (432) 842-4578
+                </a>
+                <br />
+                <a
+                  className="underline font-semibold"
+                  href="mailto:ah.towing.recovery23@gmail.com"
+                >
+                  ah.towing.recovery23@gmail.com
+                </a>
+                <br />
+                <span className="font-extrabold text-amber-200">
+                  2712 W F Street, Pecos, TX 79772
+                </span>
               </p>
             </div>
           </div>
@@ -940,7 +1175,9 @@ function ContactSection() {
     let sent = false;
     const build = (c) => {
       const loc = c
-        ? `Location: ${c.lat.toFixed(5)}, ${c.lng.toFixed(5)} https://www.google.com/maps?q=${c.lat},${c.lng}`
+        ? `Location: ${c.lat.toFixed(5)}, ${c.lng.toFixed(
+            5
+          )} https://www.google.com/maps?q=${c.lat},${c.lng}`
         : "Location: (share GPS)";
       return (
         `Tow request from ${name || "(name)"}; ` +
@@ -963,7 +1200,10 @@ function ContactSection() {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
           clearTimeout(fallback);
-          const c = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          const c = {
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          };
           setCoords(c);
           setLocStatus("Location captured");
           openSMS(build(c));
@@ -982,7 +1222,9 @@ function ContactSection() {
     }
   };
 
-  const mapsLink = coords ? `https://www.google.com/maps?q=${coords.lat},${coords.lng}` : "";
+  const mapsLink = coords
+    ? `https://www.google.com/maps?q=${coords.lat},${coords.lng}`
+    : "";
 
   return (
     <div className="grid md:grid-cols-2 gap-6" id="contact">
@@ -990,35 +1232,73 @@ function ContactSection() {
         {/* Yellow instruction box */}
         <div className="rounded-xl bg-yellow-300/95 border border-yellow-600 px-4 py-3 text-sm text-black font-extrabold mb-3">
           <strong>Instructions: </strong>
-          Please complete the form below for services and to send your GPS information to our towing and emergency services dispatcher.
-          Press the red button below to submit the form to text for services.
+          Please complete the form below for services and to send your GPS
+          information to our towing and emergency services dispatcher. Press the
+          red button below to submit the form to text for services.
         </div>
 
         {/* FORM on mint green */}
-        <form id="dispatch-form" className="grid gap-3" onSubmit={(e) => e.preventDefault()}>
+        <form
+          id="dispatch-form"
+          className="grid gap-3"
+          onSubmit={(e) => e.preventDefault()}
+        >
           <label className="grid gap-1 text-black font-extrabold">
             <span className="text-sm">Name</span>
-            <input id="name-input" className="rounded-xl border px-3 py-2 bg-emerald-50" placeholder="Full name" value={name} onChange={(e) => setName(e.target.value)} required />
+            <input
+              id="name-input"
+              className="rounded-xl border px-3 py-2 bg-emerald-50"
+              placeholder="Full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </label>
 
           <label className="grid gap-1 text-black font-extrabold">
             <span className="text-sm">Callback Phone</span>
-            <input className="rounded-xl border px-3 py-2 bg-emerald-50" inputMode="tel" placeholder="(###) ###-####" value={callback} onChange={(e) => setCallback(e.target.value)} required />
+            <input
+              className="rounded-xl border px-3 py-2 bg-emerald-50"
+              inputMode="tel"
+              placeholder="(###) ###-####"
+              value={callback}
+              onChange={(e) => setCallback(e.target.value)}
+              required
+            />
           </label>
 
           <label className="grid gap-1 text-black font-extrabold">
             <span className="text-sm">Vehicle</span>
-            <input className="rounded-xl border px-3 py-2 bg-emerald-50" placeholder="Year / Make / Model" value={vehicle} onChange={(e) => setVehicle(e.target.value)} />
+            <input
+              className="rounded-xl border px-3 py-2 bg-emerald-50"
+              placeholder="Year / Make / Model"
+              value={vehicle}
+              onChange={(e) => setVehicle(e.target.value)}
+            />
           </label>
 
           <label className="grid gap-1 text-black font-extrabold">
             <span className="text-sm">Number of Passengers</span>
-            <input type="number" min="1" max="8" className="rounded-xl border px-3 py-2 bg-emerald-50" placeholder="e.g., 2" value={passengers} onChange={(e) => setPassengers(e.target.value)} />
+            <input
+              type="number"
+              min="1"
+              max="8"
+              className="rounded-xl border px-3 py-2 bg-emerald-50"
+              placeholder="e.g., 2"
+              value={passengers}
+              onChange={(e) => setPassengers(e.target.value)}
+            />
           </label>
 
           <label className="grid gap-1 text-black font-extrabold">
             <span className="text-sm">Issue</span>
-            <textarea className="rounded-2xl border px-3 py-2 bg-emerald-50" rows={3} placeholder="Flat tire, no-start, accident, stuck, etc." value={issue} onChange={(e) => setIssue(e.target.value)} />
+            <textarea
+              className="rounded-2xl border px-3 py-2 bg-emerald-50"
+              rows={3}
+              placeholder="Flat tire, no-start, accident, stuck, etc."
+              value={issue}
+              onChange={(e) => setIssue(e.target.value)}
+            />
           </label>
 
           <div className="grid gap-2 rounded-2xl border p-3 bg-emerald-100/90 backdrop-blur">
@@ -1034,11 +1314,15 @@ function ContactSection() {
                   setLocStatus("Requesting location…");
                   navigator.geolocation.getCurrentPosition(
                     (pos) => {
-                      const c = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                      const c = {
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude,
+                      };
                       setCoords(c);
                       setLocStatus("Location captured");
                     },
-                    (err) => setLocStatus("Location failed: " + err.message),
+                    (err) =>
+                      setLocStatus("Location failed: " + err.message),
                     { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
                   );
                 }}
@@ -1053,7 +1337,14 @@ function ContactSection() {
                 <>
                   <br />
                   Captured: {coords.lat.toFixed(5)}, {coords.lng.toFixed(5)}{" "}
-                  <a className="underline" href={mapsLink} target="_blank" rel="noreferrer">Open map</a>
+                  <a
+                    className="underline"
+                    href={mapsLink}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Open map
+                  </a>
                 </>
               )}
             </div>
@@ -1070,7 +1361,8 @@ function ContactSection() {
             </button>
           </div>
           <p className="text-xs font-extrabold">
-            The red button composes a text with your details and GPS (if available) in your Messages app.
+            The red button composes a text with your details and GPS (if
+            available) in your Messages app.
           </p>
         </form>
       </div>
@@ -1078,8 +1370,11 @@ function ContactSection() {
       <div className="rounded-xl overflow-hidden border border-black/10">
         {/* “Call or Visit” line break + centered company name */}
         <div className="p-3 text-sm font-extrabold text-center bg-red-700/80 text-white rounded-t-xl">
-          Call or Visit<br />
-          <span className="text-amber-200">A&amp;H Towing &amp; Recovery, LLC</span>
+          Call or Visit
+          <br />
+          <span className="text-amber-200">
+            A&amp;H Towing &amp; Recovery, LLC
+          </span>
         </div>
         {/* Map */}
         <iframe
@@ -1087,18 +1382,30 @@ function ContactSection() {
           className="w-full h-[260px]"
           loading="lazy"
           src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik"
-          style={{ filter: "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)" }}
+          style={{
+            filter: "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
+          }}
         />
         <div className="text-xs p-2 bg-red-800/90 text-white font-extrabold text-center">
           Prefer Google?{" "}
-          <a className="underline" href="https://www.google.com/maps?q=2712%20W%20F%20Street,%20Pecos,%20TX%2079772" target="_blank" rel="noreferrer">
+          <a
+            className="underline"
+            href="https://www.google.com/maps?q=2712%20W%20F%20Street,%20Pecos,%20TX%2079772"
+            target="_blank"
+            rel="noreferrer"
+          >
             Open in Google Maps
           </a>
         </div>
-        <div className="p-3 text-sm font-extrabold text-center" style={{ color: "#1e3a8a" }}>
+        <div
+          className="p-3 text-sm font-extrabold text-center"
+          style={{ color: "#1e3a8a" }}
+        >
           24/7 Professional Service — Call or Text Us!
         </div>
-        <div className="mt-2 text-xs opacity-80 px-3 pb-3 text-center">Thank you for choosing A&amp;H!</div>
+        <div className="mt-2 text-xs opacity-80 px-3 pb-3 text-center">
+          Thank you for choosing A&amp;H!
+        </div>
       </div>
     </div>
   );

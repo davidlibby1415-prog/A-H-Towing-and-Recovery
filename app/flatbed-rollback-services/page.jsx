@@ -3,21 +3,23 @@ import ServicePage from "../../components/ServicePage";
 export const metadata = {
   title: "Flatbed / Rollback Services | A & H Towing & Recovery",
   description:
-    "Damage-conscious flatbed and rollback towing for specialty and low-clearance vehicles.",
+    "Low-profile loading, AWD/4x4 safe, equipment & motorcycle transport with secure tie-downs.",
 };
 
-export default function FlatbedRollbackPage() {
+export default function FlatbedRollbackServicesPage() {
   return (
     <ServicePage
       title="Flatbed / Rollback Services"
-      subtitle="Damage-free transport • Long & short distance"
+      subtitle="Low-Clearance • AWD/4x4 Safe • Equipment & Motorcycle Transport"
       bullets={[
-        "Flatbed / rollback service for low-clearance, specialty, or damaged vehicles.",
-        "Ideal for all-wheel-drive, performance, or vehicles that need extra care.",
-        "Load angles and securement chosen to keep bumpers, frames, and undercarriage safe.",
-        "Available for local and longer-distance moves as needed.",
+        "Low-clearance loading for lowered and specialty vehicles",
+        "All-wheel-drive and 4x4 safe transport that protects drivetrains",
+        "Motorcycle and UTV securement with dedicated tie-down points",
+        "Equipment pallets and attachments moved securely",
+        "Enclosed tool / part transfers available on request",
       ]}
-      badges={[{ label: "Flatbed" }, { label: "Rollback" }]}
+      badges={[{ label: "Low Profile" }, { label: "AWD Safe" }, { label: "Secure" }]}
+      heroVideoSrc="/Videos/tow1.mp4"
     />
   );
 }

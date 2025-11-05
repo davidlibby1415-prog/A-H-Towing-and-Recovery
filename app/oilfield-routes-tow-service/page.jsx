@@ -3,21 +3,23 @@ import ServicePage from "../../components/ServicePage";
 export const metadata = {
   title: "Oilfield Routes Tow Service | A & H Towing & Recovery",
   description:
-    "Towing for oilfield routes, lease roads, and remote access locations around Pecos, TX.",
+    "Lease road towing, pad recoveries, and oilfield route support for trucks and equipment in West Texas.",
 };
 
-export default function OilfieldRoutesTowPage() {
+export default function OilfieldRoutesTowServicePage() {
   return (
     <ServicePage
       title="Oilfield Routes Tow Service"
-      subtitle="Lease roads • remote access • Long & short distance"
+      subtitle="Lease Roads • Remote Access • Pads & Caliche — Long & Short Distance Support"
       bullets={[
-        "Towing and recovery for oilfield locations, lease roads, and remote job sites.",
-        "Operators familiar with oilfield traffic, site safety, and access challenges.",
-        "Long & short distance options from remote sites back to Pecos, Midland/Odessa, or your chosen shop.",
-        "Coordinated communication with dispatchers, company men, and safety as needed.",
+        "Towing and recovery on lease roads, ranch tracks, and remote pads",
+        "Support for service trucks, pickups, and oilfield units",
+        "Winch-outs from mud, sand, and soft caliche",
+        "Coordination with company men, dispatch, and safety reps",
+        "Moves between locations, yards, and shops across West Texas",
       ]}
-      badges={[{ label: "Oilfield" }, { label: "Remote Access" }]}
+      badges={[{ label: "Oilfield" }, { label: "Remote" }, { label: "Lease Roads" }]}
+      heroVideoSrc="/Videos/heavy-duty-bg.mp4"
     />
   );
 }

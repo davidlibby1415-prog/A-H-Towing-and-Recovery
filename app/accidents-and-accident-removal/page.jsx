@@ -2,23 +2,22 @@ import ServicePage from "../../components/ServicePage";
 
 export const metadata = {
   title: "Accidents & Accident Removal | A & H Towing & Recovery",
-  description: "Secure, professional scene handling and vehicle removal.",
+  description:
+    "Accident towing, scene clean-up assistance, and careful vehicle handling.",
 };
 
-export default function AccidentsRemovalPage() {
+export default function AccidentsPage() {
   return (
     <ServicePage
       title="Accidents & Accident Removal"
-      subtitle="Secure • Professional • Coordinated"
+      subtitle="Secure, professional accident towing and scene support"
       bullets={[
-        "Careful scene management with safety cones & lighting",
-        "Coordination with law enforcement and insurance when needed",
-        "Safe loading, transport, and storage options",
-        "Debris-clearing support (when permitted)",
+        "Prompt accident response for single-vehicle and multi-vehicle incidents.",
+        "Careful loading and transport of damaged vehicles to reduce further harm.",
+        "Coordination with law enforcement, first responders, and property owners when needed.",
+        "Scene awareness to keep you and other drivers as safe as possible during recovery.",
       ]}
-      badges={[{ label: "Secure" }, { label: "Professional" }, { label: "Coordinated" }]}
-      heroVideoSrc="/Videos/tow2.mp4"
+      badges={[{ label: "Accidents" }, { label: "Removal" }]}
     />
   );
 }
-

@@ -1,31 +1,9 @@
-"use client";
+// FILE: components/ServicePage.jsx
 
-import React from "react";
 import Link from "next/link";
+import { siteConfig } from "../lib/siteConfig";
 
-/* ========= Shared constants (match main page contact info) ========= */
-
-const SERVICE_PHONE_DISPLAY = "(432) 842-4578";
-const SERVICE_PHONE_HREF = "tel:+14328424578";
-const SERVICE_EMAIL = "ah.towing.recovery23@gmail.com";
-const SERVICE_AREAS = [
-  "Pecos (Home Base)",
-  "Reeves County",
-  "Fort Stockton",
-  "Monahans",
-  "Kermit",
-  "Balmorhea",
-  "Pyote",
-  "Toyah",
-  "Grandfalls",
-  "Wink",
-  "Midland/Odessa Metro & I-20 Corridor",
-  "US-285",
-  "TX-17",
-  "Oilfield Routes",
-];
-
-/* =================== Helpers matching main page style =================== */
+/* ===== Reusable visual helpers (mirroring your homepage look) ===== */
 
 function AnimBorder({ children, className = "" }) {
   return (
@@ -105,7 +83,7 @@ function BrandSlab({ Tag = "h1" }) {
           style={{
             fontFamily:
               'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-            fontSize: "clamp(32px, 5vw, 64px)",
+            fontSize: "clamp(34px, 6vw, 72px)",
             color: "#e10600",
             WebkitTextStroke: "1.5px #000",
             textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
@@ -119,192 +97,248 @@ function BrandSlab({ Tag = "h1" }) {
   );
 }
 
-/* Simple CTA buttons */
-
-function CallNowButton({ className = "" }) {
+/* ===== Small badge pill ===== */
+function Badge({ label }) {
   return (
-    <a
-      href={SERVICE_PHONE_HREF}
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[220px] ${className}`}
-    >
-      Call Now • {SERVICE_PHONE_DISPLAY}
-    </a>
+    <span className="rounded-2xl border border-white/15 bg-black/50 px-3 py-1 text-xs font-bold uppercase tracking-wide text-amber-200 shadow-sm">
+      {label}
+    </span>
   );
 }
 
-function BackHomeButton({ className = "" }) {
-  return (
-    <Link
-      href="/"
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[180px] ${className}`}
-    >
-      ← Back to Main Page
-    </Link>
-  );
-}
-
-/* Video card (optional) */
-
-function HeroVideoCard({ src }) {
-  if (!src) return null;
-  return (
-    <AnimBorder>
-      <div className="rounded-[22px] overflow-hidden border border-white/15 bg-black">
-        <video
-          className="w-full h-full max-h-[420px] object-cover"
-          src={src}
-          muted
-          playsInline
-          autoPlay
-          loop
-          preload="metadata"
-          controls={false}
-        />
-      </div>
-    </AnimBorder>
-  );
-}
-
-/* ======================= Main ServicePage component ======================= */
+/* ===== ServicePage main layout ===== */
 
 export default function ServicePage({
   title,
   subtitle,
   bullets = [],
   badges = [],
-  heroVideoSrc,
+  heroVideoSrc, // e.g. "/Videos/heavy-duty-bg.mp4"
+  heroImageUrl, // optional fallback background image
+  CTA,
 }) {
+  const cta = CTA || {
+    label: "Call Dispatch Now! 24/7 Services",
+    href: siteConfig.phoneHref,
+  };
+
   return (
     <main className="min-h-screen bg-neutral-950 text-white">
-      {/* Top brand + quick contact line */}
-      <section className="pt-6 pb-3">
-        <div className="container max-w-6xl">
-          <BrandSlab Tag="h1" />
-          <p className="mt-3 text-center text-sm md:text-base font-extrabold text-amber-200 drop-shadow">
-            Professional towing, recovery, and roadside assistance for Pecos &amp; oilfield
-            routes across West Texas.
-          </p>
-          <p className="mt-1 text-center text-xs md:text-sm text-gray-200">
-            Call{" "}
+      {/* Top mini-header with brand + phone (for users who don't click the buttons) */}
+      <header className="border-b border-black/40 bg-ahCharcoal">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-4 px-4 py-3">
+          <div className="flex items-center gap-3">
+            <div className="grid h-10 w-10 place-items-center rounded-xl bg-black font-bold shadow-cta">
+              <span
+                className="text-[15px] font-extrabold"
+                style={{ color: "#e10600" }}
+              >
+                A&amp;H
+              </span>
+            </div>
+            <div className="leading-tight">
+              <div className="font-bold text-red-500 drop-shadow">
+                A&amp;H Towing &amp; Recovery, LLC
+              </div>
+              <div className="text-[11px] opacity-90">
+                2712 W F Street, Pecos, TX 79772
+              </div>
+              <div className="text-[11px]">
+                <a
+                  className="underline underline-offset-4 hover:opacity-100"
+                  href={`mailto:${siteConfig.email}`}
+                >
+                  {siteConfig.email}
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="ml-auto text-right text-sm font-extrabold text-amber-200">
+            24/7 Dispatch:&nbsp;
             <a
-              href={SERVICE_PHONE_HREF}
-              className="font-semibold underline underline-offset-4"
+              href={siteConfig.phoneHref}
+              className="underline decoration-amber-300 decoration-2 underline-offset-4"
             >
-              {SERVICE_PHONE_DISPLAY}
-            </a>{" "}
-            or email{" "}
-            <a
-              href={`mailto:${SERVICE_EMAIL}`}
-              className="font-semibold underline underline-offset-4"
-            >
-              {SERVICE_EMAIL}
+              {siteConfig.phone}
             </a>
-            .
-          </p>
+          </div>
+        </div>
+      </header>
+
+      {/* HERO SECTION with video or image background */}
+      <section className="relative isolate overflow-hidden">
+        {/* Background layer: video first, image/gradient fallback */}
+        {heroVideoSrc ? (
+          <div className="absolute inset-0">
+            <video
+              className="absolute inset-0 h-full w-full object-cover"
+              muted
+              playsInline
+              autoPlay
+              loop
+              preload="metadata"
+              poster="/fallback.jpg"
+            >
+              <source src={heroVideoSrc} type="video/mp4" />
+            </video>
+          </div>
+        ) : (
+          <div
+            className="absolute inset-0 opacity-70"
+            style={{
+              backgroundImage: heroImageUrl
+                ? `url(${heroImageUrl})`
+                : "linear-gradient(135deg, #020617 0%, #0f172a 45%, #020617 100%)",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
+        )}
+
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-neutral-950/95" />
+
+        {/* Hero content */}
+        <div className="relative z-10 mx-auto max-w-7xl px-4 py-10 md:py-14">
+          <div className="space-y-6">
+            {/* Big company slab on diamond plate */}
+            <div className="max-w-4xl">
+              <BrandSlab Tag="h1" />
+            </div>
+
+            {/* Phone line for non-button users */}
+            <div className="mt-2 text-lg font-extrabold text-amber-200 drop-shadow-sm">
+              Need help now? Call&nbsp;
+              <a
+                href={siteConfig.phoneHref}
+                className="underline decoration-amber-300 decoration-2 underline-offset-4"
+              >
+                {siteConfig.phone}
+              </a>
+            </div>
+
+            {/* Service title + subtitle on steel panel with animated border */}
+            <AnimBorder className="max-w-3xl">
+              <SteelPanel className="bg-black/60">
+                <div className="flex flex-wrap items-center gap-2">
+                  {badges.map((b, i) => (
+                    <Badge key={i} label={b.label} />
+                  ))}
+                </div>
+
+                <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-4xl">
+                  {title}
+                </h2>
+                {subtitle && (
+                  <p className="mt-2 max-w-2xl text-base md:text-lg text-white/85">
+                    {subtitle}
+                  </p>
+                )}
+
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <a
+                    href={cta.href}
+                    className="inline-flex min-w-[220px] items-center justify-center rounded-2xl bg-ahBlue px-5 py-3 text-sm font-semibold text-white shadow-cta transition hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2"
+                  >
+                    {cta.label}
+                  </a>
+                  <a
+                    href={siteConfig.phoneHref}
+                    className="inline-flex min-w-[220px] items-center justify-center rounded-2xl border border-white/40 bg-black/40 px-5 py-3 text-sm font-semibold text-white/90 backdrop-blur hover:bg-black/60"
+                  >
+                    Call {siteConfig.phone}
+                  </a>
+                </div>
+              </SteelPanel>
+            </AnimBorder>
+          </div>
         </div>
       </section>
 
-      {/* Main content */}
-      <section className="pb-14">
-        <div className="container max-w-6xl space-y-8">
-          {/* Text content / bullets */}
-          <AnimBorder>
-            <SteelPanel>
-              {/* Badges row */}
-              {badges && badges.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2 mb-4">
-                  {badges.map((b, i) => (
-                    <span
-                      key={i}
-                      className="rounded-2xl border border-white/20 bg-white/10 px-3 py-1 text-xs uppercase tracking-wide font-semibold"
-                    >
-                      {b.label}
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              {/* Title with same shading vibe as main page */}
-              <div className="inline-block rounded-2xl px-4 py-2 bg-black/20 backdrop-blur-sm mb-4">
-                <h1
-                  className="text-3xl md:text-4xl font-black leading-tight tracking-tight text-sky-300"
-                  style={{
-                    textShadow: "0 2px 14px rgba(0,0,0,.6)",
-                    letterSpacing: "0.02em",
-                  }}
-                >
-                  {title}
-                </h1>
-              </div>
-
-              {subtitle && (
-                <p className="text-base md:text-lg text-white/90 max-w-3xl">
-                  {subtitle}
-                </p>
-              )}
-
-              {bullets && bullets.length > 0 && (
-                <ul className="mt-5 space-y-3">
-                  {bullets.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <span className="mt-1 inline-block h-2 w-2 shrink-0 rounded-full bg-emerald-400" />
-                      <span className="text-white/90 text-sm md:text-base">
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <CallNowButton />
-                <BackHomeButton />
-              </div>
-            </SteelPanel>
-          </AnimBorder>
-
-          {/* Hero video (if provided) */}
-          <HeroVideoCard src={heroVideoSrc} />
-
-          {/* Service area + dark-mode map centered on Pecos, TX */}
-          <div className="grid md:grid-cols-2 gap-6">
-            {/* Service area text */}
+      {/* MAIN CONTENT SECTION */}
+      <section className="bg-neutral-950 py-10 md:py-14">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 md:grid-cols-3">
+          {/* Left: bullet list in a diamond-plate panel */}
+          <div className="md:col-span-2 space-y-6">
             <AnimBorder>
               <SteelPanel>
-                <div className="text-center mb-3">
-                  <BubbleBlock className="!px-5 !py-2">
-                    <span className="font-extrabold text-[clamp(18px,3vw,24px)]">
-                      Service Area
+                <div className="mb-4 text-center md:text-left">
+                  <BubbleBlock className="!px-6 !py-3">
+                    <span className="text-lg md:text-xl font-extrabold">
+                      What We Do
                     </span>
                   </BubbleBlock>
                 </div>
-                <p className="text-sm md:text-base text-white/90 mb-3">
-                  Fast response across Pecos, surrounding towns, and key oilfield routes.
+
+                <ul className="space-y-3 text-sm md:text-base">
+                  {bullets.map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-1 inline-block h-2 w-2 flex-shrink-0 rounded-full bg-amber-400" />
+                      <span className="text-white/90">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </SteelPanel>
+            </AnimBorder>
+          </div>
+
+          {/* Right: contact + service area panels */}
+          <div className="space-y-5">
+            <AnimBorder>
+              <SteelPanel>
+                <h3 className="text-lg font-extrabold">Need help right now?</h3>
+                <p className="mt-2 text-sm text-white/80">
+                  Call our 24/7 dispatch and tell us your location, unit, and
+                  situation. We’ll get a truck rolling.
                 </p>
-                <p className="text-xs md:text-sm text-white/80 leading-relaxed">
-                  {SERVICE_AREAS.join(" • ")}
+                <a
+                  href={siteConfig.phoneHref}
+                  className="mt-3 block text-2xl font-black text-amber-300 underline underline-offset-4"
+                >
+                  {siteConfig.phone}
+                </a>
+                <p className="mt-2 text-xs text-white/65">
+                  Save this number in your phone as{" "}
+                  <span className="font-semibold">
+                    “A&amp;H Towing – Pecos”
+                  </span>{" "}
+                  so it’s ready when you need it.
                 </p>
               </SteelPanel>
             </AnimBorder>
 
-            {/* Dark-mode OSM map pinned on Pecos, TX */}
             <AnimBorder>
-              <SteelPanel padded={false} className="overflow-hidden">
-                <iframe
-                  title="Pecos, TX Service Map (Dark Mode)"
-                  className="w-full h-[260px]"
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                  allowFullScreen
-                  src="https://www.openstreetmap.org/export/embed.html?bbox=-103.8%2C31.3%2C-103.2%2C31.6&layer=mapnik&marker=31.42%2C-103.49"
-                  style={{
-                    filter:
-                      "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
-                    border: 0,
-                  }}
-                />
+              <SteelPanel>
+                <h3 className="text-lg font-extrabold">Email Dispatch</h3>
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="mt-2 block text-sm font-semibold underline"
+                >
+                  {siteConfig.email}
+                </a>
+                <p className="mt-2 text-xs text-white/75">
+                  Include PO#, unit, location, and contact info so we can stage
+                  the right truck and keep your team moving.
+                </p>
               </SteelPanel>
             </AnimBorder>
+
+            <AnimBorder>
+              <SteelPanel>
+                <h3 className="text-lg font-extrabold">Service Area</h3>
+                <p className="mt-2 text-sm text-white/80">
+                  Fast response from Pecos across{" "}
+                  {siteConfig.serviceAreas.join(", ")} — lease roads, ranch
+                  tracks, and West Texas highways.
+                </p>
+              </SteelPanel>
+            </AnimBorder>
+
+            <div className="text-xs text-white/60">
+              <Link href="/" className="underline hover:text-white">
+                &larr; Back to Home / Main Services
+              </Link>
+            </div>
           </div>
         </div>
       </section>

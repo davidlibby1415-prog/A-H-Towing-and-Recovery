@@ -379,7 +379,7 @@ function TopLocationsMarquee() {
             }}
           >
             Providing Towing, Recovery Services, and Emergency Roadside
-            Assistance to West Texas
+            Assistance to the West Texas Region
           </p>
         </div>
       </div>

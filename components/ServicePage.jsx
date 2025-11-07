@@ -1,38 +1,28 @@
 // FILE: components/ServicePage.jsx
+"use client";
 
 import Link from "next/link";
 import { siteConfig } from "../lib/siteConfig";
 
-// Simple animated-style border (no styled-jsx, safe for Server Components)
+// Safe (no styled-jsx) gradient border
 function AnimBorder({ children, className = "" }) {
   return (
     <div
       className={`p-[3px] rounded-[26px] bg-gradient-to-r from-blue-500 via-red-500 to-blue-500 ${className}`}
-      style={{
-        backgroundSize: "200% 200%",
-        animation: "rb-slow 10s linear infinite",
-      }}
+      style={{ backgroundSize: "200% 200%" }}
     >
-      <style jsx>{`
-        @keyframes rb-slow {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-      `}</style>
       {children}
     </div>
   );
 }
 
 // Diamond-plate style panel
-function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
+function SteelPanel({
+  children,
+  className = "",
+  padded = true,
+  borderColor = "rgba(255,255,255,0.18)",
+}) {
   return (
     <div
       className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
@@ -69,27 +59,40 @@ function Bubble({ children, className = "" }) {
 export default function ServicePage({
   title,
   subtitle,
-  bullets,
+  bullets = [],
   badges = [],
   heroVideoSrc,
 }) {
   return (
     <main className="min-h-screen bg-neutral-950 text-white">
-      {/* HERO WITH BACKGROUND VIDEO */}
-      <section className="relative isolate overflow-hidden">
-        {heroVideoSrc && (
+      {/* ===== HERO WITH BACKGROUND VIDEO (top, muted, loop) ===== */}
+      <section
+        className="relative isolate overflow-hidden"
+        style={{ minHeight: "min(60vh, 900px)" }}
+      >
+        {heroVideoSrc ? (
           <video
             className="absolute inset-0 w-full h-full object-cover"
-            src={heroVideoSrc}
             autoPlay
             muted
             playsInline
             loop
-          />
-        )}
+            preload="metadata"
+            disablePictureInPicture
+            poster="/fallback.jpg"
+          >
+            <source src={heroVideoSrc} type="video/mp4" />
+          </video>
+        ) : null}
 
-        {/* Dark overlay for readability */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.15),_rgba(15,23,42,0.9))]" />
+        {/* Readability overlay */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at top, rgba(15,23,42,0.15), rgba(15,23,42,0.9))",
+          }}
+        />
 
         <div className="relative mx-auto max-w-6xl px-4 py-16 md:py-20">
           {/* Company + phone on diamond plate */}
@@ -115,15 +118,13 @@ export default function ServicePage({
             <h1 className="text-3xl md:text-4xl font-black tracking-tight drop-shadow-[0_6px_18px_rgba(0,0,0,0.8)]">
               {title}
             </h1>
-            {subtitle && (
-              <p className="mt-3 text-base md:text-lg text-slate-100/90">
-                {subtitle}
-              </p>
-            )}
+            {subtitle ? (
+              <p className="mt-3 text-base md:text-lg text-slate-100/90">{subtitle}</p>
+            ) : null}
           </div>
 
           {/* Badges */}
-          {badges.length > 0 && (
+          {badges?.length ? (
             <div className="mt-4 flex flex-wrap gap-2">
               {badges.map((b) => (
                 <span
@@ -134,9 +135,9 @@ export default function ServicePage({
                 </span>
               ))}
             </div>
-          )}
+          ) : null}
 
-          {/* CTA buttons */}
+          {/* CTAs */}
           <div className="mt-8 flex flex-wrap gap-3">
             <a
               href={siteConfig.phoneHref}
@@ -154,7 +155,7 @@ export default function ServicePage({
         </div>
       </section>
 
-      {/* MAIN CONTENT */}
+      {/* ===== MAIN CONTENT ===== */}
       <section className="mx-auto max-w-6xl px-4 py-10 md:py-14">
         <div className="grid gap-8 md:grid-cols-3">
           {/* Left: bullets + service area */}
@@ -165,27 +166,29 @@ export default function ServicePage({
                   What This Service Covers
                 </span>
               </Bubble>
-              <ul className="space-y-3 text-sm md:text-base">
-                {bullets.map((item, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <span className="mt-1 inline-block h-2 w-2 rounded-full bg-amber-400" />
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
+              {bullets?.length ? (
+                <ul className="space-y-3 text-sm md:text-base">
+                  {bullets.map((item, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-1 inline-block h-2 w-2 rounded-full bg-amber-400" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
             </SteelPanel>
 
             <SteelPanel>
               <h2 className="text-xl font-extrabold mb-2">Service Area</h2>
               <p className="text-sm md:text-base text-slate-100/90">
                 Fast response across{" "}
-                {siteConfig.serviceAreas?.join(", ") || "Pecos & West Texas"}
-                . 24/7 dispatch, day or night.
+                {siteConfig.serviceAreas?.join(", ") || "Pecos & West Texas"}.
+                24/7 dispatch, day or night.
               </p>
             </SteelPanel>
           </div>
 
-          {/* Right: contact info / quick links */}
+          {/* Right: quick contacts */}
           <div className="space-y-4">
             <SteelPanel>
               <h3 className="font-semibold text-lg">Need Help Right Now?</h3>
@@ -196,7 +199,7 @@ export default function ServicePage({
                 {siteConfig.phone}
               </a>
               <p className="mt-2 text-sm text-slate-100/80">
-                Save our number in your phone as{" "}
+                Save our number as{" "}
                 <span className="font-semibold">“A&amp;H Towing – Pecos”</span>.
               </p>
             </SteelPanel>

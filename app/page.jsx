@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-
 import Link from "next/link";
 
 /* ============================ Utilities ============================ */
@@ -282,53 +281,54 @@ function BrandSlab({ Tag = "h1" }) {
 function MedalBadge({ title, lines = [] }) {
   return (
     <div className="w-full sm:w-auto px-2">
-      <div className="relative mx-auto w-56 h-64 grid place-items-center">
-        {/* outer radiant ring */}
+      <div className="relative mx-auto w-64 h-72 flex items-center justify-center">
+        {/* outer glow */}
         <div
-          className="absolute w-56 h-56 rounded-full"
+          className="absolute inset-0 rounded-[32px]"
           style={{
             background:
-              "conic-gradient(from 0deg, rgba(255,255,255,0.9), rgba(255,215,0,0.95), rgba(245,158,11,0.9), rgba(255,215,0,0.98), rgba(255,255,255,0.9))",
-            filter: "blur(1px)",
+              "radial-gradient(circle at 50% 0, #fefce8 0, #facc15 35%, #f97316 70%, #b45309 100%)",
             boxShadow:
-              "0 0 18px rgba(250,204,21,0.9), 0 0 42px rgba(250,204,21,0.7)",
+              "0 0 28px rgba(250,204,21,0.9), 0 0 90px rgba(250,204,21,0.75)",
           }}
         />
-        {/* inner “cog” ring */}
+        {/* shield / cog medal */}
         <div
-          className="absolute w-48 h-48 rounded-full"
+          className="relative w-[210px] h-[230px] flex flex-col items-center justify-center text-center border-[3.5px] border-yellow-300"
           style={{
+            clipPath:
+              "polygon(50% 0, 96% 18%, 100% 55%, 78% 100%, 22% 100%, 0 55%, 4% 18%)",
             backgroundImage:
-              "repeating-conic-gradient(from 0deg, #facc15 0deg 10deg, #b45309 10deg 20deg)",
-            boxShadow: "inset 0 0 6px rgba(0,0,0,0.45)",
-          }}
-        />
-        {/* ribbons */}
-        <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-2">
-          <div className="w-6 h-20 bg-ahRed clip-ribbon shadow-md border-2 border-yellow-300" />
-          <div className="w-6 h-20 bg-yellow-400 clip-ribbon shadow-md border-2 border-yellow-300" />
-          <div className="w-6 h-20 bg-ahBlue clip-ribbon shadow-md border-2 border-yellow-300" />
-        </div>
-        {/* medal */}
-        <div
-          className="relative w-48 h-48 rounded-full shadow-2xl border-4 border-yellow-300 grid place-items-center text-center p-5"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle at 30% 30%, #fff9c4, #ffe066 45%, #fbbf24 70%, #b45309 90%)",
+              "linear-gradient(180deg,#fef3c7 0%,#fde68a 25%,#facc15 55%,#eab308 78%,#b45309 100%)",
+            boxShadow: "0 12px 26px rgba(0,0,0,0.55)",
           }}
         >
-          {/* shimmer sweep */}
-          <div className="pointer-events-none absolute inset-0 rounded-full opacity-35 bg-[conic-gradient(from_0deg,transparent,rgba(255,255,255,0.75),transparent_30%)] animate-spin-slow" />
-          <div className="relative max-w-[8.5rem] mx-auto">
-            <div className="text-[10px] md:text-xs font-black uppercase tracking-wide text-yellow-900 leading-snug">
+          {/* mechanical teeth strip */}
+          <div
+            className="absolute -top-3 w-[78%] h-3 rounded-sm overflow-hidden"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(90deg,#78350f 0 8px,#fbbf24 8px 16px)",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.45)",
+            }}
+          />
+          <div className="relative max-w-[155px] px-2 mt-4">
+            <div className="text-[11px] md:text-xs font-black uppercase tracking-[0.18em] text-amber-900">
               {title}
             </div>
-            <div className="mt-2 text-sm md:text-base font-black text-yellow-950 leading-snug">
+            <div className="mt-2 space-y-0.5 text-[13px] md:text-sm font-black text-amber-950 leading-snug">
               {lines.map((l, i) => (
                 <div key={i}>{l}</div>
               ))}
             </div>
           </div>
+        </div>
+
+        {/* triple ribbons */}
+        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-2">
+          <div className="w-7 h-20 bg-ahRed clip-ribbon shadow-md border-2 border-yellow-300" />
+          <div className="w-7 h-20 bg-yellow-400 clip-ribbon shadow-md border-2 border-yellow-300" />
+          <div className="w-7 h-20 bg-ahBlue clip-ribbon shadow-md border-2 border-yellow-300" />
         </div>
       </div>
     </div>
@@ -339,15 +339,15 @@ function GoldenFacts() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 justify-items-center">
       <MedalBadge
-        title="Great Response Time"
-        lines={["< 30 Minutes •", "Professional"]}
+        title="GREAT RESPONSE TIME"
+        lines={["Under 30 Minutes", "Professional Dispatch"]}
       />
       <MedalBadge
-        title="Operating"
-        lines={["24 Hrs. / 7 Days a Week", "365 Day a Year"]}
+        title="OPERATING HOURS"
+        lines={["24 Hrs / 7 Days", "365 Days a Year"]}
       />
       <MedalBadge
-        title="Service Area"
+        title="SERVICE AREA"
         lines={["From Pecos, TX", "Across West Texas", "Into New Mexico"]}
       />
     </div>
@@ -357,8 +357,8 @@ function GoldenFacts() {
 /* ========================= Top Marquee ========================= */
 function TopLocationsMarquee() {
   const text =
-   "Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Kermit • Jal • Lindsay • Loving County • McCamey • Mentone • Midland County • Midland/Odessa Metro • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Pecos, TX (Home Base) • Pecos County • Plateau • Pyote • Reeves County • Royalty • Saragosa • TX-17 • TX-18 • TX-302 • Toyah • Toyahvale • Upton County • US-285 • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County";
-    "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • Oilfield Routes";
+    "Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Kermit • Jal • Lindsay • Loving County • McCamey • Mentone • Midland County • Midland/Odessa Metro • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Pecos, TX (Home Base) • Pecos County • Plateau • Pyote • Reeves County • Royalty • Saragosa • TX-17 • TX-18 • TX-302 • Toyah • Toyahvale • Upton County • US-285 • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County";
+  "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • Oilfield Routes";
   return (
     <div className="w-full bg-[#0b0f14] text-sm">
       <div className="container max-w-7xl py-2">
@@ -524,7 +524,7 @@ function VideoSection({
 
 /* ============================== Page ============================== */
 export default function Home() {
-   useEffect(() => {
+  useEffect(() => {
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
@@ -641,103 +641,103 @@ export default function Home() {
                 </div>
               </div>
             </div>
-           <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
-  {/* Services dropdown with delayed close */}
-  <div
-    className="relative"
-    onMouseEnter={openServices}
-    onMouseLeave={scheduleCloseServices}
-  >
-    <button
-      type="button"
-      className="inline-flex items-center gap-1 hover:opacity-80"
-      onClick={() => {
-        if (servicesOpen) {
-          setServicesOpen(false);
-        } else {
-          openServices();
-        }
-      }}
-    >
-      <span>Services</span>
-      <span className="text-[10px]">▾</span>
-    </button>
+            <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
+              {/* Services dropdown with delayed close */}
+              <div
+                className="relative"
+                onMouseEnter={openServices}
+                onMouseLeave={scheduleCloseServices}
+              >
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1 hover:opacity-80"
+                  onClick={() => {
+                    if (servicesOpen) {
+                      setServicesOpen(false);
+                    } else {
+                      openServices();
+                    }
+                  }}
+                >
+                  <span>Services</span>
+                  <span className="text-[10px]">▾</span>
+                </button>
 
-    {servicesOpen && (
-      <div className="absolute left-0 mt-2 min-w-[260px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[200]">
-        <Link
-          href="/light-duty-towing"
-          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-          onClick={() => setServicesOpen(false)}
-        >
-          Light Duty Towing
-        </Link>
-        <Link
-          href="/heavy-duty-commercial-towing"
-          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-          onClick={() => setServicesOpen(false)}
-        >
-          Heavy Duty &amp; Commercial Towing
-        </Link>
-        <Link
-          href="/oilfield-routes-tow-service"
-          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-          onClick={() => setServicesOpen(false)}
-        >
-          Oilfield Routes Tow Service
-        </Link>
-        <Link
-          href="/equipment-transport"
-          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-          onClick={() => setServicesOpen(false)}
-        >
-          Equipment Transport
-        </Link>
-        <Link
-          href="/flatbed-rollback-services"
-          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-          onClick={() => setServicesOpen(false)}
-        >
-          Flatbed / Rollback Services
-        </Link>
-        <Link
-          href="/emergency-roadside-assistance"
-          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-          onClick={() => setServicesOpen(false)}
-        >
-          Emergency Roadside Assistance
-        </Link>
-        <Link
-          href="/accidents-and-accident-removal"
-          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-          onClick={() => setServicesOpen(false)}
-        >
-          Accident Removal
-        </Link>
-        <Link
-          href="/winching-recovery"
-          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-          onClick={() => setServicesOpen(false)}
-        >
-          Winching / Recovery
-        </Link>
-      </div>
-    )}
-  </div>
+                {servicesOpen && (
+                  <div className="absolute left-0 mt-2 min-w-[260px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[200]">
+                    <Link
+                      href="/light-duty-towing"
+                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                      onClick={() => setServicesOpen(false)}
+                    >
+                      Light Duty Towing
+                    </Link>
+                    <Link
+                      href="/heavy-duty-commercial-towing"
+                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                      onClick={() => setServicesOpen(false)}
+                    >
+                      Heavy Duty &amp; Commercial Towing
+                    </Link>
+                    <Link
+                      href="/oilfield-routes-tow-service"
+                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                      onClick={() => setServicesOpen(false)}
+                    >
+                      Oilfield Routes Tow Service
+                    </Link>
+                    <Link
+                      href="/equipment-transport"
+                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                      onClick={() => setServicesOpen(false)}
+                    >
+                      Equipment Transport
+                    </Link>
+                    <Link
+                      href="/flatbed-rollback-services"
+                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                      onClick={() => setServicesOpen(false)}
+                    >
+                      Flatbed / Rollback Services
+                    </Link>
+                    <Link
+                      href="/emergency-roadside-assistance"
+                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                      onClick={() => setServicesOpen(false)}
+                    >
+                      Emergency Roadside Assistance
+                    </Link>
+                    <Link
+                      href="/accidents-and-accident-removal"
+                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                      onClick={() => setServicesOpen(false)}
+                    >
+                      Accident Removal
+                    </Link>
+                    <Link
+                      href="/winching-recovery"
+                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                      onClick={() => setServicesOpen(false)}
+                    >
+                      Winching / Recovery
+                    </Link>
+                  </div>
+                )}
+              </div>
 
-  <a href="#coverage" className="hover:opacity-80">
-    Coverage
-  </a>
-  <Link href="/owners" className="hover:opacity-80">
-    Owners
-  </Link>
-  <Link href="/tips-tricks" className="hover:opacity-80">
-    Tips &amp; Tricks
-  </Link>
-  <a href="#contact" className="hover:opacity-80">
-    Request a Tow
-  </a>
-</nav>
+              <a href="#coverage" className="hover:opacity-80">
+                Coverage
+              </a>
+              <Link href="/owners" className="hover:opacity-80">
+                Owners
+              </Link>
+              <Link href="/tips-tricks" className="hover:opacity-80">
+                Tips &amp; Tricks
+              </Link>
+              <a href="#contact" className="hover:opacity-80">
+                Request a Tow
+              </a>
+            </nav>
 
             <PhoneCTA className="hidden sm:inline-flex" />
           </div>
@@ -1315,22 +1315,22 @@ function ContactSection() {
     e.preventDefault();
 
     let sent = false;
-   const build = (c) => {
-  const locLine = c
-    ? `Location: ${c.lat.toFixed(5)}, ${c.lng.toFixed(
-        5
-      )}\nhttps://www.google.com/maps?q=${c.lat},${c.lng}`
-    : "Location: (share GPS)";
+    const build = (c) => {
+      const locLine = c
+        ? `Location: ${c.lat.toFixed(5)}, ${c.lng.toFixed(
+            5
+          )}\nhttps://www.google.com/maps?q=${c.lat},${c.lng}`
+        : "Location: (share GPS)";
 
-  return [
-    `Tow request from: ${name || "(name)"}`,
-    `Callback: ${callback || "(phone)"}`,
-    `Vehicle: ${vehicle || "(Y/M/M)"}`,
-    `Passengers: ${passengers || "(#)"}`,
-    `Issue: ${issue || "(describe)"}`,
-    locLine,
-  ].join("\n");
-};
+      return [
+        `Tow request from: ${name || "(name)"}`,
+        `Callback: ${callback || "(phone)"}`,
+        `Vehicle: ${vehicle || "(Y/M/M)"}`,
+        `Passengers: ${passengers || "(#)"}`,
+        `Issue: ${issue || "(describe)"}`,
+        locLine,
+      ].join("\n");
+    };
 
     const openSMS = (body) => {
       if (sent) return;

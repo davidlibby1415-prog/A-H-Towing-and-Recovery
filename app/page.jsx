@@ -284,13 +284,13 @@ function MedalBadge({ title, lines = [] }) {
               "0 0 18px rgba(250,204,21,0.9), 0 0 42px rgba(250,204,21,0.7)",
           }}
         />
-        {/* inner “ears” ring */}
+        {/* inner “cog” ring */}
         <div
           className="absolute w-48 h-48 rounded-full"
           style={{
-            background:
-              "repeating-conic-gradient(from 0deg, rgba(255,215,0,0.75) 0deg 6deg, transparent 6deg 12deg)",
-            filter: "blur(0.4px)",
+            backgroundImage:
+              "repeating-conic-gradient(from 0deg, #facc15 0deg 10deg, #b45309 10deg 20deg)",
+            boxShadow: "inset 0 0 6px rgba(0,0,0,0.45)",
           }}
         />
         {/* ribbons */}
@@ -301,7 +301,7 @@ function MedalBadge({ title, lines = [] }) {
         </div>
         {/* medal */}
         <div
-          className="relative w-44 h-44 rounded-full shadow-2xl border-4 border-yellow-300 grid place-items-center text-center p-6"
+          className="relative w-48 h-48 rounded-full shadow-2xl border-4 border-yellow-300 grid place-items-center text-center p-5"
           style={{
             backgroundImage:
               "radial-gradient(circle at 30% 30%, #fff9c4, #ffe066 45%, #fbbf24 70%, #b45309 90%)",
@@ -309,11 +309,11 @@ function MedalBadge({ title, lines = [] }) {
         >
           {/* shimmer sweep */}
           <div className="pointer-events-none absolute inset-0 rounded-full opacity-35 bg-[conic-gradient(from_0deg,transparent,rgba(255,255,255,0.75),transparent_30%)] animate-spin-slow" />
-          <div className="relative">
-            <div className="text-xs md:text-sm font-black uppercase tracking-wide text-yellow-900">
+          <div className="relative max-w-[8.5rem] mx-auto">
+            <div className="text-[10px] md:text-xs font-black uppercase tracking-wide text-yellow-900 leading-snug">
               {title}
             </div>
-            <div className="mt-2 text-lg md:text-xl font-black text-yellow-950 leading-snug">
+            <div className="mt-2 text-sm md:text-base font-black text-yellow-950 leading-snug">
               {lines.map((l, i) => (
                 <div key={i}>{l}</div>
               ))}
@@ -587,7 +587,7 @@ export default function Home() {
                   <span>Services</span>
                   <span className="text-[10px]">▾</span>
                 </button>
-                <div className="absolute left-0 mt-2 hidden min-w-[260px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 group-hover:block">
+                <div className="absolute left-0 mt-2 hidden min-w-[260px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[80] group-hover:block hover:block">
                   <Link
                     href="/light-duty-towing"
                     className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
@@ -717,19 +717,15 @@ export default function Home() {
                 </StripedCallout>
               </div>
 
-              <div className="mt-4">
-                <BubbleBlock className="!text-black">
-                  <span
-                    style={{
-                      backgroundColor: "#fde047",
-                      display: "inline-block",
-                      borderRadius: "12px",
-                      padding: "6px 10px",
-                    }}
+              <div className="mt-4 flex justify-center">
+                <StripedCallout>
+                  <div
+                    className="font-extrabold leading-snug"
+                    style={{ color: "#111827" }}
                   >
                     CLICK BELOW to call or text us direct!
-                  </span>
-                </BubbleBlock>
+                  </div>
+                </StripedCallout>
               </div>
 
               <div className="h-5" />
@@ -1023,7 +1019,7 @@ export default function Home() {
           <AnimBorder>
             <SteelPanel>
               <div className="text-center">
-                <div className="inline-block rounded-2xl px-6 py-3 bg-black/20 backdrop-blur-sm">
+                <div className="inline-block rounded-2xl px-6 py-3 bg-black backdrop-blur-sm">
                   <div
                     className="font-extrabold"
                     style={{
@@ -1119,7 +1115,7 @@ export default function Home() {
           <div className="mt-3 flex justify-center">
             <a
               className="inline-flex items-center gap-2 rounded-xl px-3 py-2 bg-black text-white font-semibold transition-transform duration-200 hover:scale-105 active:scale-95 hover:bg-zinc-900"
-              href="https://www.tiktok.com/@ditchking"
+              href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
               target="_blank"
               rel="noreferrer"
             >
@@ -1177,7 +1173,7 @@ export default function Home() {
                 <li>
                   <a
                     className="underline"
-                    href="https://www.tiktok.com/@ditchking"
+                    href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
                     target="_blank"
                     rel="noreferrer"
                   >

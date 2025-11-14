@@ -65,7 +65,7 @@ function ScrollToFormCTA({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl`}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl`}
       aria-label="Go to dispatch form"
     >
       {label.toUpperCase()} CLICK HERE
@@ -274,7 +274,7 @@ function BrandSlab({ Tag = "h1" }) {
   );
 }
 
-/* ========================= Golden award medals ========================= */
+/* ========================= New service award medals ========================= */
 
 const medalStyles = {
   container: {
@@ -320,7 +320,6 @@ function ServiceAwardMedal({ text = "Outstanding Service Award" }) {
         xmlns="http://www.w3.org/2000/svg"
         style={medalStyles.medal}
       >
-        {/* outer silver ring */}
         <circle
           cx="100"
           cy="100"
@@ -329,7 +328,6 @@ function ServiceAwardMedal({ text = "Outstanding Service Award" }) {
           stroke="#555"
           strokeWidth="6"
         />
-        {/* cog teeth */}
         <g fill="#888">
           {[...Array(12)].map((_, i) => {
             const angle = (i * 30 * Math.PI) / 180;
@@ -338,7 +336,6 @@ function ServiceAwardMedal({ text = "Outstanding Service Award" }) {
             return <circle key={i} cx={x} cy={y} r="8" />;
           })}
         </g>
-        {/* inner face */}
         <circle
           cx="100"
           cy="100"
@@ -476,6 +473,19 @@ function TopLocationsMarquee() {
             transform: rotate(360deg);
           }
         }
+
+        @keyframes cta-pulse {
+          0%,
+          100% {
+            transform: translateY(0) scale(1);
+          }
+          50% {
+            transform: translateY(-2px) scale(1.03);
+          }
+        }
+        .animate-cta-pulse {
+          animation: cta-pulse 2.1s ease-in-out infinite;
+        }
       `}</style>
     </div>
   );
@@ -573,7 +583,6 @@ export default function Home() {
     if (servicesCloseTimeout.current) {
       clearTimeout(servicesCloseTimeout.current);
     }
-    // wait ~350ms before closing so it feels less “touchy”
     servicesCloseTimeout.current = setTimeout(() => {
       setServicesOpen(false);
     }, 350);
@@ -817,7 +826,7 @@ export default function Home() {
                   </h2>
 
                   <div
-                    className="mt-2 font-extrabold leading-snug"
+                    className="mt-2 font-extrabold leading-snug text-[15px]"
                     style={{ color: "#0b1220" }}
                   >
                     We dispatch immediately for light, medium &amp; heavy-duty
@@ -826,17 +835,10 @@ export default function Home() {
                     Trained operators.
                     <br />
                     Clear pricing.
-                  </div>
-                </StripedCallout>
-              </div>
-
-              <div className="mt-4 flex justify-center">
-                <StripedCallout>
-                  <div
-                    className="font-extrabold leading-snug"
-                    style={{ color: "#111827" }}
-                  >
-                    CLICK BELOW to call or text us direct!
+                    <br />
+                    <span className="mt-2 inline-block text-[15px]">
+                      CLICK BELOW to call or text us direct!
+                    </span>
                   </div>
                 </StripedCallout>
               </div>
@@ -844,8 +846,8 @@ export default function Home() {
               <div className="h-5" />
 
               <div className="flex items-center justify-center gap-3 flex-wrap">
-                <PhoneCTA />
-                <ScrollToFormCTA />
+                <PhoneCTA className="animate-cta-pulse" />
+                <ScrollToFormCTA className="animate-cta-pulse" />
               </div>
 
               <GoldenFacts />
@@ -1111,7 +1113,7 @@ export default function Home() {
 
               <div className="grid md:grid-cols-2 gap-5 items-start">
                 {/* Map with 200-mile radius overlay (approximate) */}
-                <div className="relative rounded-2xl overflow-hidden border border-white/15 bg-black">
+                <div className="relative rounded-2xl overflow-hidden border-4 border-yellow-400/90 bg-black shadow-[0_0_25px_rgba(251,191,36,0.7)]">
                   <iframe
                     title="Service Area Map (Dark) with Radius"
                     className="w-full h-[320px]"
@@ -1139,22 +1141,15 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Right side text, quote, buttons, locations */}
-                <div className="flex flex-col items-center md:items-start text-center md:text-left gap-3">
+                {/* Right side text, buttons, locations */}
+                <div className="flex flex-col items-center md:items-start text-center md:text-left gap-3 rounded-2xl border-4 border-yellow-400/90 bg-black/40 p-4 shadow-[0_0_25px_rgba(251,191,36,0.6)]">
                   <BubbleBlock className="!px-6 !py-3">
                     <span className="font-extrabold text-[clamp(24px,4vw,40px)]">
                       Service Area
                     </span>
                   </BubbleBlock>
 
-                  <p className="mt-1 text-xs md:text-sm font-bold text-amber-100 max-w-lg italic">
-                    &quot;Listen, I&apos;ve Traveled Every Road in This Here
-                    Land. I&apos;ve Been Everywhere Man. I&apos;ve Been
-                    Everywhere Man. Crossed the Deserts Bare, Man&quot; – Johnny
-                    Cash
-                  </p>
-
-                  <div className="mt-2 flex flex-wrap gap-3 justify-center md:justify-start">
+                  <div className="mt-1 flex flex-wrap gap-3 justify-center md:justify-start">
                     <a
                       href="tel:+14328424578"
                       className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahBlue text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95"
@@ -1175,6 +1170,22 @@ export default function Home() {
                       {locations.join(" • ")}
                     </BubbleBlock>
                   </div>
+                </div>
+              </div>
+
+              {/* Johnny Cash quote below map */}
+              <div className="mt-6 flex justify-center">
+                <div className="rounded-2xl bg-black/85 border-2 border-yellow-300 shadow-[0_0_28px_rgba(251,191,36,0.8)] px-4 sm:px-6 py-3 max-w-3xl text-center">
+                  <div className="text-2xl md:text-3xl mb-1">
+                    🎶 🎵 🎶
+                  </div>
+                  <p className="text-sm md:text-base font-extrabold text-amber-100">
+                    &quot;Listen, I&apos;ve Traveled Every Road in This Here
+                    Land. I&apos;ve Been Everywhere Man. I&apos;ve Been
+                    Everywhere Man. Crossed the Deserts Bare, Man&quot; – Johnny
+                    Cash
+                  </p>
+                  <div className="mt-1 text-xl">🎵 🎶 🎵</div>
                 </div>
               </div>
             </SteelPanel>
@@ -1562,17 +1573,22 @@ function ContactSection() {
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-3 mt-2 justify-start">
-            <PhoneCTA />
+          <div className="flex flex-wrap items-stretch gap-3 mt-2 justify-start">
+            <PhoneCTA className="flex-1 max-w-xs" fullWidth />
             <button
               type="button"
               onClick={handleSendText}
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl"
+              className="flex-1 max-w-xs inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl"
             >
-              Send Text to Dispatch CLICK HERE
+              <span className="uppercase tracking-wide text-xs md:text-sm text-center">
+                SEND TEXT TO DISPATCH
+              </span>
+              <span className="mt-1 text-xs md:text-sm opacity-90">
+                Includes GPS when available
+              </span>
             </button>
           </div>
-          <p className="text-xs font-extrabold">
+          <p className="mt-1 text-sm font-extrabold">
             The red button composes a text with your details and GPS (if
             available) in your Messages app.
           </p>
@@ -1587,7 +1603,7 @@ function ContactSection() {
             style={{
               fontFamily:
                 'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial',
-              fontSize: "clamp(20px,3vw,32px)",
+              fontSize: "clamp(22px,3.4vw,34px)",
               color: "#e10600",
               WebkitTextStroke: "1px #000",
               textShadow: "0 4px 10px rgba(0,0,0,.8)",
@@ -1598,25 +1614,38 @@ function ContactSection() {
           </div>
         </div>
 
-        <div className="w-[260px] sm:w-[280px] md:w-[300px] aspect-[9/16] bg-black rounded-[32px] border-4 border-zinc-700 shadow-[0_18px_40px_rgba(0,0,0,0.9)] flex items-center justify-center overflow-hidden">
-          <iframe
-            title="A&H Towing TikTok 24/7"
-            src="https://www.tiktok.com/t/ZTMTrQtgU/"
-            className="w-full h-full"
-            allowFullScreen
-          />
+        {/* TikTok frame */}
+        <div className="relative w-[280px] sm:w-[320px] md:w-[360px] aspect-[9/16] flex items-center justify-center">
+          <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-sky-500 via-fuchsia-500 to-rose-500 p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+            <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden flex items-center justify-center">
+              {/* TikTok mini header */}
+              <div className="absolute top-2 left-3 flex items-center gap-1 text-[11px] text-white/80">
+                <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-black">
+                  <span className="text-[13px]">♪</span>
+                </span>
+                <span className="font-semibold">A&amp;H Towing</span>
+              </div>
+
+              <iframe
+                title="A&H Towing TikTok 24/7"
+                src="https://www.tiktok.com/embed/v2/ZTMTrQtgU"
+                className="w-full h-full"
+                allowFullScreen
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="mt-3">
+        <div className="mt-4">
           <a
-            className="inline-flex items-center gap-2 rounded-2xl px-4 py-2 bg-black text-white font-semibold border border-white/20 shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95 hover:bg-zinc-900"
+            className="inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-rose-500 text-black font-black text-sm md:text-base uppercase tracking-wide shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95"
             href="https://www.tiktok.com/t/ZTMTrQtgU/"
             target="_blank"
             rel="noreferrer"
           >
             <svg
-              width="18"
-              height="18"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="currentColor"
             >

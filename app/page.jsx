@@ -356,6 +356,7 @@ function GoldenFacts() {
 /* ========================= Top Marquee ========================= */
 function TopLocationsMarquee() {
   const text =
+   "Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Kermit • Jal • Lindsay • Loving County • McCamey • Mentone • Midland County • Midland/Odessa Metro • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Pecos, TX (Home Base) • Pecos County • Plateau • Pyote • Reeves County • Royalty • Saragosa • TX-17 • TX-18 • TX-302 • Toyah • Toyahvale • Upton County • US-285 • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County";
     "Pecos (Home Base) • Reeves County • Fort Stockton • Monahans • Kermit • Balmorhea • Pyote • Toyah • Grandfalls • Wink • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • Oilfield Routes";
   return (
     <div className="w-full bg-[#0b0f14] text-sm">

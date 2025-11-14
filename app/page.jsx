@@ -623,76 +623,96 @@ export default function Home() {
               </div>
             </div>
             <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
-              {/* Services dropdown */}
-              <div className="relative group">
-                <button className="inline-flex items-center gap-1 hover:opacity-80">
-                  <span>Services</span>
-                  <span className="text-[10px]">▾</span>
-                </button>
-                <div className="absolute left-0 mt-2 hidden min-w-[260px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[80] group-hover:block hover:block">
-                  <Link
-                    href="/light-duty-towing"
-                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                  >
-                    Light Duty Towing
-                  </Link>
-                  <Link
-                    href="/heavy-duty-commercial-towing"
-                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                  >
-                    Heavy Duty &amp; Commercial Towing
-                  </Link>
-                  <Link
-                    href="/oilfield-routes-tow-service"
-                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                  >
-                    Oilfield Routes Tow Service
-                  </Link>
-                  <Link
-                    href="/equipment-transport"
-                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                  >
-                    Equipment Transport
-                  </Link>
-                  <Link
-                    href="/flatbed-rollback-services"
-                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                  >
-                    Flatbed / Rollback Services
-                  </Link>
-                  <Link
-                    href="/emergency-roadside-assistance"
-                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                  >
-                    Emergency Roadside Assistance
-                  </Link>
-                  <Link
-                    href="/accidents-and-accident-removal"
-                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                  >
-                    Accident Removal
-                  </Link>
-                  <Link
-                    href="/winching-recovery"
-                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                  >
-                    Winching / Recovery
-                  </Link>
-                </div>
-              </div>
-              <a href="#coverage" className="hover:opacity-80">
-                Coverage
-              </a>
-              <Link href="/owners" className="hover:opacity-80">
-                Owners
-              </Link>
-              <Link href="/tips-tricks" className="hover:opacity-80">
-                Tips &amp; Tricks
-              </Link>
-              <a href="#contact" className="hover:opacity-80">
-                Request a Tow
-              </a>
-            </nav>
+  {/* Services dropdown (state-controlled) */}
+  <div
+    className="relative"
+    onMouseEnter={() => setServicesOpen(true)}
+    onMouseLeave={() => setServicesOpen(false)}
+  >
+    <button
+      type="button"
+      className="inline-flex items-center gap-1 hover:opacity-80"
+      onClick={() => setServicesOpen((open) => !open)}
+    >
+      <span>Services</span>
+      <span className="text-[10px]">▾</span>
+    </button>
+
+    {servicesOpen && (
+      <div className="absolute left-0 mt-2 min-w-[260px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[200]">
+        <Link
+          href="/light-duty-towing"
+          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+          onClick={() => setServicesOpen(false)}
+        >
+          Light Duty Towing
+        </Link>
+        <Link
+          href="/heavy-duty-commercial-towing"
+          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+          onClick={() => setServicesOpen(false)}
+        >
+          Heavy Duty &amp; Commercial Towing
+        </Link>
+        <Link
+          href="/oilfield-routes-tow-service"
+          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+          onClick={() => setServicesOpen(false)}
+        >
+          Oilfield Routes Tow Service
+        </Link>
+        <Link
+          href="/equipment-transport"
+          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+          onClick={() => setServicesOpen(false)}
+        >
+          Equipment Transport
+        </Link>
+        <Link
+          href="/flatbed-rollback-services"
+          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+          onClick={() => setServicesOpen(false)}
+        >
+          Flatbed / Rollback Services
+        </Link>
+        <Link
+          href="/emergency-roadside-assistance"
+          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+          onClick={() => setServicesOpen(false)}
+        >
+          Emergency Roadside Assistance
+        </Link>
+        <Link
+          href="/accidents-and-accident-removal"
+          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+          onClick={() => setServicesOpen(false)}
+        >
+          Accident Removal
+        </Link>
+        <Link
+          href="/winching-recovery"
+          className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+          onClick={() => setServicesOpen(false)}
+        >
+          Winching / Recovery
+        </Link>
+      </div>
+    )}
+  </div>
+
+  <a href="#coverage" className="hover:opacity-80">
+    Coverage
+  </a>
+  <Link href="/owners" className="hover:opacity-80">
+    Owners
+  </Link>
+  <Link href="/tips-tricks" className="hover:opacity-80">
+    Tips &amp; Tricks
+  </Link>
+  <a href="#contact" className="hover:opacity-80">
+    Request a Tow
+  </a>
+</nav>
 
             <PhoneCTA className="hidden sm:inline-flex" />
           </div>

@@ -14,7 +14,7 @@ function smsHref(number, body) {
 }
 
 /* Scroll helper so sticky header doesn't cover the form */
-function scrollToFormWithOffset(targetId = "dispatch-form", offset = 140) {
+function scrollToFormWithOffset(targetId = "dispatch-form", offset = 210) {
   if (typeof document === "undefined" || typeof window === "undefined") return;
   const el = document.getElementById(targetId);
   if (!el) return;

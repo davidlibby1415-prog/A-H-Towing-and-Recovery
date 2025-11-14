@@ -1237,20 +1237,23 @@ function ContactSection() {
     e.preventDefault();
 
     let sent = false;
-    const build = (c) => {
-      const loc = c
-        ? `Location: ${c.lat.toFixed(5)}, ${c.lng.toFixed(
-            5
-          )} https://www.google.com/maps?q=${c.lat},${c.lng}`
-        : "Location: (share GPS)";
-      return (
-        `Tow request from ${name || "(name)"}; ` +
-        `Callback: ${callback || "(phone)"}; ` +
-        `Vehicle: ${vehicle || "(Y/M/M)"}; ` +
-        `Passengers: ${passengers || "(#)"}; ` +
-        `Issue: ${issue || "(describe)"}; ${loc}`
-      );
-    };
+   const build = (c) => {
+  const locLine = c
+    ? `Location: ${c.lat.toFixed(5)}, ${c.lng.toFixed(
+        5
+      )}\nhttps://www.google.com/maps?q=${c.lat},${c.lng}`
+    : "Location: (share GPS)";
+
+  return [
+    `Tow request from: ${name || "(name)"}`,
+    `Callback: ${callback || "(phone)"}`,
+    `Vehicle: ${vehicle || "(Y/M/M)"}`,
+    `Passengers: ${passengers || "(#)"}`,
+    `Issue: ${issue || "(describe)"}`,
+    locLine,
+  ].join("\n");
+};
+
     const openSMS = (body) => {
       if (sent) return;
       sent = true;

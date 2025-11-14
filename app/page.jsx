@@ -552,7 +552,7 @@ export default function Home() {
         <TopLocationsMarquee />
 
         {/* Header */}
-        <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
+        <header className="sticky top-0 z-[120] bg-ahCharcoal text-ahText border-b border-black/30">
           <div className="container max-w-7xl flex items-center gap-6 py-3">
             <div className="flex items-center gap-3">
               <div className="h-10 w-10 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
@@ -658,10 +658,10 @@ export default function Home() {
 
         {/* ===== Top steel banner ===== */}
         <section
-          className="relative z-[60] w-full overflow-hidden"
+          className="relative z-[10] w-full overflow-hidden"
           style={{ minHeight: "clamp(110px, 15vh, 200px)" }}
         >
-          <div className="relative z-[70] h-full w-full flex items-center justify-center px-2 py-0.5">
+          <div className="relative z-[20] h-full w-full flex items-center justify-center px-2 py-0.5">
             <BrandSlab Tag="h1" />
           </div>
         </section>

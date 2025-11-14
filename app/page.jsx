@@ -31,10 +31,10 @@ function PhoneCTA({
         el?.scrollIntoView({ behavior: "smooth", block: "start" });
         setTimeout(() => document.getElementById("name-input")?.focus(), 600);
       }}
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className}`}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl`}
       aria-label="Call A&H Towing & Recovery"
     >
-      {label}
+      {label} CLICK HERE
     </a>
   );
 }
@@ -59,10 +59,10 @@ function ScrollToFormCTA({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] ${className}`}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl`}
       aria-label="Go to dispatch form"
     >
-      {label}
+      {label} CLICK HERE
     </button>
   );
 }
@@ -294,9 +294,10 @@ function MedalBadge({ title, lines = [] }) {
           }}
         />
         {/* ribbons */}
-        <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-3">
-          <div className="w-7 h-20 bg-ahRed clip-ribbon shadow-md border-2 border-yellow-300" />
-          <div className="w-7 h-20 bg-ahBlue clip-ribbon shadow-md border-2 border-yellow-300" />
+        <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex gap-2">
+          <div className="w-6 h-20 bg-ahRed clip-ribbon shadow-md border-2 border-yellow-300" />
+          <div className="w-6 h-20 bg-yellow-400 clip-ribbon shadow-md border-2 border-yellow-300" />
+          <div className="w-6 h-20 bg-ahBlue clip-ribbon shadow-md border-2 border-yellow-300" />
         </div>
         {/* medal */}
         <div
@@ -309,10 +310,10 @@ function MedalBadge({ title, lines = [] }) {
           {/* shimmer sweep */}
           <div className="pointer-events-none absolute inset-0 rounded-full opacity-35 bg-[conic-gradient(from_0deg,transparent,rgba(255,255,255,0.75),transparent_30%)] animate-spin-slow" />
           <div className="relative">
-            <div className="text-sm font-black uppercase tracking-wide text-yellow-900">
+            <div className="text-xs md:text-sm font-black uppercase tracking-wide text-yellow-900">
               {title}
             </div>
-            <div className="mt-2 text-base font-black text-yellow-950 leading-snug">
+            <div className="mt-2 text-lg md:text-xl font-black text-yellow-950 leading-snug">
               {lines.map((l, i) => (
                 <div key={i}>{l}</div>
               ))}
@@ -327,14 +328,17 @@ function MedalBadge({ title, lines = [] }) {
 function GoldenFacts() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 justify-items-center">
-      <MedalBadge title="Response Time?" lines={["< 30 Minutes •", "Professional"]} />
       <MedalBadge
-        title="Operating?"
+        title="Great Response Time"
+        lines={["< 30 Minutes •", "Professional"]}
+      />
+      <MedalBadge
+        title="Operating"
         lines={["24 Hrs. / 7 Days a Week", "365 Day a Year"]}
       />
       <MedalBadge
-        title="Service Area?"
-        lines={["From Pecos, TX", "To the Surrounding", "West Texas Region"]}
+        title="Service Area"
+        lines={["From Pecos, TX", "Across West Texas", "Into New Mexico"]}
       />
     </div>
   );
@@ -405,13 +409,7 @@ function TopLocationsMarquee() {
         }
 
         .clip-ribbon {
-          clip-path: polygon(
-            0 0,
-            100% 0,
-            100% 85%,
-            50% 100%,
-            0 85%
-          );
+          clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
         }
 
         /* ===== Global animated red↔blue border ===== */
@@ -583,15 +581,69 @@ export default function Home() {
               </div>
             </div>
             <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
-              <a href="#services" className="hover:opacity-80">
-                Services
-              </a>
+              {/* Services dropdown */}
+              <div className="relative group">
+                <button className="inline-flex items-center gap-1 hover:opacity-80">
+                  <span>Services</span>
+                  <span className="text-[10px]">▾</span>
+                </button>
+                <div className="absolute left-0 mt-2 hidden min-w-[260px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 group-hover:block">
+                  <Link
+                    href="/light-duty-towing"
+                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Light Duty Towing
+                  </Link>
+                  <Link
+                    href="/heavy-duty-commercial-towing"
+                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Heavy Duty &amp; Commercial Towing
+                  </Link>
+                  <Link
+                    href="/oilfield-routes-tow-service"
+                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Oilfield Routes Tow Service
+                  </Link>
+                  <Link
+                    href="/equipment-transport"
+                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Equipment Transport
+                  </Link>
+                  <Link
+                    href="/flatbed-rollback-services"
+                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Flatbed / Rollback Services
+                  </Link>
+                  <Link
+                    href="/emergency-roadside-assistance"
+                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Emergency Roadside Assistance
+                  </Link>
+                  <Link
+                    href="/accidents-and-accident-removal"
+                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Accident Removal
+                  </Link>
+                  <Link
+                    href="/winching-recovery"
+                    className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Winching / Recovery
+                  </Link>
+                </div>
+              </div>
               <a href="#coverage" className="hover:opacity-80">
                 Coverage
               </a>
-              <a href="/owners" className="hover:opacity-80">
+              <Link href="/owners" className="hover:opacity-80">
                 Owners
-              </a>
+              </Link>
               <a href="#contact" className="hover:opacity-80">
                 Request a Tow
               </a>
@@ -669,13 +721,13 @@ export default function Home() {
                 <BubbleBlock className="!text-black">
                   <span
                     style={{
-                      backgroundColor: "rgba(250, 204, 21, 0.65)",
+                      backgroundColor: "#fde047",
                       display: "inline-block",
                       borderRadius: "12px",
                       padding: "6px 10px",
                     }}
                   >
-                    Click below to call or text us direct!
+                    CLICK BELOW to call or text us direct!
                   </span>
                 </BubbleBlock>
               </div>
@@ -697,7 +749,7 @@ export default function Home() {
           <AnimBorder>
             <SteelPanel className="text-center">
               {/* Services Provided */}
-              <div className="inline-block rounded-2xl px-5 py-2 bg-black/20 backdrop-blur-sm">
+              <div className="inline-block rounded-2xl px-5 py-2 bg-black backdrop-blur-sm">
                 <h3
                   className="text-[clamp(32px,5.2vw,56px)] font-black leading-tight tracking-tight"
                   style={{
@@ -710,15 +762,15 @@ export default function Home() {
                 >
                   Services Provided
                 </h3>
-                <p className="mt-1 text-xs md:text-sm font-extrabold text-amber-100">
-                  Click below for more information
+                <p className="mt-1 text-base md:text-lg font-extrabold text-amber-100 uppercase">
+                  CLICK BELOW for more information
                 </p>
               </div>
 
               {/* Tow Services */}
               <div className="mt-6">
                 <div className="mb-3">
-                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black/20 backdrop-blur-sm">
+                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black backdrop-blur-sm">
                     <h4
                       className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
                       style={{
@@ -770,7 +822,7 @@ export default function Home() {
                         href={href}
                         className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
                       >
-                        <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
+                        <SteelPanel className="p-4 cursor-pointer transition-transform duration-200 hover:scale-[1.05] hover:shadow-xl">
                           <div className="flex items-start gap-3">
                             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
                               <Ico className="h-6 w-6 text-white" />
@@ -794,7 +846,7 @@ export default function Home() {
               {/* Emergency Roadside Assistance */}
               <div className="mt-8">
                 <div className="mb-3">
-                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black/20 backdrop-blur-sm">
+                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black backdrop-blur-sm">
                     <h4
                       className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
                       style={{
@@ -833,7 +885,7 @@ export default function Home() {
                         href={href}
                         className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
                       >
-                        <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
+                        <SteelPanel className="p-4 cursor-pointer transition-transform duration-200 hover:scale-[1.05] hover:shadow-xl">
                           <div className="flex items-start gap-3">
                             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
                               <Ico className="h-6 w-6 text-white" />
@@ -857,7 +909,7 @@ export default function Home() {
               {/* Accidents */}
               <div className="mt-8">
                 <div className="mb-3">
-                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black/20 backdrop-blur-sm">
+                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black backdrop-blur-sm">
                     <h4
                       className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
                       style={{
@@ -890,7 +942,7 @@ export default function Home() {
                         href={href}
                         className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
                       >
-                        <SteelPanel className="p-4 cursor-pointer transition-transform hover:scale-[1.02]">
+                        <SteelPanel className="p-4 cursor-pointer transition-transform duration-200 hover:scale-[1.05] hover:shadow-xl">
                           <div className="flex items-start gap-3">
                             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
                               <Ico className="h-6 w-6 text-white" />
@@ -939,7 +991,7 @@ export default function Home() {
                     loading="lazy"
                     referrerPolicy="no-referrer"
                     allowFullScreen
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=-103.8%2C31.3%2C-103.2%2C31.6&layer=mapnik&marker=31.42%2C-103.49"
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=-108%2C28.5%2C-98%2C34.5&layer=mapnik&marker=31.42%2C-103.49"
                     style={{
                       filter:
                         "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
@@ -1066,8 +1118,8 @@ export default function Home() {
 
           <div className="mt-3 flex justify-center">
             <a
-              className="inline-flex items-center gap-2 rounded-xl px-3 py-2 bg-black text-white font-semibold"
-              href="https://www.tiktok.com/@"
+              className="inline-flex items-center gap-2 rounded-xl px-3 py-2 bg-black text-white font-semibold transition-transform duration-200 hover:scale-105 active:scale-95 hover:bg-zinc-900"
+              href="https://www.tiktok.com/@ditchking"
               target="_blank"
               rel="noreferrer"
             >
@@ -1077,7 +1129,7 @@ export default function Home() {
                 viewBox="0 0 24 24"
                 fill="currentColor"
               >
-                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94 .5 2 .76 3.12 .76Z" />
+                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94.5 2 .76 3.12.76Z" />
               </svg>
               <span>Follow us on TikTok</span>
             </a>
@@ -1125,7 +1177,7 @@ export default function Home() {
                 <li>
                   <a
                     className="underline"
-                    href="https://www.tiktok.com/@"
+                    href="https://www.tiktok.com/@ditchking"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -1330,7 +1382,7 @@ function ContactSection() {
                     { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
                   );
                 }}
-                className="rounded-xl border px-3 py-1 text-sm hover:bg-emerald-50"
+                className="rounded-xl border px-3 py-1 text-sm hover:bg-emerald-50 transition-transform duration-150 hover:scale-105 active:scale-95"
               >
                 Use my GPS
               </button>
@@ -1359,9 +1411,9 @@ function ContactSection() {
             <button
               type="button"
               onClick={handleSendText}
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px]"
+              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl"
             >
-              Send Text to Dispatch
+              Send Text to Dispatch CLICK HERE
             </button>
           </div>
           <p className="text-xs font-extrabold">

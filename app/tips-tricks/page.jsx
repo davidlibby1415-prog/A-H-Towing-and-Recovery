@@ -187,28 +187,23 @@ const TIKTOKS = [
   },
   {
     title: "How to share your GPS pin with dispatch",
-    embedUrl:
-      "https://www.tiktok.com/embed/0000000000000000002",
+    embedUrl: "https://www.tiktok.com/embed/0000000000000000002",
   },
   {
     title: "Tips for staying visible at night roadside",
-    embedUrl:
-      "https://www.tiktok.com/embed/0000000000000000003",
+    embedUrl: "https://www.tiktok.com/embed/0000000000000000003",
   },
   {
     title: "What to do right after a fender bender",
-    embedUrl:
-      "https://www.tiktok.com/embed/0000000000000000004",
+    embedUrl: "https://www.tiktok.com/embed/0000000000000000004",
   },
   {
     title: "Checking tie-downs before we roll",
-    embedUrl:
-      "https://www.tiktok.com/embed/0000000000000000005",
+    embedUrl: "https://www.tiktok.com/embed/0000000000000000005",
   },
   {
     title: "Oilfield road safety quick tips",
-    embedUrl:
-      "https://www.tiktok.com/embed/0000000000000000006",
+    embedUrl: "https://www.tiktok.com/embed/0000000000000000006",
   },
 ];
 
@@ -221,7 +216,7 @@ export default function TipsTricksPage() {
       <TopLocationsMarquee />
 
       {/* Header (match home nav) */}
-      <header className="sticky top-0 z-50 bg-ahCharcoal text-ahText border-b border-black/30">
+      <header className="sticky top-0 z-[120] bg-ahCharcoal text-ahText border-b border-black/30">
         <div className="container max-w-7xl flex items-center gap-6 py-3">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
@@ -388,3 +383,4 @@ export default function TipsTricksPage() {
     </main>
   );
 }
+

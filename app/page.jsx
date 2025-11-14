@@ -533,25 +533,57 @@ export default function Home() {
     });
     setTimeout(() => window.scrollTo(0, 0), 0);
   }, []);
+  
+  const [servicesOpen, setServicesOpen] = useState(false);
 
   /* Alphabetized locations for the list (kept) */
   const locations = [
     "Balmorhea",
+    "Carlsbad",
+    "Coyanosa",
+    "Crane",
+    "Crane County",
+    "Culberson County",
+    "Ector County",
+    "Fort Davis",
     "Fort Stockton",
     "Grandfalls",
+    "Goldsmith",
+    "Imperial",
+    "I-20 Corridor",
     "Kermit",
-    "Midland",
-    "Midland/Odessa Metro & I-20 Corridor",
+    "Jal",
+    "Lindsay",
+    "Loving County",
+    "McCamey",
+    "Mentone",
+    "Midland County",
+    "Midland/Odessa Metro",
     "Monahans",
+    "Notrees",
     "Odessa",
     "Oilfield Routes",
-    "Pecos (Home Base)",
+    "Orla",
+    "Pecos, TX (Home Base)",
+    "Pecos County",
+    "Plateau",
     "Pyote",
     "Reeves County",
+    "Royalty",
+    "Saragosa",
     "TX-17",
+    "TX-18",
+    "TX-302",
     "Toyah",
+    "Toyahvale",
+    "Upton County",
     "US-285",
+    "Van Horn",
+    "Verhalen",
+    "Ward County",
+    "Wickett",
     "Wink",
+    "Winkler County",
   ].sort((a, b) => a.localeCompare(b));
 
   return (
@@ -803,25 +835,25 @@ export default function Home() {
                     {
                       icon: IconTruck,
                       title: "Heavy Duty & Commercial Towing",
-                      desc: "Oilfield & fleet • Long & short distance",
+                      desc: "Oilfield & Fleet • Long & Short Distance",
                       href: "/heavy-duty-commercial-towing",
                     },
                     {
                       icon: IconTruck,
                       title: "Oilfield Routes Tow Service",
-                      desc: "Lease roads • remote access • Long & short distance",
+                      desc: "Lease Roads • Remote Access • Long & Short Distance",
                       href: "/oilfield-routes-tow-service",
                     },
                     {
                       icon: IconFlatbed,
                       title: "Equipment Transport",
-                      desc: "Light equipment & tools • Long & short distance",
+                      desc: "Light Equipment & Tools • Long & Short distance",
                       href: "/equipment-transport",
                     },
                     {
                       icon: IconFlatbed,
                       title: "Flatbed / Rollback Services",
-                      desc: "Damage-free transport • Long & short distance",
+                      desc: "Damage-Free Transport • Long & Short Distance",
                       href: "/flatbed-rollback-services",
                     },
                   ].map(({ icon: Ico, title, desc, href }) => (
@@ -935,13 +967,13 @@ export default function Home() {
                     {
                       icon: IconTruck,
                       title: "Accident Removal",
-                      desc: "Secure, professional",
+                      desc: "Secure, Professional",
                       href: "/accidents-and-accident-removal",
                     },
                     {
                       icon: IconHook,
                       title: "Winching / Recovery",
-                      desc: "Off-road, mud, sand",
+                      desc: "Off-Road, Mud, Sand",
                       href: "/winching-recovery",
                     },
                   ].map(({ icon: Ico, title, desc, href }) => (

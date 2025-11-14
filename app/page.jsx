@@ -13,6 +13,18 @@ function smsHref(number, body) {
   return `sms:${number}${sep}body=${encoded}`;
 }
 
+/* Scroll helper so sticky header doesn't cover the form */
+function scrollToFormWithOffset(targetId = "dispatch-form", offset = 140) {
+  if (typeof document === "undefined" || typeof window === "undefined") return;
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const top = window.scrollY + rect.top - offset;
+  window.scrollTo({ top, left: 0, behavior: "smooth" });
+  // Focus name after scroll
+  setTimeout(() => document.getElementById("name-input")?.focus(), 600);
+}
+
 /* ====================== Small UI Helpers / Icons ====================== */
 function PhoneCTA({
   className = "",
@@ -27,9 +39,7 @@ function PhoneCTA({
       href="#contact"
       onClick={(e) => {
         e.preventDefault();
-        const el = document.getElementById("dispatch-form");
-        el?.scrollIntoView({ behavior: "smooth", block: "start" });
-        setTimeout(() => document.getElementById("name-input")?.focus(), 600);
+        scrollToFormWithOffset("dispatch-form");
       }}
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl`}
       aria-label="Call A&H Towing & Recovery"
@@ -48,11 +58,10 @@ function ScrollToFormCTA({
     e.preventDefault();
     const el = document.getElementById(targetId);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-      setTimeout(() => document.getElementById("name-input")?.focus(), 600);
+      scrollToFormWithOffset(targetId);
     } else {
       window.location.hash = "#contact";
-      setTimeout(() => document.getElementById("name-input")?.focus(), 600);
+      setTimeout(() => scrollToFormWithOffset(targetId), 300);
     }
   };
   return (

@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+
 import Link from "next/link";
 
 /* ============================ Utilities ============================ */
@@ -410,7 +411,7 @@ function TopLocationsMarquee() {
         .marquee {
           display: inline-flex;
           min-width: 200%;
-          animation: marquee-x 30s linear infinite;
+          animation: marquee-x 100s linear infinite;
         }
         @media (prefers-reduced-motion: reduce) {
           .marquee {
@@ -523,7 +524,7 @@ function VideoSection({
 
 /* ============================== Page ============================== */
 export default function Home() {
-  useEffect(() => {
+   useEffect(() => {
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
@@ -534,8 +535,29 @@ export default function Home() {
     });
     setTimeout(() => window.scrollTo(0, 0), 0);
   }, []);
-  
+
   const [servicesOpen, setServicesOpen] = useState(false);
+  const servicesCloseTimeout = useRef(null);
+
+  const openServices = () => {
+    if (servicesCloseTimeout.current) {
+      clearTimeout(servicesCloseTimeout.current);
+    }
+    setServicesOpen(true);
+  };
+
+  const scheduleCloseServices = () => {
+    if (servicesCloseTimeout.current) {
+      clearTimeout(servicesCloseTimeout.current);
+    }
+    // wait ~350ms before closing so it feels less “touchy”
+    servicesCloseTimeout.current = setTimeout(() => {
+      setServicesOpen(false);
+    }, 350);
+  };
+
+  /* Alphabetized locations for the list (kept) */
+  const locations = [
 
   /* Alphabetized locations for the list (kept) */
   const locations = [
@@ -622,17 +644,23 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
-  {/* Services dropdown (state-controlled) */}
+           <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
+  {/* Services dropdown with delayed close */}
   <div
     className="relative"
-    onMouseEnter={() => setServicesOpen(true)}
-    onMouseLeave={() => setServicesOpen(false)}
+    onMouseEnter={openServices}
+    onMouseLeave={scheduleCloseServices}
   >
     <button
       type="button"
       className="inline-flex items-center gap-1 hover:opacity-80"
-      onClick={() => setServicesOpen((open) => !open)}
+      onClick={() => {
+        if (servicesOpen) {
+          setServicesOpen(false);
+        } else {
+          openServices();
+        }
+      }}
     >
       <span>Services</span>
       <span className="text-[10px]">▾</span>

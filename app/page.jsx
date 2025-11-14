@@ -558,9 +558,6 @@ export default function Home() {
 
   /* Alphabetized locations for the list (kept) */
   const locations = [
-
-  /* Alphabetized locations for the list (kept) */
-  const locations = [
     "Balmorhea",
     "Carlsbad",
     "Coyanosa",

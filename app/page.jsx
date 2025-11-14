@@ -26,25 +26,22 @@ function scrollToFormWithOffset(targetId = "dispatch-form", offset = 210) {
 }
 
 /* ====================== Small UI Helpers / Icons ====================== */
-function PhoneCTA({
-  className = "",
-  label = "Call Dispatch Now! 24/7 Services",
-  fullWidth = false,
-}) {
+function PhoneCTA({ className = "", fullWidth = false }) {
   const widthClasses = fullWidth
     ? "w-full sm:w-auto !min-w-0"
-    : "min-w-[240px]";
+    : "min-w-[260px]";
   return (
     <a
-      href="#contact"
-      onClick={(e) => {
-        e.preventDefault();
-        scrollToFormWithOffset("dispatch-form");
-      }}
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl`}
-      aria-label="Call A&H Towing & Recovery"
+      href="tel:+14328424578"
+      className={`inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl`}
+      aria-label="Call 24/7 dispatch at (432) 842-4578"
     >
-      {label} CLICK HERE
+      <span className="uppercase tracking-wide text-xs md:text-sm text-center">
+        CLICK HERE TO CALL 24/7 DISPATCH!
+      </span>
+      <span className="mt-1 text-lg md:text-xl leading-none">
+        (432) 842-4578
+      </span>
     </a>
   );
 }
@@ -71,7 +68,7 @@ function ScrollToFormCTA({
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[240px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl`}
       aria-label="Go to dispatch form"
     >
-      {label} CLICK HERE
+      {label.toUpperCase()} CLICK HERE
     </button>
   );
 }
@@ -277,60 +274,95 @@ function BrandSlab({ Tag = "h1" }) {
   );
 }
 
-/* ========================= Golden award badges ========================= */
-function MedalBadge({ title, lines = [] }) {
-  return (
-    <div className="w-full sm:w-auto px-2">
-      <div className="relative mx-auto w-64 h-72 flex items-center justify-center">
-        {/* outer glow */}
-        <div
-          className="absolute inset-0 rounded-[32px]"
-          style={{
-            background:
-              "radial-gradient(circle at 50% 0, #fefce8 0, #facc15 35%, #f97316 70%, #b45309 100%)",
-            boxShadow:
-              "0 0 28px rgba(250,204,21,0.9), 0 0 90px rgba(250,204,21,0.75)",
-          }}
-        />
-        {/* shield / cog medal */}
-        <div
-          className="relative w-[210px] h-[230px] flex flex-col items-center justify-center text-center border-[3.5px] border-yellow-300"
-          style={{
-            clipPath:
-              "polygon(50% 0, 96% 18%, 100% 55%, 78% 100%, 22% 100%, 0 55%, 4% 18%)",
-            backgroundImage:
-              "linear-gradient(180deg,#fef3c7 0%,#fde68a 25%,#facc15 55%,#eab308 78%,#b45309 100%)",
-            boxShadow: "0 12px 26px rgba(0,0,0,0.55)",
-          }}
-        >
-          {/* mechanical teeth strip */}
-          <div
-            className="absolute -top-3 w-[78%] h-3 rounded-sm overflow-hidden"
-            style={{
-              backgroundImage:
-                "repeating-linear-gradient(90deg,#78350f 0 8px,#fbbf24 8px 16px)",
-              boxShadow: "0 2px 4px rgba(0,0,0,0.45)",
-            }}
-          />
-          <div className="relative max-w-[155px] px-2 mt-4">
-            <div className="text-[11px] md:text-xs font-black uppercase tracking-[0.18em] text-amber-900">
-              {title}
-            </div>
-            <div className="mt-2 space-y-0.5 text-[13px] md:text-sm font-black text-amber-950 leading-snug">
-              {lines.map((l, i) => (
-                <div key={i}>{l}</div>
-              ))}
-            </div>
-          </div>
-        </div>
+/* ========================= Golden award medals ========================= */
 
-        {/* triple ribbons */}
-        <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex gap-2">
-          <div className="w-7 h-20 bg-ahRed clip-ribbon shadow-md border-2 border-yellow-300" />
-          <div className="w-7 h-20 bg-yellow-400 clip-ribbon shadow-md border-2 border-yellow-300" />
-          <div className="w-7 h-20 bg-ahBlue clip-ribbon shadow-md border-2 border-yellow-300" />
-        </div>
+const medalStyles = {
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    margin: "10px",
+  },
+  ribbonContainer: {
+    display: "flex",
+    justifyContent: "center",
+    marginBottom: "-10px",
+  },
+  ribbon: {
+    width: "20px",
+    height: "60px",
+    margin: "0 2px",
+  },
+  medal: {
+    borderRadius: "50%",
+  },
+};
+
+function ServiceAwardMedal({ text = "Outstanding Service Award" }) {
+  const lines = text.split("\n");
+  return (
+    <div style={medalStyles.container}>
+      <div style={medalStyles.ribbonContainer}>
+        <div
+          style={{ ...medalStyles.ribbon, backgroundColor: "#d32f2f" }}
+        ></div>
+        <div
+          style={{ ...medalStyles.ribbon, backgroundColor: "#1976d2" }}
+        ></div>
+        <div
+          style={{ ...medalStyles.ribbon, backgroundColor: "#fbc02d" }}
+        ></div>
       </div>
+      <svg
+        width="180"
+        height="180"
+        viewBox="0 0 200 200"
+        xmlns="http://www.w3.org/2000/svg"
+        style={medalStyles.medal}
+      >
+        {/* outer silver ring */}
+        <circle
+          cx="100"
+          cy="100"
+          r="70"
+          fill="#c0c0c0"
+          stroke="#555"
+          strokeWidth="6"
+        />
+        {/* cog teeth */}
+        <g fill="#888">
+          {[...Array(12)].map((_, i) => {
+            const angle = (i * 30 * Math.PI) / 180;
+            const x = 100 + Math.cos(angle) * 80;
+            const y = 100 + Math.sin(angle) * 80;
+            return <circle key={i} cx={x} cy={y} r="8" />;
+          })}
+        </g>
+        {/* inner face */}
+        <circle
+          cx="100"
+          cy="100"
+          r="50"
+          fill="#e0e0e0"
+          stroke="#555"
+          strokeWidth="4"
+        />
+        <text
+          x="100"
+          y="90"
+          textAnchor="middle"
+          fontSize="9"
+          fontWeight="bold"
+          fill="#333"
+          style={{ fontFamily: "sans-serif" }}
+        >
+          {lines.map((line, i) => (
+            <tspan key={i} x="100" dy={i === 0 ? 0 : 12}>
+              {line}
+            </tspan>
+          ))}
+        </text>
+      </svg>
     </div>
   );
 }
@@ -338,18 +370,9 @@ function MedalBadge({ title, lines = [] }) {
 function GoldenFacts() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 justify-items-center">
-      <MedalBadge
-        title="GREAT RESPONSE TIME"
-        lines={["Under 30 Minutes", "Professional Dispatch"]}
-      />
-      <MedalBadge
-        title="OPERATING HOURS"
-        lines={["24 Hrs / 7 Days", "365 Days a Year"]}
-      />
-      <MedalBadge
-        title="SERVICE AREA"
-        lines={["From Pecos, TX", "Across West Texas", "Into New Mexico"]}
-      />
+      <ServiceAwardMedal text={"GREAT RESPONSE TIME\nUnder 30 Minutes • Professional"} />
+      <ServiceAwardMedal text={"OPERATING HOURS\n24 Hrs / 7 Days / 365 Days"} />
+      <ServiceAwardMedal text={"SERVICE AREA\nFrom Pecos, TX • West Texas • New Mexico"} />
     </div>
   );
 }
@@ -1061,19 +1084,37 @@ export default function Home() {
         <Section id="coverage" className="bg-red-900/80">
           <AnimBorder>
             <SteelPanel>
-              <div className="text-center mb-5">
-                <BubbleBlock className="!px-6 !py-3">
-                  <span className="font-extrabold text-[clamp(28px,5vw,56px)]">
-                    Service Area
-                  </span>
-                </BubbleBlock>
+              {/* Fun heading oval */}
+              <div className="flex justify-center mb-5">
+                <div className="rounded-full bg-black/85 border border-amber-400 px-6 py-4 shadow-xl max-w-2xl w-full">
+                  <div className="flex items-center justify-center gap-3">
+                    <span
+                      className="text-xl md:text-3xl font-black text-amber-300 tracking-tight"
+                      style={{
+                        fontFamily:
+                          '"Comic Sans MS","Trebuchet MS","Segoe UI",system-ui',
+                        textShadow: "0 3px 6px rgba(0,0,0,.7)",
+                      }}
+                    >
+                      Where in the TEXAS am I?
+                    </span>
+                    <span className="text-3xl md:text-4xl" aria-hidden="true">
+                      🌵
+                    </span>
+                  </div>
+                  <div className="mt-2 text-xs md:text-sm font-bold text-amber-50 text-center">
+                    Use the Map Below to Find Your Location or Use the Buttons
+                    Below to Contact Us ASAP.
+                  </div>
+                </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4 items-start">
-                <div className="rounded-2xl overflow-hidden border border-white/15">
+              <div className="grid md:grid-cols-2 gap-5 items-start">
+                {/* Map with 200-mile radius overlay (approximate) */}
+                <div className="relative rounded-2xl overflow-hidden border border-white/15 bg-black">
                   <iframe
-                    title="Service Area Map (Dark)"
-                    className="w-full h-[260px]"
+                    title="Service Area Map (Dark) with Radius"
+                    className="w-full h-[320px]"
                     loading="lazy"
                     referrerPolicy="no-referrer"
                     allowFullScreen
@@ -1083,12 +1124,57 @@ export default function Home() {
                         "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
                     }}
                   />
+                  {/* Approximate 200-mile glowing circle */}
+                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                    <div
+                      className="rounded-full"
+                      style={{
+                        width: "70%",
+                        height: "70%",
+                        border: "3px dashed rgba(250,204,21,0.95)",
+                        boxShadow:
+                          "0 0 40px rgba(250,204,21,0.7), 0 0 80px rgba(250,204,21,0.5)",
+                      }}
+                    />
+                  </div>
                 </div>
 
-                <div className="text-center md:text-left flex items-center justify-center">
-                  <BubbleBlock className="!px-5 !py-4 max-w-xl text-base md:text-lg leading-relaxed">
-                    {locations.join(" • ")}
+                {/* Right side text, quote, buttons, locations */}
+                <div className="flex flex-col items-center md:items-start text-center md:text-left gap-3">
+                  <BubbleBlock className="!px-6 !py-3">
+                    <span className="font-extrabold text-[clamp(24px,4vw,40px)]">
+                      Service Area
+                    </span>
                   </BubbleBlock>
+
+                  <p className="mt-1 text-xs md:text-sm font-bold text-amber-100 max-w-lg italic">
+                    &quot;Listen, I&apos;ve Traveled Every Road in This Here
+                    Land. I&apos;ve Been Everywhere Man. I&apos;ve Been
+                    Everywhere Man. Crossed the Deserts Bare, Man&quot; – Johnny
+                    Cash
+                  </p>
+
+                  <div className="mt-2 flex flex-wrap gap-3 justify-center md:justify-start">
+                    <a
+                      href="tel:+14328424578"
+                      className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahBlue text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95"
+                    >
+                      Click Here to Call Dispatch
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => scrollToFormWithOffset("dispatch-form")}
+                      className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahRed text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95"
+                    >
+                      Click Here to Text Location
+                    </button>
+                  </div>
+
+                  <div className="mt-3">
+                    <BubbleBlock className="!px-5 !py-4 max-w-xl text-base md:text-lg leading-relaxed">
+                      {locations.join(" • ")}
+                    </BubbleBlock>
+                  </div>
                 </div>
               </div>
             </SteelPanel>
@@ -1148,7 +1234,7 @@ export default function Home() {
           <BrandSlab Tag="h2" />
         </div>
 
-        {/* Payments + TikTok */}
+        {/* Payments row only */}
         <div className="container max-w-7xl py-4 bg-red-900/60 rounded-2xl">
           <div className="w-full flex justify-center">
             <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/30 via-rose-500/30 to-amber-400/30 border border-black/10 max-w-fit">
@@ -1201,25 +1287,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-
-          <div className="mt-3 flex justify-center">
-            <a
-              className="inline-flex items-center gap-2 rounded-xl px-3 py-2 bg-black text-white font-semibold transition-transform duration-200 hover:scale-105 active:scale-95 hover:bg-zinc-900"
-              href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94.5 2 .76 3.12.76Z" />
-              </svg>
-              <span>Follow us on TikTok</span>
-            </a>
-          </div>
         </div>
 
         {/* Footer */}
@@ -1263,7 +1330,7 @@ export default function Home() {
                 <li>
                   <a
                     className="underline"
-                    href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
+                    href="https://www.tiktok.com/t/ZTMTrQtgU/"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -1512,45 +1579,51 @@ function ContactSection() {
         </form>
       </div>
 
-      <div className="rounded-xl overflow-hidden border border-black/10">
-        {/* “Call or Visit” line break + centered company name */}
-        <div className="p-3 text-sm font-extrabold text-center bg-red-700/80 text-white rounded-t-xl">
-          Call or Visit
-          <br />
-          <span className="text-amber-200">
-            A&amp;H Towing &amp; Recovery, LLC
-          </span>
+      {/* Right side: TikTok & 24/7 message */}
+      <div className="rounded-xl overflow-hidden border border-black/10 bg-black/80 flex flex-col items-center justify-start px-4 py-5">
+        <div className="text-center mb-4">
+          <div
+            className="font-black"
+            style={{
+              fontFamily:
+                'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial',
+              fontSize: "clamp(20px,3vw,32px)",
+              color: "#e10600",
+              WebkitTextStroke: "1px #000",
+              textShadow: "0 4px 10px rgba(0,0,0,.8)",
+              letterSpacing: "0.08em",
+            }}
+          >
+            THIS JOB IS 24/7/365!
+          </div>
         </div>
-        {/* Map */}
-        <iframe
-          title="Shop Map (OpenStreetMap)"
-          className="w-full h-[260px]"
-          loading="lazy"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=-103.7%2C31.3%2C-103.3%2C31.5&layer=mapnik"
-          style={{
-            filter:
-              "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
-          }}
-        />
-        <div className="text-xs p-2 bg-red-800/90 text-white font-extrabold text-center">
-          Prefer Google?{" "}
+
+        <div className="w-[260px] sm:w-[280px] md:w-[300px] aspect-[9/16] bg-black rounded-[32px] border-4 border-zinc-700 shadow-[0_18px_40px_rgba(0,0,0,0.9)] flex items-center justify-center overflow-hidden">
+          <iframe
+            title="A&H Towing TikTok 24/7"
+            src="https://www.tiktok.com/t/ZTMTrQtgU/"
+            className="w-full h-full"
+            allowFullScreen
+          />
+        </div>
+
+        <div className="mt-3">
           <a
-            className="underline"
-            href="https://www.google.com/maps?q=2712%20W%20F%20Street,%20Pecos,%20TX%2079772"
+            className="inline-flex items-center gap-2 rounded-2xl px-4 py-2 bg-black text-white font-semibold border border-white/20 shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95 hover:bg-zinc-900"
+            href="https://www.tiktok.com/t/ZTMTrQtgU/"
             target="_blank"
             rel="noreferrer"
           >
-            Open in Google Maps
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94.5 2 .76 3.12.76Z" />
+            </svg>
+            <span>Follow us on TikTok</span>
           </a>
-        </div>
-        <div
-          className="p-3 text-sm font-extrabold text-center"
-          style={{ color: "#1e3a8a" }}
-        >
-          24/7 Professional Service — Call or Text Us!
-        </div>
-        <div className="mt-2 text-xs opacity-80 px-3 pb-3 text-center">
-          Thank you for choosing A&amp;H!
         </div>
       </div>
     </div>

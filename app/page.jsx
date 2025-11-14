@@ -273,7 +273,7 @@ function MedalBadge({ title, lines = [] }) {
   return (
     <div className="w-full sm:w-auto px-2">
       <div className="relative mx-auto w-56 h-64 grid place-items-center">
-        {/* outer radiant ring with extra golden flair */}
+        {/* outer radiant ring */}
         <div
           className="absolute w-56 h-56 rounded-full"
           style={{
@@ -643,6 +643,9 @@ export default function Home() {
               </a>
               <Link href="/owners" className="hover:opacity-80">
                 Owners
+              </Link>
+              <Link href="/tips-tricks" className="hover:opacity-80">
+                Tips &amp; Tricks
               </Link>
               <a href="#contact" className="hover:opacity-80">
                 Request a Tow

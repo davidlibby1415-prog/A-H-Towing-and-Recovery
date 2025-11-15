@@ -1,25 +1,64 @@
-import ServicePage from "../../components/ServicePage";
+"use client";
 
-export const metadata = {
-  title: "Equipment Transport | A & H Towing & Recovery",
-  description:
-    "Light equipment & tools transport. Compressors, generators, welders, tool boxes, small forklifts.",
-};
+import React from "react";
+import {
+  SiteHeader,
+  SiteFooter,
+  BrandHero,
+  PhoneCTA,
+  TextCTA,
+  TikTokGallery,
+} from "../components/ServiceLayout";
 
 export default function EquipmentTransportPage() {
   return (
-    <ServicePage
-      title="Equipment Transport"
-      subtitle="Light equipment & tools — moved safely between yard, job, and site"
-      bullets={[
-        "Skid compressors, portable generators, and welders",
-        "Tool chests, gang boxes, parts bins, and pipe racks",
-        "Small forklifts, scissor lifts, and mini skid steers",
-        "Job-to-yard and yard-to-site shuttles",
-        "Strapped, flagged, and documented per best practices",
-      ]}
-      badges={[{ label: "Strapped" }, { label: "Insured" }, { label: "Scheduled" }]}
-      heroVideoSrc="/Videos/tow3.mp4"
-    />
+    <>
+      <SiteHeader />
+      <main className="min-h-screen bg-neutral-950">
+        <BrandHero
+          serviceTitle="Equipment Transport"
+          serviceSubtitle="Light equipment, tool trailers, and small machinery moved safely around Pecos, Reeves County, and West Texas."
+        />
+
+        <section className="py-8 bg-red-900/90 border-y border-black/40">
+          <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
+            <div className="space-y-4 text-amber-50">
+              <h2 className="text-2xl md:text-3xl font-black">
+                Move your gear without beating it up.
+              </h2>
+              <p className="text-sm md:text-base font-semibold">
+                We handle small equipment and tool trailers that are too heavy
+                or awkward for a regular bumper pull.
+              </p>
+              <ul className="space-y-2 text-sm md:text-base font-semibold">
+                <li>• Compressors, welders, and light machinery</li>
+                <li>• Tool and jobsite trailers</li>
+                <li>• Yard-to-yard, shop-to-site moves</li>
+                <li>• Careful loading and securement</li>
+              </ul>
+              <p className="text-sm md:text-base font-semibold">
+                Tell us what you need moved, approximate weight, and where it’s
+                going. We’ll let you know if it fits our equipment and schedule.
+              </p>
+            </div>
+
+            <TikTokGallery
+              images={[
+                "/images/equipment-1.jpg",
+                "/images/equipment-2.jpg",
+                "/images/equipment-3.jpg",
+                "/images/equipment-4.jpg",
+              ]}
+            />
+          </div>
+
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <PhoneCTA />
+            <TextCTA />
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
   );
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   SiteHeader,
@@ -8,14 +6,19 @@ import {
   PhoneCTA,
   TextCTA,
   TikTokGallery,
-  TimeTempBar,
-} from "../components/ServiceLayout";
+} from "../../components/ServiceLayout";
+
+export const metadata = {
+  title: "Oilfield Routes Tow Service | A & H Towing & Recovery",
+  description:
+    "Tow and recovery on lease roads, caliche, mud, sand, and dark two-lane roads between Pecos, Orla, Mentone, and across West Texas.",
+};
 
 export default function OilfieldRoutesPage() {
   return (
     <>
       <SiteHeader />
-      <TimeTempBar />
+
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
           serviceTitle="Oilfield Routes Tow Service"
@@ -24,6 +27,7 @@ export default function OilfieldRoutesPage() {
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
+            {/* LEFT: Text content */}
             <div className="space-y-4 text-amber-50">
               <h2 className="text-2xl md:text-3xl font-black">
                 The patch is rough. We’re built for it.
@@ -45,6 +49,7 @@ export default function OilfieldRoutesPage() {
               </p>
             </div>
 
+            {/* RIGHT: TikTok-style gallery / visuals */}
             <TikTokGallery
               images={[
                 "/images/oilfield-1.jpg",
@@ -55,12 +60,14 @@ export default function OilfieldRoutesPage() {
             />
           </div>
 
+          {/* Bottom buttons */}
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />
           </div>
         </section>
       </main>
+
       <SiteFooter />
     </>
   );

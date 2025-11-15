@@ -113,7 +113,7 @@ function BubbleBlock({ children, className = "" }) {
 function StripedCallout({ children, className = "" }) {
   return (
     <div
-      className={`inline-block rounded-xl p-[6px] ${className}`}
+      className={`inline-block rounded-xl p-[12px] ${className}`}
       style={{
         backgroundImage:
           "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)",
@@ -879,7 +879,10 @@ export default function Home() {
           <AnimBorder>
             <SteelPanel className="text-center">
               {/* Services Provided */}
-              <div className="inline-block rounded-2xl px-5 py-2 bg-black backdrop-blur-sm">
+              <div
+                className="inline-block rounded-2xl px-5 py-2 bg-black backdrop-blur-sm"
+                style={{ border: "1.5px solid #c0c0c0" }}
+              >
                 <h3
                   className="text-[clamp(32px,5.2vw,56px)] font-black leading-tight tracking-tight"
                   style={{
@@ -900,7 +903,10 @@ export default function Home() {
               {/* Tow Services */}
               <div className="mt-6">
                 <div className="mb-3">
-                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black backdrop-blur-sm">
+                  <div
+                    className="inline-block rounded-2xl px-4 py-1.5 bg-black backdrop-blur-sm"
+                    style={{ border: "1.5px solid #c0c0c0" }}
+                  >
                     <h4
                       className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
                       style={{
@@ -978,7 +984,10 @@ export default function Home() {
               {/* Emergency Roadside Assistance */}
               <div className="mt-8">
                 <div className="mb-3">
-                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black backdrop-blur-sm">
+                  <div
+                    className="inline-block rounded-2xl px-4 py-1.5 bg-black backdrop-blur-sm"
+                    style={{ border: "1.5px solid #c0c0c0" }}
+                  >
                     <h4
                       className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
                       style={{
@@ -1043,7 +1052,10 @@ export default function Home() {
               {/* Accidents */}
               <div className="mt-8">
                 <div className="mb-3">
-                  <div className="inline-block rounded-2xl px-4 py-1.5 bg-black backdrop-blur-sm">
+                  <div
+                    className="inline-block rounded-2xl px-4 py-1.5 bg-black backdrop-blur-sm"
+                    style={{ border: "1.5px solid #c0c0c0" }}
+                  >
                     <h4
                       className="text-[clamp(20px,3.6vw,32px)] font-black tracking-tight"
                       style={{
@@ -1233,7 +1245,7 @@ export default function Home() {
                   <div className="text-2xl md:text-3xl mb-1">
                     🎶 🎵 🎶
                   </div>
-                  <p className="text-sm md:text-base font-extrabold text-amber-100">
+                  <p className="text-base md:text-lg font-extrabold text-amber-100">
                     &quot;Listen, I&apos;ve Traveled Every Road in This Here
                     Land. I&apos;ve Been Everywhere Man. I&apos;ve Been
                     Everywhere Man. Crossed the Deserts Bare, Man&quot; – Johnny
@@ -1260,7 +1272,10 @@ export default function Home() {
           <AnimBorder>
             <SteelPanel>
               <div className="text-center">
-                <div className="inline-block rounded-2xl px-6 py-3 bg-black backdrop-blur-sm">
+                <div
+                  className="inline-block rounded-2xl px-6 py-3 bg-black backdrop-blur-sm"
+                  style={{ border: "1.5px solid #ffffff" }}
+                >
                   <div
                     className="font-extrabold"
                     style={{
@@ -1654,10 +1669,7 @@ function ContactSection() {
               className="flex-1 max-w-xs inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white"
             >
               <span className="uppercase tracking-wide text-xs md:text-sm text-center font-extrabold">
-                CLICK HERE TO TEXT DISPATCH
-              </span>
-              <span className="mt-1 text-[11px] md:text-xs opacity-90 font-extrabold text-center">
-                (INCLUDE GPS LOCATION)
+                CLICK HERE TO TEXT DISPATCH (INCLUDE GPS LOCATION)
               </span>
             </button>
           </div>

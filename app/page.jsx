@@ -33,7 +33,7 @@ function PhoneCTA({ className = "", fullWidth = false }) {
   return (
     <a
       href="tel:+14328424578"
-      className={`inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl`}
+      className={`inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white`}
       aria-label="Call 24/7 dispatch at (432) 842-4578"
     >
       <span className="uppercase tracking-wide text-xs md:text-sm text-center">
@@ -50,6 +50,7 @@ function ScrollToFormCTA({
   className = "",
   label = "Text Dispatch (Include GPS)",
   targetId = "dispatch-form",
+  appendClickHere = true,
 }) {
   const onClick = (e) => {
     e.preventDefault();
@@ -61,14 +62,19 @@ function ScrollToFormCTA({
       setTimeout(() => scrollToFormWithOffset(targetId), 300);
     }
   };
+
+  const textContent = appendClickHere
+    ? `${label.toUpperCase()} CLICK HERE`
+    : label.toUpperCase();
+
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl`}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white`}
       aria-label="Go to dispatch form"
     >
-      {label.toUpperCase()} CLICK HERE
+      {textContent}
     </button>
   );
 }
@@ -81,6 +87,7 @@ function Chip({ children, className = "" }) {
       style={{
         WebkitTextStroke: "0.25px rgba(0,0,0,.7)",
         textShadow: "0 1px 2px rgba(0,0,0,.6)",
+        border: "1.5px solid rgba(255,255,255,0.95)",
       }}
     >
       {children}
@@ -106,7 +113,7 @@ function BubbleBlock({ children, className = "" }) {
 function StripedCallout({ children, className = "" }) {
   return (
     <div
-      className={`inline-block rounded-xl p-[3px] ${className}`}
+      className={`inline-block rounded-xl p-[6px] ${className}`}
       style={{
         backgroundImage:
           "repeating-linear-gradient(-45deg, #111827 0 10px, #fde047 10px 20px)",
@@ -208,7 +215,6 @@ const IconLock = (props) => (
     fill="none"
     stroke="currentColor"
     strokeWidth="1.8"
-    {...props}
   >
     <rect x="5" y="11" width="14" height="9" rx="2" />
     <path d="M8 11V8a4 4 0 1 1 8 0v3" />
@@ -220,7 +226,6 @@ const IconBolt = (props) => (
     fill="none"
     stroke="currentColor"
     strokeWidth="1.8"
-    {...props}
   >
     <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
   </svg>
@@ -231,7 +236,6 @@ const IconHook = (props) => (
     fill="none"
     stroke="currentColor"
     strokeWidth="1.8"
-    {...props}
   >
     <path d="M12 3v9a4 4 0 1 0 8 0" />
     <circle cx="12" cy="3" r="2" />
@@ -243,7 +247,6 @@ const IconFuel = (props) => (
     fill="none"
     stroke="currentColor"
     strokeWidth="1.8"
-    {...props}
   >
     <path d="M3 7a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12H3V7Z" />
     <path d="M13 10h2l3 3v6a2 2 0 0 0 2 2h1" />
@@ -673,7 +676,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <nav className="ml-auto hidden md:flex items-center gap-6 text-sm font-bold">
+            <nav className="ml-auto hidden md:flex items-center gap-6 text-base md:text-lg font-extrabold">
               {/* Services dropdown with delayed close */}
               <div
                 className="relative"
@@ -682,7 +685,7 @@ export default function Home() {
               >
                 <button
                   type="button"
-                  className="inline-flex items-center gap-1 hover:opacity-80"
+                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
                   onClick={() => {
                     if (servicesOpen) {
                       setServicesOpen(false);
@@ -757,16 +760,28 @@ export default function Home() {
                 )}
               </div>
 
-              <a href="#coverage" className="hover:opacity-80">
+              <a
+                href="#coverage"
+                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
+              >
                 Coverage
               </a>
-              <Link href="/owners" className="hover:opacity-80">
+              <Link
+                href="/owners"
+                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
+              >
                 Owners
               </Link>
-              <Link href="/tips-tricks" className="hover:opacity-80">
+              <Link
+                href="/tips-tricks"
+                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
+              >
                 Tips &amp; Tricks
               </Link>
-              <a href="#contact" className="hover:opacity-80">
+              <a
+                href="#contact"
+                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
+              >
                 Request a Tow
               </a>
             </nav>
@@ -826,7 +841,7 @@ export default function Home() {
                   </h2>
 
                   <div
-                    className="mt-2 font-extrabold leading-snug text-[15px]"
+                    className="mt-2 font-extrabold leading-snug text-[20px]"
                     style={{ color: "#0b1220" }}
                   >
                     We dispatch immediately for light, medium &amp; heavy-duty
@@ -836,8 +851,8 @@ export default function Home() {
                     <br />
                     Clear pricing.
                     <br />
-                    <span className="mt-2 inline-block text-[15px]">
-                      CLICK BELOW to call or text us direct!
+                    <span className="mt-3 inline-block underline font-black">
+                      ⬇ CLICK BELOW TO CALL OR TEXT US DIRECT! ⬇
                     </span>
                   </div>
                 </StripedCallout>
@@ -845,9 +860,13 @@ export default function Home() {
 
               <div className="h-5" />
 
-              <div className="flex items-center justify-center gap-3 flex-wrap">
+              <div className="flex items-center justify-center gap-5 flex-wrap">
                 <PhoneCTA className="animate-cta-pulse" />
-                <ScrollToFormCTA className="animate-cta-pulse" />
+                <ScrollToFormCTA
+                  className="animate-cta-pulse"
+                  label="CLICK HERE TO TEXT DISPATCH. (INCLUDE MY GPS LOCATION)."
+                  appendClickHere={false}
+                />
               </div>
 
               <GoldenFacts />
@@ -940,8 +959,10 @@ export default function Home() {
                             </div>
                             <div>
                               <BubbleBlock className="!px-3 !py-2">
-                                <div className="font-extrabold">{title}</div>
-                                <div className="text-sm text-white/95 mt-0.5">
+                                <div className="font-extrabold text-lg">
+                                  {title}
+                                </div>
+                                <div className="text-base text-white/95 mt-0.5">
                                   {desc}
                                 </div>
                               </BubbleBlock>
@@ -1003,8 +1024,10 @@ export default function Home() {
                             </div>
                             <div>
                               <BubbleBlock className="!px-3 !py-2">
-                                <div className="font-extrabold">{title}</div>
-                                <div className="text-sm text-white/95 mt-0.5">
+                                <div className="font-extrabold text-lg">
+                                  {title}
+                                </div>
+                                <div className="text-base text-white/95 mt-0.5">
                                   {desc}
                                 </div>
                               </BubbleBlock>
@@ -1060,8 +1083,10 @@ export default function Home() {
                             </div>
                             <div>
                               <BubbleBlock className="!px-3 !py-2">
-                                <div className="font-extrabold">{title}</div>
-                                <div className="text-sm text-white/95 mt-0.5">
+                                <div className="font-extrabold text-lg">
+                                  {title}
+                                </div>
+                                <div className="text-base text-white/95 mt-0.5">
                                   {desc}
                                 </div>
                               </BubbleBlock>
@@ -1086,96 +1111,125 @@ export default function Home() {
         <Section id="coverage" className="bg-red-900/80">
           <AnimBorder>
             <SteelPanel>
-              {/* Fun heading oval */}
-              <div className="flex justify-center mb-5">
-                <div className="rounded-full bg-black/85 border border-amber-400 px-6 py-4 shadow-xl max-w-2xl w-full">
-                  <div className="flex items-center justify-center gap-3">
-                    <span
-                      className="text-xl md:text-3xl font-black text-amber-300 tracking-tight"
-                      style={{
-                        fontFamily:
-                          '"Comic Sans MS","Trebuchet MS","Segoe UI",system-ui',
-                        textShadow: "0 3px 6px rgba(0,0,0,.7)",
-                      }}
-                    >
-                      Where in the TEXAS am I?
-                    </span>
-                    <span className="text-3xl md:text-4xl" aria-hidden="true">
-                      🌵
-                    </span>
-                  </div>
-                  <div className="mt-2 text-xs md:text-sm font-bold text-amber-50 text-center">
-                    Use the Map Below to Find Your Location or Use the Buttons
-                    Below to Contact Us ASAP.
-                  </div>
-                </div>
-              </div>
-
               <div className="grid md:grid-cols-2 gap-5 items-start">
-                {/* Map with 200-mile radius overlay (approximate) */}
-                <div className="relative rounded-2xl overflow-hidden border-4 border-yellow-400/90 bg-black shadow-[0_0_25px_rgba(251,191,36,0.7)]">
-                  <iframe
-                    title="Service Area Map (Dark) with Radius"
-                    className="w-full h-[320px]"
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
-                    allowFullScreen
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=-108%2C28.5%2C-98%2C34.5&layer=mapnik&marker=31.42%2C-103.49"
-                    style={{
-                      filter:
-                        "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
-                    }}
-                  />
-                  {/* Approximate 200-mile glowing circle */}
-                  <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                    <div
-                      className="rounded-full"
+                {/* LEFT: heading + map */}
+                <div className="space-y-3">
+                  <div className="flex justify-center">
+                    <div className="rounded-full bg-black/85 border border-amber-400 px-6 py-4 shadow-xl max-w-2xl w-full">
+                      <div className="flex items-center justify-center gap-3">
+                        <span
+                          className="text-xl md:text-3xl font-black text-amber-300 tracking-tight text-center"
+                          style={{
+                            fontFamily:
+                              '"Comic Sans MS","Trebuchet MS","Segoe UI",system-ui',
+                            textShadow: "0 3px 6px rgba(0,0,0,.7)",
+                          }}
+                        >
+                          Where in the TEXAS am I?
+                        </span>
+                        <span
+                          className="text-3xl md:text-4xl"
+                          aria-hidden="true"
+                        >
+                          🌵
+                        </span>
+                      </div>
+                      <div className="mt-2 text-xs md:text-sm font-bold text-amber-50 text-center">
+                        Use the Map Below to Find Your Location or Use the
+                        Buttons Below to Contact Us ASAP.
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Map with 200-mile radius overlay */}
+                  <div className="relative rounded-2xl overflow-hidden border-4 border-yellow-400/90 bg-black shadow-[0_0_25px_rgba(251,191,36,0.7)]">
+                    <iframe
+                      title="Service Area Map (Dark) with Radius"
+                      className="w-full h-[320px]"
+                      loading="lazy"
+                      referrerPolicy="no-referrer"
+                      allowFullScreen
+                      src="https://www.openstreetmap.org/export/embed.html?bbox=-108%2C28.5%2C-98%2C34.5&layer=mapnik&marker=31.42%2C-103.49"
                       style={{
-                        width: "70%",
-                        height: "70%",
-                        border: "3px dashed rgba(250,204,21,0.95)",
-                        boxShadow:
-                          "0 0 40px rgba(250,204,21,0.7), 0 0 80px rgba(250,204,21,0.5)",
+                        filter:
+                          "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
                       }}
                     />
+                    {/* Approximate 200-mile glowing circle */}
+                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                      <div
+                        className="rounded-full"
+                        style={{
+                          width: "70%",
+                          height: "70%",
+                          border: "3px dashed rgba(250,204,21,0.95)",
+                          boxShadow:
+                            "0 0 40px rgba(250,204,21,0.7), 0 0 80px rgba(250,204,21,0.5)",
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
 
-                {/* Right side text, buttons, locations */}
-                <div className="flex flex-col items-center md:items-start text-center md:text-left gap-3 rounded-2xl border-4 border-yellow-400/90 bg-black/40 p-4 shadow-[0_0_25px_rgba(251,191,36,0.6)]">
-                  <BubbleBlock className="!px-6 !py-3">
-                    <span className="font-extrabold text-[clamp(24px,4vw,40px)]">
-                      Service Area
-                    </span>
-                  </BubbleBlock>
-
-                  <div className="mt-1 flex flex-wrap gap-3 justify-center md:justify-start">
-                    <a
-                      href="tel:+14328424578"
-                      className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahBlue text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95"
-                    >
-                      Click Here to Call Dispatch
-                    </a>
-                    <button
-                      type="button"
-                      onClick={() => scrollToFormWithOffset("dispatch-form")}
-                      className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahRed text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95"
-                    >
-                      Click Here to Text Location
-                    </button>
+                {/* RIGHT: heading + cities list + buttons */}
+                <div className="space-y-3 flex flex-col items-center md:items-stretch">
+                  <div className="flex justify-center">
+                    <div className="rounded-full bg-black/85 border border-amber-400 px-6 py-4 shadow-xl max-w-2xl w-full">
+                      <div className="flex items-center justify-center gap-3">
+                        <span
+                          className="text-xl md:text-3xl font-black text-amber-300 tracking-tight text-center"
+                          style={{
+                            fontFamily:
+                              '"Comic Sans MS","Trebuchet MS","Segoe UI",system-ui',
+                            textShadow: "0 3px 6px rgba(0,0,0,.7)",
+                          }}
+                        >
+                          Service Area
+                        </span>
+                        <span
+                          className="text-3xl md:text-4xl"
+                          aria-hidden="true"
+                        >
+                          🌵
+                        </span>
+                      </div>
+                      <div className="mt-2 text-xs md:text-sm font-bold text-amber-50 text-center">
+                        From A to Z, Where Do You Need Us? Just Ask.
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="mt-3">
-                    <BubbleBlock className="!px-5 !py-4 max-w-xl text-base md:text-lg leading-relaxed">
-                      {locations.join(" • ")}
-                    </BubbleBlock>
+                  <div className="flex flex-col items-center md:items-start text-center md:text-left gap-3 rounded-2xl border-4 border-yellow-400/90 bg-black/40 p-4 shadow-[0_0_25px_rgba(251,191,36,0.6)]">
+                    <div className="mt-1 flex flex-wrap gap-3 justify-center md:justify-start">
+                      <a
+                        href="tel:+14328424578"
+                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahBlue text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border-2 border-white"
+                      >
+                        Click Here to Call Dispatch
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          scrollToFormWithOffset("dispatch-form")
+                        }
+                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahRed text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border-2 border-white"
+                      >
+                        Click Here to Text Location
+                      </button>
+                    </div>
+
+                    <div className="mt-3">
+                      <BubbleBlock className="!px-5 !py-4 max-w-xl text-base md:text-lg leading-relaxed">
+                        {locations.join(" • ")}
+                      </BubbleBlock>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Johnny Cash quote below map */}
+              {/* Johnny Cash quote below map + cities */}
               <div className="mt-6 flex justify-center">
-                <div className="rounded-2xl bg-black/85 border-2 border-yellow-300 shadow-[0_0_28px_rgba(251,191,36,0.8)] px-4 sm:px-6 py-3 max-w-3xl text-center">
+                <div className="w-full max-w-5xl rounded-2xl bg-black/85 border-2 border-yellow-300 shadow-[0_0_28px_rgba(251,191,36,0.8)] px-4 sm:px-6 py-3 text-center">
                   <div className="text-2xl md:text-3xl mb-1">
                     🎶 🎵 🎶
                   </div>
@@ -1250,12 +1304,14 @@ export default function Home() {
           <div className="w-full flex justify-center">
             <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/30 via-rose-500/30 to-amber-400/30 border border-black/10 max-w-fit">
               <div className="flex flex-wrap items-center justify-center gap-4">
-                <div className="font-extrabold text-white">We accept:</div>
+                <div className="font-extrabold text-white text-lg md:text-xl">
+                  We accept:
+                </div>
 
                 <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-yellow-50 to-amber-100">
                   <svg
-                    width="20"
-                    height="20"
+                    width="24"
+                    height="24"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -1263,13 +1319,15 @@ export default function Home() {
                     <rect x="2" y="6" width="20" height="12" rx="2" />
                     <circle cx="12" cy="12" r="3" />
                   </svg>
-                  <span className="font-extrabold">Cash</span>
+                  <span className="font-extrabold text-base md:text-lg">
+                    Cash
+                  </span>
                 </div>
 
                 <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-sky-50 to-blue-100">
                   <svg
-                    width="20"
-                    height="20"
+                    width="24"
+                    height="24"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -1277,15 +1335,15 @@ export default function Home() {
                     <rect x="2" y="5" width="20" height="14" rx="2" />
                     <path d="M2 10h20" />
                   </svg>
-                  <span className="font-extrabold">
+                  <span className="font-extrabold text-base md:text-lg">
                     All Major Credit Cards
                   </span>
                 </div>
 
                 <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-rose-50 to-red-100">
                   <svg
-                    width="20"
-                    height="20"
+                    width="24"
+                    height="24"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -1293,7 +1351,9 @@ export default function Home() {
                     <path d="M3 6h18l-2 12H5L3 6Z" />
                     <path d="M7 10h10M6 14h12" />
                   </svg>
-                  <span className="font-extrabold">EFS Services</span>
+                  <span className="font-extrabold text-base md:text-lg">
+                    EFS Services
+                  </span>
                 </div>
               </div>
             </div>
@@ -1302,7 +1362,7 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="bg-ahCharcoal text-ahText mt-4">
-          <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-8 text-sm">
+          <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-8 text-base md:text-lg">
             <div className="text-center md:text-left">
               <div className="font-extrabold text-white drop-shadow-sm">
                 Call or Visit
@@ -1591,13 +1651,13 @@ function ContactSection() {
             <button
               type="button"
               onClick={handleSendText}
-              className="flex-1 max-w-xs inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl"
+              className="flex-1 max-w-xs inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white"
             >
-              <span className="uppercase tracking-wide text-xs md:text-sm text-center">
-                SEND TEXT TO DISPATCH
+              <span className="uppercase tracking-wide text-xs md:text-sm text-center font-extrabold">
+                CLICK HERE TO TEXT DISPATCH
               </span>
-              <span className="mt-1 text-xs md:text-sm opacity-90">
-                Includes GPS when available
+              <span className="mt-1 text-[11px] md:text-xs opacity-90 font-extrabold text-center">
+                (INCLUDE GPS LOCATION)
               </span>
             </button>
           </div>
@@ -1617,7 +1677,7 @@ function ContactSection() {
               fontFamily:
                 'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial',
               fontSize: "clamp(22px,3.4vw,34px)",
-              color: "#e10600",
+              color: "#f97316", // orange
               WebkitTextStroke: "1px #000",
               textShadow: "0 4px 10px rgba(0,0,0,.8)",
               letterSpacing: "0.08em",

@@ -8,7 +8,7 @@ import {
   PhoneCTA,
   TextCTA,
   TikTokGallery,
-} from "../components/ServiceLayout";
+} from "../../components/ServiceLayout";
 
 export default function FlatbedRollbackPage() {
   return (
@@ -62,3 +62,4 @@ export default function FlatbedRollbackPage() {
     </>
   );
 }
+

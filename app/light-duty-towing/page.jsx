@@ -1,60 +1,78 @@
-"use client";
+import React from "react";
+import {
+  SiteHeader,
+  SiteFooter,
+  BrandHero,
+  PhoneCTA,
+  TextCTA,
+  TikTokGallery,
+} from "../components/ServiceLayout";
 
-import ServiceLayout from "../../components/ServiceLayout";
-import ServicePage from "../../components/ServicePage";
-import SiteNavLinks from "../../components/SiteNavLinks"; // only if you actually use it
+export const metadata = {
+  title: "Light Duty Towing | A & H Towing & Recovery",
+  description:
+    "Light-duty towing for cars, SUVs, and pickups in Pecos, Reeves County, and the West Texas highways.",
+};
 
 export default function LightDutyTowingPage() {
   return (
     <>
       <SiteHeader />
+
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
           serviceTitle="Light Duty Towing"
-          serviceSubtitle="Cars, SUVs, and pickups — based in Pecos & Reeves County and running the West Texas highways day and night."
+          serviceSubtitle="Cars, SUVs, and pickups moved safely in and out of Pecos, Reeves County, and the West Texas highways."
         />
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
+            {/* Left: Text content */}
             <div className="space-y-4 text-amber-50">
               <h2 className="text-2xl md:text-3xl font-black">
-                Stuck on the shoulder? We’ll come get you.
+                Stuck, broken down, or won&apos;t start? We&apos;ll get you off the
+                shoulder.
               </h2>
+
               <p className="text-sm md:text-base font-semibold">
-                A&amp;H Towing &amp; Recovery handles everyday breakdowns,
-                fender-benders, and “my car just quit” moments all over Pecos,
-                Reeves County, and the surrounding highways.
+                Whether it&apos;s a daily driver, family SUV, or work pickup, we
+                treat your vehicle like it&apos;s ours. Our light-duty trucks are
+                set up for safe loading, securement, and clean drop-off.
               </p>
+
               <ul className="space-y-2 text-sm md:text-base font-semibold">
-                <li>• Local and long-distance light duty tows</li>
-                <li>• Cars, SUVs, and 1-ton pickups</li>
-                <li>• Shop, dealership, and home driveway tows</li>
-                <li>• I-20, US-285, TX-17, TX-18, TX-302 and lease roads</li>
+                <li>• Cars, small trucks, and SUVs</li>
+                <li>• Breakdowns on I-20, US-285, TX-17, TX-302, and local roads</li>
+                <li>• Local in-town tows and longer-distance transports</li>
+                <li>• Careful hook-up and tie-down to protect bumpers and suspension</li>
               </ul>
+
               <p className="text-sm md:text-base font-semibold">
-                When you call, you get a local wrecking company — not a call
-                center. We’ll tell you what we can do, what it will cost, and
-                about how long before a truck reaches you.
+                When you call or text, let us know what you&apos;re driving, where
+                you&apos;re headed, and what happened. We&apos;ll give you straight
+                answers on price, ETA, and what to expect when the truck rolls up.
               </p>
             </div>
 
+            {/* Right: TikTok-style gallery */}
             <TikTokGallery
               images={[
-                "/images/light-duty-1.jpg",
-                "/images/light-duty-2.jpg",
-                "/images/light-duty-3.jpg",
-                "/images/light-duty-4.jpg",
+                "/images/light-1.jpg",
+                "/images/light-2.jpg",
+                "/images/light-3.jpg",
+                "/images/light-4.jpg",
               ]}
             />
           </div>
 
-          {/* Bottom CTAs */}
+          {/* Bottom buttons on the page */}
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />
           </div>
         </section>
       </main>
+
       <SiteFooter />
     </>
   );

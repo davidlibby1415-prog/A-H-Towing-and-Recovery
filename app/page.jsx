@@ -369,42 +369,17 @@ function ServiceAwardMedal({ text = "Outstanding Service Award" }) {
 
 function GoldenFacts() {
   return (
-    <div className="mt-6 flex flex-col items-center">
-      {/* Canva wheels embed */}
-      <div
-        style={{
-          position: "relative",
-          width: "100%",
-          maxWidth: "720px",
-          height: 0,
-          paddingTop: "100%",
-          paddingBottom: 0,
-          boxShadow: "0 2px 8px 0 rgba(63,69,81,0.16)",
-          marginTop: "1.6em",
-          marginBottom: "0.9em",
-          overflow: "hidden",
-          borderRadius: "12px",
-          willChange: "transform",
-        }}
-      >
-        <iframe
-          loading="lazy"
-          style={{
-            position: "absolute",
-            width: "100%",
-            height: "100%",
-            top: 0,
-            left: 0,
-            border: "none",
-            padding: 0,
-            margin: 0,
-          }}
-          src="https://www.canva.com/design/DAG4t8y9wMI/tHfVe0y4rq_cLhS-W-v6hA/view?embed"
-          allowFullScreen
-          allow="fullscreen"
-          title="A&H Service Awards"
+    <div className="mt-6 flex justify-center">
+      <div className="max-w-[900px] w-full px-2">
+        <img
+          src="/ahh-service-medals.jpg"
+          alt="Great Response Time, Operating Hours, and Service Area awards for A&H Towing & Recovery"
+          className="w-full h-auto rounded-2xl border-4 border-yellow-400/90 shadow-[0_0_30px_rgba(250,204,21,0.75)] bg-black"
         />
       </div>
+    </div>
+  );
+}
 
       {/* Credit link (optional but nice) */}
       <a

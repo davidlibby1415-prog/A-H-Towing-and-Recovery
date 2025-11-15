@@ -6,7 +6,7 @@ import {
   PhoneCTA,
   TextCTA,
   TikTokGallery,
-} from "../../components/ServiceLayout";
+} from "../components/ServiceLayout";
 
 export const metadata = {
   title: "Heavy Duty & Commercial Towing | A & H Towing & Recovery",

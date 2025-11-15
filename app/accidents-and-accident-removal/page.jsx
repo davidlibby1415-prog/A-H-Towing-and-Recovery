@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   SiteHeader,
@@ -60,7 +58,7 @@ export default function AccidentRemovalPage() {
                 </div>
                 <a
                   className="text-[10px] underline text-amber-100 hover:text-amber-200"
-                  href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
+                  href="https://www.tiktok.com/@285302ditchking?refer=embed"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -69,12 +67,12 @@ export default function AccidentRemovalPage() {
               </div>
 
               <p className="text-[11px] md:text-xs text-amber-100/80 mb-3">
-                These are real recoveries handled by our crew across the 285 /
-                302 “thunderdome” — flipped 18-wheelers, locomotives, and
-                oilfield wrecks.
+                Real recoveries from the 285 / 302 “thunderdome” — flipped
+                18-wheelers, locomotives, and oilfield wrecks handled with
+                professionalism and patience.
               </p>
 
-              <div className="grid gap-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 <TikTokEmbed
                   videoId="6908073338308939014"
                   caption="Deploy Airbags: Flipped 18 Wheeler"

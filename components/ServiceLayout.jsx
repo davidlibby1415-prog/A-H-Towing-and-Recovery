@@ -1,4 +1,3 @@
-// app/components/ServiceLayout.jsx
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -14,8 +13,9 @@ function smsHref(number, body) {
   return `sms:${number}${sep}body=${encoded}`;
 }
 
-/* ============================ CTAs ============================ */
-export function PhoneCTA({ className = "", fullWidth = false }) {
+/* ====================== Small UI Helpers ====================== */
+
+function PhoneCTA({ className = "", fullWidth = false }) {
   const widthClasses = fullWidth
     ? "w-full sm:w-auto !min-w-0"
     : "min-w-[260px]";
@@ -35,97 +35,37 @@ export function PhoneCTA({ className = "", fullWidth = false }) {
   );
 }
 
-export function TextCTA({ className = "" }) {
+function TextCTA({ className = "" }) {
   const body =
-    "Tow or roadside request for A&H Towing & Recovery. My name is ______. I am near ______. Vehicle: ______. Please text or call me back.";
+    "Tow request: (Please include your name, callback number, vehicle, passengers, and GPS location link if possible.)";
+
   return (
     <a
       href={smsHref("+14328424578", body)}
-      className={`inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white`}
-      aria-label="Text dispatch for help"
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white`}
     >
-      <span className="uppercase tracking-wide text-xs md:text-sm text-center">
-        TEXT DISPATCH FOR HELP
-      </span>
-      <span className="mt-1 text-[11px] leading-tight opacity-90 text-center">
-        Include your name, location & vehicle
-      </span>
+      TEXT DISPATCH (INCLUDE GPS)
     </a>
   );
 }
 
-/* ======================= Steel / Animated Border ======================= */
-function AnimBorder({ children, className = "" }) {
-  return (
-    <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>
-      {children}
-    </div>
-  );
-}
-
-function SteelPanel({ children, className = "", padded = true }) {
-  return (
-    <div
-      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
-        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
-      } ${className}`}
-      style={{
-        backgroundImage:
-          'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        borderColor: "rgba(255,255,255,0.18)",
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-/* Animated border CSS */
-function AnimatedBorderStyles() {
-  return (
-    <style jsx global>{`
-      @property --angle {
-        syntax: "<angle>";
-        initial-value: 0deg;
-        inherits: false;
-      }
-      @keyframes rb-rotate {
-        to {
-          --angle: 360deg;
-        }
-      }
-      .rb-border {
-        --angle: 0deg;
-        background: conic-gradient(
-          from var(--angle),
-          #3b82f6 0%,
-          #ef4444 50%,
-          #3b82f6 100%
-        );
-        animation: rb-rotate 24s linear infinite;
-      }
-    `}</style>
-  );
-}
-
-/* ======================= Time & Temperature ======================= */
+/* ============ Time & Temperature (small, non-blocking) ============ */
 function TimeTemp() {
   const [now, setNow] = useState(new Date());
   const [temp, setTemp] = useState(null);
   const [locationLabel, setLocationLabel] = useState("Pecos, TX");
 
+  // Update clock every minute
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(id);
   }, []);
 
-  // Optional: live temp via OpenWeather (requires NEXT_PUBLIC_OPENWEATHER_KEY)
+  // Optional live temp; requires NEXT_PUBLIC_OPENWEATHER_KEY
   useEffect(() => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
     if (!apiKey) return;
+
     const lat = 31.4229;
     const lon = -103.4938;
 
@@ -134,10 +74,16 @@ function TimeTemp() {
     )
       .then((res) => res.json())
       .then((data) => {
-        if (data?.main?.temp) setTemp(Math.round(data.main.temp));
-        if (data?.name) setLocationLabel(`${data.name}, TX`);
+        if (data?.main?.temp) {
+          setTemp(Math.round(data.main.temp));
+        }
+        if (data?.name) {
+          setLocationLabel(`${data.name}, TX`);
+        }
       })
-      .catch(() => {});
+      .catch(() => {
+        // silently ignore errors; fallback is "--°F"
+      });
   }, []);
 
   const timeStr = now.toLocaleTimeString([], {
@@ -155,26 +101,176 @@ function TimeTemp() {
   );
 }
 
-/* ============================ Header ============================ */
-export function SiteHeader() {
+/* ===== Tiny translucent “bubble” helper ===== */
+function BubbleBlock({ children, className = "" }) {
+  return (
+    <div
+      className={`inline-block rounded-2xl px-4 py-3 bg-black/45 text-white font-extrabold shadow ${className}`}
+      style={{
+        WebkitTextStroke: "0.25px rgba(0,0,0,.7)",
+        textShadow: "0 1px 2px rgba(0,0,0,.6)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* Simple gradient border wrapper (static, not animated) */
+function AnimBorder({ children, className = "" }) {
+  return (
+    <div
+      className={`p-[6px] rounded-[28px] bg-gradient-to-r from-ahBlue via-black to-ahRed ${className}`}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* Steel panel container */
+function SteelPanel({
+  children,
+  className = "",
+  padded = true,
+  borderColor = "rgba(255,255,255,0.18)",
+}) {
+  return (
+    <div
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
+        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
+      } ${className}`}
+      style={{
+        backgroundImage:
+          'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        borderColor,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* Big A&H slab */
+function BrandSlab({ Tag = "h1" }) {
+  return (
+    <AnimBorder>
+      <SteelPanel padded={false} className="px-2 py-2 text-center">
+        <Tag
+          className="font-black tracking-tight inline-block"
+          style={{
+            fontFamily:
+              'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+            fontSize: "clamp(40px, 7vw, 72px)",
+            color: "#e10600",
+            WebkitTextStroke: "1.5px #000",
+            textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
+            lineHeight: 1.05,
+          }}
+        >
+          A&amp;H TOWING &amp; RECOVERY, LLC
+        </Tag>
+      </SteelPanel>
+    </AnimBorder>
+  );
+}
+
+/* ========================= Top Marquee ========================= */
+function TopLocationsMarquee() {
+  const text =
+    "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Kermit • Jal • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County";
+
+  return (
+    <div className="w-full bg-[#0b0f14] text-sm">
+      <div className="container max-w-7xl py-2">
+        <div className="relative overflow-hidden">
+          <div
+            className="slim-marquee whitespace-nowrap font-extrabold tracking-tight"
+            style={{
+              color: "#f5f7fa",
+              WebkitTextStroke: "0.4px rgba(0,0,0,.9)",
+              textShadow: "0 1px 2px rgba(0,0,0,.7)",
+              fontFamily:
+                'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+              fontWeight: 900,
+            }}
+          >
+            <span className="inline-block pr-12">{text}</span>
+            <span className="inline-block pr-12">{text}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="h-[2px]" />
+      <div className="w-full bg-red-700/90">
+        <div className="container max-w-7xl">
+          <p
+            className="text-center font-extrabold py-1"
+            style={{
+              fontFamily:
+                'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+              color: "#ffd54a",
+            }}
+          >
+            Providing Towing, Recovery Services, and Emergency Roadside
+            Assistance to the West Texas Region
+          </p>
+        </div>
+      </div>
+
+      <style jsx global>{`
+        @keyframes slim-marquee-x {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .slim-marquee {
+          display: inline-flex;
+          min-width: 200%;
+          animation: slim-marquee-x 80s linear infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .slim-marquee {
+            animation: none !important;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* ====================== Shared Header ====================== */
+
+function SiteHeader() {
   const [servicesOpen, setServicesOpen] = useState(false);
-  const closeTimerRef = useRef(null);
+  const servicesCloseTimeout = useRef(null);
 
   const openServices = () => {
-    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
+    if (servicesCloseTimeout.current) {
+      clearTimeout(servicesCloseTimeout.current);
+    }
     setServicesOpen(true);
   };
 
-  const scheduleClose = () => {
-    if (closeTimerRef.current) clearTimeout(closeTimerRef.current);
-    closeTimerRef.current = setTimeout(() => setServicesOpen(false), 300);
+  const scheduleCloseServices = () => {
+    if (servicesCloseTimeout.current) {
+      clearTimeout(servicesCloseTimeout.current);
+    }
+    servicesCloseTimeout.current = setTimeout(() => {
+      setServicesOpen(false);
+    }, 350);
   };
 
   return (
     <header className="sticky top-0 z-[120] bg-ahCharcoal text-ahText border-b border-black/30">
       <div className="container max-w-7xl flex items-center gap-6 py-3">
-        {/* Logo + text block (centered nicely) */}
-        <div className="flex items-center gap-3 flex-shrink-0">
+        {/* Left: mini logo + address */}
+        <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
             <span
               className="text-[15px] font-extrabold"
@@ -183,9 +279,9 @@ export function SiteHeader() {
               A&amp;H
             </span>
           </div>
-          <div className="leading-tight text-center sm:text-left">
+          <div className="leading-tight">
             <div className="font-bold drop-shadow text-red-600">
-              A&amp;H Towing &amp; Recovery, LLC
+              A&amp;H Towing & Recovery, LLC
             </div>
             <div className="text-xs opacity-90">
               2712 W F Street, Pecos, TX 79772
@@ -201,21 +297,25 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* Nav */}
+        {/* Center: nav */}
         <nav className="ml-auto hidden md:flex items-center gap-6 text-base md:text-lg font-extrabold">
+          {/* Services dropdown with delayed close */}
           <div
             className="relative"
             onMouseEnter={openServices}
-            onMouseLeave={scheduleClose}
+            onMouseLeave={scheduleCloseServices}
           >
             <button
               type="button"
               className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-              onClick={() => setServicesOpen((open) => !open)}
+              onClick={() => {
+                setServicesOpen((o) => !o);
+              }}
             >
               <span>Services</span>
               <span className="text-[10px]">▾</span>
             </button>
+
             {servicesOpen && (
               <div className="absolute left-0 mt-2 min-w-[260px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[200]">
                 <Link
@@ -230,14 +330,14 @@ export function SiteHeader() {
                   className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
                   onClick={() => setServicesOpen(false)}
                 >
-                  Heavy Duty &amp; Commercial
+                  Heavy Duty &amp; Commercial Towing
                 </Link>
                 <Link
                   href="/oilfield-routes-tow-service"
                   className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
                   onClick={() => setServicesOpen(false)}
                 >
-                  Oilfield Routes
+                  Oilfield Routes Tow Service
                 </Link>
                 <Link
                   href="/equipment-transport"
@@ -251,14 +351,14 @@ export function SiteHeader() {
                   className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
                   onClick={() => setServicesOpen(false)}
                 >
-                  Flatbed / Rollback
+                  Flatbed / Rollback Services
                 </Link>
                 <Link
                   href="/emergency-roadside-assistance"
                   className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
                   onClick={() => setServicesOpen(false)}
                 >
-                  Emergency Roadside
+                  Emergency Roadside Assistance
                 </Link>
                 <Link
                   href="/accidents-and-accident-removal"
@@ -278,12 +378,12 @@ export function SiteHeader() {
             )}
           </div>
 
-          <a
+          <Link
             href="/#coverage"
             className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
           >
             Coverage
-          </a>
+          </Link>
           <Link
             href="/owners"
             className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
@@ -296,15 +396,15 @@ export function SiteHeader() {
           >
             Tips &amp; Tricks
           </Link>
-          <a
+          <Link
             href="/#contact"
             className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
           >
             Request a Tow
-          </a>
+          </Link>
         </nav>
 
-        {/* Time / Temp + always-on blue call button */}
+        {/* Right: time/temp + always-on blue call */}
         <div className="ml-4 flex items-center gap-3">
           <TimeTemp />
           <PhoneCTA className="hidden sm:inline-flex" />
@@ -314,197 +414,161 @@ export function SiteHeader() {
   );
 }
 
-/* ============================ Big Brand Hero ============================ */
-export function BrandHero({ serviceTitle, serviceSubtitle }) {
-  return (
-    <section
-      className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40"
-      style={{ minHeight: "75vh" }}
-    >
-      <AnimatedBorderStyles />
-      <div className="relative z-[20] h-full w-full flex items-center justify-center px-2 py-6">
-        <AnimBorder className="w-full max-w-4xl">
-          <SteelPanel padded={true} className="text-center bg-black/70">
-            <div className="inline-block px-4 py-3 border-4 border-white rounded-2xl bg-black/80">
-              <h1
-                className="font-black tracking-tight"
-                style={{
-                  fontFamily:
-                    'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-                  fontSize: "clamp(40px, 5.8vw, 72px)",
-                  color: "#e10600",
-                  WebkitTextStroke: "1.5px #000",
-                  textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
-                  lineHeight: 1.05,
-                }}
-              >
-                A&amp;H TOWING &amp; RECOVERY, LLC
-              </h1>
-            </div>
+/* ====================== Layout Component ====================== */
 
-            {serviceTitle && (
-              <p className="mt-5 text-[clamp(24px,3.3vw,34px)] font-black text-amber-200">
-                {serviceTitle}
-              </p>
-            )}
-            {serviceSubtitle && (
-              <p className="mt-2 text-base md:text-lg font-bold text-amber-50 max-w-2xl mx-auto">
-                {serviceSubtitle}
-              </p>
-            )}
-
-            {/* Top CTA row under subheading */}
-            <div className="mt-5 flex flex-wrap justify-center gap-3">
-              <PhoneCTA />
-              <TextCTA />
-            </div>
-          </SteelPanel>
-        </AnimBorder>
-      </div>
-
-      {/* Thin gradient strip under hero */}
-      <div className="h-1 w-full bg-gradient-to-r from-ahBlue to-ahRed" />
-    </section>
-  );
-}
-
-/* ============================ TikTok + Photos ============================ */
-export function TikTokGallery({
-  tiktokId = "7226078493514222894",
-  handle = "@285302ditchking",
-  images = [],
+export default function ServiceLayout({
+  title = "Towing & Recovery Service",
+  subtitle = "Professional 24/7 towing, recovery, and roadside assistance.",
+  children,
 }) {
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    const existing = document.querySelector(
-      'script[src="https://www.tiktok.com/embed.js"]'
-    );
-    if (existing) return;
-    const s = document.createElement("script");
-    s.src = "https://www.tiktok.com/embed.js";
-    s.async = true;
-    document.body.appendChild(s);
-  }, []);
-
   return (
-    <div className="space-y-4">
-      <div className="rounded-2xl overflow-hidden border border-white/15 bg-black/90 flex items-center justify-center px-3 py-4">
-        <div className="relative w-[260px] sm:w-[300px] md:w-[340px]">
-          <blockquote
-            className="tiktok-embed"
-            cite={`https://www.tiktok.com/${handle}/video/${tiktokId}`}
-            data-video-id={tiktokId}
-            style={{ maxWidth: "605px", minWidth: "260px", margin: 0 }}
-          >
-            <section>
-              <a
-                target="_blank"
-                rel="noreferrer"
-                title={handle}
-                href={`https://www.tiktok.com/${handle}?refer=embed`}
-              >
-                {handle}
-              </a>
-            </section>
-          </blockquote>
-        </div>
-      </div>
+    <main className="min-h-screen bg-neutral-950 text-ahText">
+      {/* Top marquee shared with main page */}
+      <TopLocationsMarquee />
 
-      {images.length > 0 && (
-        <div className="grid grid-cols-2 gap-3">
-          {images.map((src) => (
-            <div
-              key={src}
-              className="rounded-xl overflow-hidden border border-white/25 bg-black/70"
-            >
-              <img
-                src={src}
-                alt=""
-                className="w-full h-32 md:h-40 object-cover"
-              />
+      {/* Header with nav + time/temp + blue call */}
+      <SiteHeader />
+
+      {/* Steel A&H banner, centered, big */}
+      <section
+        className="relative z-[10] w-full overflow-hidden"
+        style={{ minHeight: "clamp(120px, 18vh, 240px)" }}
+      >
+        <div className="relative z-[20] h-full w-full flex items-center justify-center px-2 py-3">
+          <div className="w-full max-w-5xl">
+            <BrandSlab Tag="h1" />
+          </div>
+        </div>
+      </section>
+
+      {/* Service page hero: title, subtitle, CTAs */}
+      <section className="py-6 md:py-8 bg-red-900/90">
+        <div className="container max-w-7xl">
+          <AnimBorder>
+            <SteelPanel>
+              <div className="text-center">
+                <div className="inline-block bg-black/80 rounded-2xl px-5 py-3 border border-white/70">
+                  <h1
+                    className="font-black tracking-tight"
+                    style={{
+                      fontFamily:
+                        '"Inter","Segoe UI",system-ui,-apple-system,Roboto,Helvetica,Arial',
+                      fontSize: "clamp(28px,4.6vw,40px)",
+                      color: "#facc15",
+                      textShadow: "0 2px 8px rgba(0,0,0,.8)",
+                    }}
+                  >
+                    {title}
+                  </h1>
+                  <p className="mt-2 text-sm md:text-base font-extrabold text-amber-100 max-w-2xl mx-auto">
+                    {subtitle}
+                  </p>
+                </div>
+
+                {/* Call / Text buttons right under heading */}
+                <div className="mt-4 flex flex-wrap justify-center gap-4">
+                  <PhoneCTA />
+                  <TextCTA />
+                </div>
+              </div>
+            </SteelPanel>
+          </AnimBorder>
+        </div>
+      </section>
+
+      {/* Main service content (your custom page copy) */}
+      <section className="py-6 md:py-8 bg-red-800/95">
+        <div className="container max-w-7xl">
+          <AnimBorder>
+            <SteelPanel>
+              <div className="space-y-4 text-sm md:text-base leading-relaxed">
+                {children}
+              </div>
+
+              {/* Bottom CTAs on every service page */}
+              <div className="mt-6 pt-4 border-t border-white/20 flex flex-wrap gap-4 justify-center">
+                <PhoneCTA />
+                <TextCTA />
+              </div>
+            </SteelPanel>
+          </AnimBorder>
+        </div>
+      </section>
+
+      {/* Footer matches main page */}
+      <footer className="bg-ahCharcoal text-ahText mt-4">
+        <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-8 text-base md:text-lg">
+          <div className="text-center md:text-left">
+            <div className="font-extrabold text-white drop-shadow-sm">
+              Call or Visit
             </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ============================ Footer ============================ */
-export function SiteFooter() {
-  return (
-    <footer className="bg-ahCharcoal text-ahText mt-4">
-      <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-8 text-base md:text-lg">
-        <div className="text-center md:text-left">
-          <div className="font-extrabold text-white drop-shadow-sm">
-            Call or Visit
+            <div className="font-extrabold text-amber-200 mt-1">
+              A&amp;H Towing &amp; Recovery, LLC
+            </div>
+            <p className="mt-2 font-bold text-amber-200">
+              Professional towing, recovery, and roadside assistance for Pecos
+              &amp; oilfield routes.
+            </p>
           </div>
-          <div className="font-extrabold text-amber-200 mt-1">
-            A&amp;H Towing &amp; Recovery, LLC
+          <div>
+            <div className="font-semibold text-white">Quick Links</div>
+            <ul className="mt-2 space-y-1">
+              <li>
+                <Link className="underline" href="/#services">
+                  Services
+                </Link>
+              </li>
+              <li>
+                <Link className="underline" href="/#coverage">
+                  Coverage
+                </Link>
+              </li>
+              <li>
+                <Link className="underline" href="/#contact">
+                  Request a Tow
+                </Link>
+              </li>
+            </ul>
           </div>
-          <p className="mt-2 font-bold text-amber-200">
-            Professional towing, recovery, and roadside assistance for Pecos
-            &amp; West Texas oilfield routes.
-          </p>
-        </div>
-        <div>
-          <div className="font-semibold text-white">Quick Links</div>
-          <ul className="mt-2 space-y-1">
-            <li>
-              <a className="underline" href="/#services">
-                Services
-              </a>
-            </li>
-            <li>
-              <a className="underline" href="/#coverage">
-                Coverage
-              </a>
-            </li>
-            <li>
-              <a className="underline" href="/#contact">
-                Request a Tow
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <div className="font-semibold text-white">Social</div>
-          <ul className="mt-2 space-y-1">
-            <li>
+          <div>
+            <div className="font-semibold text-white">Social</div>
+            <ul className="mt-2 space-y-1">
+              <li>
+                <a
+                  className="underline"
+                  href="https://www.tiktok.com/t/ZTMTrQtgU/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  TikTok
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="text-center md:text-left">
+            <div className="font-semibold text-white">Contact</div>
+            <p className="mt-2 text-white drop-shadow-sm">
               <a
-                className="underline"
-                href="https://www.tiktok.com/@285302ditchking"
-                target="_blank"
-                rel="noreferrer"
+                className="underline font-semibold"
+                href="tel:+14328424578"
               >
-                TikTok
+                (432) 842-4578
               </a>
-            </li>
-          </ul>
+              <br />
+              <a
+                className="underline font-semibold"
+                href="mailto:ah.towing.recovery23@gmail.com"
+              >
+                ah.towing.recovery23@gmail.com
+              </a>
+              <br />
+              <span className="font-extrabold text-amber-200">
+                2712 W F Street, Pecos, TX 79772
+              </span>
+            </p>
+          </div>
         </div>
-        <div className="text-center md:text-left">
-          <div className="font-semibold text-white">Contact</div>
-          <p className="mt-2 text-white drop-shadow-sm">
-            <a
-              className="underline font-semibold"
-              href="tel:+14328424578"
-            >
-              (432) 842-4578
-            </a>
-            <br />
-            <a
-              className="underline font-semibold"
-              href="mailto:ah.towing.recovery23@gmail.com"
-            >
-              ah.towing.recovery23@gmail.com
-            </a>
-            <br />
-            <span className="font-extrabold text-amber-200">
-              2712 W F Street, Pecos, TX 79772
-            </span>
-          </p>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    </main>
   );
 }

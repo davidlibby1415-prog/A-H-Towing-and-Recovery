@@ -9,6 +9,13 @@
    GLOBAL STYLES — A&H Towing & Recovery, LLC
    ---------------------------------------------------------- */
 
+/* Brand variables (optional helpers for non-Tailwind styles) */
+:root {
+  --accent: #dc2626;
+  --accent2: #2563eb;
+  --muted: #6b7280;
+}
+
 /* Reset & Base */
 * {
   box-sizing: border-box;
@@ -23,7 +30,8 @@ body {
   scroll-behavior: smooth;
   background-color: #f9fafb;
   color: #111827;
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.6;
 }
 
@@ -55,9 +63,11 @@ h6 {
 h1 {
   font-size: clamp(2rem, 5vw, 3rem);
 }
+
 h2 {
   font-size: clamp(1.5rem, 3vw, 2rem);
 }
+
 h3 {
   font-size: clamp(1.25rem, 2.5vw, 1.5rem);
 }
@@ -89,6 +99,7 @@ a.button {
   transition: all 0.2s ease;
 }
 
+/* Primary CTA */
 a.button-primary {
   background-color: #0ea5e9;
   color: white;
@@ -99,6 +110,7 @@ a.button-primary:hover {
   background-color: #0284c7;
 }
 
+/* Secondary CTA */
 a.button-secondary {
   background-color: #16a34a;
   color: white;
@@ -108,7 +120,7 @@ a.button-secondary:hover {
   background-color: #15803d;
 }
 
-/* Images */
+/* Media */
 img,
 iframe,
 video {

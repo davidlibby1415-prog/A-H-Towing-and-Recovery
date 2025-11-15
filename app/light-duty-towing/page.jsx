@@ -1,14 +1,8 @@
 "use client";
 
-import React from "react";
-import {
-  SiteHeader,
-  SiteFooter,
-  BrandHero,
-  PhoneCTA,
-  TextCTA,
-  TikTokGallery,
-} from "../components/ServiceLayout";
+import ServiceLayout from "../../components/ServiceLayout";
+import ServicePage from "../../components/ServicePage";
+import SiteNavLinks from "../../components/SiteNavLinks"; // only if you actually use it
 
 export default function LightDutyTowingPage() {
   return (

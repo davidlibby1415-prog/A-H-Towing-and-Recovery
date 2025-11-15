@@ -1,3 +1,4 @@
+// app/components/ServiceLayout.jsx (or /components/ServiceLayout.jsx)
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -5,23 +6,30 @@ import Link from "next/link";
 
 /* ============================ Utilities ============================ */
 
+/**
+ * Build an sms: URL with a prefilled body, handling iOS vs others.
+ */
 function smsHref(number, body) {
   const encoded = encodeURIComponent(body);
   const isiOS =
     typeof navigator !== "undefined" &&
     /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
   const sep = isiOS ? "&" : "?";
   return `sms:${number}${sep}body=${encoded}`;
 }
 
-/* Simple time + temperature hook (client-side only) */
+/**
+ * Client-only hook: shows local time and a rough temperature
+ * using browser location + Open-Meteo.
+ */
 function useTimeAndTemp() {
   const [timeString, setTimeString] = useState("");
   const [tempF, setTempF] = useState(null);
   const [tempStatus, setTempStatus] = useState("idle");
   const hasRequestedRef = useRef(false);
 
-  // Local time
+  // Local time (update every 30s)
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -36,7 +44,7 @@ function useTimeAndTemp() {
     return () => clearInterval(id);
   }, []);
 
-  // Rough temperature using browser location + open-meteo
+  // Rough temperature using geolocation + open-meteo
   useEffect(() => {
     if (hasRequestedRef.current) return;
     if (typeof navigator === "undefined" || !navigator.geolocation) return;
@@ -50,17 +58,19 @@ function useTimeAndTemp() {
           const lat = pos.coords.latitude;
           const lon = pos.coords.longitude;
           setTempStatus("fetching");
+
           const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`;
           const res = await fetch(url);
           const data = await res.json();
           const t = data?.current_weather?.temperature;
+
           if (typeof t === "number") {
             setTempF(Math.round(t));
             setTempStatus("ok");
           } else {
             setTempStatus("error");
           }
-        } catch (e) {
+        } catch {
           setTempStatus("error");
         }
       },
@@ -74,12 +84,13 @@ function useTimeAndTemp() {
   return { timeString, tempF, tempStatus };
 }
 
-/* ====================== Small UI Helpers / Icons ====================== */
+/* ====================== Small UI Helpers / CTAs ====================== */
 
 export function PhoneCTA({ className = "", fullWidth = false }) {
   const widthClasses = fullWidth
     ? "w-full sm:w-auto !min-w-0"
     : "min-w-[240px]";
+
   return (
     <a
       href="tel:+14328424578"
@@ -117,20 +128,20 @@ export function TextCTA({ className = "" }) {
   );
 }
 
+/* Time & Temp (small) */
+
 function TimeTempDisplay() {
   const { timeString, tempF } = useTimeAndTemp();
 
   return (
     <div className="flex flex-col items-end text-[10px] md:text-xs text-amber-100 leading-tight whitespace-nowrap">
       <span>Time: {timeString || "--:--"}</span>
-      <span>
-        Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}
-      </span>
+      <span>Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
     </div>
   );
 }
 
-/* Slim bar version for pages that want a dedicated strip */
+/* Optional slim bar version (if you ever want a separate strip) */
 export function TimeTempBar() {
   const { timeString, tempF } = useTimeAndTemp();
 
@@ -142,16 +153,14 @@ export function TimeTempBar() {
         </span>
         <div className="flex items-center gap-4">
           <span>Time: {timeString || "--:--"}</span>
-          <span>
-            Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}
-          </span>
+          <span>Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
         </div>
       </div>
     </div>
   );
 }
 
-/* ===== Gradient border + steel panel + big brand ===== */
+/* ====================== Chrome-style panels & brand ====================== */
 
 function AnimBorder({ children, className = "" }) {
   return (
@@ -388,7 +397,7 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* Global styles for animated border */}
+        {/* Global styles for animated border (shared across pages) */}
         <style jsx global>{`
           @property --angle {
             syntax: "<angle>";
@@ -497,7 +506,7 @@ export function BrandHero({ serviceTitle, serviceSubtitle }) {
   return (
     <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
       <div className="container max-w-7xl py-5 md:py-6 flex flex-col items-center">
-        {/* Big A&H sign on steel – about 75% width on large screens */}
+        {/* Big A&H sign on steel */}
         <div className="w-full flex justify-center">
           <div className="w-full max-w-5xl">
             <BrandSlab />
@@ -546,6 +555,7 @@ export function TikTokGallery({ images = [] }) {
           <span>Shop &amp; Truck Shots</span>
         </div>
       </div>
+
       <div className="grid grid-cols-2 gap-2 sm:gap-3">
         {safeImages.map((src, idx) => (
           <div
@@ -563,6 +573,7 @@ export function TikTokGallery({ images = [] }) {
           </div>
         ))}
       </div>
+
       <div className="mt-3 text-center">
         <a
           className="inline-flex items-center gap-2 rounded-2xl px-4 py-1.5 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-rose-500 text-black font-black text-[11px] md:text-xs uppercase tracking-wide shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95"

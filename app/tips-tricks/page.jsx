@@ -11,7 +11,7 @@ import {
 export const metadata = {
   title: "Tips & Tricks | A & H Towing & Recovery",
   description:
-    "Practical tips for staying safe on the roadside, getting faster service, and protecting your vehicle during a tow in West Texas.",
+    "Simple, real-world tips to stay safer on the side of the road and make your tow or roadside service go smoother.",
 };
 
 export default function TipsTricksPage() {
@@ -21,131 +21,136 @@ export default function TipsTricksPage() {
 
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
-          serviceTitle="Tips & Tricks for Safer Tows"
-          serviceSubtitle="Simple steps you can take before, during, and after a tow to keep your family safer and get help faster in West Texas."
+          serviceTitle="Tips & Tricks for a Smoother Tow"
+          serviceSubtitle="Simple things you can do — before and after we arrive — to keep everyone safer and make the job go faster."
         />
 
-        {/* Main tips section */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid lg:grid-cols-2 gap-8 items-start">
-            {/* LEFT: Tips content */}
+            {/* LEFT: Text content */}
             <div className="space-y-6 text-amber-50">
-              {/* Before You Call */}
+              {/* Safety first */}
               <div className="space-y-3">
                 <h2 className="text-2xl md:text-3xl font-black">
-                  Before you call or text for a tow
+                  First priority: keep people safe, not just vehicles.
                 </h2>
                 <p className="text-sm md:text-base font-semibold">
-                  A few quick details can shave minutes off your wait time and
-                  help us roll up with the right truck and plan.
+                  When something breaks or you’re stranded, it’s easy to focus
+                  only on the car or truck. These quick tips keep{" "}
+                  <span className="font-black">
+                    you, your family, and our operators
+                  </span>{" "}
+                  safer until we get there.
                 </p>
                 <ul className="space-y-2 text-sm md:text-base font-semibold">
                   <li>
-                    • {" "}
-                    <span className="font-black underline">
-                      Get your location as close as you can.
+                    • If possible,{" "}
+                    <span className="font-black">
+                      move as far off the travel lane
                     </span>{" "}
-                    Mile markers, landmarks, exit numbers, or a GPS pin help us
-                    find you faster on I-20, US-285, TX-17, and lease roads.
+                    as you safely can — shoulder, ramp, or wide approach.
                   </li>
                   <li>
-                    • {" "}
-                    <span className="font-black underline">
-                      Know what you&apos;re driving.
-                    </span>{" "}
-                    Year / make / model and if it&apos;s 2WD, 4x4, or AWD. That
-                    matters for how we hook up, especially on low or specialty
-                    vehicles.
+                    • Turn on{" "}
+                    <span className="font-black">hazard flashers</span> and, if
+                    you have them, set out triangles or flares away from the
+                    vehicle.
                   </li>
                   <li>
-                    • {" "}
-                    <span className="font-black underline">
-                      Tell us what happened.
-                    </span>{" "}
-                    Flat, no-start, wreck, off-road, stuck, or mechanical issue.
-                    We don&apos;t need a novel — just honest basics so we know
-                    what we&apos;re walking into.
+                    • Stay inside with your seatbelt on if the traffic is heavy
+                    or you’re on a fast highway.
                   </li>
                   <li>
-                    • {" "}
-                    <span className="font-black underline">
-                      Let us know about kids, elders, or pets in the vehicle.
-                    </span>{" "}
-                    Heat and cold are harder on them. We&apos;ll keep that in
-                    mind and move with purpose.
+                    • If you must exit, step out{" "}
+                    <span className="font-black">
+                      away from traffic and never into the lane.
+                    </span>
                   </li>
                 </ul>
               </div>
 
-              {/* While You Wait */}
+              {/* What to have ready */}
               <div className="space-y-3">
                 <h3 className="text-xl md:text-2xl font-black">
-                  While you&apos;re waiting on the tow truck
+                  What to have ready when you call or text
                 </h3>
                 <p className="text-sm md:text-base font-semibold">
-                  The shoulder, lease roads, and two-lanes around Pecos, Orla,
-                  and Mentone aren&apos;t friendly places to stand around. Safety
-                  comes first.
+                  You don’t need to know everything — just share what you can.
+                  These pieces of information help us{" "}
+                  <span className="font-black">
+                    pick the right truck and find you faster.
+                  </span>
+                </p>
+                <ul className="space-y-2 text-sm md:text-base font-semibold">
+                  <li>• Year / Make / Model of your vehicle</li>
+                  <li>• Automatic or standard (if you know)</li>
+                  <li>• Is it loaded with tools, cargo, or a trailer?</li>
+                  <li>• Exact location, GPS pin, or closest mile marker / exit</li>
+                  <li>• Where you’d like it towed (home, shop, yard, etc.)</li>
+                </ul>
+              </div>
+
+              {/* Elder / family-friendly tips */}
+              <div className="space-y-3">
+                <h3 className="text-xl md:text-2xl font-black">
+                  Helping elders and family members during a tow
+                </h3>
+                <p className="text-sm md:text-base font-semibold">
+                  If you’re calling for a parent, grandparent, or someone who
+                  doesn’t handle roadside stress well, a few small steps make a
+                  big difference.
                 </p>
                 <ul className="space-y-2 text-sm md:text-base font-semibold">
                   <li>
                     •{" "}
-                    <span className="font-black underline">
-                      If it&apos;s safe, move away from traffic.
+                    <span className="font-black">
+                      Stay calm and speak slowly.
                     </span>{" "}
-                    Get everyone out and to the right side of the vehicle or up
-                    on the bar ditch if you can do it safely.
+                    Let them know a truck is coming and what to expect.
                   </li>
                   <li>
-                    • Turn on hazard lights and, if you have them, set out
-                    flares or triangles pointed toward oncoming traffic.
-                  </li>
-                  <li>
-                    •{" "}
-                    <span className="font-black underline">
-                      Stay off your phone calls
+                    • Ask them to{" "}
+                    <span className="font-black">
+                      keep their phone nearby and turned up
                     </span>{" "}
-                    except to talk with dispatch, law enforcement, or family.
-                    We may need to reach you for directions or updates.
+                    so our operator or dispatch can reach them.
                   </li>
                   <li>
-                    • In the oilfield, follow site or company rules and listen
-                    to the company man and officers on scene.
+                    • If they have mobility issues,{" "}
+                    <span className="font-black">tell us that upfront</span> so
+                    we plan for extra time and patience on-scene.
+                  </li>
+                  <li>
+                    • If you’re not with them,{" "}
+                    <span className="font-black">
+                      stay on standby for phone updates
+                    </span>{" "}
+                    from us and from them.
                   </li>
                 </ul>
               </div>
 
-              {/* Protecting Your Vehicle */}
-              <div className="space-y-3">
-                <h3 className="text-xl md:text-2xl font-black">
-                  Protecting your vehicle and belongings
-                </h3>
-                <p className="text-sm md:text-base font-semibold">
-                  A wreck or breakdown is stressful. A few small steps can help
-                  you feel more in control of the situation.
-                </p>
-                <ul className="space-y-2 text-sm md:text-base font-semibold">
+              {/* Small “while you wait” box */}
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-4 text-sm md:text-base font-semibold">
+                <h4 className="text-lg md:text-xl font-black mb-2 text-amber-300">
+                  While you wait on us
+                </h4>
+                <ul className="space-y-1">
+                  <li>• Keep doors locked and windows mostly up.</li>
+                  <li>• Have your hazards on and interior lights ready.</li>
                   <li>
-                    • Remove or secure wallets, purses, tools, firearms, and
-                    anything else you can&apos;t afford to lose.
+                    • Get your keys, wallet/purse, and any valuables ready to
+                    take with you.
                   </li>
                   <li>
-                    • Take pictures of the scene, damage, license plates, and
-                    anything you&apos;re worried you&apos;ll forget later.
-                  </li>
-                  <li>
-                    • Ask where your vehicle is going — shop, yard, home, or
-                    body shop — and write it down or save it in your phone.
-                  </li>
-                  <li>
-                    • If law enforcement is involved, listen to the officer and
-                    let us coordinate with them on recovery and cleanup.
+                    • If kids are with you, explain that a tow truck is coming
+                    to help — not to be scared.
                   </li>
                 </ul>
               </div>
             </div>
 
-            {/* RIGHT: TikTok-style gallery / visual block */}
+            {/* RIGHT: TikTok-style gallery / visuals */}
             <div className="space-y-6">
               <TikTokGallery
                 images={[
@@ -154,3 +159,36 @@ export default function TipsTricksPage() {
                   "/images/tips-3.jpg",
                   "/images/tips-4.jpg",
                 ]}
+              />
+
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-4 text-sm md:text-base font-semibold text-amber-50">
+                <h4 className="text-lg md:text-xl font-black mb-2 text-amber-300">
+                  Quick checklist before we hook up
+                </h4>
+                <ul className="space-y-1">
+                  <li>• Remove anything you don’t want bouncing around.</li>
+                  <li>• Grab medications, chargers, and essentials.</li>
+                  <li>• Tell us if there’s a pet in the vehicle.</li>
+                  <li>• Let us know if there’s prior body damage we should note.</li>
+                </ul>
+                <p className="mt-2">
+                  The more we know, the better we can plan the hook, route, and
+                  drop-off — and the smoother your whole night goes.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Buttons at bottom */}
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <PhoneCTA />
+            <TextCTA />
+          </div>
+        </section>
+      </main>
+
+      <SiteFooter />
+    </>
+  );
+}
+

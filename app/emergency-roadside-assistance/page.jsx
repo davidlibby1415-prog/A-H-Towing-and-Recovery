@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   SiteHeader,
@@ -10,10 +8,17 @@ import {
   TikTokGallery,
 } from "../../components/ServiceLayout";
 
+export const metadata = {
+  title: "Emergency Roadside Assistance | A & H Towing & Recovery",
+  description:
+    "Fuel delivery, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways.",
+};
+
 export default function EmergencyRoadsidePage() {
   return (
     <>
       <SiteHeader />
+
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
           serviceTitle="Emergency Roadside Assistance"
@@ -22,6 +27,7 @@ export default function EmergencyRoadsidePage() {
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
+            {/* LEFT: Text content */}
             <div className="space-y-4 text-amber-50">
               <h2 className="text-2xl md:text-3xl font-black">
                 Not every problem needs a full tow.
@@ -43,6 +49,7 @@ export default function EmergencyRoadsidePage() {
               </p>
             </div>
 
+            {/* RIGHT: TikTok-style gallery / visuals */}
             <TikTokGallery
               images={[
                 "/images/roadside-1.jpg",
@@ -53,12 +60,14 @@ export default function EmergencyRoadsidePage() {
             />
           </div>
 
+          {/* Bottom buttons */}
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />
           </div>
         </section>
       </main>
+
       <SiteFooter />
     </>
   );

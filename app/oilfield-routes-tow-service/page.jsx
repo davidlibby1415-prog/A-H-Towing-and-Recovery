@@ -8,12 +8,14 @@ import {
   PhoneCTA,
   TextCTA,
   TikTokGallery,
+  TimeTempBar,
 } from "../components/ServiceLayout";
 
 export default function OilfieldRoutesPage() {
   return (
     <>
       <SiteHeader />
+      <TimeTempBar />
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
           serviceTitle="Oilfield Routes Tow Service"

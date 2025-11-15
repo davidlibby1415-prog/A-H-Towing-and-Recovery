@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   SiteHeader,
@@ -10,10 +8,17 @@ import {
   TikTokGallery,
 } from "../../components/ServiceLayout";
 
+export const metadata = {
+  title: "Equipment Transport | A & H Towing & Recovery",
+  description:
+    "Light equipment, tool trailers, and small machinery moved safely around Pecos, Reeves County, and West Texas.",
+};
+
 export default function EquipmentTransportPage() {
   return (
     <>
       <SiteHeader />
+
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
           serviceTitle="Equipment Transport"
@@ -22,6 +27,7 @@ export default function EquipmentTransportPage() {
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
+            {/* LEFT: Text content */}
             <div className="space-y-4 text-amber-50">
               <h2 className="text-2xl md:text-3xl font-black">
                 Move your gear without beating it up.
@@ -42,6 +48,7 @@ export default function EquipmentTransportPage() {
               </p>
             </div>
 
+            {/* RIGHT: TikTok-style gallery / visuals */}
             <TikTokGallery
               images={[
                 "/images/equipment-1.jpg",
@@ -52,12 +59,14 @@ export default function EquipmentTransportPage() {
             />
           </div>
 
+          {/* Bottom buttons */}
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />
           </div>
         </section>
       </main>
+
       <SiteFooter />
     </>
   );

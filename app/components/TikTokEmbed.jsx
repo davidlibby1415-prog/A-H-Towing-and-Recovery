@@ -1,33 +1,28 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
-export function TikTokEmbed({ videoId, caption }) {
-  const containerRef = useRef(null);
-
+const TikTokEmbed = ({ videoId, caption }) => {
   useEffect(() => {
-    const scriptId = "tiktok-embed-script";
-    if (!document.getElementById(scriptId)) {
-      const s = document.createElement("script");
-      s.id = scriptId;
-      s.src = "https://www.tiktok.com/embed.js";
-      s.async = true;
-      document.body.appendChild(s);
-    } else {
-      // If the script is already there, TikTok will usually re-scan automatically.
-      // Some implementations call window.tiktokEmbedLoad(), but it's optional.
+    // Load TikTok embed script once
+    if (!document.querySelector('script[src="https://www.tiktok.com/embed.js"]')) {
+      const script = document.createElement("script");
+      script.src = "https://www.tiktok.com/embed.js";
+      script.async = true;
+      document.body.appendChild(script);
     }
-  }, [videoId]);
-
-  const href = `https://www.tiktok.com/@285302ditchking/video/${videoId}`;
+  }, []);
 
   return (
-    <div ref={containerRef}>
+    <div className="w-full rounded-xl bg-neutral-900/80 border border-neutral-700 p-2 flex flex-col gap-2">
       <blockquote
-        className="tiktok-embed"
-        cite={href}
+        className="tiktok-embed w-full"
+        cite={`https://www.tiktok.com/@285302ditchking/video/${videoId}`}
         data-video-id={videoId}
-        style={{ maxWidth: "605px", minWidth: "325px" }}
+        style={{
+          margin: 0,
+          maxWidth: "100%",
+        }}
       >
         <section>
           <a
@@ -38,10 +33,16 @@ export function TikTokEmbed({ videoId, caption }) {
           >
             @285302ditchking
           </a>
-          {caption && <p>{caption}</p>}
         </section>
       </blockquote>
+
+      {caption && (
+        <div className="text-[11px] md:text-xs text-amber-100/80 font-semibold px-1">
+          {caption}
+        </div>
+      )}
     </div>
   );
-}
+};
 
+export default TikTokEmbed;

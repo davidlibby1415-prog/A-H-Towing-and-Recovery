@@ -6,7 +6,7 @@ import {
   PhoneCTA,
   TextCTA,
   TikTokGallery,
-} from "../../components/ServiceLayout";
+} from "../components/ServiceLayout";
 
 export const metadata = {
   title: "Flatbed / Rollback Services | A & H Towing & Recovery",
@@ -71,3 +71,4 @@ export default function FlatbedRollbackPage() {
     </>
   );
 }
+

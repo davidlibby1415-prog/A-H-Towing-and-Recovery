@@ -71,7 +71,7 @@ function ScrollToFormCTA({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white`}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white`}
       aria-label="Go to dispatch form"
     >
       {textContent}
@@ -610,8 +610,8 @@ export default function Home() {
     "Goldsmith",
     "Imperial",
     "I-20 Corridor",
-    "Kermit",
     "Jal",
+    "Kermit",
     "Lindsay",
     "Loving County",
     "McCamey",
@@ -623,8 +623,8 @@ export default function Home() {
     "Odessa",
     "Oilfield Routes",
     "Orla",
-    "Pecos, TX (Home Base)",
     "Pecos County",
+    "Pecos, TX (Home Base)",
     "Plateau",
     "Pyote",
     "Reeves County",
@@ -1228,7 +1228,7 @@ export default function Home() {
                         onClick={() =>
                           scrollToFormWithOffset("dispatch-form")
                         }
-                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahRed text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border-2 border-white"
+                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahRed text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border-2 border-white outline outline-2 outline-white"
                       >
                         Click Here to Text Location
                       </button>
@@ -1670,7 +1670,7 @@ function ContactSection() {
             <button
               type="button"
               onClick={handleSendText}
-              className="flex-1 max-w-xs inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white"
+              className="flex-1 max-w-xs inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white"
             >
               <span className="uppercase tracking-wide text-xs md:text-sm text-center font-extrabold">
                 CLICK HERE TO TEXT DISPATCH (INCLUDE GPS LOCATION)
@@ -1697,6 +1697,9 @@ function ContactSection() {
               WebkitTextStroke: "1px #000",
               textShadow: "0 4px 10px rgba(0,0,0,.8)",
               letterSpacing: "0.08em",
+              textDecoration: "underline",
+              textDecorationThickness: "3px",
+              textDecorationColor: "#f97316",
             }}
           >
             THIS JOB IS 24/7/365!
@@ -1705,7 +1708,7 @@ function ContactSection() {
 
         {/* TikTok frame using official embed */}
         <div className="relative w-[280px] sm:w-[320px] md:w-[360px] aspect-[9/16] flex items-center justify-center">
-          <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-sky-500 via-fuchsia-500 to-rose-500 p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+          <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden flex items-center justify-center">
               {/* TikTok mini header */}
               <div className="absolute top-2 left-3 flex items-center gap-1 text-[11px] text-white/80 z-10">
@@ -1721,6 +1724,7 @@ function ContactSection() {
                   className="tiktok-embed"
                   cite="https://www.tiktok.com/@285302ditchking/video/7226078493514222894"
                   data-video-id="7226078493514222894"
+                  data-color="black"
                   style={{ maxWidth: "605px", minWidth: "325px", margin: 0 }}
                 >
                   <section>
@@ -1791,6 +1795,16 @@ function ContactSection() {
             <span>Follow us on TikTok</span>
           </a>
         </div>
+
+        <style jsx global>{`
+          .tiktok-embed {
+            background-color: #000 !important;
+            color: #fff !important;
+          }
+          .tiktok-embed * {
+            color: #fff !important;
+          }
+        `}</style>
       </div>
     </div>
   );

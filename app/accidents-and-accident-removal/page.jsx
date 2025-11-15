@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   SiteHeader,
@@ -8,12 +6,19 @@ import {
   PhoneCTA,
   TextCTA,
   TikTokGallery,
-} from "../components/ServiceLayout";
+} from "../../components/ServiceLayout";
+
+export const metadata = {
+  title: "Accident Removal | A & H Towing & Recovery",
+  description:
+    "Professional, patient accident-scene towing and cleanup across Pecos, Reeves County, and the West Texas highways.",
+};
 
 export default function AccidentRemovalPage() {
   return (
     <>
       <SiteHeader />
+
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
           serviceTitle="Accident Removal"
@@ -22,6 +27,7 @@ export default function AccidentRemovalPage() {
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
+            {/* LEFT: Text content */}
             <div className="space-y-4 text-amber-50">
               <h2 className="text-2xl md:text-3xl font-black">
                 After the crash, we help you breathe again.
@@ -43,6 +49,7 @@ export default function AccidentRemovalPage() {
               </p>
             </div>
 
+            {/* RIGHT: TikTok-style gallery / visuals */}
             <TikTokGallery
               images={[
                 "/images/accident-1.jpg",
@@ -53,12 +60,14 @@ export default function AccidentRemovalPage() {
             />
           </div>
 
+          {/* Bottom buttons */}
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />
           </div>
         </section>
       </main>
+
       <SiteFooter />
     </>
   );

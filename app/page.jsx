@@ -4,6 +4,10 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 /* ============================ Utilities ============================ */
+
+/**
+ * Build an sms: link with prefilled body.
+ */
 function smsHref(number, body) {
   const encoded = encodeURIComponent(body);
   const isiOS =
@@ -26,10 +30,12 @@ function scrollToFormWithOffset(targetId = "dispatch-form", offset = 210) {
 }
 
 /* ====================== Small UI Helpers / Icons ====================== */
+
 function PhoneCTA({ className = "", fullWidth = false }) {
   const widthClasses = fullWidth
     ? "w-full sm:w-auto !min-w-0"
     : "min-w-[260px]";
+
   return (
     <a
       href="tel:+14328424578"
@@ -37,7 +43,7 @@ function PhoneCTA({ className = "", fullWidth = false }) {
       aria-label="Call 24/7 dispatch at (432) 842-4578"
     >
       <span className="uppercase tracking-wide text-xs md:text-sm text-center">
-        CLICK HERE TO CALL 24/7 DISPATCH!
+        CLICK HERE TO CALL 24/7 DISPATCH
       </span>
       <span className="mt-1 text-lg md:text-xl leading-none">
         (432) 842-4578
@@ -64,7 +70,7 @@ function ScrollToFormCTA({
   };
 
   const textContent = appendClickHere
-    ? `${label.toUpperCase()} CLICK HERE`
+    ? `${label.toUpperCase()} — CLICK HERE`
     : label.toUpperCase();
 
   return (
@@ -80,6 +86,7 @@ function ScrollToFormCTA({
 }
 
 /* ============ Time & Temperature (Header, small, non-blocking) ============ */
+
 function TimeTemp() {
   const [now, setNow] = useState(new Date());
   const [temp, setTemp] = useState(null);
@@ -132,6 +139,7 @@ function TimeTemp() {
 }
 
 /* ===== Tiny translucent “bubble” helpers ===== */
+
 function Chip({ children, className = "" }) {
   return (
     <span
@@ -161,7 +169,7 @@ function BubbleBlock({ children, className = "" }) {
   );
 }
 
-/* Tight caution callout (striped border, solid yellow body; text styles set by children) */
+/* Tight caution callout (striped border, solid yellow body) */
 function StripedCallout({ children, className = "" }) {
   return (
     <div
@@ -181,7 +189,7 @@ function StripedCallout({ children, className = "" }) {
   );
 }
 
-/* Thin gradient strip */
+/* Thin gradient strip (kept for future use) */
 function AccentStrip({ color = "from-ahBlue to-ahRed", className = "" }) {
   return (
     <div className={`h-1 w-full bg-gradient-to-r ${color} ${className}`} />
@@ -189,6 +197,7 @@ function AccentStrip({ color = "from-ahBlue to-ahRed", className = "" }) {
 }
 
 /* =================== GLOBAL Animated Border (red↔blue) =================== */
+
 function AnimBorder({ children, className = "" }) {
   return (
     <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>
@@ -197,7 +206,8 @@ function AnimBorder({ children, className = "" }) {
   );
 }
 
-/* Steel panel container (background only) */
+/* Steel panel container (diamond plate background) */
+
 function SteelPanel({
   children,
   className = "",
@@ -223,7 +233,8 @@ function SteelPanel({
   );
 }
 
-/* Section wrapper (tight) */
+/* Section wrapper */
+
 function Section({ id, children, className = "" }) {
   return (
     <section id={id} className={`py-7 md:py-8 ${className}`}>
@@ -233,6 +244,7 @@ function Section({ id, children, className = "" }) {
 }
 
 /* Icons */
+
 const IconTruck = (props) => (
   <svg
     viewBox="0 0 24 24"
@@ -247,6 +259,7 @@ const IconTruck = (props) => (
     <circle cx="17.5" cy="17.5" r="2" />
   </svg>
 );
+
 const IconFlatbed = (props) => (
   <svg
     viewBox="0 0 24 24"
@@ -261,17 +274,20 @@ const IconFlatbed = (props) => (
     <circle cx="18" cy="18" r="2" />
   </svg>
 );
+
 const IconLock = (props) => (
   <svg
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
     strokeWidth="1.8"
+    {...props}
   >
     <rect x="5" y="11" width="14" height="9" rx="2" />
     <path d="M8 11V8a4 4 0 1 1 8 0v3" />
   </svg>
 );
+
 const IconBolt = (props) => (
   <svg
     viewBox="0 0 24 24"
@@ -282,6 +298,7 @@ const IconBolt = (props) => (
     <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" />
   </svg>
 );
+
 const IconHook = (props) => (
   <svg
     viewBox="0 0 24 24"
@@ -293,6 +310,7 @@ const IconHook = (props) => (
     <circle cx="12" cy="3" r="2" />
   </svg>
 );
+
 const IconFuel = (props) => (
   <svg
     viewBox="0 0 24 24"
@@ -306,6 +324,7 @@ const IconFuel = (props) => (
 );
 
 /* ===== Company name on steel (animated red↔blue border; RED letters) ===== */
+
 function BrandSlab({ Tag = "h1" }) {
   return (
     <AnimBorder>
@@ -329,97 +348,7 @@ function BrandSlab({ Tag = "h1" }) {
   );
 }
 
-/* ========================= New service award medals ========================= */
-
-const medalStyles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    margin: "10px",
-  },
-  ribbonContainer: {
-    display: "flex",
-    justifyContent: "center",
-    marginBottom: "-10px",
-  },
-  ribbon: {
-    width: "20px",
-    height: "60px",
-    margin: "0 2px",
-  },
-  medal: {
-    borderRadius: "50%",
-  },
-};
-
-function ServiceAwardMedal({ text = "Outstanding Service Award" }) {
-  const lines = text.split("\n");
-  return (
-    <div style={medalStyles.container}>
-      <div style={medalStyles.ribbonContainer}>
-        <div
-          style={{ ...medalStyles.ribbon, backgroundColor: "#d32f2f" }}
-        ></div>
-        <div
-          style={{ ...medalStyles.ribbon, backgroundColor: "#1976d2" }}
-        ></div>
-        <div
-          style={{ ...medalStyles.ribbon, backgroundColor: "#fbc02d" }}
-        ></div>
-      </div>
-      <svg
-        width="180"
-        height="180"
-        viewBox="0 0 200 200"
-        xmlns="http://www.w3.org/2000/svg"
-        style={medalStyles.medal}
-      >
-        <circle
-          cx="100"
-          cy="100"
-          r="70"
-          fill="#c0c0c0"
-          stroke="#555"
-          strokeWidth="6"
-        />
-        <g fill="#888">
-          {[...Array(12)].map((_, i) => {
-            const angle = (i * 30 * Math.PI) / 180;
-            const x = 100 + Math.cos(angle) * 80;
-            const y = 100 + Math.sin(angle) * 80;
-            return <circle key={i} cx={x} cy={y} r="8" />;
-          })}
-        </g>
-        <circle
-          cx="100"
-          cy="100"
-          r="50"
-          fill="#e0e0e0"
-          stroke="#555"
-          strokeWidth="4"
-        />
-        <text
-          x="100"
-          y="90"
-          textAnchor="middle"
-          fontSize="9"
-          fontWeight="bold"
-          fill="#333"
-          style={{ fontFamily: "sans-serif" }}
-        >
-          {lines.map((line, i) => (
-            <tspan key={i} x="100" dy={i === 0 ? 0 : 12}>
-              {line}
-            </tspan>
-          ))}
-        </text>
-      </svg>
-    </div>
-  );
-}
-
-/* ========================= Golden Medals Image ========================= */
+/* ========================= “Golden medals” image ========================= */
 
 function GoldenFacts() {
   return (
@@ -436,6 +365,7 @@ function GoldenFacts() {
 }
 
 /* ========================= Top Marquee ========================= */
+
 function TopLocationsMarquee() {
   const text =
     "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Kermit • Jal • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County";
@@ -551,6 +481,7 @@ function TopLocationsMarquee() {
 }
 
 /* ===================== Video wrapper ===================== */
+
 function VideoSection({
   src,
   minVH = 100,
@@ -563,6 +494,7 @@ function VideoSection({
   overlayStrength = 0.35,
 }) {
   const [videoError, setVideoError] = useState(false);
+
   return (
     <section
       className={`relative isolate w-full overflow-hidden ${extraClass}`}
@@ -615,17 +547,13 @@ function VideoSection({
 }
 
 /* ============================== Page ============================== */
+
 export default function Home() {
   useEffect(() => {
     if ("scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
-    window.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: "instant" in window ? "instant" : "auto",
-    });
-    setTimeout(() => window.scrollTo(0, 0), 0);
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, []);
 
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -647,7 +575,6 @@ export default function Home() {
     }, 350);
   };
 
-  /* Alphabetized locations for the list (kept) */
   const locations = [
     "Balmorhea",
     "Carlsbad",
@@ -717,7 +644,7 @@ export default function Home() {
               </div>
               <div className="leading-tight">
                 <div className="font-bold drop-shadow text-red-600">
-                  A&amp;H Towing & Recovery, LLC
+                  A&amp;H Towing &amp; Recovery, LLC
                 </div>
                 <div className="text-xs opacity-90">
                   2712 W F Street, Pecos, TX 79772
@@ -732,6 +659,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
             <nav className="ml-auto hidden md:flex items-center gap-6 text-base md:text-lg font-extrabold">
               {/* Services dropdown with delayed close */}
               <div
@@ -850,7 +778,7 @@ export default function Home() {
           </div>
         </header>
 
-        {/* ===== Top steel banner ===== */}
+        {/* Top steel banner */}
         <section
           className="relative z-[10] w-full overflow-hidden"
           style={{ minHeight: "clamp(110px, 15vh, 200px)" }}
@@ -860,7 +788,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ========== Tow1 (show full wrecker) ========== */}
+        {/* Tow1 video */}
         <VideoSection
           src="/Videos/tow1.mp4"
           minVH={76}
@@ -876,7 +804,6 @@ export default function Home() {
           }}
         />
 
-        {/* Space so wheels are clearly visible before next section */}
         <div className="h-7" />
 
         {/* =================== STRANDED SECTION =================== */}
@@ -912,7 +839,7 @@ export default function Home() {
                     Clear pricing.
                     <br />
                     <span className="mt-3 inline-block underline font-black">
-                      ⬇ CLICK BELOW TO CALL OR TEXT US DIRECT! ⬇
+                      ⬇ CLICK BELOW TO CALL OR TEXT US DIRECT ⬇
                     </span>
                   </div>
                 </StripedCallout>
@@ -924,7 +851,7 @@ export default function Home() {
                 <PhoneCTA className="animate-cta-pulse" />
                 <ScrollToFormCTA
                   className="animate-cta-pulse"
-                  label="CLICK HERE TO TEXT DISPATCH. (INCLUDE MY GPS LOCATION)."
+                  label="CLICK HERE TO TEXT DISPATCH (INCLUDE MY GPS LOCATION)"
                   appendClickHere={false}
                 />
               </div>
@@ -938,7 +865,6 @@ export default function Home() {
         <Section id="services" className="bg-red-800/90">
           <AnimBorder>
             <SteelPanel className="text-center">
-              {/* Services Provided */}
               <div
                 className="inline-block rounded-2xl px-5 py-2 bg-black backdrop-blur-sm"
                 style={{ border: "1.5px solid #c0c0c0" }}
@@ -956,7 +882,7 @@ export default function Home() {
                   Services Provided
                 </h3>
                 <p className="mt-1 text-base md:text-lg font-extrabold text-amber-100 uppercase">
-                  CLICK BELOW for more information
+                  CLICK BELOW FOR MORE INFORMATION
                 </p>
               </div>
 
@@ -991,25 +917,25 @@ export default function Home() {
                     {
                       icon: IconTruck,
                       title: "Heavy Duty & Commercial Towing",
-                      desc: "Oilfield & Fleet • Long & Short Distance",
+                      desc: "Oilfield & Fleet • Long & short distance",
                       href: "/heavy-duty-commercial-towing",
                     },
                     {
                       icon: IconTruck,
                       title: "Oilfield Routes Tow Service",
-                      desc: "Lease Roads • Remote Access • Long & Short Distance",
+                      desc: "Lease roads • Remote access • Long & short distance",
                       href: "/oilfield-routes-tow-service",
                     },
                     {
                       icon: IconFlatbed,
                       title: "Equipment Transport",
-                      desc: "Light Equipment & Tools • Long & Short distance",
+                      desc: "Light equipment & tools • Long & short distance",
                       href: "/equipment-transport",
                     },
                     {
                       icon: IconFlatbed,
                       title: "Flatbed / Rollback Services",
-                      desc: "Damage-Free Transport • Long & Short Distance",
+                      desc: "Damage-conscious transport • Long & short distance",
                       href: "/flatbed-rollback-services",
                     },
                   ].map(({ icon: Ico, title, desc, href }) => (
@@ -1133,13 +1059,13 @@ export default function Home() {
                     {
                       icon: IconTruck,
                       title: "Accident Removal",
-                      desc: "Secure, Professional",
+                      desc: "Secure, professional scene towing",
                       href: "/accidents-and-accident-removal",
                     },
                     {
                       icon: IconHook,
                       title: "Winching / Recovery",
-                      desc: "Off-Road, Mud, Sand",
+                      desc: "Off-road, mud, sand recoveries",
                       href: "/winching-recovery",
                     },
                   ].map(({ icon: Ico, title, desc, href }) => (
@@ -1207,13 +1133,12 @@ export default function Home() {
                         </span>
                       </div>
                       <div className="mt-2 text-xs md:text-sm font-bold text-amber-50 text-center">
-                        Use the Map Below to Find Your Location or Use the
-                        Buttons Below to Contact Us ASAP.
+                        Use the map below to find your location or use the
+                        buttons below to contact us ASAP.
                       </div>
                     </div>
                   </div>
 
-                  {/* Map with 200-mile radius overlay */}
                   <div className="relative rounded-2xl overflow-hidden border-4 border-yellow-400/90 bg-black shadow-[0_0_25px_rgba(251,191,36,0.7)]">
                     <iframe
                       title="Service Area Map (Dark) with Radius"
@@ -1227,7 +1152,6 @@ export default function Home() {
                           "invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.8)",
                       }}
                     />
-                    {/* Approximate 200-mile glowing circle */}
                     <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
                       <div
                         className="rounded-full"
@@ -1266,7 +1190,7 @@ export default function Home() {
                         </span>
                       </div>
                       <div className="mt-2 text-xs md:text-sm font-bold text-amber-50 text-center">
-                        From A to Z, Where Do You Need Us? Just Ask.
+                        From A to Z, where do you need us? Just ask.
                       </div>
                     </div>
                   </div>
@@ -1299,17 +1223,14 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Johnny Cash quote below map + cities */}
+              {/* Johnny Cash quote */}
               <div className="mt-6 flex justify-center">
                 <div className="w-full max-w-5xl rounded-2xl bg-black/85 border-2 border-yellow-300 shadow-[0_0_28px_rgba(251,191,36,0.8)] px-4 sm:px-6 py-3 text-center">
-                  <div className="text-2xl md:text-3xl mb-1">
-                    🎶 🎵 🎶
-                  </div>
+                  <div className="text-2xl md:text-3xl mb-1">🎶 🎵 🎶</div>
                   <p className="text-base md:text-lg font-extrabold text-amber-100">
-                    &quot;Listen, I&apos;ve Traveled Every Road in This Here
-                    Land. I&apos;ve Been Everywhere Man. I&apos;ve Been
-                    Everywhere Man. Crossed the Deserts Bare, Man&quot; – Johnny
-                    Cash
+                    &quot;Listen, I&apos;ve traveled every road in this here
+                    land. I&apos;ve been everywhere, man. Crossed the deserts
+                    bare, man.&quot; – Johnny Cash
                   </p>
                   <div className="mt-1 text-xl">🎵 🎶 🎵</div>
                 </div>
@@ -1318,7 +1239,7 @@ export default function Home() {
           </AnimBorder>
         </Section>
 
-        {/* =================== Tow3 =================== */}
+        {/* Tow3 video */}
         <Section className="bg-red-800/90">
           <VideoSection
             src="/Videos/tow3.mp4"
@@ -1374,7 +1295,7 @@ export default function Home() {
           <BrandSlab Tag="h2" />
         </div>
 
-        {/* Payments row only */}
+        {/* Payments row */}
         <div className="container max-w-7xl py-4 bg-red-900/60 rounded-2xl">
           <div className="w-full flex justify-center">
             <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/30 via-rose-500/30 to-amber-400/30 border border-black/10 max-w-fit">
@@ -1515,6 +1436,7 @@ export default function Home() {
 }
 
 /* ========================= Contact Section ========================= */
+
 function ContactSection() {
   const [name, setName] = useState("");
   const [callback, setCallback] = useState("");
@@ -1608,7 +1530,7 @@ function ContactSection() {
           red button below to submit the form to text for services.
         </div>
 
-        {/* FORM on mint green */}
+        {/* FORM */}
         <form
           id="dispatch-form"
           className="grid gap-3"
@@ -1734,8 +1656,8 @@ function ContactSection() {
             </button>
           </div>
           <p className="mt-1 text-sm font-extrabold">
-            The red button composes a text with your details and GPS (if
-            available) in your Messages app.
+            The red button opens your Messages app with your details and GPS
+            (if available) already filled in.
           </p>
         </form>
       </div>
@@ -1758,11 +1680,10 @@ function ContactSection() {
               textDecorationColor: "#f97316",
             }}
           >
-            THIS JOB IS 24/7/365!
+            THIS JOB IS 24/7/365
           </div>
         </div>
 
-        {/* TikTok frame using official embed */}
         <div className="relative w-[280px] sm:w-[320px] md:w-[360px] aspect-[9/16] flex items-center justify-center">
           <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden flex items-center justify-center">

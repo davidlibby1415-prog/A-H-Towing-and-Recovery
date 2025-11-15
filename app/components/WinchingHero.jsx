@@ -7,12 +7,11 @@ import { TikTokEmbed } from "./TikTokEmbed";
 export default function WinchingHero() {
   return (
     <section className="relative w-full overflow-hidden bg-black border-b border-black/40">
-      {/* Background TikTok video */}
+      {/* Background TikTok video + dark overlay */}
       <div className="absolute inset-0">
         {/* Center the embed */}
         <div className="w-full h-full flex items-center justify-center">
-          {/* Big but constrained on desktop */}
-          <div className="w-full max-w-md md:max-w-2xl lg:max-w-3xl opacity-70">
+          <div className="w-full max-w-md md:max-w-2xl lg:max-w-3xl opacity-80">
             <TikTokEmbed
               videoId="7501393555433262367"
               caption="Practicing for Perfection"
@@ -20,8 +19,8 @@ export default function WinchingHero() {
           </div>
         </div>
 
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-black/75 pointer-events-none" />
+        {/* Slightly dark overlay so text is readable, but video is visible */}
+        <div className="absolute inset-0 bg-black/55 pointer-events-none" />
       </div>
 
       {/* Foreground hero content */}

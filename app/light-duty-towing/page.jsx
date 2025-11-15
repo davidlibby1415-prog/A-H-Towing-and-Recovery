@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   SiteHeader,
@@ -9,6 +7,12 @@ import {
   TextCTA,
   TikTokGallery,
 } from "../components/ServiceLayout";
+
+export const metadata = {
+  title: "Light Duty Towing | A & H Towing & Recovery",
+  description:
+    "Light duty towing for cars, SUVs, and pickups around Pecos, Reeves County, and the West Texas highways with clear communication and careful handling.",
+};
 
 export default function LightDutyTowingPage() {
   return (
@@ -42,9 +46,7 @@ export default function LightDutyTowingPage() {
               <ul className="space-y-2 text-sm md:text-base font-semibold">
                 <li>• Cars, SUVs, half-ton and light pickups</li>
                 <li>• Local tows across Pecos and surrounding communities</li>
-                <li>
-                  • Long-distance runs along I-20, US-285, TX-17, TX-302
-                </li>
+                <li>• Long-distance runs along I-20, US-285, TX-17, TX-302</li>
                 <li>
                   • Driveable and non-driveable units (flat tires, no-starts,
                   etc.)
@@ -121,3 +123,4 @@ export default function LightDutyTowingPage() {
     </>
   );
 }
+

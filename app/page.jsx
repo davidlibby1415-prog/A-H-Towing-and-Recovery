@@ -367,6 +367,8 @@ function ServiceAwardMedal({ text = "Outstanding Service Award" }) {
   );
 }
 
+/* ========================= Golden Medals Image ========================= */
+
 function GoldenFacts() {
   return (
     <div className="mt-6 flex justify-center">
@@ -381,6 +383,7 @@ function GoldenFacts() {
   );
 }
 
+
       {/* Credit link (optional but nice) */}
       <a
         href="https://www.canva.com/design/DAG4t8y9wMI/tHfVe0y4rq_cLhS-W-v6hA/view?utm_content=DAG4t8y9wMI&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
@@ -388,11 +391,7 @@ function GoldenFacts() {
         rel="noopener noreferrer"
         className="text-xs sm:text-sm font-semibold text-amber-200 underline hover:text-amber-300"
       >
-        JD Power Inspired Cog Wheel Sticker by Elizabeth
-      </a>
-    </div>
-  );
-}
+       
 
 /* ========================= Top Marquee ========================= */
 function TopLocationsMarquee() {

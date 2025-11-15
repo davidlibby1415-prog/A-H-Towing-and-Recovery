@@ -1,4 +1,4 @@
-// app/components/ServiceLayout.jsx (or /components/ServiceLayout.jsx)
+//components/ServiceLayout.jsx)
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";

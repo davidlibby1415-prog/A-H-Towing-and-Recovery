@@ -1,47 +1,73 @@
-# Node modules and build output
+# =========================
+# Node modules & build output
+# =========================
 node_modules/
 .next/
 out/
 dist/
 
+# If you ever use Next export
+# out/
+
+# =========================
 # Logs
+# =========================
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 *.log
 
+# =========================
 # Environment variables
+# (keep these local only)
+# =========================
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 
+# =========================
 # OS-generated files
+# =========================
 .DS_Store
 Thumbs.db
 ehthumbs.db
 Icon?
 *.swp
 
-# Editor folders
+# =========================
+# Editor / IDE folders
+# =========================
 .vscode/
 .idea/
 *.sublime-workspace
 *.sublime-project
 
+# =========================
 # Dependency caches
+# =========================
 .pnpm-store/
-package-lock.json
-yarn.lock
 
-# Optional: if using StackBlitz or Vercel locally
+# Lockfiles – usually you
+# WANT these tracked for consistent builds.
+# Uncomment if you truly want to ignore them.
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# =========================
+# Tooling / platforms
+# =========================
 .vercel/
 .stackblitzrc
 
+# =========================
 # Miscellaneous
+# =========================
 coverage/
 *.pid
 *.seed
 *.tgz
+

@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // ✅ Enables React 18 and modern Next.js features
+  // React / build behavior
   reactStrictMode: true,
   swcMinify: true,
 
-  // ✅ Ignore lint/type errors during build so Vercel can deploy cleanly
+  // Let Vercel build even if there are lint / TS issues
+  // (You should still run `npm run lint` locally when you can)
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -12,7 +13,8 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
 
-  // ✅ Allow embedding TikTok, Google Maps, and other iframes safely
+  // Remote image domains (for <Image />).
+  // This does NOT control iframes, only Next.js Image optimization.
   images: {
     domains: [
       "cdn-icons-png.flaticon.com",
@@ -23,10 +25,10 @@ const nextConfig = {
     ],
   },
 
-  // ✅ Enable static page export (optional; for fallback hosting)
+  // Good default for Vercel / Node deployments
   output: "standalone",
 
-  // ✅ Optional security headers
+  // Basic security-related headers
   async headers() {
     return [
       {
@@ -34,7 +36,10 @@ const nextConfig = {
         headers: [
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
         ],
       },
     ];

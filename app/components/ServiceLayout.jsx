@@ -130,6 +130,27 @@ function TimeTempDisplay() {
   );
 }
 
+/* Slim bar version for pages that want a dedicated strip */
+export function TimeTempBar() {
+  const { timeString, tempF } = useTimeAndTemp();
+
+  return (
+    <div className="w-full bg-black/80 border-b border-black/60">
+      <div className="container max-w-7xl flex items-center justify-between py-1.5 text-[10px] md:text-xs text-amber-100">
+        <span className="font-semibold uppercase tracking-wide">
+          Pecos • Reeves County • West Texas Routes
+        </span>
+        <div className="flex items-center gap-4">
+          <span>Time: {timeString || "--:--"}</span>
+          <span>
+            Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ===== Gradient border + steel panel + big brand ===== */
 
 function AnimBorder({ children, className = "" }) {

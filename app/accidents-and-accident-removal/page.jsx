@@ -68,22 +68,33 @@ export default function AccidentRemovalPage() {
 
               <p className="text-[11px] md:text-xs text-amber-100/80 mb-3">
                 Real recoveries from the 285 / 302 “thunderdome” — flipped
-                18-wheelers, locomotives, and oilfield wrecks handled with
-                professionalism and patience.
+                18-wheelers, locomotives, oversized loads, and training to keep
+                everything sharp.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4">
+                {/* 1. Deploy Airbags: Flipped 18 Wheeler */}
                 <TikTokEmbed
                   videoId="6908073338308939014"
                   caption="Deploy Airbags: Flipped 18 Wheeler"
                 />
+
+                {/* 2. Team Effort: Locomotive Accident */}
                 <TikTokEmbed
                   videoId="7230219035911327022"
                   caption="Team Effort: Locomotive Accident"
                 />
+
+                {/* 3. The Rotator for an Oversized Accident */}
                 <TikTokEmbed
-                  videoId="7396334944261262622"
-                  caption="Highway Closure: Oilfield Accident"
+                  videoId="7414757668876733726"
+                  caption="The Rotator for an Oversized Accident"
+                />
+
+                {/* 4. Practicing for Perfection */}
+                <TikTokEmbed
+                  videoId="7501393555433262367"
+                  caption="Practicing for Perfection"
                 />
               </div>
             </div>

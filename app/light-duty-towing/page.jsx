@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   SiteHeader,
@@ -24,12 +26,13 @@ export default function LightDutyTowingPage() {
             {/* LEFT: Text content */}
             <div className="space-y-4 text-amber-50">
               <h2 className="text-2xl md:text-3xl font-black">
-                Daily drivers, family vehicles, and work rigs — handled with care.
+                Daily drivers, family vehicles, and work rigs — handled with
+                care.
               </h2>
 
               <p className="text-sm md:text-base font-semibold">
-                A breakdown or no-start doesn&apos;t have to wreck your whole day.
-                We focus on{" "}
+                A breakdown or no-start doesn&apos;t have to wreck your whole
+                day. We focus on{" "}
                 <span className="font-black">
                   safe loading, clear communication, and clean drop-offs
                 </span>{" "}
@@ -39,14 +42,19 @@ export default function LightDutyTowingPage() {
               <ul className="space-y-2 text-sm md:text-base font-semibold">
                 <li>• Cars, SUVs, half-ton and light pickups</li>
                 <li>• Local tows across Pecos and surrounding communities</li>
-                <li>• Long-distance runs along I-20, US-285, TX-17, TX-302</li>
-                <li>• Driveable and non-driveable units (flat tires, no-starts, etc.)</li>
+                <li>
+                  • Long-distance runs along I-20, US-285, TX-17, TX-302
+                </li>
+                <li>
+                  • Driveable and non-driveable units (flat tires, no-starts,
+                  etc.)
+                </li>
               </ul>
 
               <p className="text-sm md:text-base font-semibold">
-                Tell us where you are, what you&apos;re driving, and where you want it
-                to go — home, shop, yard, or dealership. We&apos;ll give you a straight
-                answer on ETA and pricing.
+                Tell us where you are, what you&apos;re driving, and where you
+                want it to go — home, shop, yard, or dealership. We&apos;ll give
+                you a straight answer on ETA and pricing.
               </p>
 
               {/* Small “what to tell dispatch” helper */}
@@ -61,8 +69,8 @@ export default function LightDutyTowingPage() {
                   <li>• Where you want the vehicle delivered</li>
                 </ul>
                 <p className="mt-2">
-                  The more info you send up front, the fewer calls we have to make
-                  back and forth while you&apos;re already stressed.
+                  The more info you send up front, the fewer calls we have to
+                  make back and forth while you&apos;re already stressed.
                 </p>
               </div>
             </div>
@@ -85,15 +93,17 @@ export default function LightDutyTowingPage() {
                 <ul className="space-y-1">
                   <li>• Turn on your hazards if it&apos;s safe to do so.</li>
                   <li>• Stay inside the vehicle or well away from traffic.</li>
-                  <li>• Gather keys, wallets, and anything you need to leave with.</li>
                   <li>
-                    • If law enforcement is on scene, let them know A &amp; H Towing
-                    is en route.
+                    • Gather keys, wallets, and anything you need to leave with.
+                  </li>
+                  <li>
+                    • If law enforcement is on scene, let them know A &amp; H
+                    Towing is en route.
                   </li>
                 </ul>
                 <p className="mt-2">
-                  Our goal is to get you and your vehicle off the shoulder and into
-                  a safer spot as quickly and safely as possible.
+                  Our goal is to get you and your vehicle off the shoulder and
+                  into a safer spot as quickly and safely as possible.
                 </p>
               </div>
             </div>

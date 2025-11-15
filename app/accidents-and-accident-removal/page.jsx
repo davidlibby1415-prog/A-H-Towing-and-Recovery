@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   SiteHeader,
@@ -5,8 +7,8 @@ import {
   BrandHero,
   PhoneCTA,
   TextCTA,
-  TikTokGallery,
 } from "../components/ServiceLayout";
+import { TikTokEmbed } from "../components/TikTokEmbed";
 
 export const metadata = {
   title: "Accident Removal | A & H Towing & Recovery",
@@ -49,15 +51,44 @@ export default function AccidentRemovalPage() {
               </p>
             </div>
 
-            {/* RIGHT: TikTok-style gallery / visuals */}
-            <TikTokGallery
-              images={[
-                "/images/accident-1.jpg",
-                "/images/accident-2.jpg",
-                "/images/accident-3.jpg",
-                "/images/accident-4.jpg",
-              ]}
-            />
+            {/* RIGHT: TikTok grid / visuals */}
+            <div className="rounded-2xl border-2 border-yellow-400/90 bg-black/80 p-4 shadow-[0_0_25px_rgba(251,191,36,0.6)]">
+              <div className="mb-3 flex justify-between items-center">
+                <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 bg-yellow-400 text-black text-[11px] font-black uppercase tracking-wide">
+                  <span className="text-xs">🎥</span>
+                  <span>Real Accident Removal</span>
+                </div>
+                <a
+                  className="text-[10px] underline text-amber-100 hover:text-amber-200"
+                  href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View on TikTok
+                </a>
+              </div>
+
+              <p className="text-[11px] md:text-xs text-amber-100/80 mb-3">
+                These are real recoveries handled by our crew across the 285 /
+                302 “thunderdome” — flipped 18-wheelers, locomotives, and
+                oilfield wrecks.
+              </p>
+
+              <div className="grid gap-4">
+                <TikTokEmbed
+                  videoId="6908073338308939014"
+                  caption="Deploy Airbags: Flipped 18 Wheeler"
+                />
+                <TikTokEmbed
+                  videoId="7230219035911327022"
+                  caption="Team Effort: Locomotive Accident"
+                />
+                <TikTokEmbed
+                  videoId="7396334944261262622"
+                  caption="Highway Closure: Oilfield Accident"
+                />
+              </div>
+            </div>
           </div>
 
           {/* Bottom buttons */}

@@ -2,11 +2,11 @@ import React from "react";
 import {
   SiteHeader,
   SiteFooter,
-  BrandHero,
   PhoneCTA,
   TextCTA,
   TikTokGallery,
 } from "../components/ServiceLayout";
+import WinchingHero from "../components/WinchingHero";
 
 export const metadata = {
   title: "Winching / Recovery | A & H Towing & Recovery",
@@ -20,10 +20,8 @@ export default function WinchingRecoveryPage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        <BrandHero
-          serviceTitle="Winching / Recovery"
-          serviceSubtitle="Off-road, mud, sand, and soft shoulder recoveries on lease roads, ranch tracks, and West Texas highways."
-        />
+        {/* New hero with TikTok background */}
+        <WinchingHero />
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
@@ -126,4 +124,3 @@ export default function WinchingRecoveryPage() {
     </>
   );
 }
-

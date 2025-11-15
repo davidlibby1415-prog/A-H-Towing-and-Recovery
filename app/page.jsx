@@ -79,6 +79,58 @@ function ScrollToFormCTA({
   );
 }
 
+/* ============ Time & Temperature (Header, small, non-blocking) ============ */
+function TimeTemp() {
+  const [now, setNow] = useState(new Date());
+  const [temp, setTemp] = useState(null);
+  const [locationLabel, setLocationLabel] = useState("Pecos, TX");
+
+  // Update clock every minute
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 60000);
+    return () => clearInterval(id);
+  }, []);
+
+  // Optional live temp using OpenWeather; requires NEXT_PUBLIC_OPENWEATHER_KEY
+  useEffect(() => {
+    const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
+    if (!apiKey) return;
+
+    const lat = 31.4229;
+    const lon = -103.4938;
+
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.main?.temp) {
+          setTemp(Math.round(data.main.temp));
+        }
+        if (data?.name) {
+          setLocationLabel(`${data.name}, TX`);
+        }
+      })
+      .catch(() => {
+        // fail silently; just leaves temp as null
+      });
+  }, []);
+
+  const timeStr = now.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  return (
+    <div className="hidden sm:flex flex-col items-end text-[10px] leading-tight text-amber-100/90">
+      <span className="font-semibold">{timeStr}</span>
+      <span className="font-semibold">
+        {temp != null ? `${temp}°F` : "--°F"} • {locationLabel}
+      </span>
+    </div>
+  );
+}
+
 /* ===== Tiny translucent “bubble” helpers ===== */
 function Chip({ children, className = "" }) {
   return (
@@ -790,7 +842,11 @@ export default function Home() {
               </a>
             </nav>
 
-            <PhoneCTA className="hidden sm:inline-flex" />
+            {/* Time & Temp + always-on blue call button */}
+            <div className="ml-4 flex items-center gap-3">
+              <TimeTemp />
+              <PhoneCTA className="hidden sm:inline-flex" />
+            </div>
           </div>
         </header>
 

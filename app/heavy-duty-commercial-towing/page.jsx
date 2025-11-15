@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   SiteHeader,
@@ -10,10 +8,17 @@ import {
   TikTokGallery,
 } from "../../components/ServiceLayout";
 
+export const metadata = {
+  title: "Heavy Duty & Commercial Towing | A & H Towing & Recovery",
+  description:
+    "Oilfield, fleet, and commercial units moved safely out of Pecos, Reeves County, and the West Texas patch.",
+};
+
 export default function HeavyDutyCommercialTowingPage() {
   return (
     <>
       <SiteHeader />
+
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
           serviceTitle="Heavy Duty & Commercial Towing"
@@ -22,6 +27,7 @@ export default function HeavyDutyCommercialTowingPage() {
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
+            {/* LEFT: Text content */}
             <div className="space-y-4 text-amber-50">
               <h2 className="text-2xl md:text-3xl font-black">
                 When your work truck can’t work, we move it.
@@ -42,6 +48,7 @@ export default function HeavyDutyCommercialTowingPage() {
               </p>
             </div>
 
+            {/* RIGHT: TikTok-style gallery / visuals */}
             <TikTokGallery
               images={[
                 "/images/heavy-1.jpg",
@@ -52,13 +59,16 @@ export default function HeavyDutyCommercialTowingPage() {
             />
           </div>
 
+          {/* Bottom buttons */}
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />
           </div>
         </section>
       </main>
+
       <SiteFooter />
     </>
   );
 }
+

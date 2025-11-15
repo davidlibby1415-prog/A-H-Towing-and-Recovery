@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start"
   },
   "dependencies": {
     "next": "13.4.19",
@@ -29,6 +28,6 @@
     "maintained node versions"
   ],
   "engines": {
-    "node": "18.x"
+    "node": "22.x"
   }
 }

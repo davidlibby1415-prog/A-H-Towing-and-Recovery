@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   SiteHeader,
@@ -10,10 +8,17 @@ import {
   TikTokGallery,
 } from "../../components/ServiceLayout";
 
+export const metadata = {
+  title: "Flatbed / Rollback Services | A & H Towing & Recovery",
+  description:
+    "Damage-conscious flatbed and rollback towing for low vehicles, AWD units, and non-rolling or heavily damaged vehicles across Pecos and West Texas.",
+};
+
 export default function FlatbedRollbackPage() {
   return (
     <>
       <SiteHeader />
+
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
           serviceTitle="Flatbed / Rollback Services"
@@ -22,6 +27,7 @@ export default function FlatbedRollbackPage() {
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
+            {/* LEFT: Text content */}
             <div className="space-y-4 text-amber-50">
               <h2 className="text-2xl md:text-3xl font-black">
                 Some vehicles just belong on a flatbed.
@@ -42,6 +48,7 @@ export default function FlatbedRollbackPage() {
               </p>
             </div>
 
+            {/* RIGHT: TikTok-style gallery / visuals */}
             <TikTokGallery
               images={[
                 "/images/flatbed-1.jpg",
@@ -52,14 +59,15 @@ export default function FlatbedRollbackPage() {
             />
           </div>
 
+          {/* Bottom buttons */}
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />
           </div>
         </section>
       </main>
+
       <SiteFooter />
     </>
   );
 }
-

@@ -6,7 +6,7 @@ import {
   PhoneCTA,
   TextCTA,
 } from "../components/ServiceLayout";
-import TikTokEmbed from "../components/TikTokEmbed";
+import { TikTokEmbed } from "../components/TikTokEmbed";
 
 export const metadata = {
   title: "Accident Removal | A & H Towing & Recovery",
@@ -43,42 +43,50 @@ export default function AccidentRemovalPage() {
                 <li>• Respectful communication with you and your family</li>
               </ul>
               <p className="text-sm md:text-base font-semibold">
-                If you&apos;re safe and able, call us once law enforcement is
-                on scene. We&apos;ll explain what happens next and where your
-                vehicle will go.
+                If you’re safe and able, call us once law enforcement is on
+                scene. We’ll explain what happens next and where your vehicle
+                will go.
               </p>
             </div>
 
-            {/* RIGHT: TikTok grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {/* RIGHT: TikTok grid – 2x2 on desktop, stacked on mobile */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* 1. Deploy Airbags: Flipped 18 Wheeler */}
-              <TikTokEmbed
-                videoId="6908073338308939014"
-                caption="Deploying airbags to recover a flipped 18-wheeler without making the damage worse."
-              />
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/80 p-2">
+                <TikTokEmbed
+                  videoId="6908073338308939014"
+                  caption="Deploy Airbags: Flipped 18 Wheeler"
+                />
+              </div>
 
               {/* 2. Team Effort: Locomotive Accident */}
-              <TikTokEmbed
-                videoId="7230219035911327022"
-                caption="Locomotive accident recovery — working with a full team to clear the scene safely."
-              />
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/80 p-2">
+                <TikTokEmbed
+                  videoId="7230219035911327022"
+                  caption="Team Effort: Locomotive Accident"
+                />
+              </div>
 
               {/* 3. The Rotator for an Oversized Accident */}
-              <TikTokEmbed
-                videoId="7414757668876733726"
-                caption="Using the rotator on an oversized accident to lift, swing, and set everything back where it belongs."
-              />
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/80 p-2">
+                <TikTokEmbed
+                  videoId="7414757668876733726"
+                  caption="The Rotator for an Oversized Accident"
+                />
+              </div>
 
               {/* 4. Practicing for Perfection */}
-              <TikTokEmbed
-                videoId="7501393555433262367"
-                caption="Practicing complex lifts so when the real wreck happens, the team is already dialed in."
-              />
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/80 p-2">
+                <TikTokEmbed
+                  videoId="7501393555433262367"
+                  caption="Practicing for Perfection"
+                />
+              </div>
             </div>
           </div>
 
           {/* Bottom buttons */}
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />
           </div>
@@ -89,4 +97,3 @@ export default function AccidentRemovalPage() {
     </>
   );
 }
-

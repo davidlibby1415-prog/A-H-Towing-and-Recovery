@@ -11,7 +11,7 @@ import {
 export const metadata = {
   title: "Winching / Recovery | A & H Towing & Recovery",
   description:
-    "Off-road recovery for mud, sand, soft shoulder, and lease roads around Pecos, Orla, Mentone, and the West Texas patch.",
+    "Off-road winching and recovery for mud, sand, soft shoulder, and lease roads across Pecos, Reeves County, and West Texas.",
 };
 
 export default function WinchingRecoveryPage() {
@@ -22,53 +22,100 @@ export default function WinchingRecoveryPage() {
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
           serviceTitle="Winching / Recovery"
-          serviceSubtitle="Off-road, mud, sand, and soft-shoulder recovery on lease roads and remote routes."
+          serviceSubtitle="Off-road, mud, sand, and soft shoulder recoveries on lease roads, ranch tracks, and West Texas highways."
         />
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* Left: Text content */}
+            {/* LEFT: Text content */}
             <div className="space-y-4 text-amber-50">
               <h2 className="text-2xl md:text-3xl font-black">
-                When the road ends and the trouble starts, we go in after you.
+                Stuck doesn’t mean stranded.
               </h2>
-
               <p className="text-sm md:text-base font-semibold">
-                Lease roads, caliche, ranch tracks, and soft shoulders don&apos;t
-                always play nice. When you&apos;re buried, high-centered, or
-                sliding toward the bar ditch, you need recovery — not just a
-                regular tow.
+                Lease roads, caliche, sand, and soft shoulders will humble
+                anyone. We treat recoveries like a job to be{" "}
+                <span className="font-black">planned and executed</span>, not
+                rushed and guessed at.
               </p>
-
               <ul className="space-y-2 text-sm md:text-base font-semibold">
-                <li>• Mud, sand, and soft-shoulder winch-outs</li>
-                <li>• Off-road recoveries on lease roads and access routes</li>
-                <li>• Frame-safe attachment points and careful rigging</li>
-                <li>• Communication with company men, ranch, or safety when needed</li>
-                <li>• Focus on recovering you with as little extra damage as possible</li>
+                <li>
+                  • Mud, sand, and soft-shoulder recoveries on lease roads and
+                  ranch tracks
+                </li>
+                <li>
+                  • Off-road pulls with attention to tire ruts, ruts, and
+                  ground conditions
+                </li>
+                <li>
+                  • Frame-safe attachment points, soft shackles, and rigging
+                  awareness
+                </li>
+                <li>
+                  • Communication with drivers, company men, or landowners
+                </li>
               </ul>
-
               <p className="text-sm md:text-base font-semibold">
-                Tell us what you&apos;re driving, how it&apos;s stuck, and how far off
-                the road you are. Drop a GPS pin, gate description, or mile
-                markers. We&apos;ll talk through the plan and send a truck that&apos;s
-                equipped for recovery — not guesswork.
+                The goal is simple:{" "}
+                <span className="font-black">
+                  get you out with as little extra damage as possible
+                </span>{" "}
+                and off the unsafe ground.
               </p>
+
+              {/* Small “what to tell us” box */}
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-4 text-sm md:text-base font-semibold">
+                <h3 className="text-lg md:text-xl font-black mb-2 text-amber-300">
+                  What helps us plan a recovery
+                </h3>
+                <ul className="space-y-1">
+                  <li>• Type of vehicle (2WD / 4x4, loaded or empty)</li>
+                  <li>• Ground conditions (mud, sand, caliche, shoulder)</li>
+                  <li>• How far off the road you are</li>
+                  <li>• Any obstacles (ditches, fences, posts, etc.)</li>
+                </ul>
+                <p className="mt-2">
+                  The more detail you give us up front, the better we can
+                  prepare the truck, gear, and approach.
+                </p>
+              </div>
             </div>
 
-            {/* Right: TikTok-style gallery */}
-            <TikTokGallery
-              images={[
-                "/images/winch-1.jpg",
-                "/images/winch-2.jpg",
-                "/images/winch-3.jpg",
-                "/images/winch-4.jpg",
-              ]}
-            />
+            {/* RIGHT: TikTok-style gallery / visuals */}
+            <div className="space-y-6">
+              <TikTokGallery
+                images={[
+                  "/images/winch-1.jpg",
+                  "/images/winch-2.jpg",
+                  "/images/winch-3.jpg",
+                  "/images/winch-4.jpg",
+                ]}
+              />
+
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-4 text-sm md:text-base font-semibold text-amber-50">
+                <h4 className="text-lg md:text-xl font-black mb-2 text-amber-300">
+                  Safety around a stuck vehicle
+                </h4>
+                <ul className="space-y-1">
+                  <li>• Stay clear of the recovery path and cable line.</li>
+                  <li>• Keep bystanders and crew back until we’re rigged.</li>
+                  <li>• Don’t spin tires while we’re setting up.</li>
+                  <li>
+                    • Follow the operator’s directions — they’re watching the
+                    angles and risk.
+                  </li>
+                </ul>
+                <p className="mt-2">
+                  Recovery work is dangerous when rushed. We’d rather take an
+                  extra minute to set it up right than gamble with people or
+                  equipment.
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* Bottom buttons on the page */}
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
+          {/* Buttons at bottom */}
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />
           </div>

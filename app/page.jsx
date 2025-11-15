@@ -369,10 +369,52 @@ function ServiceAwardMedal({ text = "Outstanding Service Award" }) {
 
 function GoldenFacts() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-6 justify-items-center">
-      <ServiceAwardMedal text={"GREAT RESPONSE TIME\nUnder 30 Minutes • Professional"} />
-      <ServiceAwardMedal text={"OPERATING HOURS\n24 Hrs / 7 Days / 365 Days"} />
-      <ServiceAwardMedal text={"SERVICE AREA\nFrom Pecos, TX • West Texas • New Mexico"} />
+    <div className="mt-6 flex flex-col items-center">
+      {/* Canva wheels embed */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: "720px",
+          height: 0,
+          paddingTop: "100%",
+          paddingBottom: 0,
+          boxShadow: "0 2px 8px 0 rgba(63,69,81,0.16)",
+          marginTop: "1.6em",
+          marginBottom: "0.9em",
+          overflow: "hidden",
+          borderRadius: "12px",
+          willChange: "transform",
+        }}
+      >
+        <iframe
+          loading="lazy"
+          style={{
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            top: 0,
+            left: 0,
+            border: "none",
+            padding: 0,
+            margin: 0,
+          }}
+          src="https://www.canva.com/design/DAG4t8y9wMI/tHfVe0y4rq_cLhS-W-v6hA/view?embed"
+          allowFullScreen
+          allow="fullscreen"
+          title="A&H Service Awards"
+        />
+      </div>
+
+      {/* Credit link (optional but nice) */}
+      <a
+        href="https://www.canva.com/design/DAG4t8y9wMI/tHfVe0y4rq_cLhS-W-v6hA/view?utm_content=DAG4t8y9wMI&utm_campaign=designshare&utm_medium=embeds&utm_source=link"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-xs sm:text-sm font-semibold text-amber-200 underline hover:text-amber-300"
+      >
+        JD Power Inspired Cog Wheel Sticker by Elizabeth
+      </a>
     </div>
   );
 }

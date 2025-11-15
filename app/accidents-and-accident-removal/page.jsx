@@ -8,7 +8,7 @@ import {
   PhoneCTA,
   TextCTA,
   TikTokGallery,
-} from "../../components/ServiceLayout";
+} from "../components/ServiceLayout";
 
 export default function AccidentRemovalPage() {
   return (

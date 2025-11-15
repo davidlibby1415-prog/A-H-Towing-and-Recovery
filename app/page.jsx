@@ -391,12 +391,12 @@ function GoldenFacts() {
         rel="noopener noreferrer"
         className="text-xs sm:text-sm font-semibold text-amber-200 underline hover:text-amber-300"
       >
-       
+   );
+}      
 
 /* ========================= Top Marquee ========================= */
 function TopLocationsMarquee() {
-  const text =
-    "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Kermit • Jal • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County";
+  const text = "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Kermit • Jal • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County";
 
   return (
     <div className="w-full bg-[#0b0f14] text-sm">
@@ -420,7 +420,6 @@ function TopLocationsMarquee() {
         </div>
       </div>
 
-      {/* tight gap */}
       <div className="h-[2px]" />
       <div className="w-full bg-red-700/90">
         <div className="container max-w-7xl">
@@ -462,7 +461,6 @@ function TopLocationsMarquee() {
           clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
         }
 
-        /* ===== Global animated red↔blue border ===== */
         @property --angle {
           syntax: "<angle>";
           initial-value: 0deg;

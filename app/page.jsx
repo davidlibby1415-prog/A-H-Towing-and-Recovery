@@ -1389,6 +1389,19 @@ function ContactSection() {
   const [coords, setCoords] = useState(null);
   const [locStatus, setLocStatus] = useState("Idle");
 
+  // Load TikTok embed script once
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const existing = document.querySelector(
+      'script[src="https://www.tiktok.com/embed.js"]'
+    );
+    if (existing) return;
+    const s = document.createElement("script");
+    s.src = "https://www.tiktok.com/embed.js";
+    s.async = true;
+    document.body.appendChild(s);
+  }, []);
+
   const handleSendText = (e) => {
     e.preventDefault();
 
@@ -1614,32 +1627,80 @@ function ContactSection() {
           </div>
         </div>
 
-        {/* TikTok frame */}
+        {/* TikTok frame using official embed */}
         <div className="relative w-[280px] sm:w-[320px] md:w-[360px] aspect-[9/16] flex items-center justify-center">
           <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-sky-500 via-fuchsia-500 to-rose-500 p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden flex items-center justify-center">
               {/* TikTok mini header */}
-              <div className="absolute top-2 left-3 flex items-center gap-1 text-[11px] text-white/80">
+              <div className="absolute top-2 left-3 flex items-center gap-1 text-[11px] text-white/80 z-10">
                 <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-black">
                   <span className="text-[13px]">♪</span>
                 </span>
-                <span className="font-semibold">A&amp;H Towing</span>
+                <span className="font-semibold">@285302ditchking</span>
               </div>
 
-              <iframe
-                title="A&H Towing TikTok 24/7"
-                src="https://www.tiktok.com/embed/v2/ZTMTrQtgU"
-                className="w-full h-full"
-                allowFullScreen
-              />
+              {/* Embed container */}
+              <div className="w-full h-full overflow-y-auto flex items-center justify-center px-1 pt-6 pb-2">
+                <blockquote
+                  className="tiktok-embed"
+                  cite="https://www.tiktok.com/@285302ditchking/video/7226078493514222894"
+                  data-video-id="7226078493514222894"
+                  style={{ maxWidth: "605px", minWidth: "325px", margin: 0 }}
+                >
+                  <section>
+                    <a
+                      target="_blank"
+                      title="@285302ditchking"
+                      href="https://www.tiktok.com/@285302ditchking?refer=embed"
+                    >
+                      @285302ditchking
+                    </a>{" "}
+                    <a
+                      title="towtruckstories"
+                      target="_blank"
+                      href="https://www.tiktok.com/tag/towtruckstories?refer=embed"
+                    >
+                      #towtruckstories
+                    </a>{" "}
+                    <a
+                      title="towoperator"
+                      target="_blank"
+                      href="https://www.tiktok.com/tag/towoperator?refer=embed"
+                    >
+                      #towoperator
+                    </a>{" "}
+                    <a
+                      title="wreckersoftiktok"
+                      target="_blank"
+                      href="https://www.tiktok.com/tag/wreckersoftiktok?refer=embed"
+                    >
+                      #wreckersoftiktok
+                    </a>{" "}
+                    <a
+                      title="itbelikethat"
+                      target="_blank"
+                      href="https://www.tiktok.com/tag/itbelikethat?refer=embed"
+                    >
+                      #itbelikethat
+                    </a>{" "}
+                    <a
+                      target="_blank"
+                      title="♬ original sound - 285/302 ditch king"
+                      href="https://www.tiktok.com/music/original-sound-7226078466881080106?refer=embed"
+                    >
+                      ♬ original sound - 285/302 ditch king
+                    </a>
+                  </section>
+                </blockquote>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="mt-4">
           <a
-            className="inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-rose-500 text-black font-black text-sm md:text-base uppercase tracking-wide shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95"
-            href="https://www.tiktok.com/t/ZTMTrQtgU/"
+            className="inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-rose-500 text-black font-black text-sm md:text-base uppercase tracking-wide shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95 animate-cta-pulse"
+            href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
             target="_blank"
             rel="noreferrer"
           >

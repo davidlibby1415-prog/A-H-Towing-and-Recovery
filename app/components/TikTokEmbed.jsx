@@ -1,28 +1,33 @@
+// app/components/TikTokEmbed.jsx
 "use client";
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
-const TikTokEmbed = ({ videoId, caption }) => {
+export function TikTokEmbed({ videoId, caption }) {
   useEffect(() => {
-    // Load TikTok embed script once
-    if (!document.querySelector('script[src="https://www.tiktok.com/embed.js"]')) {
+    // Load TikTok script once on the client
+    const existingScript = document.querySelector(
+      'script[src="https://www.tiktok.com/embed.js"]'
+    );
+    if (!existingScript) {
       const script = document.createElement("script");
       script.src = "https://www.tiktok.com/embed.js";
       script.async = true;
       document.body.appendChild(script);
+    } else if (window?.tiktokEmbedLoad) {
+      // If script already loaded, tell it to rescan
+      window.tiktokEmbedLoad();
     }
   }, []);
 
+  const url = `https://www.tiktok.com/@285302ditchking/video/${videoId}`;
+
   return (
-    <div className="w-full rounded-xl bg-neutral-900/80 border border-neutral-700 p-2 flex flex-col gap-2">
+    <div className="w-full h-full flex items-center justify-center">
       <blockquote
-        className="tiktok-embed w-full"
-        cite={`https://www.tiktok.com/@285302ditchking/video/${videoId}`}
+        className="tiktok-embed w-full h-full"
+        cite={url}
         data-video-id={videoId}
-        style={{
-          margin: 0,
-          maxWidth: "100%",
-        }}
       >
         <section>
           <a
@@ -33,16 +38,9 @@ const TikTokEmbed = ({ videoId, caption }) => {
           >
             @285302ditchking
           </a>
+          {caption && <p>{caption}</p>}
         </section>
       </blockquote>
-
-      {caption && (
-        <div className="text-[11px] md:text-xs text-amber-100/80 font-semibold px-1">
-          {caption}
-        </div>
-      )}
     </div>
   );
-};
-
-export default TikTokEmbed;
+}

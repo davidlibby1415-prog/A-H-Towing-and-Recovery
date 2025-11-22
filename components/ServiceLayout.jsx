@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 /* ============================ Utilities ============================ */
+
 function smsHref(number, body) {
   const encoded = encodeURIComponent(body);
   const isiOS =
@@ -36,6 +37,7 @@ function useTimeAndTemp() {
   useEffect(() => {
     if (hasRequestedRef.current) return;
     if (typeof navigator === "undefined" || !navigator.geolocation) return;
+
     hasRequestedRef.current = true;
 
     navigator.geolocation.getCurrentPosition(
@@ -61,6 +63,7 @@ function useTimeAndTemp() {
 }
 
 /* ====================== Small CTAs ====================== */
+
 export function PhoneCTA({ className = "", fullWidth = false }) {
   const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
   return (
@@ -101,21 +104,15 @@ export function TextCTA({ className = "" }) {
 }
 
 /* ====================== Brand pieces ====================== */
+
 function AnimBorder({ children, className = "" }) {
   return <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>{children}</div>;
 }
 
-function SteelPanel({
-  children,
-  className = "",
-  padded = true,
-  borderColor = "rgba(255,255,255,0.18)",
-}) {
+function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
   return (
     <div
-      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
-        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
-      } ${className}`}
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
       style={{
         backgroundImage:
           'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
@@ -156,7 +153,8 @@ function BrandSlabInline() {
   );
 }
 
-/* =================== Header / Footer + Top Marquee =================== */
+/* =================== Header (no marquee here) =================== */
+
 function TimeTempDisplay() {
   const { timeString, tempF } = useTimeAndTemp();
   return (
@@ -167,7 +165,7 @@ function TimeTempDisplay() {
   );
 }
 
-/* Top marquee identical to main page */
+/* Top marquee identical to main page (exported) */
 export function TopMarquee({
   text = "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Jal • Kermit • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County",
 }) {
@@ -325,8 +323,14 @@ export function SiteHeader() {
 
         {/* animated border global */}
         <style jsx global>{`
-          @property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
-          @keyframes rb-rotate { to { --angle: 360deg; } }
+          @property --angle {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+          }
+          @keyframes rb-rotate {
+            to { --angle: 360deg; }
+          }
           .rb-border {
             --angle: 0deg;
             background: conic-gradient(from var(--angle), #3b82f6 0%, #ef4444 50%, #3b82f6 100%);
@@ -382,46 +386,26 @@ export function SiteFooter() {
 
 /* =================== Brand Hero (video background) =================== */
 /**
- * Props:
- * - heroVideoSrc: string (e.g., "/Videos/fuel.mp4")  <-- case-sensitive on Vercel
- * - fallbackSrc: string (e.g., "/Videos/tow1.mp4")
+ * - heroVideoSrc: string (e.g., "/videos/fuel.mp4") <-- check exact path/casing
  * - poster: string
- * - showBanner: boolean (default true)
- * - showCard: boolean (default true)
- * - bannerTopMarginPx: number  (space below navbar for company banner)
- * - cardCenterOffsetPx: number (positive pushes the card DOWN from true center)
- * - overlayOpacity: 0..1  (0 = none)
- * - minVH: number (section min height in vh, default 76)
+ * - serviceTitle / serviceSubtitle: strings
+ * - bannerTopMarginPx: number (space below navbar for banner)
+ * - cardCenterOffsetPx: number (positive pushes the card DOWN)
+ * - overlayOpacity: 0..1 (0 = no overlay)
  */
 export function BrandHero({
   heroVideoSrc,
-  fallbackSrc,
   poster,
-  showBanner = true,
-  showCard = true,
+  serviceTitle,
+  serviceSubtitle,
   bannerTopMarginPx = 16,
   cardCenterOffsetPx = 130,
   overlayOpacity = 0,
-  minVH = 76,
 }) {
-  const [activeSrc, setActiveSrc] = useState(heroVideoSrc);
-
-  // create an alternate-casing candidate to handle /Videos/ vs /videos/
-  const altCaseSrc = React.useMemo(() => {
-    if (!heroVideoSrc) return null;
-    // flip just the "/Videos/" segment if present
-    return heroVideoSrc.includes("/Videos/")
-      ? heroVideoSrc.replace("/Videos/", "/videos/")
-      : heroVideoSrc.replace("/videos/", "/Videos/");
-  }, [heroVideoSrc]);
-
   return (
-    <section
-      className="relative isolate w-full overflow-hidden bg-black"
-      style={{ minHeight: `min(${minVH}vh, 1200px)` }}
-    >
+    <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
       {/* background video (z-0) */}
-      {activeSrc && (
+      {heroVideoSrc && (
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
           autoPlay
@@ -430,68 +414,54 @@ export function BrandHero({
           playsInline
           preload="metadata"
           poster={poster || "/fallback.jpg"}
-          onError={() => {
-            if (activeSrc && altCaseSrc && activeSrc !== altCaseSrc) {
-              setActiveSrc(altCaseSrc);
-            } else if (fallbackSrc && activeSrc !== fallbackSrc) {
-              setActiveSrc(fallbackSrc);
-            }
-          }}
         >
-          <source src={activeSrc} type="video/mp4" />
-          {altCaseSrc ? <source src={altCaseSrc} type="video/mp4" /> : null}
-          {fallbackSrc ? <source src={fallbackSrc} type="video/mp4" /> : null}
+          <source src={heroVideoSrc} type="video/mp4" />
         </video>
       )}
 
-      {/* OPTIONAL overlay (z-10) */}
+      {/* OPTIONAL overlay */}
       {overlayOpacity > 0 && (
-        <div
-          className="absolute inset-0 pointer-events-none z-10"
-          style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }}
-        />
+        <div className="absolute inset-0 pointer-events-none z-[5]" style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }} />
       )}
 
-      {/* Content (z-20) */}
-      <div className="relative z-20 container max-w-7xl">
-        {showBanner && (
-          <div className="w-full flex justify-center" style={{ marginTop: `${bannerTopMarginPx}px` }}>
-            <div className="w-full max-w-5xl">
-              <BrandSlabInline />
-            </div>
+      <div className="relative container max-w-7xl z-10">
+        {/* Company banner under navbar */}
+        <div className="w-full flex justify-center" style={{ marginTop: `${bannerTopMarginPx}px` }}>
+          <div className="w-full max-w-5xl">
+            <BrandSlabInline />
           </div>
-        )}
+        </div>
 
-        {showCard && (
-          <div
-            className="absolute left-1/2 top-1/2 -translate-x-1/2"
-            style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
-          >
-            <div className="mx-auto w-[min(92vw,820px)]">
-              <div className="rounded-2xl border border-white/40 bg-black/75 text-amber-50 px-4 md:px-6 py-4 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
-                <h2 className="text-xl md:text-2xl font-black text-amber-200 tracking-tight">
-                  Emergency Roadside Assistance
-                </h2>
-                <p className="mt-2 text-xs md:text-sm font-semibold text-amber-100">
-                  Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways.
-                </p>
-                <div className="mt-4 flex flex-wrap justify-center gap-3">
-                  <PhoneCTA />
-                  <TextCTA />
-                </div>
+        {/* Centered Roadside Assistance card (this is the box you wanted) */}
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2"
+          style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
+        >
+          <div className="mx-auto w-[min(92vw,820px)]">
+            <div className="rounded-2xl border border-white/40 bg-black/75 text-white px-4 md:px-6 py-4 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
+              <h2 className="text-xl md:text-2xl font-black tracking-tight">
+                {serviceTitle || "Emergency Roadside Assistance"}
+              </h2>
+              {serviceSubtitle && (
+                <p className="mt-2 text-xs md:text-sm font-semibold">{serviceSubtitle}</p>
+              )}
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
+                <PhoneCTA />
+                <TextCTA />
               </div>
             </div>
           </div>
-        )}
+        </div>
 
-        {/* spacer to ensure section has height when no center card */}
+        {/* spacer to give height */}
         <div className="invisible py-[28vh]" />
       </div>
     </section>
   );
 }
 
-/* =================== Simple TikTok-style Image Gallery =================== */
+/* =================== TikTok-style Image Gallery =================== */
+
 export function TikTokGallery({ images = [] }) {
   const safeImages = Array.isArray(images) ? images : [];
   if (safeImages.length === 0) {

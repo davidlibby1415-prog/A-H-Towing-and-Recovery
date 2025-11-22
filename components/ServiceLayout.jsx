@@ -1,3 +1,4 @@
+// components/ServiceLayout.jsx
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -11,7 +12,9 @@ function smsHref(number, body) {
     typeof navigator !== "undefined" &&
     /iPhone|iPad|iPod/i.test(navigator.userAgent);
   const sep = isiOS ? "&" : "?";
-  return `sms:${number}${sep}body=${encoded}`;
+  return `sms:${number}${sep}body=${encodeURIComponent(body)}`
+    .replace("%0A", "\n")
+    .replace("%2520", "%20");
 }
 
 function useTimeAndTemp() {
@@ -20,16 +23,12 @@ function useTimeAndTemp() {
   const hasRequestedRef = useRef(false);
 
   useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const formatted = now.toLocaleTimeString([], {
-        hour: "numeric",
-        minute: "2-digit",
-      });
-      setTimeString(formatted);
-    };
-    updateTime();
-    const id = setInterval(updateTime, 30000);
+    const tick = () =>
+      setTimeString(
+        new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+      );
+    tick();
+    const id = setInterval(tick, 30_000);
     return () => clearInterval(id);
   }, []);
 
@@ -42,17 +41,17 @@ function useTimeAndTemp() {
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         try {
-          const lat = pos.coords.latitude;
-          const lon = pos.coords.longitude;
-          const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`;
+          const { latitude, longitude } = pos.coords;
+          const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=fahrenheit`;
           const res = await fetch(url);
           const data = await res.json();
           const t = data?.current_weather?.temperature;
           if (typeof t === "number") setTempF(Math.round(t));
-        } catch {}
+        } catch {
+          /* ignore */
+        }
       },
-      () => {},
-      { enableHighAccuracy: false, timeout: 4000, maximumAge: 60_000 }
+      () => {}
     );
   }, []);
 
@@ -87,7 +86,6 @@ export function TextCTA({ className = "" }) {
     "Passengers: (#)",
     "Location: (share GPS or send a pin)",
   ].join("\n");
-
   return (
     <a
       href={smsHref("+14328424578", body)}
@@ -100,7 +98,6 @@ export function TextCTA({ className = "" }) {
   );
 }
 
-/* Time & Temp (small) */
 function TimeTempDisplay() {
   const { timeString, tempF } = useTimeAndTemp();
   return (
@@ -117,17 +114,10 @@ function AnimBorder({ children, className = "" }) {
   return <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>{children}</div>;
 }
 
-function SteelPanel({
-  children,
-  className = "",
-  padded = true,
-  borderColor = "rgba(255,255,255,0.18)",
-}) {
+function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
   return (
     <div
-      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
-        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
-      } ${className}`}
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
       style={{
         backgroundImage:
           'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
@@ -142,22 +132,21 @@ function SteelPanel({
   );
 }
 
-/** Classic slab brand */
 function BrandSlab() {
   return (
     <AnimBorder>
       <SteelPanel padded={false} className="px-3 py-1 text-center">
-        <div className="inline-block rounded-2xl bg-black/75 border-2 border-white px-3 py-1.5">
+        <div className="inline-block rounded-2xl bg-black/60 backdrop-blur-[1px] border-2 border-white px-3 py-1.5">
           <h1
             className="font-black tracking-tight"
             style={{
               fontFamily:
                 'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-              fontSize: "clamp(36px, 6vw, 72px)",
+              fontSize: "clamp(40px, 7vw, 96px)",
               color: "#e10600",
-              WebkitTextStroke: "1.25px #000",
+              WebkitTextStroke: "1.5px #000",
               textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
-              lineHeight: 1.06,
+              lineHeight: 1.05,
             }}
           >
             A&amp;H TOWING &amp; RECOVERY, LLC
@@ -168,35 +157,33 @@ function BrandSlab() {
   );
 }
 
-/** Plain red wordmark (no panel) with soft glow */
-function BrandWordmark({ offsetPx = 0 }) {
-  return (
-    <div className="relative w-full flex justify-center">
-      {/* soft side glows to match safety vibe */}
-      <div
-        className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 h-12 w-24 md:w-40 rounded-full blur-2xl"
-        style={{ background: "radial-gradient(circle, rgba(255,255,255,.25), rgba(0,0,0,0))" }}
-      />
-      <div
-        className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 h-12 w-24 md:w-40 rounded-full blur-2xl"
-        style={{ background: "radial-gradient(circle, rgba(255,255,255,.25), rgba(0,0,0,0))" }}
-      />
+/* =================== Top Marquee (like home) =================== */
 
-      <h1
-        className="text-center font-black tracking-tight"
-        style={{
-          transform: `translateY(${offsetPx}px)`,
-          fontFamily:
-            'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-          fontSize: "clamp(30px, 5.5vw, 64px)",
-          color: "#e10600",
-          WebkitTextStroke: "1px #000",
-          textShadow: "0 1px 0 #7f1d1d, 0 12px 28px rgba(0,0,0,.55)",
-          lineHeight: 1.06,
-        }}
-      >
-        A&amp;H TOWING &amp; RECOVERY, LLC
-      </h1>
+function TopMarquee() {
+  const items =
+    "Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van";
+  return (
+    <div className="w-full bg-red-700 text-white text-[11px] md:text-xs font-black tracking-wide overflow-hidden border-b border-black/30">
+      <div className="relative whitespace-nowrap py-1">
+        <div className="animate-marquee inline-block pr-10">{items}</div>
+        <div className="animate-marquee inline-block pr-10" aria-hidden>
+          {items}
+        </div>
+      </div>
+
+      <style jsx global>{`
+        @keyframes marqueeX {
+          0% {
+            transform: translateX(0%);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
+        }
+        .animate-marquee {
+          animation: marqueeX 35s linear infinite;
+        }
+      `}</style>
     </div>
   );
 }
@@ -219,8 +206,10 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-[120] bg-ahCharcoal text-ahText border-b border-black/30">
+        <TopMarquee />
+
         <div className="container max-w-7xl flex items-center gap-4 py-2.5">
-          {/* Left: brand glyph + address */}
+          {/* Left: logo + address */}
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
               <span className="text-[14px] font-extrabold" style={{ color: "#e10600" }}>
@@ -240,19 +229,18 @@ export function SiteHeader() {
             </div>
           </div>
 
-          {/* Right side: nav + time/temp + call */}
+          {/* Right: nav + time/temp + call */}
           <div className="ml-auto flex items-center gap-3">
             <nav className="hidden md:flex items-center gap-5 text-xs md:text-sm lg:text-base font-extrabold">
               <Link href="/" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
                 Home
               </Link>
 
-              {/* Services dropdown */}
               <div className="relative" onMouseEnter={openServices} onMouseLeave={scheduleCloseServices}>
                 <button
                   type="button"
                   className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-                  onClick={() => setServicesOpen((s) => !s)}
+                  onClick={() => setServicesOpen((v) => !v)}
                 >
                   <span>Services</span>
                   <span className="text-[10px]">▾</span>
@@ -309,7 +297,7 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* global animated border token */}
+        {/* global animated border */}
         <style jsx global>{`
           @property --angle {
             syntax: "<angle>";
@@ -395,26 +383,14 @@ export function SiteFooter() {
 /* =================== Brand Hero for Service Pages =================== */
 /**
  * Props:
- * - heroVideoSrc (string)   — /videos/... path
- * - poster (string)
- * - brandMode: "panel" | "text"  (default "panel")
- * - brandOffsetPx (number)       — nudges the brand up/down
- * - contentOffsetPx (number)     — nudges the centered service box up/down
- * - minHeightClass (string)      — tailwind height classes for the hero section
+ * - heroVideoSrc: string (e.g., "/videos/fuel.mp4")
+ * - poster: string
+ * - ctaOffsetPx: number (positive pushes panel downward from center)
  */
-export function BrandHero({
-  serviceTitle,
-  serviceSubtitle,
-  heroVideoSrc,
-  poster,
-  brandMode = "panel",
-  brandOffsetPx = 0,
-  contentOffsetPx = 0,
-  minHeightClass = "h-[56vh] md:h-[72vh]",
-}) {
+export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc, poster, ctaOffsetPx = 0 }) {
   return (
-    <section className={`relative isolate overflow-hidden bg-neutral-950 border-b border-black/40 ${minHeightClass}`}>
-      {/* Background video */}
+    <section className="relative z-[10] w-full overflow-hidden border-b border-black/40">
+      {/* Video background (no black page background) */}
       {heroVideoSrc && (
         <video
           className="absolute inset-0 w-full h-full object-cover"
@@ -429,33 +405,39 @@ export function BrandHero({
         </video>
       )}
 
-      {/* overlay for readability */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_45%,rgba(0,0,0,0.55)_78%,rgba(0,0,0,0.78)_100%)]" />
+      {/* Very light radial vignette for readability */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.08)_55%,rgba(0,0,0,0.28)_85%,rgba(0,0,0,0.42)_100%)]" />
 
-      {/* Top brand */}
-      <div className="relative z-10 container max-w-7xl pt-5 md:pt-6">
-        {brandMode === "text" ? (
-          <BrandWordmark offsetPx={brandOffsetPx} />
-        ) : (
-          <div style={{ transform: `translateY(${brandOffsetPx}px)` }}>
+      {/* Content wrapper */}
+      <div className="relative container max-w-7xl pt-6 pb-16 md:pt-7 md:pb-24">
+        {/* Brand just under header */}
+        <div className="flex justify-center">
+          <div className="w-full max-w-5xl">
             <BrandSlab />
           </div>
-        )}
-      </div>
+        </div>
 
-      {/* Centered service box */}
-      <div
-        className="pointer-events-none absolute z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-        style={{ transform: `translate(-50%, calc(-50% + ${contentOffsetPx}px))` }}
-      >
-        <div className="pointer-events-auto w-[min(92vw,720px)] rounded-2xl border-2 border-white/60 bg-black/70 px-4 md:px-6 py-4 text-center shadow-[0_20px_50px_rgba(0,0,0,.55)]">
-          <h2 className="text-xl md:text-3xl font-black text-amber-200 tracking-tight">{serviceTitle}</h2>
-          <p className="mt-2 text-xs md:text-sm font-semibold text-amber-100">{serviceSubtitle}</p>
-          <div className="mt-4 flex flex-wrap justify-center gap-3">
-            <PhoneCTA />
-            <TextCTA />
+        {/* Emergency panel — centered, then nudged down ~2 inches */}
+        <div
+          className="pointer-events-auto absolute left-1/2 top-1/2 -translate-x-1/2"
+          style={{ transform: `translate(-50%, calc(-50% + ${ctaOffsetPx}px))` }}
+        >
+          <div className="mx-auto w-[min(92vw,780px)] rounded-2xl border-2 border-white/90 bg-black/55 backdrop-blur-[1px] text-center shadow-[0_0_25px_rgba(0,0,0,0.45)]">
+            <div className="px-4 py-3 md:px-6 md:py-4">
+              <h2 className="text-amber-200 text-xl md:text-2xl font-black drop-shadow-sm">{serviceTitle}</h2>
+              {serviceSubtitle && (
+                <p className="mt-1.5 text-[11px] md:text-sm font-semibold text-amber-100">{serviceSubtitle}</p>
+              )}
+              <div className="mt-3 flex flex-wrap justify-center gap-3">
+                <PhoneCTA />
+                <TextCTA />
+              </div>
+            </div>
           </div>
         </div>
+
+        {/* Spacer to ensure section height is generous on short screens */}
+        <div className="h-[58vh] md:h-[62vh]" />
       </div>
     </section>
   );
@@ -472,7 +454,6 @@ export function TikTokGallery({ images = [] }) {
       </div>
     );
   }
-
   return (
     <div className="rounded-2xl border-2 border-yellow-400/90 bg-black/80 p-4 shadow-[0_0_25px_rgba(251,191,36,0.6)]">
       <div className="mb-2">

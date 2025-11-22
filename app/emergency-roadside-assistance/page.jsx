@@ -5,7 +5,7 @@ import {
   BrandHero,
   PhoneCTA,
   TextCTA,
-  TopMarquee, // identical to main page
+  TopMarquee,
 } from "../../components/ServiceLayout";
 
 export const metadata = {
@@ -18,18 +18,22 @@ export default function EmergencyRoadsidePage() {
   return (
     <>
       <SiteHeader />
-      {/* Marquee identical to main page, directly under the header */}
+      {/* Marquee identical to main, directly under header */}
       <TopMarquee />
 
       <main className="min-h-screen bg-neutral-950">
+        {/* HERO: video only (no company slab, no overlay card) */}
         <BrandHero
-          heroVideoSrc="/videos/fuel.mp4"   // make sure the file/casing matches
+          heroVideoSrc="/Videos/fuel.mp4"     /* <-- verify exact casing & file exists */
+          fallbackSrc="/Videos/tow1.mp4"      /* optional fallback */
           poster="/fallback.jpg"
-          serviceTitle="Emergency Roadside Assistance"
-          serviceSubtitle="Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways."
+          showBanner={false}
+          showCard={false}
+          overlayOpacity={0}
+          minVH={76}
         />
 
-        {/* Description + Safety tips */}
+        {/* Description + Safety tips (kept) */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
             <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-5 text-amber-50">

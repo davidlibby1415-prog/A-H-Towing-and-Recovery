@@ -1,7 +1,6 @@
-// components/ServiceLayout.jsx
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 /* ============================ Utilities ============================ */
@@ -18,17 +17,17 @@ function smsHref(number, body) {
 /* local time + rough temperature (client only) */
 function useTimeAndTemp() {
   const [timeString, setTimeString] = useState("");
+  const [dateString, setDateString] = useState("");
   const [tempF, setTempF] = useState(null);
   const hasRequestedRef = useRef(false);
 
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      const formatted = now.toLocaleTimeString([], {
-        hour: "numeric",
-        minute: "2-digit",
-      });
-      setTimeString(formatted);
+      const time = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+      const date = now.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+      setTimeString(time);
+      setDateString(date);
     };
     updateTime();
     const id = setInterval(updateTime, 30000);
@@ -60,11 +59,12 @@ function useTimeAndTemp() {
     );
   }, []);
 
-  return { timeString, tempF };
+  return { timeString, dateString, tempF };
 }
 
 /* ====================== Small CTAs ====================== */
 
+/** Blue button: tap-to-call */
 export function PhoneCTA({ className = "", fullWidth = false }) {
   const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
   return (
@@ -83,22 +83,15 @@ export function PhoneCTA({ className = "", fullWidth = false }) {
   );
 }
 
-export function TextCTA({ className = "" }) {
-  const body = [
-    "Tow request from: (name)",
-    "Callback: (phone)",
-    "Vehicle: (year / make / model)",
-    "Passengers: (#)",
-    "Location: (share GPS or send a pin)",
-  ].join("\n");
-
+/** Red button: go to main page request form */
+export function FormCTA({ className = "", label = "TEXT REQUEST FORM (INCLUDE GPS)" }) {
   return (
     <a
-      href={smsHref("+14328424578", body)}
+      href="/#contact"
       className={`inline-flex flex-col items-center justify-center rounded-2xl px-4 py-2.5 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-[11px] md:text-sm min-w-[240px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white`}
     >
       <span className="uppercase tracking-wide text-[10px] md:text-xs text-center">
-        TEXT DISPATCH (INCLUDE GPS)
+        {label}
       </span>
     </a>
   );
@@ -110,17 +103,10 @@ export function AnimBorder({ children, className = "" }) {
   return <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>{children}</div>;
 }
 
-export function SteelPanel({
-  children,
-  className = "",
-  padded = true,
-  borderColor = "rgba(255,255,255,0.18)",
-}) {
+export function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
   return (
     <div
-      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
-        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
-      } ${className}`}
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
       style={{
         backgroundImage:
           'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
@@ -138,16 +124,17 @@ export function SteelPanel({
 /* =================== Header / Footer + Marquee =================== */
 
 function TimeTempDisplay() {
-  const { timeString, tempF } = useTimeAndTemp();
+  const { timeString, dateString, tempF } = useTimeAndTemp();
   return (
     <div className="flex flex-col items-end text-[10px] md:text-xs text-amber-100 leading-tight whitespace-nowrap">
+      <span className="font-semibold">{dateString || "—"}</span>
       <span>Time: {timeString || "--:--"}</span>
       <span>Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
     </div>
   );
 }
 
-/* Top marquee identical to main page */
+/** Top marquee identical feel to main page */
 export function TopMarquee({
   text = "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Jal • Kermit • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County",
 }) {
@@ -366,26 +353,20 @@ export function SiteFooter() {
   );
 }
 
-/* =================== Brand Hero (Emergency only) =================== */
-/**
- * Shows ONLY the Emergency Roadside Assistance box over the video.
- * No company name banner here (per your request).
- *
- * Props:
- * - heroVideoSrc: string (e.g., "/Videos/fuel.mp4")
- * - poster: string
- * - overlayOpacity: 0..1  -> 0 = no overlay (default)
+/* =================== Brand Hero (Emergency) =================== */
+/** 
+ * A minimal hero for service pages that ONLY shows the emergency card over the video.
+ * No company banner, no extra overlays unless specified.
  */
 export function BrandHeroEmergency({
-  heroVideoSrc,           // e.g., "/Videos/fuel.mp4"
-  poster = "/fallback.jpg",
+  heroVideoSrc,
+  poster,
   overlayOpacity = 0,
+  cardCenterOffsetPx = 130,
 }) {
   return (
-    <section
-      className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40"
-      style={{ minHeight: "62vh" }}
-    >
+    <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
+      {/* background video */}
       {heroVideoSrc && (
         <video
           className="absolute inset-0 w-full h-full object-cover"
@@ -394,45 +375,51 @@ export function BrandHeroEmergency({
           loop
           playsInline
           preload="metadata"
-          poster={poster}
+          poster={poster || "/fallback.jpg"}
         >
           <source src={heroVideoSrc} type="video/mp4" />
         </video>
       )}
 
+      {/* OPTIONAL overlay */}
       {overlayOpacity > 0 && (
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }}
-        />
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }} />
       )}
 
-      {/* Centered callout */}
-      <div className="relative container max-w-7xl h-[62vh] grid place-items-center">
-        <div className="w-[min(92vw,880px)]">
-          <div className="rounded-2xl border border-white/80 bg-black/80 backdrop-blur-sm text-white px-4 md:px-6 py-4 text-center shadow-[0_12px_35px_rgba(0,0,0,.65)]">
-            <h2
-              className="text-2xl md:text-3xl font-black"
-              style={{ textShadow: "0 2px 8px rgba(0,0,0,.8)" }}
-            >
-              Emergency Roadside Assistance
-            </h2>
-            <p
-              className="mt-1 text-sm md:text-base font-semibold text-white"
-              style={{ textShadow: "0 2px 6px rgba(0,0,0,.8)" }}
-            >
-              Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways.
-            </p>
+      {/* Emergency card centered & nudged down */}
+      <div className="relative container max-w-7xl">
+        <div
+          className="absolute left-1/2 top-1/2 -translate-x-1/2"
+          style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
+        >
+          <div className="mx-auto w-[min(92vw,820px)]">
+            <div className="rounded-2xl border border-white/60 bg-black/60 backdrop-blur-sm text-amber-50 px-4 md:px-6 py-4 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
+              <h2
+                className="text-[clamp(22px,4.5vw,36px)] font-black tracking-tight"
+                style={{
+                  color: "#fff",
+                  WebkitTextStroke: "0.4px rgba(0,0,0,.85)",
+                  textShadow: "0 2px 10px rgba(0,0,0,.85)",
+                  letterSpacing: "0.2px",
+                }}
+              >
+                Emergency Roadside Assistance
+              </h2>
+              <p className="mt-2 text-xs md:text-sm font-semibold text-white">
+                Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways.
+              </p>
 
-            <div className="mt-4 flex flex-wrap justify-center gap-3">
-              <PhoneCTA />
-              <TextCTA />
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
+                <PhoneCTA />
+                <FormCTA />
+              </div>
             </div>
           </div>
         </div>
+
+        {/* spacer to give height */}
+        <div className="invisible py-[28vh]" />
       </div>
     </section>
   );
 }
-
-

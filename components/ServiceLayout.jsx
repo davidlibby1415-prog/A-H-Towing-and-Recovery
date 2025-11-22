@@ -500,43 +500,30 @@ export function SiteFooter() {
   );
 }
 
-/* =================== Brand Hero for Service Pages (with video) =================== */
+/* =================== Brand Hero for Service Pages =================== */
 
-export function BrandHero({
-  serviceTitle,
-  serviceSubtitle,
-  heroVideoSrc = "",          // e.g. "/mnt/data/Fuel.mp4"
-  poster = "/fallback.jpg",   // optional poster in /public
-}) {
+export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc, poster }) {
   return (
-    <section
-      className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40"
-      style={{ minHeight: "min(72vh, 1100px)" }}
-    >
+    <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
       {/* Background video */}
-      {heroVideoSrc ? (
+      {heroVideoSrc && (
         <video
           className="absolute inset-0 w-full h-full object-cover"
-          src={heroVideoSrc}
           autoPlay
           muted
-          playsInline
           loop
+          playsInline
           preload="metadata"
-          poster={poster}
-        />
-      ) : null}
+          poster={poster || "/fallback.jpg"}
+        >
+          <source src={heroVideoSrc} type="video/mp4" />
+        </video>
+      )}
 
-      {/* Readability overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.58) 78%, rgba(0,0,0,0.72) 100%)",
-        }}
-      />
+      {/* Dark overlay for readability */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.55)_78%,rgba(0,0,0,0.75)_100%)]" />
 
-      <div className="relative z-10 container max-w-7xl py-5 md:py-6 flex flex-col items-center px-4">
+      <div className="relative container max-w-7xl py-5 md:py-6 flex flex-col items-center">
         {/* Big A&H sign on steel */}
         <div className="w-full flex justify-center">
           <div className="w-full max-w-5xl">
@@ -619,3 +606,4 @@ export function TikTokGallery({ images = [] }) {
     </div>
   );
 }
+

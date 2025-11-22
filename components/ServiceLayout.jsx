@@ -37,7 +37,6 @@ function useTimeAndTemp() {
   useEffect(() => {
     if (hasRequestedRef.current) return;
     if (typeof navigator === "undefined" || !navigator.geolocation) return;
-
     hasRequestedRef.current = true;
 
     navigator.geolocation.getCurrentPosition(
@@ -62,7 +61,7 @@ function useTimeAndTemp() {
   return { timeString, tempF };
 }
 
-/* ====================== Small CTAs ====================== */
+/* ====================== CTAs ====================== */
 
 export function PhoneCTA({ className = "", fullWidth = false }) {
   const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
@@ -109,13 +108,13 @@ function TimeTempDisplay() {
   const { timeString, tempF } = useTimeAndTemp();
   return (
     <div className="flex flex-col items-end text-[10px] md:text-xs text-amber-100 leading-tight whitespace-nowrap">
-      <span>Time: {timeString || "--:--"}</span>
-      <span>Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
+      <span>{timeString || "--:--"}</span>
+      <span>{typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
     </div>
   );
 }
 
-/* Top marquee identical feel to main page */
+/* Marquee identical feel to main page */
 export function TopMarquee({
   text = "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Jal • Kermit • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County",
 }) {
@@ -160,6 +159,18 @@ export function TopMarquee({
         @media (prefers-reduced-motion: reduce) {
           .marquee { animation: none !important; }
         }
+        /* animated rainbow border (used elsewhere) */
+        @property --angle {
+          syntax: "<angle>";
+          initial-value: 0deg;
+          inherits: false;
+        }
+        @keyframes rb-rotate { to { --angle: 360deg; } }
+        .rb-border {
+          --angle: 0deg;
+          background: conic-gradient(from var(--angle), #3b82f6 0%, #ef4444 50%, #3b82f6 100%);
+          animation: rb-rotate 24s linear infinite;
+        }
       `}</style>
     </div>
   );
@@ -179,116 +190,97 @@ export function SiteHeader() {
   };
 
   return (
-    <>
-      <header className="sticky top-0 z-[120] bg-ahCharcoal text-ahText border-b border-black/30">
-        <div className="container max-w-7xl flex items-center gap-4 py-2.5">
-          {/* logo + address */}
-          <div className="flex items-center gap-3">
-            <div className="h-9 w-9 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
-              <span className="text-[14px] font-extrabold" style={{ color: "#e10600" }}>
-                A&amp;H
-              </span>
-            </div>
-            <div className="leading-tight">
-              <div className="font-bold drop-shadow text-red-600 text-xs md:text-sm">
-                A&amp;H Towing &amp; Recovery, LLC
-              </div>
-              <div className="text-[10px] md:text-xs opacity-90">2712 W F Street, Pecos, TX 79772</div>
-              <div className="text-[10px] md:text-xs">
-                <a className="underline underline-offset-4 hover:opacity-100" href="mailto:ah.towing.recovery23@gmail.com">
-                  ah.towing.recovery23@gmail.com
-                </a>
-              </div>
-            </div>
+    <header className="sticky top-0 z-[120] bg-ahCharcoal text-ahText border-b border-black/30">
+      <div className="container max-w-7xl flex items-center gap-4 py-2.5">
+        {/* logo + address */}
+        <div className="flex items-center gap-3">
+          <div className="h-9 w-9 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
+            <span className="text-[14px] font-extrabold" style={{ color: "#e10600" }}>
+              A&amp;H
+            </span>
           </div>
-
-          {/* right side */}
-          <div className="ml-auto flex items-center gap-3">
-            <nav className="hidden md:flex items-center gap-5 text-xs md:text-sm lg:text-base font-extrabold">
-              <Link href="/" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
-                Home
-              </Link>
-
-              <div className="relative" onMouseEnter={openServices} onMouseLeave={scheduleCloseServices}>
-                <button
-                  type="button"
-                  className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-                  onClick={() => setServicesOpen((v) => !v)}
-                >
-                  <span>Services</span>
-                  <span className="text-[10px]">▾</span>
-                </button>
-
-                {servicesOpen && (
-                  <div className="absolute left-0 mt-2 min-w-[240px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[200]">
-                    <Link href="/light-duty-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
-                      Light Duty Towing
-                    </Link>
-                    <Link href="/heavy-duty-commercial-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
-                      Heavy Duty &amp; Commercial Towing
-                    </Link>
-                    <Link href="/oilfield-routes-tow-service" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
-                      Oilfield Routes Tow Service
-                    </Link>
-                    <Link href="/equipment-transport" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
-                      Equipment Transport
-                    </Link>
-                    <Link href="/flatbed-rollback-services" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
-                      Flatbed / Rollback Services
-                    </Link>
-                    <Link href="/emergency-roadside-assistance" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
-                      Emergency Roadside Assistance
-                    </Link>
-                    <Link href="/accidents-and-accident-removal" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
-                      Accident Removal
-                    </Link>
-                    <Link href="/winching-recovery" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
-                      Winching / Recovery
-                    </Link>
-                  </div>
-                )}
-              </div>
-
-              <Link href="/#coverage" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
-                Coverage
-              </Link>
-              <Link href="/owners" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
-                Owners
-              </Link>
-              <Link href="/tips-tricks" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
-                Tips &amp; Tricks
-              </Link>
-              <Link href="/#contact" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
-                Request a Tow
-              </Link>
-            </nav>
-
-            <div className="hidden sm:block">
-              <TimeTempDisplay />
+          <div className="leading-tight">
+            <div className="font-bold drop-shadow text-red-600 text-xs md:text-sm">
+              A&amp;H Towing &amp; Recovery, LLC
             </div>
-
-            <PhoneCTA className="ml-1" />
+            <div className="text-[10px] md:text-xs opacity-90">2712 W F Street, Pecos, TX 79772</div>
+            <div className="text-[10px] md:text-xs">
+              <a className="underline underline-offset-4 hover:opacity-100" href="mailto:ah.towing.recovery23@gmail.com">
+                ah.towing.recovery23@gmail.com
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* animated border global */}
-        <style jsx global>{`
-          @property --angle {
-            syntax: "<angle>";
-            initial-value: 0deg;
-            inherits: false;
-          }
-          @keyframes rb-rotate {
-            to { --angle: 360deg; }
-          }
-          .rb-border {
-            --angle: 0deg;
-            background: conic-gradient(from var(--angle), #3b82f6 0%, #ef4444 50%, #3b82f6 100%);
-            animation: rb-rotate 24s linear infinite;
-          }
-        `}</style>
-      </header>
-    </>
+        {/* right side */}
+        <div className="ml-auto flex items-center gap-3">
+          <nav className="hidden md:flex items-center gap-5 text-xs md:text-sm lg:text-base font-extrabold">
+            <Link href="/" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+              Home
+            </Link>
+
+            <div className="relative" onMouseEnter={openServices} onMouseLeave={scheduleCloseServices}>
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
+                onClick={() => setServicesOpen((v) => !v)}
+              >
+                <span>Services</span>
+                <span className="text-[10px]">▾</span>
+              </button>
+
+              {servicesOpen && (
+                <div className="absolute left-0 mt-2 min-w-[240px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[200]">
+                  <Link href="/light-duty-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                    Light Duty Towing
+                  </Link>
+                  <Link href="/heavy-duty-commercial-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                    Heavy Duty &amp; Commercial Towing
+                  </Link>
+                  <Link href="/oilfield-routes-tow-service" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                    Oilfield Routes Tow Service
+                  </Link>
+                  <Link href="/equipment-transport" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                    Equipment Transport
+                  </Link>
+                  <Link href="/flatbed-rollback-services" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                    Flatbed / Rollback Services
+                  </Link>
+                  <Link href="/emergency-roadside-assistance" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                    Emergency Roadside Assistance
+                  </Link>
+                  <Link href="/accidents-and-accident-removal" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                    Accident Removal
+                  </Link>
+                  <Link href="/winching-recovery" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                    Winching / Recovery
+                  </Link>
+                </div>
+              )}
+            </div>
+
+            <Link href="/#coverage" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+              Coverage
+            </Link>
+            <Link href="/owners" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+              Owners
+            </Link>
+            <Link href="/tips-tricks" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+              Tips &amp; Tricks
+            </Link>
+            <Link href="/#contact" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+              Request a Tow
+            </Link>
+          </nav>
+
+          <div className="hidden sm:block">
+            <TimeTempDisplay />
+          </div>
+
+          <PhoneCTA className="ml-1" />
+        </div>
+      </div>
+    </header>
   );
 }
 
@@ -334,25 +326,18 @@ export function SiteFooter() {
   );
 }
 
-/* =================== BRAND HERO (video + ONE card only) =================== */
-/**
- * Props:
- * - heroVideoSrc: string (e.g., "/Videos/fuel.mp4")  << CAPITAL V to match repo
- * - poster: string
- * - cardCenterOffsetPx: number -> positive pushes the roadside card DOWN (default 130)
- * - overlayOpacity: 0..1        -> 0 = no dark overlay (we'll keep it 0 here)
- */
+/* =================== BRAND HERO (video + one card, NO company banner) =================== */
 export function BrandHero({
   heroVideoSrc,
-  poster,
+  poster = "/fallback.jpg",
   cardCenterOffsetPx = 130,
-  overlayOpacity = 0,
+  overlayOpacity = 0, // keep 0 = no darkening
   serviceTitle = "Emergency Roadside Assistance",
   serviceSubtitle = "Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways.",
 }) {
   return (
-    <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
-      {/* background video (MAKE SURE PATH/CASE IS CORRECT) */}
+    <section className="relative w-full overflow-hidden bg-neutral-950 border-b border-black/40">
+      {/* background video (ensure /public/videos/fuel.mp4 exists and is lowercase) */}
       {!!heroVideoSrc && (
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
@@ -361,31 +346,33 @@ export function BrandHero({
           loop
           playsInline
           preload="metadata"
-          poster={poster || "/fallback.jpg"}
+          poster={poster}
         >
           <source src={heroVideoSrc} type="video/mp4" />
         </video>
       )}
 
-      {/* NO overlay by default; leave off unless overlayOpacity>0 */}
+      {/* optional overlay — left at 0 by default */}
       {overlayOpacity > 0 && (
-        <div className="absolute inset-0 pointer-events-none z-[1]" style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }} />
+        <div
+          className="absolute inset-0 pointer-events-none z-[1]"
+          style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }}
+        />
       )}
 
-      {/* Only the roadside card, centered and nudged down */}
+      {/* Centered roadside card (white text) */}
       <div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 z-[2]"
         style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
       >
         <div className="mx-auto w-[min(92vw,820px)]">
-          <div className="rounded-2xl border border-white/60 bg-black/70 px-4 md:px-6 py-5 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
+          <div className="rounded-2xl border border-white/70 bg-black/70 px-4 md:px-6 py-5 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
             <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
               {serviceTitle}
             </h2>
             <p className="mt-2 text-sm md:text-base font-semibold text-white">
               {serviceSubtitle}
             </p>
-
             <div className="mt-4 flex flex-wrap justify-center gap-3">
               <PhoneCTA />
               <TextCTA />
@@ -394,8 +381,13 @@ export function BrandHero({
         </div>
       </div>
 
-      {/* spacer so the section has real height */}
+      {/* spacer to ensure section has height for the absolutely positioned card */}
       <div className="relative z-[1] invisible py-[28vh]" />
     </section>
   );
+}
+
+/* ---- (build-safety) export a no-op TikTokGallery to avoid breakage if imported elsewhere ---- */
+export function TikTokGallery() {
+  return null;
 }

@@ -153,7 +153,7 @@ function BrandSlabInline() {
   );
 }
 
-/* =================== Header / Footer + Marquee =================== */
+/* =================== Header / Footer (no marquee here) =================== */
 
 function TimeTempDisplay() {
   const { timeString, tempF } = useTimeAndTemp();
@@ -165,29 +165,50 @@ function TimeTempDisplay() {
   );
 }
 
-function MarqueeStrip() {
+/* Top marquee identical feel to main page (exported) */
+export function TopMarquee({
+  text = "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Jal • Kermit • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County",
+}) {
   return (
-    <div className="w-full bg-[#a40000] text-white text-[11px] md:text-xs font-semibold overflow-hidden border-b border-black/40">
-      <div className="marquee py-1">
-        Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla •
-        Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Ward County • Wink • Winkler
-        County • Van
+    <div className="w-full bg-[#0b0f14] text-sm">
+      <div className="container max-w-7xl py-2">
+        <div className="relative overflow-hidden">
+          <div
+            className="marquee whitespace-nowrap font-extrabold tracking-tight"
+            style={{
+              color: "#f5f7fa",
+              WebkitTextStroke: "0.4px rgba(0,0,0,.9)",
+              textShadow: "0 1px 2px rgba(0,0,0,.7)",
+            }}
+          >
+            <span className="inline-block pr-12">{text}</span>
+            <span className="inline-block pr-12">{text}</span>
+            <span className="inline-block pr-12">{text}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="h-[2px]" />
+      <div className="w-full bg-red-700/90">
+        <div className="container max-w-7xl">
+          <p className="text-center font-extrabold py-1 text-[#ffd54a]">
+            Providing Towing, Recovery Services, and Emergency Roadside Assistance to the West Texas Region
+          </p>
+        </div>
       </div>
 
       <style jsx global>{`
-        .marquee {
-          white-space: nowrap;
-          display: inline-block;
-          animation: ah-marquee 38s linear infinite;
-          padding-left: 100%;
+        @keyframes marquee-x {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
         }
-        @keyframes ah-marquee {
-          0% {
-            transform: translateX(0);
-          }
-          100% {
-            transform: translateX(-100%);
-          }
+        .marquee {
+          display: inline-flex;
+          min-width: 200%;
+          animation: marquee-x 100s linear infinite;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .marquee { animation: none !important; }
         }
       `}</style>
     </div>
@@ -253,11 +274,7 @@ export function SiteHeader() {
                     <Link href="/light-duty-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
                       Light Duty Towing
                     </Link>
-                    <Link
-                      href="/heavy-duty-commercial-towing"
-                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                      onClick={() => setServicesOpen(false)}
-                    >
+                    <Link href="/heavy-duty-commercial-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
                       Heavy Duty &amp; Commercial Towing
                     </Link>
                     <Link href="/oilfield-routes-tow-service" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
@@ -304,7 +321,7 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* animated rainbow border global */}
+        {/* animated border global */}
         <style jsx global>{`
           @property --angle {
             syntax: "<angle>";
@@ -312,9 +329,7 @@ export function SiteHeader() {
             inherits: false;
           }
           @keyframes rb-rotate {
-            to {
-              --angle: 360deg;
-            }
+            to { --angle: 360deg; }
           }
           .rb-border {
             --angle: 0deg;
@@ -323,9 +338,6 @@ export function SiteHeader() {
           }
         `}</style>
       </header>
-
-      {/* marquee like main page */}
-      <MarqueeStrip />
     </>
   );
 }
@@ -344,21 +356,9 @@ export function SiteFooter() {
         <div>
           <div className="font-semibold text-white">Quick Links</div>
           <ul className="mt-2 space-y-1">
-            <li>
-              <Link className="underline" href="/#services">
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link className="underline" href="/#coverage">
-                Coverage
-              </Link>
-            </li>
-            <li>
-              <Link className="underline" href="/#contact">
-                Request a Tow
-              </Link>
-            </li>
+            <li><Link className="underline" href="/#services">Services</Link></li>
+            <li><Link className="underline" href="/#coverage">Coverage</Link></li>
+            <li><Link className="underline" href="/#contact">Request a Tow</Link></li>
           </ul>
         </div>
         <div>
@@ -374,14 +374,8 @@ export function SiteFooter() {
         <div className="text-center md:text-left">
           <div className="font-semibold text-white">Contact</div>
           <p className="mt-2 text-white drop-shadow-sm">
-            <a className="underline font-semibold" href="tel:+14328424578">
-              (432) 842-4578
-            </a>
-            <br />
-            <a className="underline font-semibold" href="mailto:ah.towing.recovery23@gmail.com">
-              ah.towing.recovery23@gmail.com
-            </a>
-            <br />
+            <a className="underline font-semibold" href="tel:+14328424578">(432) 842-4578</a><br />
+            <a className="underline font-semibold" href="mailto:ah.towing.recovery23@gmail.com">ah.towing.recovery23@gmail.com</a><br />
             <span className="font-extrabold text-amber-200">2712 W F Street, Pecos, TX 79772</span>
           </p>
         </div>
@@ -390,7 +384,7 @@ export function SiteFooter() {
   );
 }
 
-/* =================== Brand Hero (video background, no overlay) =================== */
+/* =================== Brand Hero (video background) =================== */
 /**
  * Props:
  * - heroVideoSrc: string (e.g., "/videos/fuel.mp4")
@@ -398,8 +392,8 @@ export function SiteFooter() {
  * - serviceTitle: string
  * - serviceSubtitle: string
  * - bannerTopMarginPx: number  -> space below navbar for the company banner (default 16)
- * - cardCenterOffsetPx: number -> positive pushes the roadside card DOWN from the true center (default 130)
- * - overlayOpacity: 0..1        -> leave at 0 for NO dark overlay on video (default 0)
+ * - cardCenterOffsetPx: number -> positive pushes the roadside card DOWN (default 130)
+ * - overlayOpacity: 0..1        -> 0 = no dark overlay
  */
 export function BrandHero({
   heroVideoSrc,
@@ -427,24 +421,20 @@ export function BrandHero({
         </video>
       )}
 
-      {/* OPTIONAL fade (default 0 = none) */}
+      {/* OPTIONAL overlay */}
       {overlayOpacity > 0 && (
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }}
-        />
+        <div className="absolute inset-0 pointer-events-none" style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }} />
       )}
 
-      {/* Content (only the banner + service card) */}
       <div className="relative container max-w-7xl">
-        {/* Company banner right under navbar */}
+        {/* Company banner under navbar */}
         <div className="w-full flex justify-center" style={{ marginTop: `${bannerTopMarginPx}px` }}>
           <div className="w-full max-w-5xl">
             <BrandSlabInline />
           </div>
         </div>
 
-        {/* Roadside assistance card — centered but nudged down */}
+        {/* Center card nudged down */}
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2"
           style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
@@ -457,7 +447,6 @@ export function BrandHero({
               {serviceSubtitle && (
                 <p className="mt-2 text-xs md:text-sm font-semibold text-amber-100">{serviceSubtitle}</p>
               )}
-
               <div className="mt-4 flex flex-wrap justify-center gap-3">
                 <PhoneCTA />
                 <TextCTA />
@@ -466,7 +455,7 @@ export function BrandHero({
           </div>
         </div>
 
-        {/* spacer to ensure section has height */}
+        {/* spacer to give height */}
         <div className="invisible py-[28vh]" />
       </div>
     </section>

@@ -4,6 +4,8 @@ import {
   SiteHeader,
   SiteFooter,
   BrandHero,
+  PhoneCTA, // Imported for the optional CTA section
+  TextCTA, // Imported for the optional CTA section
   TopMarquee,
 } from "../../components/ServiceLayout";
 
@@ -78,10 +80,8 @@ export default function EmergencyRoadsidePage() {
 
         <section className="py-6 bg-red-800/90">
           <div className="container max-w-7xl flex flex-wrap justify-center gap-3">
-            {/* The PhoneCTA and TextCTA components are imported from ServiceLayout */}
-            {/* To keep the page component clean, we rely on the component above for the import. */}
-            {/* If the page needs the CTAs here, they must be imported from the layout file: */}
-            {/* <PhoneCTA /> and <TextCTA /> */}
+            <PhoneCTA />
+            <TextCTA />
           </div>
         </section>
       </main>

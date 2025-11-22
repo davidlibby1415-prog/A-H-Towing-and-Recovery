@@ -1,4 +1,5 @@
 // app/emergency-roadside-assistance/page.jsx
+
 import React from "react";
 import Link from "next/link";
 import {
@@ -6,7 +7,6 @@ import {
   SiteFooter,
   BrandHero,
   PhoneCTA,
-  TextCTA,
   TopMarquee,
 } from "../../components/ServiceLayout";
 
@@ -25,13 +25,13 @@ export default function EmergencyRoadsidePage() {
       <main className="min-h-screen bg-neutral-950">
         {/* HERO (video) */}
         <BrandHero
-          heroVideoSrc="/Videos/fuel.mp4" // 👈 capital V – fixed
+          heroVideoSrc="/Videos/fuel.mp4" // make sure V is capital in your folder
           poster="/fallback.jpg"
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways."
         />
 
-        {/* Lift the Emergency box up over the video a bit, and make all text bright */}
+        {/* Lift box up toward top of video */}
         <section className="-mt-24 md:-mt-28 pb-6">
           <div className="container max-w-5xl">
             <div
@@ -46,14 +46,13 @@ export default function EmergencyRoadsidePage() {
               </h1>
               <p className="mt-2 text-white font-semibold text-[clamp(14px,2.6vw,18px)]">
                 Fuel, jumpstarts, lockouts, tire changes, and safe
-                transportation around Pecos, Reeves County, and the West
-                Texas highways.
+                transportation around Pecos, Reeves County, and the West Texas
+                highways.
               </p>
 
               <div className="mt-4 flex flex-wrap justify-center gap-3">
-                {/* Blue = Call */}
                 <PhoneCTA />
-                {/* Red = Jump to main page form */}
+                {/* red button -> main page form */}
                 <Link
                   href="/#contact"
                   className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white"
@@ -66,10 +65,10 @@ export default function EmergencyRoadsidePage() {
           </div>
         </section>
 
-        {/* What we can do / Safety tips (white text + vibrant borders) */}
+        {/* MAIN TEXT / SERVICES DESCRIPTION */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* Left box */}
+            {/* Left: what we do on scene */}
             <div className="rounded-2xl border-2 border-yellow-400/90 bg-black/70 p-5 text-white shadow-[0_0_24px_rgba(250,204,21,0.35)]">
               <h2 className="text-2xl md:text-3xl font-black mb-2">
                 What we can do on the spot
@@ -86,7 +85,7 @@ export default function EmergencyRoadsidePage() {
                 <li>• Fuel delivery (gas or diesel)</li>
                 <li>• Jumpstarts and quick roadside battery checks</li>
                 <li>• Lockouts (fast entry with no damage)</li>
-                <li>• Tire changes (spare fitting & lug checks)</li>
+                <li>• Tire changes (spare fitting &amp; lug checks)</li>
                 <li>• Safe transportation to shoulder, lot, or destination</li>
               </ul>
               <p className="mt-3 text-sm md:text-base font-semibold">
@@ -105,7 +104,7 @@ export default function EmergencyRoadsidePage() {
               </div>
             </div>
 
-            {/* Right box */}
+            {/* Right: safety tips */}
             <div className="rounded-2xl border-2 border-yellow-400/90 bg-black/70 p-5 text-white shadow-[0_0_24px_rgba(250,204,21,0.35)]">
               <h3 className="text-2xl md:text-3xl font-black mb-2">
                 Safety Tips Before We Arrive
@@ -132,7 +131,7 @@ export default function EmergencyRoadsidePage() {
           </div>
         </section>
 
-        {/* CTA row under the text areas */}
+        {/* bottom CTA row on this page */}
         <section className="py-6 bg-red-800/90">
           <div className="container max-w-7xl flex flex-wrap justify-center gap-3">
             <PhoneCTA />
@@ -150,3 +149,4 @@ export default function EmergencyRoadsidePage() {
     </>
   );
 }
+

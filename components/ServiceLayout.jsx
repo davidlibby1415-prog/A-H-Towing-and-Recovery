@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 /* ============================ Utilities ============================ */
 
-function smsHref(number, body) {
+export function smsHref(number, body) {
   const encoded = encodeURIComponent(body);
   const isiOS =
     typeof navigator !== "undefined" &&
@@ -14,50 +15,14 @@ function smsHref(number, body) {
   return `sms:${number}${sep}body=${encoded}`;
 }
 
-/* local time + rough temperature (client only) */
-function useTimeAndTemp() {
-  const [timeString, setTimeString] = useState("");
-  const [dateString, setDateString] = useState("");
-  const [tempF, setTempF] = useState(null);
-  const hasRequestedRef = useRef(false);
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      setTimeString(
-        now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
-      );
-      setDateString(
-        now.toLocaleDateString([], { year: "numeric", month: "short", day: "2-digit" })
-      );
-    };
-    updateTime();
-    const id = setInterval(updateTime, 30_000);
-    return () => clearInterval(id);
-  }, []);
-
-  useEffect(() => {
-    if (hasRequestedRef.current) return;
-    if (typeof navigator === "undefined" || !navigator.geolocation) return;
-    hasRequestedRef.current = true;
-    navigator.geolocation.getCurrentPosition(
-      async (pos) => {
-        try {
-          const lat = pos.coords.latitude;
-          const lon = pos.coords.longitude;
-          const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`;
-          const res = await fetch(url);
-          const data = await res.json();
-          const t = data?.current_weather?.temperature;
-          if (typeof t === "number") setTempF(Math.round(t));
-        } catch {}
-      },
-      () => {},
-      { enableHighAccuracy: false, timeout: 4000, maximumAge: 60_000 }
-    );
-  }, []);
-
-  return { timeString, dateString, tempF };
+function scrollToFormWithOffset(targetId = "dispatch-form", offset = 210) {
+  if (typeof document === "undefined" || typeof window === "undefined") return;
+  const el = document.getElementById(targetId);
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const top = window.scrollY + rect.top - offset;
+  window.scrollTo({ top, left: 0, behavior: "smooth" });
+  setTimeout(() => document.getElementById("name-input")?.focus(), 600);
 }
 
 /* ====================== Small CTAs ====================== */
@@ -80,16 +45,33 @@ export function PhoneCTA({ className = "", fullWidth = false }) {
   );
 }
 
-/* Red button that routes to the main page form */
-export function LinkToFormCTA({ className = "", label = "TEXT DISPATCH (INCLUDE GPS)" }) {
+/** Red button that:
+ *  - If form is on current page: precise smooth scroll with offset
+ *  - Else: push("/#contact"); home auto-snaps to form with the same offset
+ */
+export function ScrollToMainFormCTA({
+  className = "",
+  label = "TEXT DISPATCH (INCLUDE GPS)",
+}) {
+  const router = useRouter();
+  const onClick = (e) => {
+    e.preventDefault();
+    if (typeof document !== "undefined" && document.getElementById("dispatch-form")) {
+      scrollToFormWithOffset("dispatch-form");
+      return;
+    }
+    router.push("/#contact");
+  };
+
   return (
-    <a
-      href="/#contact"
+    <button
+      type="button"
+      onClick={onClick}
       className={`inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-[11px] md:text-sm min-w-[240px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white`}
       aria-label="Go to dispatch text form"
     >
       {label}
-    </a>
+    </button>
   );
 }
 
@@ -107,7 +89,9 @@ export function SteelPanel({
 }) {
   return (
     <div
-      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
+        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
+      } ${className}`}
       style={{
         backgroundImage:
           'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
@@ -122,20 +106,93 @@ export function SteelPanel({
   );
 }
 
+/* Big red A&H slab on diamond plate */
+function BrandSlabInline() {
+  return (
+    <AnimBorder>
+      <SteelPanel padded={false} className="px-3 py-1 text-center">
+        <div className="inline-block rounded-2xl bg-black/75 border-2 border-white px-3 py-1.5">
+          <h1
+            className="font-black tracking-tight"
+            style={{
+              fontFamily:
+                'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+              fontSize: "clamp(40px, 7vw, 96px)",
+              color: "#e10600",
+              WebkitTextStroke: "1.5px #000",
+              textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
+              lineHeight: 1.05,
+            }}
+          >
+            A&amp;H TOWING &amp; RECOVERY, LLC
+          </h1>
+        </div>
+      </SteelPanel>
+    </AnimBorder>
+  );
+}
+
 /* =================== Header / Footer (no marquee here) =================== */
+
+function useTimeAndTemp() {
+  const [timeString, setTimeString] = useState("");
+  const [dateString, setDateString] = useState("");
+  const [tempF, setTempF] = useState(null);
+  const hasRequestedRef = useRef(false);
+
+  useEffect(() => {
+    const tick = () => {
+      const now = new Date();
+      setTimeString(
+        now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+      );
+      setDateString(
+        now.toLocaleDateString([], { year: "numeric", month: "short", day: "2-digit" })
+      );
+    };
+    tick();
+    const id = setInterval(tick, 30000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    if (hasRequestedRef.current) return;
+    if (typeof navigator === "undefined" || !navigator.geolocation) return;
+    hasRequestedRef.current = true;
+
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        try {
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`;
+          const res = await fetch(url);
+          const data = await res.json();
+          const t = data?.current_weather?.temperature;
+          if (typeof t === "number") setTempF(Math.round(t));
+        } catch {
+          /* ignore */
+        }
+      },
+      () => {},
+      { enableHighAccuracy: false, timeout: 4000, maximumAge: 60_000 }
+    );
+  }, []);
+
+  return { timeString, dateString, tempF };
+}
 
 function TimeTempDisplay() {
   const { timeString, dateString, tempF } = useTimeAndTemp();
   return (
     <div className="flex flex-col items-end text-[10px] md:text-xs text-amber-100 leading-tight whitespace-nowrap">
-      <span>{dateString || "—"}</span>
+      <span>{dateString || "--"}</span>
       <span>Time: {timeString || "--:--"}</span>
       <span>Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
     </div>
   );
 }
 
-/* Top marquee identical feel to main page (exported) */
 export function TopMarquee({
   text = "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Jal • Kermit • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County",
 }) {
@@ -180,6 +237,7 @@ export function TopMarquee({
         @media (prefers-reduced-motion: reduce) {
           .marquee { animation: none !important; }
         }
+
         @property --angle {
           syntax: "<angle>";
           initial-value: 0deg;
@@ -199,7 +257,6 @@ export function TopMarquee({
 export function SiteHeader() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const servicesCloseTimeout = useRef(null);
-
   const openServices = () => {
     if (servicesCloseTimeout.current) clearTimeout(servicesCloseTimeout.current);
     setServicesOpen(true);
@@ -246,27 +303,52 @@ export function SiteHeader() {
                   className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
                   onClick={() => setServicesOpen((v) => !v)}
                 >
-                  <span>Services</span><span className="text-[10px]">▾</span>
+                  <span>Services</span>
+                  <span className="text-[10px]">▾</span>
                 </button>
 
                 {servicesOpen && (
                   <div className="absolute left-0 mt-2 min-w-[240px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[200]">
-                    <Link href="/light-duty-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Light Duty Towing</Link>
-                    <Link href="/heavy-duty-commercial-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Heavy Duty &amp; Commercial Towing</Link>
-                    <Link href="/oilfield-routes-tow-service" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Oilfield Routes Tow Service</Link>
-                    <Link href="/equipment-transport" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Equipment Transport</Link>
-                    <Link href="/flatbed-rollback-services" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Flatbed / Rollback Services</Link>
-                    <Link href="/emergency-roadside-assistance" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Emergency Roadside Assistance</Link>
-                    <Link href="/accidents-and-accident-removal" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Accident Removal</Link>
-                    <Link href="/winching-recovery" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Winching / Recovery</Link>
+                    <Link href="/light-duty-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Light Duty Towing
+                    </Link>
+                    <Link href="/heavy-duty-commercial-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Heavy Duty &amp; Commercial Towing
+                    </Link>
+                    <Link href="/oilfield-routes-tow-service" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Oilfield Routes Tow Service
+                    </Link>
+                    <Link href="/equipment-transport" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Equipment Transport
+                    </Link>
+                    <Link href="/flatbed-rollback-services" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Flatbed / Rollback Services
+                    </Link>
+                    <Link href="/emergency-roadside-assistance" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Emergency Roadside Assistance
+                    </Link>
+                    <Link href="/accidents-and-accident-removal" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Accident Removal
+                    </Link>
+                    <Link href="/winching-recovery" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Winching / Recovery
+                    </Link>
                   </div>
                 )}
               </div>
 
-              <Link href="/#coverage" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">Coverage</Link>
-              <Link href="/owners" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">Owners</Link>
-              <Link href="/tips-tricks" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">Tips &amp; Tricks</Link>
-              <Link href="/#contact" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">Request a Tow</Link>
+              <Link href="/#coverage" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+                Coverage
+              </Link>
+              <Link href="/owners" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+                Owners
+              </Link>
+              <Link href="/tips-tricks" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+                Tips &amp; Tricks
+              </Link>
+              <Link href="/#contact" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+                Request a Tow
+              </Link>
             </nav>
 
             <div className="hidden sm:block">
@@ -324,15 +406,24 @@ export function SiteFooter() {
 }
 
 /* =================== Brand Hero (video background) =================== */
-
+/**
+ * Props:
+ * - heroVideoSrc: string (e.g., "/Videos/fuel.mp4")  <-- capital V when needed
+ * - poster: string
+ * - serviceTitle: string
+ * - serviceSubtitle: string
+ * - bannerTopMarginPx: number  -> space below navbar for the company banner (default 16)
+ * - cardCenterOffsetPx: number -> positive pushes the card DOWN (default 130)
+ * - overlayOpacity: 0..1        -> 0 = no dark overlay
+ */
 export function BrandHero({
   heroVideoSrc,
   poster,
   serviceTitle,
   serviceSubtitle,
-  bannerTopMarginPx = 0,
-  cardCenterOffsetPx = 10, // small positive so the card sits higher (closer to your yellow line)
-  overlayOpacity = 0.25,
+  bannerTopMarginPx = 16,
+  cardCenterOffsetPx = 130,
+  overlayOpacity = 0,
 }) {
   return (
     <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
@@ -351,47 +442,45 @@ export function BrandHero({
         </video>
       )}
 
-      {/* overlay */}
+      {/* OPTIONAL overlay */}
       {overlayOpacity > 0 && (
         <div className="absolute inset-0 pointer-events-none" style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }} />
       )}
 
       <div className="relative container max-w-7xl">
-        {/* spacer under navbar (kept tiny) */}
-        <div className="w-full flex justify-center" style={{ marginTop: `${bannerTopMarginPx}px` }} />
+        {/* Company banner under navbar */}
+        <div className="w-full flex justify-center" style={{ marginTop: `${bannerTopMarginPx}px` }}>
+          <div className="w-full max-w-5xl">
+            <BrandSlabInline />
+          </div>
+        </div>
 
-        {/* Center card nudged UP */}
+        {/* Center card nudged down */}
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2"
           style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
         >
-          <div className="mx-auto w-[min(92vw,880px)]">
-            <div className="rounded-2xl border border-white/55 bg-black/58 backdrop-blur-sm text-amber-50 px-4 md:px-6 py-5 text-center shadow-[0_20px_45px_rgba(0,0,0,.65)]">
-              <h2
-                className="text-3xl md:text-4xl font-black tracking-tight text-white"
-                style={{ textShadow: "0 3px 16px rgba(0,0,0,.9)" }}
-              >
+          <div className="mx-auto w-[min(92vw,820px)]">
+            <div className="rounded-2xl border border-white/40 bg-black/64 text-amber-50 px-4 md:px-6 py-4 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
+              <h2 className="text-3xl md:text-4xl font-black text-white tracking-tight">
                 {serviceTitle || "Emergency Roadside Assistance"}
               </h2>
               {serviceSubtitle && (
-                <p className="mt-2 text-sm md:text-base font-semibold text-white">
+                <p className="mt-1.5 text-xs md:text-sm font-semibold text-white/95">
                   {serviceSubtitle}
                 </p>
               )}
               <div className="mt-4 flex flex-wrap justify-center gap-3">
                 <PhoneCTA />
-                <LinkToFormCTA />
+                <ScrollToMainFormCTA />
               </div>
             </div>
           </div>
         </div>
 
-        {/* spacer for height */}
-        <div className="invisible py-[26vh]" />
+        {/* spacer to give height */}
+        <div className="invisible py-[28vh]" />
       </div>
     </section>
   );
 }
-
-/* export list for pages */
-export { Link };

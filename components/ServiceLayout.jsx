@@ -195,7 +195,7 @@ function SteelPanel({
   );
 }
 
-function BrandSlab() {
+export function BrandSlab() {
   return (
     <AnimBorder>
       <SteelPanel padded={false} className="px-3 py-1 text-center">
@@ -278,6 +278,14 @@ export function SiteHeader() {
           {/* Right side: nav + time/temp + call button */}
           <div className="ml-auto flex items-center gap-3">
             <nav className="hidden md:flex items-center gap-5 text-xs md:text-sm lg:text-base font-extrabold">
+              {/* NEW: Home link */}
+              <Link
+                href="/"
+                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
+              >
+                Home
+              </Link>
+
               {/* Services dropdown with delayed close */}
               <div
                 className="relative"
@@ -606,4 +614,3 @@ export function TikTokGallery({ images = [] }) {
     </div>
   );
 }
-

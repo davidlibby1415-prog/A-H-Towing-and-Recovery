@@ -328,65 +328,64 @@ export function SiteFooter() {
 
 /* =================== BRAND HERO (video + one card, NO company banner) =================== */
 export function BrandHero({
-  heroVideoSrc,
-  poster = "/fallback.jpg",
-  cardCenterOffsetPx = 130,
-  overlayOpacity = 0, // keep 0 = no darkening
-  serviceTitle = "Emergency Roadside Assistance",
-  serviceSubtitle = "Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways.",
+  heroVideoSrc,
+  poster = "/fallback.jpg",
+  cardCenterOffsetPx = 130,
+  overlayOpacity = 0, // keep 0 = no darkening
+  serviceTitle = "Emergency Roadside Assistance",
+  serviceSubtitle = "Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways.",
 }) {
-  return (
-    <section className="relative w-full overflow-hidden bg-neutral-950 border-b border-black/40">
-      {/* background video (ensure /public/videos/fuel.mp4 exists and is lowercase) */}
-      {!!heroVideoSrc && (
-        <video
-          className="absolute inset-0 w-full h-full object-cover z-0"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster={poster}
-        >
-          <source src={heroVideoSrc} type="video/mp4" />
-        </video>
-      )}
+  return (
+    <section className="relative w-full overflow-hidden bg-neutral-950 border-b border-black/40">
+      {/* background video (path comment updated to reflect /Videos/fuel.mp4) */}
+      {!!heroVideoSrc && (
+        <video
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={poster}
+        >
+          <source src={heroVideoSrc} type="video/mp4" />
+        </video>
+      )}
 
-      {/* optional overlay — left at 0 by default */}
-      {overlayOpacity > 0 && (
-        <div
-          className="absolute inset-0 pointer-events-none z-[1]"
-          style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }}
-        />
-      )}
+      {/* optional overlay — left at 0 by default */}
+      {overlayOpacity > 0 && (
+        <div
+          className="absolute inset-0 pointer-events-none z-[1]"
+          style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }}
+        />
+      )}
 
-      {/* Centered roadside card (white text) */}
-      <div
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 z-[2]"
-        style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
-      >
-        <div className="mx-auto w-[min(92vw,820px)]">
-          <div className="rounded-2xl border border-white/70 bg-black/70 px-4 md:px-6 py-5 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
-            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
-              {serviceTitle}
-            </h2>
-            <p className="mt-2 text-sm md:text-base font-semibold text-white">
-              {serviceSubtitle}
-            </p>
-            <div className="mt-4 flex flex-wrap justify-center gap-3">
-              <PhoneCTA />
-              <TextCTA />
-            </div>
-          </div>
-        </div>
-      </div>
+      {/* Centered roadside card (white text) */}
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 z-[2]"
+        style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
+      >
+        <div className="mx-auto w-[min(92vw,820px)]">
+          <div className="rounded-2xl border border-white/70 bg-black/70 px-4 md:px-6 py-5 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
+            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+              {serviceTitle}
+            </h2>
+            <p className="mt-2 text-sm md:text-base font-semibold text-white">
+              {serviceSubtitle}
+            </p>
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              <PhoneCTA />
+              <TextCTA />
+            </div>
+        </div>
+      </div>
 
-      {/* spacer to ensure section has height for the absolutely positioned card */}
-      <div className="relative z-[1] invisible py-[28vh]" />
-    </section>
-  );
+      {/* spacer to ensure section has height for the absolutely positioned card */}
+      <div className="relative z-[1] invisible py-[28vh]" />
+    </section>
+  );
 }
-
+      
 /* ---- (build-safety) export a no-op TikTokGallery to avoid breakage if imported elsewhere ---- */
 export function TikTokGallery() {
   return null;

@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
   SiteHeader,
@@ -8,7 +6,7 @@ import {
   BrandHero,
 } from "../../components/ServiceLayout";
 
-/** Shared CTA styles (local-only to this page; DOES NOT touch your form) */
+/** Local CTA components – simple anchors (no hooks), safe in a Server Component */
 function BlueCallButton({ className = "" }) {
   return (
     <a
@@ -19,15 +17,13 @@ function BlueCallButton({ className = "" }) {
       <span className="uppercase tracking-wide text-xs md:text-sm text-center">
         CLICK HERE TO CALL 24/7 DISPATCH
       </span>
-      <span className="mt-1 text-lg md:text-xl leading-none">
-        (432) 842-4578
-      </span>
+      <span className="mt-1 text-lg md:text-xl leading-none">(432) 842-4578</span>
     </a>
   );
 }
 
 function RedTextFormButton({ className = "" }) {
-  // IMPORTANT: simple anchor to main page form; main page handles smooth snap.
+  // Link straight to the main page form section; the main page handles smooth scroll.
   return (
     <a
       href="/#contact"
@@ -52,49 +48,49 @@ export default function EmergencyRoadsidePage() {
       <TopMarquee />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* Video hero — capital V path kept; brighter headline/subtitle via white text */}
+        {/* HERO with video (Capital 'V' path) + brighter heading/subtitle */}
         <BrandHero
-          heroVideoSrc="/Videos/fuel.mp4"   // <- capital V (critical)
+          heroVideoSrc="/Videos/fuel.mp4"  // <-- critical: capital V
           poster="/fallback.jpg"
           serviceTitle={
-            <span className="text-white drop-shadow-[0_2px_8px_rgba(0,0,0,.8)]">
+            <span className="!text-white drop-shadow-[0_2px_8px_rgba(0,0,0,.85)]">
               Emergency Roadside Assistance
             </span>
           }
           serviceSubtitle={
-            <span className="text-white/95 drop-shadow-[0_2px_6px_rgba(0,0,0,.75)]">
-              Fuel, jumpstarts, lockouts, tire changes, and safe transportation around
+            <span className="!text-white drop-shadow-[0_2px_6px_rgba(0,0,0,.75)]">
+              Fuel, jumpstarts, lockouts, <strong>tire changes</strong>, and <strong>safe transportation</strong> around
               Pecos, Reeves County, and the West Texas highways.
             </span>
           }
-          // If your BrandHero supports this prop, keep it; otherwise it’s ignored.
           overlayOpacity={0.18}
-          // If your BrandHero centers the card too low, nudge it up a bit:
           cardCenterOffsetPx={8}
         />
 
-        {/* Two content boxes with vibrant border + bright text */}
+        {/* CONTENT BOXES with vibrant border + bright text */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
 
             {/* What we can do on the spot */}
             <div className="rounded-[28px] p-[6px] rb-border">
-              <div className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
-                   style={{
-                     backgroundImage:
-                       'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
-                     backgroundSize: "cover",
-                     backgroundRepeat: "no-repeat",
-                     backgroundPosition: "center",
-                   }}>
+              <div
+                className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                }}
+              >
                 <h2 className="text-2xl md:text-3xl font-black mb-2">
                   What we can do on the spot
                 </h2>
                 <p className="text-sm md:text-base font-semibold">
                   Not every problem needs a full tow. When a breakdown blindsides
                   you, we’ll meet you quickly and handle the small stuff that keeps
-                  you rolling: fuel delivery, jumpstarts, lockouts, <strong>tire changes</strong>,
-                  and a calm plan if a tow is the safer call.
+                  you rolling: fuel delivery, jumpstarts, lockouts, <strong>tire changes</strong>, and a calm plan
+                  if a tow is the safer call.
                 </p>
                 <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold">
                   <li>• Fuel delivery (gas or diesel)</li>
@@ -114,30 +110,30 @@ export default function EmergencyRoadsidePage() {
 
             {/* Safety Tips */}
             <div className="rounded-[28px] p-[6px] rb-border">
-              <div className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
-                   style={{
-                     backgroundImage:
-                       'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
-                     backgroundSize: "cover",
-                     backgroundRepeat: "no-repeat",
-                     backgroundPosition: "center",
-                   }}>
+              <div
+                className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
+                  backgroundSize: "cover",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                }}
+              >
                 <h3 className="text-2xl md:text-3xl font-black mb-2">
                   Safety Tips Before We Arrive
                 </h3>
                 <ol className="list-decimal list-inside space-y-2 text-sm md:text-base font-semibold">
                   <li>
                     <strong>
-                      Make sure your vehicle is in a safe location away from traffic
-                      — or evacuate the vehicle to a safe distance/place nearby.
+                      Make sure your vehicle is in a safe location away from traffic — or evacuate the vehicle to a safe distance/place nearby.
                     </strong>
                   </li>
                   <li>Turn on hazard flashers if it’s safe.</li>
                   <li>Stay belted inside, or stand well away from traffic.</li>
                   <li>Keep your phone handy so we can reach you.</li>
                   <li>
-                    If law enforcement is on scene, let them know A&amp;H Towing
-                    &amp; Recovery is en route.
+                    If law enforcement is on scene, let them know A&amp;H Towing &amp; Recovery is en route.
                   </li>
                 </ol>
                 <p className="mt-3 text-sm md:text-base font-semibold">

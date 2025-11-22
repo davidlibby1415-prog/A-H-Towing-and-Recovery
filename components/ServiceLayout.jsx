@@ -1,4 +1,3 @@
-// components/ServiceLayout.jsx
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -12,23 +11,26 @@ function smsHref(number, body) {
     typeof navigator !== "undefined" &&
     /iPhone|iPad|iPod/i.test(navigator.userAgent);
   const sep = isiOS ? "&" : "?";
-  return `sms:${number}${sep}body=${encodeURIComponent(body)}`
-    .replace("%0A", "\n")
-    .replace("%2520", "%20");
+  return `sms:${number}${sep}body=${encoded}`;
 }
 
+/* local time + rough temperature (client only) */
 function useTimeAndTemp() {
   const [timeString, setTimeString] = useState("");
   const [tempF, setTempF] = useState(null);
   const hasRequestedRef = useRef(false);
 
   useEffect(() => {
-    const tick = () =>
-      setTimeString(
-        new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
-      );
-    tick();
-    const id = setInterval(tick, 30_000);
+    const updateTime = () => {
+      const now = new Date();
+      const formatted = now.toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "2-digit",
+      });
+      setTimeString(formatted);
+    };
+    updateTime();
+    const id = setInterval(updateTime, 30000);
     return () => clearInterval(id);
   }, []);
 
@@ -41,8 +43,9 @@ function useTimeAndTemp() {
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         try {
-          const { latitude, longitude } = pos.coords;
-          const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true&temperature_unit=fahrenheit`;
+          const lat = pos.coords.latitude;
+          const lon = pos.coords.longitude;
+          const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`;
           const res = await fetch(url);
           const data = await res.json();
           const t = data?.current_weather?.temperature;
@@ -51,14 +54,15 @@ function useTimeAndTemp() {
           /* ignore */
         }
       },
-      () => {}
+      () => {},
+      { enableHighAccuracy: false, timeout: 4000, maximumAge: 60_000 }
     );
   }, []);
 
   return { timeString, tempF };
 }
 
-/* ====================== Small UI Helpers / CTAs ====================== */
+/* ====================== Small CTAs ====================== */
 
 export function PhoneCTA({ className = "", fullWidth = false }) {
   const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
@@ -86,6 +90,7 @@ export function TextCTA({ className = "" }) {
     "Passengers: (#)",
     "Location: (share GPS or send a pin)",
   ].join("\n");
+
   return (
     <a
       href={smsHref("+14328424578", body)}
@@ -98,17 +103,7 @@ export function TextCTA({ className = "" }) {
   );
 }
 
-function TimeTempDisplay() {
-  const { timeString, tempF } = useTimeAndTemp();
-  return (
-    <div className="flex flex-col items-end text-[10px] md:text-xs text-amber-100 leading-tight whitespace-nowrap">
-      <span>Time: {timeString || "--:--"}</span>
-      <span>Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
-    </div>
-  );
-}
-
-/* ====================== Chrome-style panels & brand ====================== */
+/* ====================== Brand pieces ====================== */
 
 function AnimBorder({ children, className = "" }) {
   return <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>{children}</div>;
@@ -132,11 +127,12 @@ function SteelPanel({ children, className = "", padded = true, borderColor = "rg
   );
 }
 
-function BrandSlab() {
+/* Big red A&H slab on diamond plate */
+function BrandSlabInline() {
   return (
     <AnimBorder>
       <SteelPanel padded={false} className="px-3 py-1 text-center">
-        <div className="inline-block rounded-2xl bg-black/60 backdrop-blur-[1px] border-2 border-white px-3 py-1.5">
+        <div className="inline-block rounded-2xl bg-black/75 border-2 border-white px-3 py-1.5">
           <h1
             className="font-black tracking-tight"
             style={{
@@ -157,38 +153,46 @@ function BrandSlab() {
   );
 }
 
-/* =================== Top Marquee (like home) =================== */
+/* =================== Header / Footer + Marquee =================== */
 
-function TopMarquee() {
-  const items =
-    "Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van";
+function TimeTempDisplay() {
+  const { timeString, tempF } = useTimeAndTemp();
   return (
-    <div className="w-full bg-red-700 text-white text-[11px] md:text-xs font-black tracking-wide overflow-hidden border-b border-black/30">
-      <div className="relative whitespace-nowrap py-1">
-        <div className="animate-marquee inline-block pr-10">{items}</div>
-        <div className="animate-marquee inline-block pr-10" aria-hidden>
-          {items}
-        </div>
+    <div className="flex flex-col items-end text-[10px] md:text-xs text-amber-100 leading-tight whitespace-nowrap">
+      <span>Time: {timeString || "--:--"}</span>
+      <span>Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
+    </div>
+  );
+}
+
+function MarqueeStrip() {
+  return (
+    <div className="w-full bg-[#a40000] text-white text-[11px] md:text-xs font-semibold overflow-hidden border-b border-black/40">
+      <div className="marquee py-1">
+        Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla •
+        Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Ward County • Wink • Winkler
+        County • Van
       </div>
 
       <style jsx global>{`
-        @keyframes marqueeX {
+        .marquee {
+          white-space: nowrap;
+          display: inline-block;
+          animation: ah-marquee 38s linear infinite;
+          padding-left: 100%;
+        }
+        @keyframes ah-marquee {
           0% {
-            transform: translateX(0%);
+            transform: translateX(0);
           }
           100% {
             transform: translateX(-100%);
           }
         }
-        .animate-marquee {
-          animation: marqueeX 35s linear infinite;
-        }
       `}</style>
     </div>
   );
 }
-
-/* =================== Shared Header & Footer =================== */
 
 export function SiteHeader() {
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -206,10 +210,8 @@ export function SiteHeader() {
   return (
     <>
       <header className="sticky top-0 z-[120] bg-ahCharcoal text-ahText border-b border-black/30">
-        <TopMarquee />
-
         <div className="container max-w-7xl flex items-center gap-4 py-2.5">
-          {/* Left: logo + address */}
+          {/* logo + address */}
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
               <span className="text-[14px] font-extrabold" style={{ color: "#e10600" }}>
@@ -229,7 +231,7 @@ export function SiteHeader() {
             </div>
           </div>
 
-          {/* Right: nav + time/temp + call */}
+          {/* right side */}
           <div className="ml-auto flex items-center gap-3">
             <nav className="hidden md:flex items-center gap-5 text-xs md:text-sm lg:text-base font-extrabold">
               <Link href="/" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
@@ -245,12 +247,17 @@ export function SiteHeader() {
                   <span>Services</span>
                   <span className="text-[10px]">▾</span>
                 </button>
+
                 {servicesOpen && (
                   <div className="absolute left-0 mt-2 min-w-[240px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[200]">
                     <Link href="/light-duty-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
                       Light Duty Towing
                     </Link>
-                    <Link href="/heavy-duty-commercial-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                    <Link
+                      href="/heavy-duty-commercial-towing"
+                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
+                      onClick={() => setServicesOpen(false)}
+                    >
                       Heavy Duty &amp; Commercial Towing
                     </Link>
                     <Link href="/oilfield-routes-tow-service" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
@@ -297,7 +304,7 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* global animated border */}
+        {/* animated rainbow border global */}
         <style jsx global>{`
           @property --angle {
             syntax: "<angle>";
@@ -316,6 +323,9 @@ export function SiteHeader() {
           }
         `}</style>
       </header>
+
+      {/* marquee like main page */}
+      <MarqueeStrip />
     </>
   );
 }
@@ -380,17 +390,29 @@ export function SiteFooter() {
   );
 }
 
-/* =================== Brand Hero for Service Pages =================== */
+/* =================== Brand Hero (video background, no overlay) =================== */
 /**
  * Props:
  * - heroVideoSrc: string (e.g., "/videos/fuel.mp4")
  * - poster: string
- * - ctaOffsetPx: number (positive pushes panel downward from center)
+ * - serviceTitle: string
+ * - serviceSubtitle: string
+ * - bannerTopMarginPx: number  -> space below navbar for the company banner (default 16)
+ * - cardCenterOffsetPx: number -> positive pushes the roadside card DOWN from the true center (default 130)
+ * - overlayOpacity: 0..1        -> leave at 0 for NO dark overlay on video (default 0)
  */
-export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc, poster, ctaOffsetPx = 0 }) {
+export function BrandHero({
+  heroVideoSrc,
+  poster,
+  serviceTitle,
+  serviceSubtitle,
+  bannerTopMarginPx = 16,
+  cardCenterOffsetPx = 130,
+  overlayOpacity = 0,
+}) {
   return (
-    <section className="relative z-[10] w-full overflow-hidden border-b border-black/40">
-      {/* Video background (no black page background) */}
+    <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
+      {/* background video */}
       {heroVideoSrc && (
         <video
           className="absolute inset-0 w-full h-full object-cover"
@@ -405,30 +427,38 @@ export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc, poster,
         </video>
       )}
 
-      {/* Very light radial vignette for readability */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.08)_55%,rgba(0,0,0,0.28)_85%,rgba(0,0,0,0.42)_100%)]" />
+      {/* OPTIONAL fade (default 0 = none) */}
+      {overlayOpacity > 0 && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }}
+        />
+      )}
 
-      {/* Content wrapper */}
-      <div className="relative container max-w-7xl pt-6 pb-16 md:pt-7 md:pb-24">
-        {/* Brand just under header */}
-        <div className="flex justify-center">
+      {/* Content (only the banner + service card) */}
+      <div className="relative container max-w-7xl">
+        {/* Company banner right under navbar */}
+        <div className="w-full flex justify-center" style={{ marginTop: `${bannerTopMarginPx}px` }}>
           <div className="w-full max-w-5xl">
-            <BrandSlab />
+            <BrandSlabInline />
           </div>
         </div>
 
-        {/* Emergency panel — centered, then nudged down ~2 inches */}
+        {/* Roadside assistance card — centered but nudged down */}
         <div
-          className="pointer-events-auto absolute left-1/2 top-1/2 -translate-x-1/2"
-          style={{ transform: `translate(-50%, calc(-50% + ${ctaOffsetPx}px))` }}
+          className="absolute left-1/2 top-1/2 -translate-x-1/2"
+          style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
         >
-          <div className="mx-auto w-[min(92vw,780px)] rounded-2xl border-2 border-white/90 bg-black/55 backdrop-blur-[1px] text-center shadow-[0_0_25px_rgba(0,0,0,0.45)]">
-            <div className="px-4 py-3 md:px-6 md:py-4">
-              <h2 className="text-amber-200 text-xl md:text-2xl font-black drop-shadow-sm">{serviceTitle}</h2>
+          <div className="mx-auto w-[min(92vw,820px)]">
+            <div className="rounded-2xl border border-white/40 bg-black/75 text-amber-50 px-4 md:px-6 py-4 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
+              <h2 className="text-xl md:text-2xl font-black text-amber-200 tracking-tight">
+                {serviceTitle || "Emergency Roadside Assistance"}
+              </h2>
               {serviceSubtitle && (
-                <p className="mt-1.5 text-[11px] md:text-sm font-semibold text-amber-100">{serviceSubtitle}</p>
+                <p className="mt-2 text-xs md:text-sm font-semibold text-amber-100">{serviceSubtitle}</p>
               )}
-              <div className="mt-3 flex flex-wrap justify-center gap-3">
+
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
                 <PhoneCTA />
                 <TextCTA />
               </div>
@@ -436,8 +466,8 @@ export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc, poster,
           </div>
         </div>
 
-        {/* Spacer to ensure section height is generous on short screens */}
-        <div className="h-[58vh] md:h-[62vh]" />
+        {/* spacer to ensure section has height */}
+        <div className="invisible py-[28vh]" />
       </div>
     </section>
   );

@@ -500,12 +500,43 @@ export function SiteFooter() {
   );
 }
 
-/* =================== Brand Hero for Service Pages =================== */
+/* =================== Brand Hero for Service Pages (with video) =================== */
 
-export function BrandHero({ serviceTitle, serviceSubtitle }) {
+export function BrandHero({
+  serviceTitle,
+  serviceSubtitle,
+  heroVideoSrc = "",          // e.g. "/mnt/data/Fuel.mp4"
+  poster = "/fallback.jpg",   // optional poster in /public
+}) {
   return (
-    <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
-      <div className="container max-w-7xl py-5 md:py-6 flex flex-col items-center">
+    <section
+      className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40"
+      style={{ minHeight: "min(72vh, 1100px)" }}
+    >
+      {/* Background video */}
+      {heroVideoSrc ? (
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          src={heroVideoSrc}
+          autoPlay
+          muted
+          playsInline
+          loop
+          preload="metadata"
+          poster={poster}
+        />
+      ) : null}
+
+      {/* Readability overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.58) 78%, rgba(0,0,0,0.72) 100%)",
+        }}
+      />
+
+      <div className="relative z-10 container max-w-7xl py-5 md:py-6 flex flex-col items-center px-4">
         {/* Big A&H sign on steel */}
         <div className="w-full flex justify-center">
           <div className="w-full max-w-5xl">

@@ -1,3 +1,4 @@
+// NOTE: this is a Server Component (no "use client" here) so `metadata` is allowed.
 import React from "react";
 import {
   SiteHeader,
@@ -18,24 +19,24 @@ export default function EmergencyRoadsidePage() {
   return (
     <>
       <SiteHeader />
-      {/* Marquee identical to the main page */}
+      {/* Marquee identical to main page, directly under the header */}
       <TopMarquee />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* --- ONLY the Emergency Roadside card over the video (NO company banner) --- */}
+        {/* Video hero — NO company name slab, white text, buttons only here */}
         <BrandHero
-          heroVideoSrc="/Videos/fuel.mp4"   // IMPORTANT: match file & folder case
+          heroVideoSrc="/videos/fuel.mp4" // ensure this exact file/casing exists in /public/videos
           poster="/fallback.jpg"
-          cardCenterOffsetPx={130}
-          overlayOpacity={0}
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways."
+          overlayOpacity={0}
+          cardCenterOffsetPx={130}
         />
 
-        {/* Description + Safety tips (bright white text). No duplicate buttons here. */}
+        {/* Description + Safety tips — bright white text, NO extra buttons */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            <div className="rounded-2xl border border-yellow-400/80 bg-black/40 p-5 text-white">
+            <div className="rounded-2xl border border-yellow-400/80 bg-black/60 p-5 text-white">
               <h2 className="text-2xl md:text-3xl font-black mb-2">
                 What we can do on the spot
               </h2>
@@ -51,10 +52,10 @@ export default function EmergencyRoadsidePage() {
                 <li>• Lockouts (fast entry with no damage)</li>
                 <li>• If needed, quick move to a safer shoulder or lot</li>
               </ul>
-              {/* Buttons removed here to avoid duplication (kept only in the black card over the video) */}
+              {/* Buttons intentionally omitted here (kept only in the hero box) */}
             </div>
 
-            <div className="rounded-2xl border border-yellow-400/80 bg-black/40 p-5 text-white">
+            <div className="rounded-2xl border border-yellow-400/80 bg-black/60 p-5 text-white">
               <h3 className="text-2xl md:text-3xl font-black mb-2">
                 Safety Tips Before We Arrive
               </h3>
@@ -62,7 +63,7 @@ export default function EmergencyRoadsidePage() {
                 <li>
                   <strong>
                     Make sure your vehicle is in a safe location away from
-                    traffic, or evacuate the vehicle to a safe distance/place
+                    traffic—or evacuate the vehicle to a safe distance/place
                     nearby.
                   </strong>
                 </li>
@@ -75,9 +76,18 @@ export default function EmergencyRoadsidePage() {
                 </li>
               </ol>
               <p className="mt-3 text-sm md:text-base font-semibold">
-                Your safety comes first. If anything changes, call or text us an update.
+                Your safety comes first. If anything changes, call or text us with an update.
               </p>
             </div>
+          </div>
+        </section>
+
+        {/* Optional spacer CTA strip without duplicating the primary buttons */}
+        <section className="py-6 bg-red-800/90">
+          <div className="container max-w-7xl flex flex-wrap justify-center gap-3">
+            {/* Keep it simple; if you prefer no CTAs here at all, remove this section */}
+            <PhoneCTA />
+            <TextCTA />
           </div>
         </section>
       </main>

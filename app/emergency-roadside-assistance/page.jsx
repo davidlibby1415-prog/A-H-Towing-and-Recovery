@@ -3,7 +3,9 @@ import {
   SiteHeader,
   SiteFooter,
   BrandHero,
-  TopMarquee, // identical to main page
+  PhoneCTA,
+  TextCTA,
+  TopMarquee,
 } from "../../components/ServiceLayout";
 
 export const metadata = {
@@ -16,25 +18,24 @@ export default function EmergencyRoadsidePage() {
   return (
     <>
       <SiteHeader />
-      {/* Marquee identical to main page, directly under the header */}
+      {/* Marquee identical to the main page */}
       <TopMarquee />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* ✅ Emergency Roadside BOX over video */}
+        {/* --- ONLY the Emergency Roadside card over the video (NO company banner) --- */}
         <BrandHero
-          heroVideoSrc="/videos/fuel.mp4"   // <-- confirm exact path/casing in /public/videos
+          heroVideoSrc="/Videos/fuel.mp4"   // IMPORTANT: match file & folder case
           poster="/fallback.jpg"
+          cardCenterOffsetPx={130}
+          overlayOpacity={0}
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways."
-          overlayOpacity={0}                 // no dark overlay
-          bannerTopMarginPx={16}
-          cardCenterOffsetPx={130}
         />
 
-        {/* ✅ Bright white text below; no extra CTA buttons down here */}
+        {/* Description + Safety tips (bright white text). No duplicate buttons here. */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-5 text-white">
+            <div className="rounded-2xl border border-yellow-400/80 bg-black/40 p-5 text-white">
               <h2 className="text-2xl md:text-3xl font-black mb-2">
                 What we can do on the spot
               </h2>
@@ -50,10 +51,10 @@ export default function EmergencyRoadsidePage() {
                 <li>• Lockouts (fast entry with no damage)</li>
                 <li>• If needed, quick move to a safer shoulder or lot</li>
               </ul>
-              {/* Buttons removed here to avoid redundancy */}
+              {/* Buttons removed here to avoid duplication (kept only in the black card over the video) */}
             </div>
 
-            <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-5 text-white">
+            <div className="rounded-2xl border border-yellow-400/80 bg-black/40 p-5 text-white">
               <h3 className="text-2xl md:text-3xl font-black mb-2">
                 Safety Tips Before We Arrive
               </h3>
@@ -61,7 +62,7 @@ export default function EmergencyRoadsidePage() {
                 <li>
                   <strong>
                     Make sure your vehicle is in a safe location away from
-                    traffic or evacuate the vehicle to a safe distance/place
+                    traffic, or evacuate the vehicle to a safe distance/place
                     nearby.
                   </strong>
                 </li>
@@ -74,18 +75,14 @@ export default function EmergencyRoadsidePage() {
                 </li>
               </ol>
               <p className="mt-3 text-sm md:text-base font-semibold">
-                Your safety comes first. If anything changes, call or text us
-                an update.
+                Your safety comes first. If anything changes, call or text us an update.
               </p>
             </div>
           </div>
         </section>
-
-        {/* ⛔ Removed the extra bottom CTA row so buttons appear only in the emergency box */}
       </main>
 
       <SiteFooter />
     </>
   );
 }
-

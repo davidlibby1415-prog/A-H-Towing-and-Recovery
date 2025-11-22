@@ -3,7 +3,6 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import BrandSlabInline from "./BrandSlabInline";
 
 /* ============================ Utilities ============================ */
 
@@ -19,7 +18,6 @@ function smsHref(number, body) {
 function useTimeAndTemp() {
   const [timeString, setTimeString] = useState("");
   const [tempF, setTempF] = useState(null);
-  const [tempStatus, setTempStatus] = useState("idle");
   const hasRequestedRef = useRef(false);
 
   useEffect(() => {
@@ -41,47 +39,33 @@ function useTimeAndTemp() {
     if (typeof navigator === "undefined" || !navigator.geolocation) return;
 
     hasRequestedRef.current = true;
-    setTempStatus("locating");
 
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
         try {
           const lat = pos.coords.latitude;
           const lon = pos.coords.longitude;
-          setTempStatus("fetching");
-
           const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`;
           const res = await fetch(url);
           const data = await res.json();
           const t = data?.current_weather?.temperature;
-
-          if (typeof t === "number") {
-            setTempF(Math.round(t));
-            setTempStatus("ok");
-          } else {
-            setTempStatus("error");
-          }
+          setTempF(typeof t === "number" ? Math.round(t) : null);
         } catch {
-          setTempStatus("error");
+          setTempF(null);
         }
       },
-      () => {
-        setTempStatus("error");
-      },
+      () => setTempF(null),
       { enableHighAccuracy: false, timeout: 4000, maximumAge: 60_000 }
     );
   }, []);
 
-  return { timeString, tempF, tempStatus };
+  return { timeString, tempF };
 }
 
 /* ====================== Small UI Helpers / CTAs ====================== */
 
 export function PhoneCTA({ className = "", fullWidth = false }) {
-  const widthClasses = fullWidth
-    ? "w-full sm:w-auto !min-w-0"
-    : "min-w-[240px]";
-
+  const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
   return (
     <a
       href="tel:+14328424578"
@@ -91,9 +75,7 @@ export function PhoneCTA({ className = "", fullWidth = false }) {
       <span className="uppercase tracking-wide text-[10px] md:text-xs text-center">
         CLICK TO CALL 24/7 DISPATCH
       </span>
-      <span className="mt-0.5 text-base md:text-lg leading-none">
-        (432) 842-4578
-      </span>
+      <span className="mt-0.5 text-base md:text-lg leading-none">(432) 842-4578</span>
     </a>
   );
 }
@@ -129,20 +111,54 @@ function TimeTempDisplay() {
   );
 }
 
-export function TimeTempBar() {
-  const { timeString, tempF } = useTimeAndTemp();
+/* ====================== Chrome-style panels & brand ====================== */
+
+function AnimBorder({ children, className = "" }) {
+  return <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>{children}</div>;
+}
+
+function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
   return (
-    <div className="w-full bg-black/80 border-b border-black/60">
-      <div className="container max-w-7xl flex items-center justify-between py-1.5 text-[10px] md:text-xs text-amber-100">
-        <span className="font-semibold uppercase tracking-wide">
-          Pecos • Reeves County • West Texas Routes
-        </span>
-        <div className="flex items-center gap-4">
-          <span>Time: {timeString || "--:--"}</span>
-          <span>Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
-        </div>
-      </div>
+    <div
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
+      style={{
+        backgroundImage:
+          'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        borderColor,
+      }}
+    >
+      {children}
     </div>
+  );
+}
+
+/** Brand banner; `compact` shrinks it for service pages */
+function BrandSlab({ compact = false }) {
+  return (
+    <AnimBorder>
+      <SteelPanel padded={false} className="px-3 py-1 text-center">
+        <div className="inline-block rounded-2xl bg-black/75 border-2 border-white px-3 py-1.5">
+          <h1
+            className="font-black tracking-tight"
+            style={{
+              fontFamily:
+                'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+              // smaller cap when compact
+              fontSize: compact ? "clamp(28px, 5.2vw, 72px)" : "clamp(40px, 7vw, 96px)",
+              color: "#e10600",
+              WebkitTextStroke: "1.5px #000",
+              textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
+              lineHeight: 1.05,
+            }}
+          >
+            A&amp;H TOWING &amp; RECOVERY, LLC
+          </h1>
+        </div>
+      </SteelPanel>
+    </AnimBorder>
   );
 }
 
@@ -153,19 +169,12 @@ export function SiteHeader() {
   const servicesCloseTimeout = useRef(null);
 
   const openServices = () => {
-    if (servicesCloseTimeout.current) {
-      clearTimeout(servicesCloseTimeout.current);
-    }
+    if (servicesCloseTimeout.current) clearTimeout(servicesCloseTimeout.current);
     setServicesOpen(true);
   };
-
   const scheduleCloseServices = () => {
-    if (servicesCloseTimeout.current) {
-      clearTimeout(servicesCloseTimeout.current);
-    }
-    servicesCloseTimeout.current = setTimeout(() => {
-      setServicesOpen(false);
-    }, 350);
+    if (servicesCloseTimeout.current) clearTimeout(servicesCloseTimeout.current);
+    servicesCloseTimeout.current = setTimeout(() => setServicesOpen(false), 350);
   };
 
   return (
@@ -175,10 +184,7 @@ export function SiteHeader() {
           {/* Left: logo + address */}
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
-              <span
-                className="text-[14px] font-extrabold"
-                style={{ color: "#e10600" }}
-              >
+              <span className="text-[14px] font-extrabold" style={{ color: "#e10600" }}>
                 A&amp;H
               </span>
             </div>
@@ -186,14 +192,9 @@ export function SiteHeader() {
               <div className="font-bold drop-shadow text-red-600 text-xs md:text-sm">
                 A&amp;H Towing &amp; Recovery, LLC
               </div>
-              <div className="text-[10px] md:text-xs opacity-90">
-                2712 W F Street, Pecos, TX 79772
-              </div>
+              <div className="text-[10px] md:text-xs opacity-90">2712 W F Street, Pecos, TX 79772</div>
               <div className="text-[10px] md:text-xs">
-                <a
-                  className="underline underline-offset-4 hover:opacity-100"
-                  href="mailto:ah.towing.recovery23@gmail.com"
-                >
+                <a className="underline underline-offset-4 hover:opacity-100" href="mailto:ah.towing.recovery23@gmail.com">
                   ah.towing.recovery23@gmail.com
                 </a>
               </div>
@@ -203,20 +204,13 @@ export function SiteHeader() {
           {/* Right: nav + time/temp + call */}
           <div className="ml-auto flex items-center gap-3">
             <nav className="hidden md:flex items-center gap-5 text-xs md:text-sm lg:text-base font-extrabold">
-              {/* NEW: Home/Main Page link */}
-              <Link
-                href="/"
-                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-              >
+              {/* NEW: Home link */}
+              <Link href="/" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
                 Home
               </Link>
 
-              {/* Services dropdown with delayed close */}
-              <div
-                className="relative"
-                onMouseEnter={openServices}
-                onMouseLeave={scheduleCloseServices}
-              >
+              {/* Services dropdown */}
+              <div className="relative" onMouseEnter={openServices} onMouseLeave={scheduleCloseServices}>
                 <button
                   type="button"
                   className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
@@ -228,88 +222,44 @@ export function SiteHeader() {
 
                 {servicesOpen && (
                   <div className="absolute left-0 mt-2 min-w-[240px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[200]">
-                    <Link
-                      href="/light-duty-towing"
-                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                      onClick={() => setServicesOpen(false)}
-                    >
+                    <Link href="/light-duty-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
                       Light Duty Towing
                     </Link>
-                    <Link
-                      href="/heavy-duty-commercial-towing"
-                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                      onClick={() => setServicesOpen(false)}
-                    >
+                    <Link href="/heavy-duty-commercial-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
                       Heavy Duty &amp; Commercial Towing
                     </Link>
-                    <Link
-                      href="/oilfield-routes-tow-service"
-                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                      onClick={() => setServicesOpen(false)}
-                    >
+                    <Link href="/oilfield-routes-tow-service" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
                       Oilfield Routes Tow Service
                     </Link>
-                    <Link
-                      href="/equipment-transport"
-                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                      onClick={() => setServicesOpen(false)}
-                    >
+                    <Link href="/equipment-transport" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
                       Equipment Transport
                     </Link>
-                    <Link
-                      href="/flatbed-rollback-services"
-                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                      onClick={() => setServicesOpen(false)}
-                    >
+                    <Link href="/flatbed-rollback-services" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
                       Flatbed / Rollback Services
                     </Link>
-                    <Link
-                      href="/emergency-roadside-assistance"
-                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                      onClick={() => setServicesOpen(false)}
-                    >
+                    <Link href="/emergency-roadside-assistance" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
                       Emergency Roadside Assistance
                     </Link>
-                    <Link
-                      href="/accidents-and-accident-removal"
-                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                      onClick={() => setServicesOpen(false)}
-                    >
+                    <Link href="/accidents-and-accident-removal" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
                       Accident Removal
                     </Link>
-                    <Link
-                      href="/winching-recovery"
-                      className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
-                      onClick={() => setServicesOpen(false)}
-                    >
+                    <Link href="/winching-recovery" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
                       Winching / Recovery
                     </Link>
                   </div>
                 )}
               </div>
 
-              <Link
-                href="/#coverage"
-                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-              >
+              <Link href="/#coverage" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
                 Coverage
               </Link>
-              <Link
-                href="/owners"
-                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-              >
+              <Link href="/owners" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
                 Owners
               </Link>
-              <Link
-                href="/tips-tricks"
-                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-              >
+              <Link href="/tips-tricks" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
                 Tips &amp; Tricks
               </Link>
-              <Link
-                href="/#contact"
-                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-              >
+              <Link href="/#contact" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
                 Request a Tow
               </Link>
             </nav>
@@ -322,7 +272,7 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* Global animation for the rainbow border (used by BrandSlabInline) */}
+        {/* Animated border keyframes */}
         <style jsx global>{`
           @property --angle {
             syntax: "<angle>";
@@ -336,12 +286,7 @@ export function SiteHeader() {
           }
           .rb-border {
             --angle: 0deg;
-            background: conic-gradient(
-              from var(--angle),
-              #3b82f6 0%,
-              #ef4444 50%,
-              #3b82f6 100%
-            );
+            background: conic-gradient(from var(--angle), #3b82f6 0%, #ef4444 50%, #3b82f6 100%);
             animation: rb-rotate 24s linear infinite;
           }
         `}</style>
@@ -355,15 +300,10 @@ export function SiteFooter() {
     <footer className="bg-ahCharcoal text-ahText mt-4">
       <div className="container max-w-7xl grid md:grid-cols-4 gap-8 py-8 text-sm md:text-base">
         <div className="text-center md:text-left">
-          <div className="font-extrabold text-white drop-shadow-sm">
-            Call or Visit
-          </div>
-          <div className="font-extrabold text-amber-200 mt-1">
-            A&amp;H Towing &amp; Recovery, LLC
-          </div>
+          <div className="font-extrabold text-white drop-shadow-sm">Call or Visit</div>
+          <div className="font-extrabold text-amber-200 mt-1">A&amp;H Towing &amp; Recovery, LLC</div>
           <p className="mt-2 font-bold text-amber-200">
-            Professional towing, recovery, and roadside assistance for Pecos
-            &amp; oilfield routes.
+            Professional towing, recovery, and roadside assistance for Pecos &amp; oilfield routes.
           </p>
         </div>
         <div>
@@ -390,12 +330,7 @@ export function SiteFooter() {
           <div className="font-semibold text-white">Social</div>
           <ul className="mt-2 space-y-1">
             <li>
-              <a
-                className="underline"
-                href="https://www.tiktok.com/t/ZTMTrQtgU/"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a className="underline" href="https://www.tiktok.com/t/ZTMTrQtgU/" target="_blank" rel="noreferrer">
                 TikTok
               </a>
             </li>
@@ -408,16 +343,11 @@ export function SiteFooter() {
               (432) 842-4578
             </a>
             <br />
-            <a
-              className="underline font-semibold"
-              href="mailto:ah.towing.recovery23@gmail.com"
-            >
+            <a className="underline font-semibold" href="mailto:ah.towing.recovery23@gmail.com">
               ah.towing.recovery23@gmail.com
             </a>
             <br />
-            <span className="font-extrabold text-amber-200">
-              2712 W F Street, Pecos, TX 79772
-            </span>
+            <span className="font-extrabold text-amber-200">2712 W F Street, Pecos, TX 79772</span>
           </p>
         </div>
       </div>
@@ -426,25 +356,25 @@ export function SiteFooter() {
 }
 
 /* =================== Brand Hero for Service Pages =================== */
-/* Banner moved ABOVE the video; title box lifted ~0.75" (≈56px). */
-
-export function BrandHero({
-  serviceTitle,
-  serviceSubtitle,
-  heroVideoSrc,
-  poster,
-}) {
+/**
+ * Now renders:
+ * 1) A top black strip with the A&H banner (compact)
+ * 2) A tall video hero below it with the service box raised ~3/4"
+ */
+export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc, poster }) {
   return (
     <>
-      {/* A&H banner ABOVE the video */}
-      <section className="w-full bg-neutral-950 border-b border-black/40">
-        <div className="container max-w-7xl py-5 md:py-6 flex justify-center">
-          <BrandSlabInline className="w-full max-w-5xl" />
+      {/* Strip: banner ABOVE video so it never blocks action */}
+      <div className="bg-neutral-950 border-b border-black/40">
+        <div className="container max-w-7xl py-4 md:py-5 flex justify-center">
+          <div className="w-full max-w-5xl md:max-w-4xl">
+            <BrandSlab compact />
+          </div>
         </div>
-      </section>
+      </div>
 
-      {/* HERO with background video */}
-      <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
+      {/* Video hero */}
+      <section className="relative isolate overflow-hidden bg-neutral-950 min-h-[68vh] md:min-h-[78vh]">
         {heroVideoSrc && (
           <video
             className="absolute inset-0 w-full h-full object-cover"
@@ -459,18 +389,14 @@ export function BrandHero({
           </video>
         )}
 
-        {/* overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.55)_78%,rgba(0,0,0,0.75)_100%)]" />
+        {/* darkening for readability */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_45%,rgba(0,0,0,0.55)_75%,rgba(0,0,0,0.8)_100%)]" />
 
-        {/* Centered service box, shifted up ~54–56px */}
-        <div className="relative container max-w-7xl py-10 md:py-16 flex justify-center">
-          <div className="w-full max-w-3xl mx-auto rounded-2xl border-2 border-white bg-black/75 px-4 md:px-6 py-4 text-center transform -translate-y-14">
-            <h2 className="text-xl md:text-3xl font-black text-amber-200 tracking-tight">
-              {serviceTitle}
-            </h2>
-            <p className="mt-2 text-xs md:text-sm font-semibold text-amber-100">
-              {serviceSubtitle}
-            </p>
+        {/* Service title box, raised ~ 3/4 inch */}
+        <div className="relative container max-w-7xl h-full flex items-center justify-center px-4">
+          <div className="w-full max-w-3xl mx-auto rounded-2xl border-2 border-white bg-black/75 px-4 md:px-6 py-4 text-center -translate-y-12 md:-translate-y-16">
+            <h2 className="text-xl md:text-3xl font-black text-amber-200 tracking-tight">{serviceTitle}</h2>
+            <p className="mt-2 text-xs md:text-sm font-semibold text-amber-100">{serviceSubtitle}</p>
 
             <div className="mt-4 flex flex-wrap justify-center gap-3">
               <PhoneCTA />
@@ -487,12 +413,11 @@ export function BrandHero({
 
 export function TikTokGallery({ images = [] }) {
   const safeImages = Array.isArray(images) ? images : [];
-
   if (safeImages.length === 0) {
     return (
       <div className="rounded-2xl border-2 border-yellow-400/80 bg-black/80 p-4 text-center text-amber-100 text-sm">
-        Photo gallery coming soon. For now, call dispatch and we&apos;ll tell
-        you exactly what our truck can handle.
+        Photo gallery coming soon. For now, call dispatch and we&apos;ll tell you exactly what our
+        truck can handle.
       </div>
     );
   }

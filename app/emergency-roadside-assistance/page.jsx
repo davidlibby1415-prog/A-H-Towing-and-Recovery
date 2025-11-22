@@ -7,7 +7,7 @@ import {
   PhoneCTA,
   TextCTA,
   TikTokGallery,
-} from "../../components/ServiceLayout"; // <-- two dots from /app/emergency-roadside-assistance
+} from "../../components/ServiceLayout";
 
 export const metadata = {
   title: "Emergency Roadside Assistance | A & H Towing & Recovery",
@@ -24,7 +24,7 @@ export default function EmergencyRoadsidePage() {
         <BrandHero
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways."
-          heroVideoSrc="/mnt/data/Fuel.mp4"   // uses your uploaded file path
+          heroVideoSrc="/Videos/fuel.mp4"   // <-- path served from /public/Videos/fuel.mp4
           poster="/fallback.jpg"
         />
 

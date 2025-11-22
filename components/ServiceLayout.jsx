@@ -103,57 +103,7 @@ export function TextCTA({ className = "" }) {
   );
 }
 
-/* ====================== Brand pieces ====================== */
-
-function AnimBorder({ children, className = "" }) {
-  return <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>{children}</div>;
-}
-
-function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
-  return (
-    <div
-      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
-      style={{
-        backgroundImage:
-          'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        borderColor,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-/* Big red A&H slab on diamond plate */
-function BrandSlabInline() {
-  return (
-    <AnimBorder>
-      <SteelPanel padded={false} className="px-3 py-1 text-center">
-        <div className="inline-block rounded-2xl bg-black/75 border-2 border-white px-3 py-1.5">
-          <h1
-            className="font-black tracking-tight"
-            style={{
-              fontFamily:
-                'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-              fontSize: "clamp(40px, 7vw, 96px)",
-              color: "#e10600",
-              WebkitTextStroke: "1.5px #000",
-              textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
-              lineHeight: 1.05,
-            }}
-          >
-            A&amp;H TOWING &amp; RECOVERY, LLC
-          </h1>
-        </div>
-      </SteelPanel>
-    </AnimBorder>
-  );
-}
-
-/* =================== Header (no marquee here) =================== */
+/* =================== Header / Footer + Marquee =================== */
 
 function TimeTempDisplay() {
   const { timeString, tempF } = useTimeAndTemp();
@@ -165,7 +115,7 @@ function TimeTempDisplay() {
   );
 }
 
-/* Top marquee identical to main page (exported) */
+/* Top marquee identical feel to main page */
 export function TopMarquee({
   text = "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Jal • Kermit • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County",
 }) {
@@ -384,28 +334,26 @@ export function SiteFooter() {
   );
 }
 
-/* =================== Brand Hero (video background) =================== */
+/* =================== BRAND HERO (video + ONE card only) =================== */
 /**
- * - heroVideoSrc: string (e.g., "/videos/fuel.mp4") <-- check exact path/casing
+ * Props:
+ * - heroVideoSrc: string (e.g., "/Videos/fuel.mp4")  << CAPITAL V to match repo
  * - poster: string
- * - serviceTitle / serviceSubtitle: strings
- * - bannerTopMarginPx: number (space below navbar for banner)
- * - cardCenterOffsetPx: number (positive pushes the card DOWN)
- * - overlayOpacity: 0..1 (0 = no overlay)
+ * - cardCenterOffsetPx: number -> positive pushes the roadside card DOWN (default 130)
+ * - overlayOpacity: 0..1        -> 0 = no dark overlay (we'll keep it 0 here)
  */
 export function BrandHero({
   heroVideoSrc,
   poster,
-  serviceTitle,
-  serviceSubtitle,
-  bannerTopMarginPx = 16,
   cardCenterOffsetPx = 130,
   overlayOpacity = 0,
+  serviceTitle = "Emergency Roadside Assistance",
+  serviceSubtitle = "Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways.",
 }) {
   return (
     <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
-      {/* background video (z-0) */}
-      {heroVideoSrc && (
+      {/* background video (MAKE SURE PATH/CASE IS CORRECT) */}
+      {!!heroVideoSrc && (
         <video
           className="absolute inset-0 w-full h-full object-cover z-0"
           autoPlay
@@ -419,96 +367,35 @@ export function BrandHero({
         </video>
       )}
 
-      {/* OPTIONAL overlay */}
+      {/* NO overlay by default; leave off unless overlayOpacity>0 */}
       {overlayOpacity > 0 && (
-        <div className="absolute inset-0 pointer-events-none z-[5]" style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }} />
+        <div className="absolute inset-0 pointer-events-none z-[1]" style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }} />
       )}
 
-      <div className="relative container max-w-7xl z-10">
-        {/* Company banner under navbar */}
-        <div className="w-full flex justify-center" style={{ marginTop: `${bannerTopMarginPx}px` }}>
-          <div className="w-full max-w-5xl">
-            <BrandSlabInline />
-          </div>
-        </div>
+      {/* Only the roadside card, centered and nudged down */}
+      <div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 z-[2]"
+        style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
+      >
+        <div className="mx-auto w-[min(92vw,820px)]">
+          <div className="rounded-2xl border border-white/60 bg-black/70 px-4 md:px-6 py-5 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
+            <h2 className="text-2xl md:text-3xl font-black text-white tracking-tight">
+              {serviceTitle}
+            </h2>
+            <p className="mt-2 text-sm md:text-base font-semibold text-white">
+              {serviceSubtitle}
+            </p>
 
-        {/* Centered Roadside Assistance card (this is the box you wanted) */}
-        <div
-          className="absolute left-1/2 top-1/2 -translate-x-1/2"
-          style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
-        >
-          <div className="mx-auto w-[min(92vw,820px)]">
-            <div className="rounded-2xl border border-white/40 bg-black/75 text-white px-4 md:px-6 py-4 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
-              <h2 className="text-xl md:text-2xl font-black tracking-tight">
-                {serviceTitle || "Emergency Roadside Assistance"}
-              </h2>
-              {serviceSubtitle && (
-                <p className="mt-2 text-xs md:text-sm font-semibold">{serviceSubtitle}</p>
-              )}
-              <div className="mt-4 flex flex-wrap justify-center gap-3">
-                <PhoneCTA />
-                <TextCTA />
-              </div>
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              <PhoneCTA />
+              <TextCTA />
             </div>
           </div>
         </div>
-
-        {/* spacer to give height */}
-        <div className="invisible py-[28vh]" />
       </div>
+
+      {/* spacer so the section has real height */}
+      <div className="relative z-[1] invisible py-[28vh]" />
     </section>
-  );
-}
-
-/* =================== TikTok-style Image Gallery =================== */
-
-export function TikTokGallery({ images = [] }) {
-  const safeImages = Array.isArray(images) ? images : [];
-  if (safeImages.length === 0) {
-    return (
-      <div className="rounded-2xl border-2 border-yellow-400/80 bg-black/80 p-4 text-center text-amber-100 text-sm">
-        Photo gallery coming soon. For now, call dispatch and we&apos;ll tell you exactly what our truck can handle.
-      </div>
-    );
-  }
-  return (
-    <div className="rounded-2xl border-2 border-yellow-400/90 bg-black/80 p-4 shadow-[0_0_25px_rgba(251,191,36,0.6)]">
-      <div className="mb-2">
-        <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 bg-yellow-400 text-black text-[11px] font-black uppercase tracking-wide">
-          <span className="text-xs">🎥</span>
-          <span>Shop &amp; Truck Shots</span>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-2 sm:gap-3">
-        {safeImages.map((src, idx) => (
-          <div
-            key={idx}
-            className="relative rounded-2xl overflow-hidden bg-neutral-900 aspect-[4/5] border border-neutral-700"
-          >
-            <img
-              src={src}
-              alt={`A&H towing photo ${idx + 1}`}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
-            />
-            <div className="absolute bottom-1 left-1 rounded-full bg-black/70 text-[9px] px-2 py-0.5 font-semibold text-amber-100">
-              @285302ditchking
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-3 text-center">
-        <a
-          className="inline-flex items-center gap-2 rounded-2xl px-4 py-1.5 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-rose-500 text-black font-black text-[11px] md:text-xs uppercase tracking-wide shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95"
-          href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <span className="text-xs">TikTok</span>
-          <span>Watch more recoveries</span>
-        </a>
-      </div>
-    </div>
   );
 }

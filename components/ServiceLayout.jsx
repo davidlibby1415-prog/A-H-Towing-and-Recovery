@@ -6,6 +6,7 @@ import Link from "next/link";
 
 /* ============================ Utilities ============================ */
 
+/** Build an sms: URL with a prefilled body, handling iOS vs others. */
 function smsHref(number, body) {
   const encoded = encodeURIComponent(body);
   const isiOS =
@@ -15,6 +16,7 @@ function smsHref(number, body) {
   return `sms:${number}${sep}body=${encoded}`;
 }
 
+/** Client-only hook: shows local time and a rough temperature via Open-Meteo. */
 function useTimeAndTemp() {
   const [timeString, setTimeString] = useState("");
   const [tempF, setTempF] = useState(null);
@@ -49,12 +51,12 @@ function useTimeAndTemp() {
           const res = await fetch(url);
           const data = await res.json();
           const t = data?.current_weather?.temperature;
-          setTempF(typeof t === "number" ? Math.round(t) : null);
+          if (typeof t === "number") setTempF(Math.round(t));
         } catch {
-          setTempF(null);
+          /* ignore */
         }
       },
-      () => setTempF(null),
+      () => {},
       { enableHighAccuracy: false, timeout: 4000, maximumAge: 60_000 }
     );
   }, []);
@@ -101,12 +103,31 @@ export function TextCTA({ className = "" }) {
   );
 }
 
+/* Time & Temp (small) */
 function TimeTempDisplay() {
   const { timeString, tempF } = useTimeAndTemp();
   return (
     <div className="flex flex-col items-end text-[10px] md:text-xs text-amber-100 leading-tight whitespace-nowrap">
       <span>Time: {timeString || "--:--"}</span>
       <span>Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
+    </div>
+  );
+}
+
+/* Optional slim bar version */
+export function TimeTempBar() {
+  const { timeString, tempF } = useTimeAndTemp();
+  return (
+    <div className="w-full bg-black/80 border-b border-black/60">
+      <div className="container max-w-7xl flex items-center justify-between py-1.5 text-[10px] md:text-xs text-amber-100">
+        <span className="font-semibold uppercase tracking-wide">
+          Pecos • Reeves County • West Texas Routes
+        </span>
+        <div className="flex items-center gap-4">
+          <span>Time: {timeString || "--:--"}</span>
+          <span>Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -120,10 +141,12 @@ function AnimBorder({ children, className = "" }) {
 function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
   return (
     <div
-      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
+        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
+      } ${className}`}
       style={{
         backgroundImage:
-          'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
+          'linear-gradient(0deg, rgba(0,0,0,0.22), rgba(0,0,0,0.22)), url("/diamond-plate.jpg")',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -135,30 +158,37 @@ function SteelPanel({ children, className = "", padded = true, borderColor = "rg
   );
 }
 
-/** Brand banner; `compact` shrinks it for service pages */
-function BrandSlab({ compact = false }) {
+/** Brighter, safety-forward banner with animated side “electrical” glows + animated border */
+function BrandSlab() {
   return (
-    <AnimBorder>
-      <SteelPanel padded={false} className="px-3 py-1 text-center">
-        <div className="inline-block rounded-2xl bg-black/75 border-2 border-white px-3 py-1.5">
-          <h1
-            className="font-black tracking-tight"
-            style={{
-              fontFamily:
-                'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-              // smaller cap when compact
-              fontSize: compact ? "clamp(28px, 5.2vw, 72px)" : "clamp(40px, 7vw, 96px)",
-              color: "#e10600",
-              WebkitTextStroke: "1.5px #000",
-              textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
-              lineHeight: 1.05,
-            }}
-          >
-            A&amp;H TOWING &amp; RECOVERY, LLC
-          </h1>
-        </div>
-      </SteelPanel>
-    </AnimBorder>
+    <div className="relative">
+      {/* side animated glows */}
+      <div className="absolute -left-6 top-1/2 -translate-y-1/2 h-24 w-24 rounded-full blur-2xl glow-left pointer-events-none" />
+      <div className="absolute -right-6 top-1/2 -translate-y-1/2 h-24 w-24 rounded-full blur-2xl glow-right pointer-events-none" />
+
+      <AnimBorder>
+        <SteelPanel padded={false} className="px-3 py-1 text-center bg-black/65 backdrop-blur-[2px]">
+          <div className="inline-block rounded-2xl bg-gradient-to-br from-slate-900/80 via-slate-800/80 to-slate-900/80 border-2 border-white/85 px-3 py-1.5">
+            <h1
+              className="font-black tracking-tight"
+              style={{
+                fontFamily:
+                  'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
+                fontSize: "clamp(38px, 6.6vw, 92px)",
+                color: "#ff1a1a",
+                WebkitTextStroke: "1.25px #0b0b0b",
+                textShadow:
+                  "0 0 10px rgba(255,255,255,.15), 0 3px 0 #7f1d1d, 0 12px 28px rgba(0,0,0,.55)",
+                lineHeight: 1.06,
+                letterSpacing: "0.5px",
+              }}
+            >
+              A&amp;H TOWING &amp; RECOVERY, LLC
+            </h1>
+          </div>
+        </SteelPanel>
+      </AnimBorder>
+    </div>
   );
 }
 
@@ -201,10 +231,9 @@ export function SiteHeader() {
             </div>
           </div>
 
-          {/* Right: nav + time/temp + call */}
+          {/* Right side: nav + time/temp + call button */}
           <div className="ml-auto flex items-center gap-3">
             <nav className="hidden md:flex items-center gap-5 text-xs md:text-sm lg:text-base font-extrabold">
-              {/* NEW: Home link */}
               <Link href="/" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
                 Home
               </Link>
@@ -214,7 +243,7 @@ export function SiteHeader() {
                 <button
                   type="button"
                   className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-                  onClick={() => setServicesOpen((v) => !v)}
+                  onClick={() => setServicesOpen((s) => !s)}
                 >
                   <span>Services</span>
                   <span className="text-[10px]">▾</span>
@@ -272,7 +301,7 @@ export function SiteHeader() {
           </div>
         </div>
 
-        {/* Animated border keyframes */}
+        {/* Global styles for animated border and glows */}
         <style jsx global>{`
           @property --angle {
             syntax: "<angle>";
@@ -286,8 +315,24 @@ export function SiteHeader() {
           }
           .rb-border {
             --angle: 0deg;
-            background: conic-gradient(from var(--angle), #3b82f6 0%, #ef4444 50%, #3b82f6 100%);
-            animation: rb-rotate 24s linear infinite;
+            background: conic-gradient(from var(--angle), #60a5fa 0%, #22d3ee 35%, #fca5a5 70%, #60a5fa 100%);
+            animation: rb-rotate 20s linear infinite;
+          }
+          @keyframes glowPulse {
+            0%, 100% { opacity: .35; transform: translateY(-50%) scale(1); }
+            50% { opacity: .8; transform: translateY(-50%) scale(1.1); }
+          }
+          @keyframes lightningFlicker {
+            0%, 8%, 100% { filter: brightness(1); }
+            3%, 6% { filter: brightness(2.4); }
+          }
+          .glow-left {
+            background: radial-gradient(closest-side, rgba(56,189,248,.7), rgba(56,189,248,0));
+            animation: glowPulse 3.2s ease-in-out infinite, lightningFlicker 7s steps(1, end) infinite;
+          }
+          .glow-right {
+            background: radial-gradient(closest-side, rgba(250,204,21,.8), rgba(250,204,21,0));
+            animation: glowPulse 3.2s ease-in-out .6s infinite, lightningFlicker 8.2s steps(1, end) infinite;
           }
         `}</style>
       </header>
@@ -355,27 +400,19 @@ export function SiteFooter() {
   );
 }
 
-/* =================== Brand Hero for Service Pages =================== */
+/* =================== Brand Hero (video with movable center box) =================== */
 /**
- * Now renders:
- * 1) A top black strip with the A&H banner (compact)
- * 2) A tall video hero below it with the service box raised ~3/4"
+ * Props:
+ * - heroVideoSrc: string (e.g., "/videos/fuel.mp4")
+ * - poster: string fallback image
+ * - centerOffsetPx: number; positive pushes the text box DOWN (e.g., 202 for ~2.10 inches)
  */
-export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc, poster }) {
+export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc, poster, centerOffsetPx = 0 }) {
   return (
-    <>
-      {/* Strip: banner ABOVE video so it never blocks action */}
-      <div className="bg-neutral-950 border-b border-black/40">
-        <div className="container max-w-7xl py-4 md:py-5 flex justify-center">
-          <div className="w-full max-w-5xl md:max-w-4xl">
-            <BrandSlab compact />
-          </div>
-        </div>
-      </div>
-
-      {/* Video hero */}
-      <section className="relative isolate overflow-hidden bg-neutral-950 min-h-[68vh] md:min-h-[78vh]">
-        {heroVideoSrc && (
+    <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
+      {/* video */}
+      {heroVideoSrc && (
+        <div className="relative h-[62vh] md:h-[75vh]">
           <video
             className="absolute inset-0 w-full h-full object-cover"
             autoPlay
@@ -387,25 +424,34 @@ export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc, poster 
           >
             <source src={heroVideoSrc} type="video/mp4" />
           </video>
-        )}
+          {/* subtle dark for readability */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.55)_78%,rgba(0,0,0,0.75)_100%)]" />
+        </div>
+      )}
 
-        {/* darkening for readability */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_45%,rgba(0,0,0,0.55)_75%,rgba(0,0,0,0.8)_100%)]" />
+      {/* content overlays */}
+      <div className="pointer-events-none absolute inset-0 flex flex-col items-center">
+        {/* Banner always visible and not blocking video too much */}
+        <div className="mt-4 w-full max-w-5xl px-4">
+          <BrandSlab />
+        </div>
 
-        {/* Service title box, raised ~ 3/4 inch */}
-        <div className="relative container max-w-7xl h-full flex items-center justify-center px-4">
-          <div className="w-full max-w-3xl mx-auto rounded-2xl border-2 border-white bg-black/75 px-4 md:px-6 py-4 text-center -translate-y-12 md:-translate-y-16">
+        {/* Center box — movable */}
+        <div
+          className="w-full max-w-3xl px-4"
+          style={{ transform: `translateY(${centerOffsetPx}px)` }}
+        >
+          <div className="mx-auto mt-4 pointer-events-auto rounded-2xl border-2 border-white bg-black/75 px-4 md:px-6 py-4 text-center shadow-[0_10px_40px_rgba(0,0,0,.45)]">
             <h2 className="text-xl md:text-3xl font-black text-amber-200 tracking-tight">{serviceTitle}</h2>
             <p className="mt-2 text-xs md:text-sm font-semibold text-amber-100">{serviceSubtitle}</p>
-
             <div className="mt-4 flex flex-wrap justify-center gap-3">
               <PhoneCTA />
               <TextCTA />
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 
@@ -416,12 +462,10 @@ export function TikTokGallery({ images = [] }) {
   if (safeImages.length === 0) {
     return (
       <div className="rounded-2xl border-2 border-yellow-400/80 bg-black/80 p-4 text-center text-amber-100 text-sm">
-        Photo gallery coming soon. For now, call dispatch and we&apos;ll tell you exactly what our
-        truck can handle.
+        Photo gallery coming soon. For now, call dispatch and we&apos;ll tell you exactly what our truck can handle.
       </div>
     );
   }
-
   return (
     <div className="rounded-2xl border-2 border-yellow-400/90 bg-black/80 p-4 shadow-[0_0_25px_rgba(251,191,36,0.6)]">
       <div className="mb-2">
@@ -433,15 +477,8 @@ export function TikTokGallery({ images = [] }) {
 
       <div className="grid grid-cols-2 gap-2 sm:gap-3">
         {safeImages.map((src, idx) => (
-          <div
-            key={idx}
-            className="relative rounded-2xl overflow-hidden bg-neutral-900 aspect-[4/5] border border-neutral-700"
-          >
-            <img
-              src={src}
-              alt={`A&H towing photo ${idx + 1}`}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
-            />
+          <div key={idx} className="relative rounded-2xl overflow-hidden bg-neutral-900 aspect-[4/5] border border-neutral-700">
+            <img src={src} alt={`A&H towing photo ${idx + 1}`} className="w-full h-full object-cover hover:scale-105 transition-transform duration-200" />
             <div className="absolute bottom-1 left-1 rounded-full bg-black/70 text-[9px] px-2 py-0.5 font-semibold text-amber-100">
               @285302ditchking
             </div>

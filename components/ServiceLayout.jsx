@@ -5,24 +5,20 @@ import Link from "next/link";
 
 /* ============================ Utilities ============================ */
 
-/** Build an sms: URL with a prefilled body, handling iOS vs others. */
 function smsHref(number, body) {
   const encoded = encodeURIComponent(body);
   const isiOS =
     typeof navigator !== "undefined" &&
     /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
   const sep = isiOS ? "&" : "?";
   return `sms:${number}${sep}body=${encoded}`;
 }
 
-/** Client-only hook: shows local time and a rough temperature using geolocation + Open-Meteo. */
 function useTimeAndTemp() {
   const [timeString, setTimeString] = useState("");
   const [tempF, setTempF] = useState(null);
   const hasRequestedRef = useRef(false);
 
-  // Local time (update every 30s)
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -37,7 +33,6 @@ function useTimeAndTemp() {
     return () => clearInterval(id);
   }, []);
 
-  // Rough temperature using geolocation + open-meteo
   useEffect(() => {
     if (hasRequestedRef.current) return;
     if (typeof navigator === "undefined" || !navigator.geolocation) return;
@@ -49,22 +44,14 @@ function useTimeAndTemp() {
         try {
           const lat = pos.coords.latitude;
           const lon = pos.coords.longitude;
-
           const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`;
           const res = await fetch(url);
           const data = await res.json();
           const t = data?.current_weather?.temperature;
-
-          if (typeof t === "number") {
-            setTempF(Math.round(t));
-          }
-        } catch {
-          /* ignore fetch error silently */
-        }
+          if (typeof t === "number") setTempF(Math.round(t));
+        } catch {}
       },
-      () => {
-        /* ignore location error silently */
-      },
+      () => {},
       { enableHighAccuracy: false, timeout: 4000, maximumAge: 60_000 }
     );
   }, []);
@@ -130,12 +117,20 @@ function AnimBorder({ children, className = "" }) {
   return <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>{children}</div>;
 }
 
-function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
+function SteelPanel({
+  children,
+  className = "",
+  padded = true,
+  borderColor = "rgba(255,255,255,0.18)",
+}) {
   return (
     <div
-      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
+      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
+        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
+      } ${className}`}
       style={{
-        backgroundImage: 'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
+        backgroundImage:
+          'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
@@ -147,7 +142,7 @@ function SteelPanel({ children, className = "", padded = true, borderColor = "rg
   );
 }
 
-/** Classic A&H steel-panel slab (kept for other pages if you want it). */
+/** Classic slab brand */
 function BrandSlab() {
   return (
     <AnimBorder>
@@ -158,11 +153,11 @@ function BrandSlab() {
             style={{
               fontFamily:
                 'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-              fontSize: "clamp(40px, 7vw, 96px)",
+              fontSize: "clamp(36px, 6vw, 72px)",
               color: "#e10600",
-              WebkitTextStroke: "1.5px #000",
+              WebkitTextStroke: "1.25px #000",
               textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
-              lineHeight: 1.05,
+              lineHeight: 1.06,
             }}
           >
             A&amp;H TOWING &amp; RECOVERY, LLC
@@ -173,30 +168,31 @@ function BrandSlab() {
   );
 }
 
-/** Plain red “A&H…” wordmark (no panel), with optional side glow. */
-function BrandWordmark({ sideGlow }) {
+/** Plain red wordmark (no panel) with soft glow */
+function BrandWordmark({ offsetPx = 0 }) {
   return (
     <div className="relative w-full flex justify-center">
-      {/* side glow accents */}
-      {sideGlow && (
-        <>
-          <div className="pointer-events-none absolute left-3 md:left-6 top-1/2 -translate-y-1/2 h-20 md:h-28 w-20 md:w-28 rounded-full blur-3xl opacity-60 animate-glow-left" />
-          <div className="pointer-events-none absolute right-3 md:right-6 top-1/2 -translate-y-1/2 h-20 md:h-28 w-20 md:w-28 rounded-full blur-3xl opacity-60 animate-glow-right" />
-        </>
-      )}
+      {/* soft side glows to match safety vibe */}
+      <div
+        className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 h-12 w-24 md:w-40 rounded-full blur-2xl"
+        style={{ background: "radial-gradient(circle, rgba(255,255,255,.25), rgba(0,0,0,0))" }}
+      />
+      <div
+        className="pointer-events-none absolute right-0 top-1/2 -translate-y-1/2 h-12 w-24 md:w-40 rounded-full blur-2xl"
+        style={{ background: "radial-gradient(circle, rgba(255,255,255,.25), rgba(0,0,0,0))" }}
+      />
 
       <h1
-        className="text-center font-black tracking-tight select-none"
+        className="text-center font-black tracking-tight"
         style={{
+          transform: `translateY(${offsetPx}px)`,
           fontFamily:
             'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-          fontSize: "clamp(38px, 6.7vw, 94px)",
-          color: "#ff1a1a",
-          WebkitTextStroke: "1.25px rgba(0,0,0,0.9)",
-          textShadow:
-            "0 1px 0 #7f1d1d, 0 8px 18px rgba(0,0,0,.55), 0 0 22px rgba(255,220,220,.18)",
-          lineHeight: 1.05,
-          letterSpacing: "1px",
+          fontSize: "clamp(30px, 5.5vw, 64px)",
+          color: "#e10600",
+          WebkitTextStroke: "1px #000",
+          textShadow: "0 1px 0 #7f1d1d, 0 12px 28px rgba(0,0,0,.55)",
+          lineHeight: 1.06,
         }}
       >
         A&amp;H TOWING &amp; RECOVERY, LLC
@@ -215,7 +211,6 @@ export function SiteHeader() {
     if (servicesCloseTimeout.current) clearTimeout(servicesCloseTimeout.current);
     setServicesOpen(true);
   };
-
   const scheduleCloseServices = () => {
     if (servicesCloseTimeout.current) clearTimeout(servicesCloseTimeout.current);
     servicesCloseTimeout.current = setTimeout(() => setServicesOpen(false), 350);
@@ -225,7 +220,7 @@ export function SiteHeader() {
     <>
       <header className="sticky top-0 z-[120] bg-ahCharcoal text-ahText border-b border-black/30">
         <div className="container max-w-7xl flex items-center gap-4 py-2.5">
-          {/* Left: logo + address */}
+          {/* Left: brand glyph + address */}
           <div className="flex items-center gap-3">
             <div className="h-9 w-9 rounded-xl bg-black grid place-items-center font-bold shadow-cta">
               <span className="text-[14px] font-extrabold" style={{ color: "#e10600" }}>
@@ -236,77 +231,85 @@ export function SiteHeader() {
               <div className="font-bold drop-shadow text-red-600 text-xs md:text-sm">
                 A&amp;H Towing &amp; Recovery, LLC
               </div>
-              <div className="text-[10px] md:text-xs opacity-90">
-                2712 W F Street, Pecos, TX 79772
-              </div>
+              <div className="text-[10px] md:text-xs opacity-90">2712 W F Street, Pecos, TX 79772</div>
               <div className="text-[10px] md:text-xs">
-                <a
-                  className="underline underline-offset-4 hover:opacity-100"
-                  href="mailto:ah.towing.recovery23@gmail.com"
-                >
+                <a className="underline underline-offset-4 hover:opacity-100" href="mailto:ah.towing.recovery23@gmail.com">
                   ah.towing.recovery23@gmail.com
                 </a>
               </div>
             </div>
           </div>
 
-          {/* Right side: nav + time/temp + call button */}
+          {/* Right side: nav + time/temp + call */}
           <div className="ml-auto flex items-center gap-3">
             <nav className="hidden md:flex items-center gap-5 text-xs md:text-sm lg:text-base font-extrabold">
-              {/* NEW: Home/Main Page link */}
-              <Link
-                href="/"
-                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-              >
+              <Link href="/" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
                 Home
               </Link>
 
-              {/* Services dropdown with delayed close */}
-              <div
-                className="relative"
-                onMouseEnter={openServices}
-                onMouseLeave={scheduleCloseServices}
-              >
+              {/* Services dropdown */}
+              <div className="relative" onMouseEnter={openServices} onMouseLeave={scheduleCloseServices}>
                 <button
                   type="button"
                   className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-                  onClick={() => setServicesOpen((v) => !v)}
+                  onClick={() => setServicesOpen((s) => !s)}
                 >
                   <span>Services</span>
                   <span className="text-[10px]">▾</span>
                 </button>
-
                 {servicesOpen && (
                   <div className="absolute left-0 mt-2 min-w-[240px] rounded-xl bg-black/95 text-xs sm:text-sm text-white shadow-lg border border-yellow-400 z-[200]">
-                    <Link href="/light-duty-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Light Duty Towing</Link>
-                    <Link href="/heavy-duty-commercial-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Heavy Duty &amp; Commercial Towing</Link>
-                    <Link href="/oilfield-routes-tow-service" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Oilfield Routes Tow Service</Link>
-                    <Link href="/equipment-transport" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Equipment Transport</Link>
-                    <Link href="/flatbed-rollback-services" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Flatbed / Rollback Services</Link>
-                    <Link href="/emergency-roadside-assistance" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Emergency Roadside Assistance</Link>
-                    <Link href="/accidents-and-accident-removal" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Accident Removal</Link>
-                    <Link href="/winching-recovery" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>Winching / Recovery</Link>
+                    <Link href="/light-duty-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Light Duty Towing
+                    </Link>
+                    <Link href="/heavy-duty-commercial-towing" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Heavy Duty &amp; Commercial Towing
+                    </Link>
+                    <Link href="/oilfield-routes-tow-service" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Oilfield Routes Tow Service
+                    </Link>
+                    <Link href="/equipment-transport" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Equipment Transport
+                    </Link>
+                    <Link href="/flatbed-rollback-services" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Flatbed / Rollback Services
+                    </Link>
+                    <Link href="/emergency-roadside-assistance" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Emergency Roadside Assistance
+                    </Link>
+                    <Link href="/accidents-and-accident-removal" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Accident Removal
+                    </Link>
+                    <Link href="/winching-recovery" className="block px-4 py-2 hover:bg-yellow-400 hover:text-black" onClick={() => setServicesOpen(false)}>
+                      Winching / Recovery
+                    </Link>
                   </div>
                 )}
               </div>
 
-              <Link href="/#coverage" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">Coverage</Link>
-              <Link href="/owners" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">Owners</Link>
-              <Link href="/tips-tricks" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">Tips &amp; Tricks</Link>
-              <Link href="/#contact" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">Request a Tow</Link>
+              <Link href="/#coverage" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+                Coverage
+              </Link>
+              <Link href="/owners" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+                Owners
+              </Link>
+              <Link href="/tips-tricks" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+                Tips &amp; Tricks
+              </Link>
+              <Link href="/#contact" className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors">
+                Request a Tow
+              </Link>
             </nav>
 
-            {/* Time + Temp */}
             <div className="hidden sm:block">
               <TimeTempDisplay />
             </div>
 
-            {/* Call button - always in header */}
             <PhoneCTA className="ml-1" />
           </div>
         </div>
 
-        {/* Global styles for animated border and side glows */}
+        {/* global animated border token */}
         <style jsx global>{`
           @property --angle {
             syntax: "<angle>";
@@ -320,30 +323,8 @@ export function SiteHeader() {
           }
           .rb-border {
             --angle: 0deg;
-            background: conic-gradient(
-              from var(--angle),
-              #3b82f6 0%,
-              #ef4444 50%,
-              #3b82f6 100%
-            );
+            background: conic-gradient(from var(--angle), #3b82f6 0%, #ef4444 50%, #3b82f6 100%);
             animation: rb-rotate 24s linear infinite;
-          }
-          /* soft animated glows for left/right of the wordmark */
-          .animate-glow-left {
-            background: radial-gradient(closest-side, rgba(56,189,248,0.65), rgba(56,189,248,0) 70%);
-            animation: glowLeft 3.6s ease-in-out infinite;
-          }
-          .animate-glow-right {
-            background: radial-gradient(closest-side, rgba(251,191,36,0.65), rgba(251,191,36,0) 70%);
-            animation: glowRight 3.6s ease-in-out infinite;
-          }
-          @keyframes glowLeft {
-            0%, 100% { transform: translateY(-50%) translateX(0); opacity: .55; }
-            50% { transform: translateY(-50%) translateX(6px); opacity: .75; }
-          }
-          @keyframes glowRight {
-            0%, 100% { transform: translateY(-50%) translateX(0); opacity: .55; }
-            50% { transform: translateY(-50%) translateX(-6px); opacity: .75; }
           }
         `}</style>
       </header>
@@ -365,9 +346,21 @@ export function SiteFooter() {
         <div>
           <div className="font-semibold text-white">Quick Links</div>
           <ul className="mt-2 space-y-1">
-            <li><Link className="underline" href="/#services">Services</Link></li>
-            <li><Link className="underline" href="/#coverage">Coverage</Link></li>
-            <li><Link className="underline" href="/#contact">Request a Tow</Link></li>
+            <li>
+              <Link className="underline" href="/#services">
+                Services
+              </Link>
+            </li>
+            <li>
+              <Link className="underline" href="/#coverage">
+                Coverage
+              </Link>
+            </li>
+            <li>
+              <Link className="underline" href="/#contact">
+                Request a Tow
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
@@ -383,7 +376,9 @@ export function SiteFooter() {
         <div className="text-center md:text-left">
           <div className="font-semibold text-white">Contact</div>
           <p className="mt-2 text-white drop-shadow-sm">
-            <a className="underline font-semibold" href="tel:+14328424578">(432) 842-4578</a>
+            <a className="underline font-semibold" href="tel:+14328424578">
+              (432) 842-4578
+            </a>
             <br />
             <a className="underline font-semibold" href="mailto:ah.towing.recovery23@gmail.com">
               ah.towing.recovery23@gmail.com
@@ -400,24 +395,25 @@ export function SiteFooter() {
 /* =================== Brand Hero for Service Pages =================== */
 /**
  * Props:
- * - brandVariant: "panel" | "plain"  (default "panel")
- * - sideGlow: boolean (adds subtle animated side glows when brandVariant="plain")
- * - heroVideoSrc: string (e.g., "/videos/fuel.mp4")
- * - poster: string
- * - serviceTitle, serviceSubtitle: strings
- * - centerOffsetPx: number (pushes the center callout down; e.g., 200)
+ * - heroVideoSrc (string)   — /videos/... path
+ * - poster (string)
+ * - brandMode: "panel" | "text"  (default "panel")
+ * - brandOffsetPx (number)       — nudges the brand up/down
+ * - contentOffsetPx (number)     — nudges the centered service box up/down
+ * - minHeightClass (string)      — tailwind height classes for the hero section
  */
 export function BrandHero({
-  brandVariant = "panel",
-  sideGlow = false,
-  heroVideoSrc,
-  poster,
   serviceTitle,
   serviceSubtitle,
-  centerOffsetPx = 0,
+  heroVideoSrc,
+  poster,
+  brandMode = "panel",
+  brandOffsetPx = 0,
+  contentOffsetPx = 0,
+  minHeightClass = "h-[56vh] md:h-[72vh]",
 }) {
   return (
-    <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40 min-h-[72vh]">
+    <section className={`relative isolate overflow-hidden bg-neutral-950 border-b border-black/40 ${minHeightClass}`}>
       {/* Background video */}
       {heroVideoSrc && (
         <video
@@ -433,28 +429,28 @@ export function BrandHero({
         </video>
       )}
 
-      {/* Dark overlay for readability */}
+      {/* overlay for readability */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_45%,rgba(0,0,0,0.55)_78%,rgba(0,0,0,0.78)_100%)]" />
 
-      <div className="relative container max-w-7xl py-5 md:py-6 flex flex-col items-center">
-        {/* Brand at the very top to avoid faces */}
-        <div className="w-full flex justify-center mb-2 md:mb-3">
-          {brandVariant === "plain" ? <BrandWordmark sideGlow={sideGlow} /> : <BrandSlab />}
-        </div>
+      {/* Top brand */}
+      <div className="relative z-10 container max-w-7xl pt-5 md:pt-6">
+        {brandMode === "text" ? (
+          <BrandWordmark offsetPx={brandOffsetPx} />
+        ) : (
+          <div style={{ transform: `translateY(${brandOffsetPx}px)` }}>
+            <BrandSlab />
+          </div>
+        )}
+      </div>
 
-        {/* Centered callout (moved down by centerOffsetPx) */}
-        <div
-          className="w-full max-w-3xl mx-auto rounded-2xl border-2 border-white bg-black/75 px-4 md:px-6 py-4 text-center"
-          style={{ transform: `translateY(${Math.max(0, centerOffsetPx)}px)` }}
-        >
-          <h2 className="text-xl md:text-3xl font-black text-amber-200 tracking-tight">
-            {serviceTitle}
-          </h2>
-          <p className="mt-2 text-xs md:text-sm font-semibold text-amber-100">
-            {serviceSubtitle}
-          </p>
-
-          {/* Buttons under the subheading */}
+      {/* Centered service box */}
+      <div
+        className="pointer-events-none absolute z-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+        style={{ transform: `translate(-50%, calc(-50% + ${contentOffsetPx}px))` }}
+      >
+        <div className="pointer-events-auto w-[min(92vw,720px)] rounded-2xl border-2 border-white/60 bg-black/70 px-4 md:px-6 py-4 text-center shadow-[0_20px_50px_rgba(0,0,0,.55)]">
+          <h2 className="text-xl md:text-3xl font-black text-amber-200 tracking-tight">{serviceTitle}</h2>
+          <p className="mt-2 text-xs md:text-sm font-semibold text-amber-100">{serviceSubtitle}</p>
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />

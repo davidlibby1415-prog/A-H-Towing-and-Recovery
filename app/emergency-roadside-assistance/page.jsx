@@ -1,4 +1,3 @@
-// app/emergency-roadside-assistance/page.jsx
 import React from "react";
 import {
   SiteHeader,
@@ -24,9 +23,12 @@ export default function EmergencyRoadsidePage() {
         <BrandHero
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways."
-          heroVideoSrc="/Videos/fuel.mp4"   // <-- path served from /public/Videos/fuel.mp4
+          heroVideoSrc="/videos/fuel.mp4"        // <- your public video path (case-sensitive)
           poster="/fallback.jpg"
-          centerOffsetPx={202}
+          brandMode="text"                        // <- plain red letters (no box)
+          brandOffsetPx={-24}                    // move wordmark slightly up
+          contentOffsetPx={-120}                 // move the service box UP ~2.1 inches
+          minHeightClass="h-[56vh] md:h-[72vh]"  // taller hero
         />
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
@@ -38,9 +40,8 @@ export default function EmergencyRoadsidePage() {
               </h2>
 
               <p className="text-sm md:text-base font-semibold">
-                Sometimes you just need enough help to get rolling again — safely.
-                We handle the small breakdowns that can still ruin your night if
-                no one shows up with the right tools and attitude.
+                Sometimes you just need enough help to get rolling again — safely. We handle the small breakdowns that can still ruin your
+                night if no one shows up with the right tools and attitude.
               </p>
 
               <ul className="space-y-2 text-sm md:text-base font-semibold">
@@ -51,9 +52,8 @@ export default function EmergencyRoadsidePage() {
               </ul>
 
               <p className="text-sm md:text-base font-semibold">
-                Tell us where you are, what you&apos;re driving, and what happened.
-                We&apos;ll let you know if roadside is enough or if you&apos;re better
-                off with a full tow to a safer spot or shop.
+                Tell us where you are, what you&apos;re driving, and what happened. We&apos;ll let you know if roadside is enough or if
+                you&apos;re better off with a full tow to a safer spot or shop.
               </p>
 
               {/* What to tell us when you call */}
@@ -92,10 +92,7 @@ export default function EmergencyRoadsidePage() {
                   <li>• Turn on your hazard flashers if it&apos;s safe.</li>
                   <li>• Stay inside the vehicle or well away from traffic.</li>
                   <li>• Keep your phone nearby so we can reach you.</li>
-                  <li>
-                    • If law enforcement is on scene, let them know A &amp; H
-                    Towing &amp; Recovery is on the way.
-                  </li>
+                  <li>• If law enforcement is on scene, let them know A &amp; H Towing &amp; Recovery is on the way.</li>
                 </ul>
                 <p className="mt-2">
                   Our first priority is keeping you, your passengers, and other drivers as safe as possible while we work.

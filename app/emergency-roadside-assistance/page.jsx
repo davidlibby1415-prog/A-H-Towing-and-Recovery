@@ -1,3 +1,4 @@
+// app/emergency-roadside-assistance/page.jsx
 import React from "react";
 import {
   SiteHeader,
@@ -6,7 +7,7 @@ import {
   PhoneCTA,
   TextCTA,
   TikTokGallery,
-} from "../components/ServiceLayout";
+} from "../../components/ServiceLayout"; // <-- two dots from /app/emergency-roadside-assistance
 
 export const metadata = {
   title: "Emergency Roadside Assistance | A & H Towing & Recovery",
@@ -23,6 +24,8 @@ export default function EmergencyRoadsidePage() {
         <BrandHero
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways."
+          heroVideoSrc="/mnt/data/Fuel.mp4"   // uses your uploaded file path
+          poster="/fallback.jpg"
         />
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
@@ -34,9 +37,9 @@ export default function EmergencyRoadsidePage() {
               </h2>
 
               <p className="text-sm md:text-base font-semibold">
-                Sometimes you just need enough help to get rolling again —
-                safely. We handle the small breakdowns that can still ruin your
-                night if no one shows up with the right tools and attitude.
+                Sometimes you just need enough help to get rolling again — safely.
+                We handle the small breakdowns that can still ruin your night if
+                no one shows up with the right tools and attitude.
               </p>
 
               <ul className="space-y-2 text-sm md:text-base font-semibold">
@@ -47,9 +50,9 @@ export default function EmergencyRoadsidePage() {
               </ul>
 
               <p className="text-sm md:text-base font-semibold">
-                Tell us where you are, what you&apos;re driving, and what
-                happened. We&apos;ll let you know if roadside is enough or if
-                you&apos;re better off with a full tow to a safer spot or shop.
+                Tell us where you are, what you&apos;re driving, and what happened.
+                We&apos;ll let you know if roadside is enough or if you&apos;re better
+                off with a full tow to a safer spot or shop.
               </p>
 
               {/* What to tell us when you call */}
@@ -64,8 +67,7 @@ export default function EmergencyRoadsidePage() {
                   <li>• If you&apos;re in a safe spot or on a live shoulder</li>
                 </ul>
                 <p className="mt-2">
-                  A few clear details up front means fewer call-backs while
-                  you&apos;re already stressed on the side of the road.
+                  A few clear details up front means fewer call-backs while you&apos;re already stressed on the side of the road.
                 </p>
               </div>
             </div>
@@ -95,8 +97,7 @@ export default function EmergencyRoadsidePage() {
                   </li>
                 </ul>
                 <p className="mt-2">
-                  Our first priority is keeping you, your passengers, and other
-                  drivers as safe as possible while we work.
+                  Our first priority is keeping you, your passengers, and other drivers as safe as possible while we work.
                 </p>
               </div>
             </div>

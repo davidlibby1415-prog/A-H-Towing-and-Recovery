@@ -21,17 +21,14 @@ export default function EmergencyRoadsidePage() {
       <TopMarquee />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* === Video hero (NO company banner), buttons only here === */}
         <BrandHeroEmergency
-          heroVideoSrc="/Videos/fuel.mp4"   // CAPITAL V — must match /public folder name
+          heroVideoSrc="/Videos/fuel.mp4"  // <- capital V
           poster="/fallback.jpg"
           overlayOpacity={0}
         />
 
-        {/* === Bright white text sections with vibrant borders === */}
         <section className="py-10 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* What we can do on the spot */}
             <AnimBorder>
               <SteelPanel className="bg-black/70">
                 <h2 className="text-white text-2xl md:text-3xl font-black mb-2">
@@ -49,11 +46,9 @@ export default function EmergencyRoadsidePage() {
                   <li>• Lockouts (fast entry with no damage)</li>
                   <li>• If needed, quick move to a safer shoulder or lot</li>
                 </ul>
-                {/* No buttons here (kept only in the hero card to avoid redundancy) */}
               </SteelPanel>
             </AnimBorder>
 
-            {/* Safety tips */}
             <AnimBorder>
               <SteelPanel className="bg-black/70">
                 <h3 className="text-white text-2xl md:text-3xl font-black mb-2">
@@ -68,14 +63,12 @@ export default function EmergencyRoadsidePage() {
                   <li>Stay belted inside, or stand well away from traffic.</li>
                   <li>Keep your phone handy so we can reach you.</li>
                   <li>
-                    If law enforcement is on scene, let them know A&amp;H Towing
-                    &amp; Recovery is en route.
+                    If law enforcement is on scene, let them know A&amp;H Towing &amp; Recovery is en route.
                   </li>
                 </ol>
                 <p className="mt-3 text-white/95 text-sm md:text-base font-semibold">
                   Your safety comes first. If anything changes, call or text us with an update.
                 </p>
-                {/* No extra buttons here */}
               </SteelPanel>
             </AnimBorder>
           </div>

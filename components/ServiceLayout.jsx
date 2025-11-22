@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 
 /* ============================ Utilities ============================ */
@@ -24,15 +24,12 @@ function useTimeAndTemp() {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      const time = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-      const date = now.toLocaleDateString([], {
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      });
-      setTimeString(time);
-      setDateString(date);
+      setTimeString(
+        now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+      );
+      setDateString(
+        now.toLocaleDateString([], { year: "numeric", month: "short", day: "numeric" })
+      );
     };
     updateTime();
     const id = setInterval(updateTime, 30000);
@@ -69,7 +66,6 @@ function useTimeAndTemp() {
 
 /* ====================== Small CTAs ====================== */
 
-/** Blue button: tap-to-call */
 export function PhoneCTA({ className = "", fullWidth = false }) {
   const widthClasses = fullWidth ? "w-full sm:w-auto !min-w-0" : "min-w-[240px]";
   return (
@@ -88,30 +84,46 @@ export function PhoneCTA({ className = "", fullWidth = false }) {
   );
 }
 
-/** Red button: go to main page request form */
-export function FormCTA({ className = "", label = "TEXT REQUEST FORM (INCLUDE GPS)" }) {
+export function TextCTA({ className = "" }) {
+  const body = [
+    "Tow request from: (name)",
+    "Callback: (phone)",
+    "Vehicle: (year / make / model)",
+    "Passengers: (#)",
+    "Location: (share GPS or send a pin)",
+  ].join("\n");
+
   return (
     <a
-      href="/#contact"
+      href={smsHref("+14328424578", body)}
       className={`inline-flex flex-col items-center justify-center rounded-2xl px-4 py-2.5 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-[11px] md:text-sm min-w-[240px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white`}
     >
       <span className="uppercase tracking-wide text-[10px] md:text-xs text-center">
-        {label}
+        TEXT DISPATCH (INCLUDE GPS)
       </span>
     </a>
   );
 }
 
-/* Alias so older pages importing TextCTA don’t break */
-export const TextCTA = FormCTA;
+/* Red CTA that sends users to the main page form */
+export function LinkToFormCTA({ className = "", label = "TEXT REQUEST FORM (INCLUDE GPS)" }) {
+  return (
+    <Link
+      href="/#contact"
+      className={`inline-flex items-center justify-center rounded-2xl px-4 py-2.5 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-[11px] md:text-sm min-w-[240px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white`}
+    >
+      {label}
+    </Link>
+  );
+}
 
 /* ====================== Brand pieces ====================== */
 
-export function AnimBorder({ children, className = "" }) {
+function AnimBorder({ children, className = "" }) {
   return <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>{children}</div>;
 }
 
-export function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
+function SteelPanel({ children, className = "", padded = true, borderColor = "rgba(255,255,255,0.18)" }) {
   return (
     <div
       className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${padded ? "px-4 py-5 md:px-6 md:py-6" : ""} ${className}`}
@@ -129,20 +141,20 @@ export function SteelPanel({ children, className = "", padded = true, borderColo
   );
 }
 
-/* =================== Header / Footer + Marquee =================== */
+/* =================== Header (date + time + temp) =================== */
 
 function TimeTempDisplay() {
   const { timeString, dateString, tempF } = useTimeAndTemp();
   return (
     <div className="flex flex-col items-end text-[10px] md:text-xs text-amber-100 leading-tight whitespace-nowrap">
-      <span className="font-semibold">{dateString || "—"}</span>
-      <span>Time: {timeString || "--:--"}</span>
+      <span>{dateString || "--"}</span>
+      <span>{timeString || "--:--"}</span>
       <span>Temp: {typeof tempF === "number" ? `${tempF}°F` : "--°F"}</span>
     </div>
   );
 }
 
-/** Top marquee identical feel to main page */
+/* Top marquee identical feel to main page */
 export function TopMarquee({
   text = "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Jal • Kermit • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County",
 }) {
@@ -361,16 +373,25 @@ export function SiteFooter() {
   );
 }
 
-/* =================== Brand Hero (Emergency) =================== */
+/* =================== Brand Hero (video background) =================== */
 /**
- * Minimal hero for service pages that ONLY shows the emergency card over the video.
- * No company banner; pure white text so it pops on footage.
+ * Props:
+ * - heroVideoSrc: string (e.g., "/Videos/fuel.mp4")
+ * - poster: string
+ * - serviceTitle: string
+ * - serviceSubtitle: string
+ * - bannerTopMarginPx: number  -> space below navbar for the company banner
+ * - cardCenterOffsetPx: number -> positive pushes the roadside card DOWN (default 70 for higher placement)
+ * - overlayOpacity: 0..1        -> 0 = no dark overlay
  */
-export function BrandHeroEmergency({
+export function BrandHero({
   heroVideoSrc,
   poster,
-  overlayOpacity = 0,
-  cardCenterOffsetPx = 130,
+  serviceTitle,
+  serviceSubtitle,
+  bannerTopMarginPx = 10,
+  cardCenterOffsetPx = 70, // higher on the screen by default
+  overlayOpacity = 0.25,
 }) {
   return (
     <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
@@ -389,7 +410,7 @@ export function BrandHeroEmergency({
         </video>
       )}
 
-      {/* OPTIONAL overlay */}
+      {/* overlay for legibility */}
       {overlayOpacity > 0 && (
         <div
           className="absolute inset-0 pointer-events-none"
@@ -397,48 +418,49 @@ export function BrandHeroEmergency({
         />
       )}
 
-      {/* Emergency card centered & nudged down */}
       <div className="relative container max-w-7xl">
+        {/* Company banner spacer if you ever add it back */}
+        <div className="w-full flex justify-center" style={{ marginTop: `${bannerTopMarginPx}px` }} />
+
+        {/* Card — centered but nudged up (smaller offset) */}
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2"
           style={{ transform: `translate(-50%, calc(-50% + ${cardCenterOffsetPx}px))` }}
         >
-          <div className="mx-auto w-[min(92vw,820px)]">
-            <div className="rounded-2xl border border-white/60 bg-black/60 backdrop-blur-sm text-amber-50 px-4 md:px-6 py-4 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
+          <div className="mx-auto w-[min(92vw,880px)]">
+            <div className="rounded-2xl border border-white/50 bg-black/55 backdrop-blur-sm text-amber-50 px-4 md:px-6 py-5 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
               <h2
-                className="text-[clamp(22px,4.5vw,36px)] font-black tracking-tight"
+                className="text-2xl md:text-3xl font-black tracking-tight"
                 style={{
-                  color: "#fff",
-                  WebkitTextStroke: "0.4px rgba(0,0,0,.85)",
-                  textShadow: "0 2px 10px rgba(0,0,0,.85)",
-                  letterSpacing: "0.2px",
+                  color: "#ffffff",
+                  textShadow: "0 2px 12px rgba(0,0,0,.65)",
                 }}
               >
-                Emergency Roadside Assistance
+                {serviceTitle || "Emergency Roadside Assistance"}
               </h2>
-              <p className="mt-2 text-xs md:text-sm font-semibold text-white">
-                Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways.
-              </p>
+              {serviceSubtitle && (
+                <p className="mt-2 text-sm md:text-base font-semibold text-white">
+                  {serviceSubtitle}
+                </p>
+              )}
 
               <div className="mt-4 flex flex-wrap justify-center gap-3">
                 <PhoneCTA />
-                <FormCTA />
+                <LinkToFormCTA />
               </div>
             </div>
           </div>
         </div>
 
-        {/* spacer to give height */}
+        {/* spacer to ensure section has height */}
         <div className="invisible py-[28vh]" />
       </div>
     </section>
   );
 }
 
-/* Backward-compatible export so older pages that import BrandHero don’t crash */
-export const BrandHero = BrandHeroEmergency;
+/* =================== TikTok-style Image Gallery (kept export) =================== */
 
-/* =================== TikTok-style Image Gallery (safe default) =================== */
 export function TikTokGallery({ images = [] }) {
   const safeImages = Array.isArray(images) ? images : [];
   if (safeImages.length === 0) {
@@ -473,6 +495,18 @@ export function TikTokGallery({ images = [] }) {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="mt-3 text-center">
+        <a
+          className="inline-flex items-center gap-2 rounded-2xl px-4 py-1.5 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-rose-500 text-black font-black text-[11px] md:text-xs uppercase tracking-wide shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95"
+          href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <span className="text-xs">TikTok</span>
+          <span>Watch more recoveries</span>
+        </a>
       </div>
     </div>
   );

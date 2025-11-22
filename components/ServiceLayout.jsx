@@ -25,7 +25,12 @@ function useTimeAndTemp() {
     const updateTime = () => {
       const now = new Date();
       const time = now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
-      const date = now.toLocaleDateString([], { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+      const date = now.toLocaleDateString([], {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      });
       setTimeString(time);
       setDateString(date);
     };
@@ -96,6 +101,9 @@ export function FormCTA({ className = "", label = "TEXT REQUEST FORM (INCLUDE GP
     </a>
   );
 }
+
+/* Alias so older pages importing TextCTA don’t break */
+export const TextCTA = FormCTA;
 
 /* ====================== Brand pieces ====================== */
 
@@ -354,9 +362,9 @@ export function SiteFooter() {
 }
 
 /* =================== Brand Hero (Emergency) =================== */
-/** 
- * A minimal hero for service pages that ONLY shows the emergency card over the video.
- * No company banner, no extra overlays unless specified.
+/**
+ * Minimal hero for service pages that ONLY shows the emergency card over the video.
+ * No company banner; pure white text so it pops on footage.
  */
 export function BrandHeroEmergency({
   heroVideoSrc,
@@ -383,7 +391,10 @@ export function BrandHeroEmergency({
 
       {/* OPTIONAL overlay */}
       {overlayOpacity > 0 && (
-        <div className="absolute inset-0 pointer-events-none" style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }} />
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ backgroundColor: `rgba(0,0,0,${overlayOpacity})` }}
+        />
       )}
 
       {/* Emergency card centered & nudged down */}
@@ -421,5 +432,48 @@ export function BrandHeroEmergency({
         <div className="invisible py-[28vh]" />
       </div>
     </section>
+  );
+}
+
+/* Backward-compatible export so older pages that import BrandHero don’t crash */
+export const BrandHero = BrandHeroEmergency;
+
+/* =================== TikTok-style Image Gallery (safe default) =================== */
+export function TikTokGallery({ images = [] }) {
+  const safeImages = Array.isArray(images) ? images : [];
+  if (safeImages.length === 0) {
+    return (
+      <div className="rounded-2xl border-2 border-yellow-400/80 bg-black/80 p-4 text-center text-amber-100 text-sm">
+        Photo gallery coming soon. For now, call dispatch and we&apos;ll tell you exactly what our truck can handle.
+      </div>
+    );
+  }
+  return (
+    <div className="rounded-2xl border-2 border-yellow-400/90 bg-black/80 p-4 shadow-[0_0_25px_rgba(251,191,36,0.6)]">
+      <div className="mb-2">
+        <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 bg-yellow-400 text-black text-[11px] font-black uppercase tracking-wide">
+          <span className="text-xs">🎥</span>
+          <span>Shop &amp; Truck Shots</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-2 sm:gap-3">
+        {safeImages.map((src, idx) => (
+          <div
+            key={idx}
+            className="relative rounded-2xl overflow-hidden bg-neutral-900 aspect-[4/5] border border-neutral-700"
+          >
+            <img
+              src={src}
+              alt={`A&H towing photo ${idx + 1}`}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
+            />
+            <div className="absolute bottom-1 left-1 rounded-full bg-black/70 text-[9px] px-2 py-0.5 font-semibold text-amber-100">
+              @285302ditchking
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

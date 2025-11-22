@@ -29,7 +29,7 @@ export default function EmergencyRoadsidePage() {
           serviceSubtitle="Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways."
         />
 
-        {/* Description + Safety tips (kept) */}
+        {/* Description + Safety tips */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
             <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-5 text-amber-50">

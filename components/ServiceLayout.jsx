@@ -103,7 +103,7 @@ export function TextCTA({ className = "" }) {
   );
 }
 
-/* ====================== Brand pieces / borders ====================== */
+/* ====================== Borders / Panels ====================== */
 
 export function AnimBorder({ children, className = "" }) {
   return <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>{children}</div>;
@@ -146,7 +146,6 @@ function TimeTempDisplay() {
   );
 }
 
-/* Top marquee identical feel to main page */
 export function TopMarquee({
   text = "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Jal • Kermit • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County",
 }) {
@@ -362,15 +361,13 @@ export function SiteFooter() {
 }
 
 /* =================== Emergency hero (video, NO company banner) =================== */
-/** Only the video + emergency card; no big brand slab. */
 export function BrandHeroEmergency({
   heroVideoSrc,           // e.g., "/Videos/fuel.mp4"  (capital V matters)
   poster = "/fallback.jpg",
-  overlayOpacity = 0,     // keep text bright, no darkening by default
+  overlayOpacity = 0,
 }) {
   return (
     <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40" style={{ minHeight: "62vh" }}>
-      {/* background video */}
       {heroVideoSrc && (
         <video
           className="absolute inset-0 w-full h-full object-cover"
@@ -385,7 +382,6 @@ export function BrandHeroEmergency({
         </video>
       )}
 
-      {/* OPTIONAL overlay */}
       {overlayOpacity > 0 && (
         <div
           className="absolute inset-0 pointer-events-none"
@@ -393,7 +389,6 @@ export function BrandHeroEmergency({
         />
       )}
 
-      {/* Emergency Roadside Assistance card centered */}
       <div className="relative container max-w-7xl h-[62vh] grid place-items-center">
         <div className="w-[min(92vw,880px)]">
           <div className="rounded-2xl border border-white/70 bg-black/70 text-white px-4 md:px-6 py-4 text-center shadow-[0_12px_35px_rgba(0,0,0,.55)]">
@@ -413,7 +408,10 @@ export function BrandHeroEmergency({
   );
 }
 
-/* ==== Stub export so other pages won’t fail builds (even if unused) ==== */
+/* === Alias export to keep older pages working === */
+export { BrandHeroEmergency as BrandHero };
+
+/* ==== Safe stub so imports don’t break older pages ==== */
 export function TikTokGallery() {
   return null;
 }

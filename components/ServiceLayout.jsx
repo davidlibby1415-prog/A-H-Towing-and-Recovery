@@ -3,33 +3,25 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import BrandSlabInline from "./BrandSlabInline";
 
 /* ============================ Utilities ============================ */
 
-/**
- * Build an sms: URL with a prefilled body, handling iOS vs others.
- */
 function smsHref(number, body) {
   const encoded = encodeURIComponent(body);
   const isiOS =
     typeof navigator !== "undefined" &&
     /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
   const sep = isiOS ? "&" : "?";
   return `sms:${number}${sep}body=${encoded}`;
 }
 
-/**
- * Client-only hook: shows local time and a rough temperature
- * using browser location + Open-Meteo.
- */
 function useTimeAndTemp() {
   const [timeString, setTimeString] = useState("");
   const [tempF, setTempF] = useState(null);
   const [tempStatus, setTempStatus] = useState("idle");
   const hasRequestedRef = useRef(false);
 
-  // Local time (update every 30s)
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
@@ -44,7 +36,6 @@ function useTimeAndTemp() {
     return () => clearInterval(id);
   }, []);
 
-  // Rough temperature using geolocation + open-meteo
   useEffect(() => {
     if (hasRequestedRef.current) return;
     if (typeof navigator === "undefined" || !navigator.geolocation) return;
@@ -128,11 +119,8 @@ export function TextCTA({ className = "" }) {
   );
 }
 
-/* Time & Temp (small) */
-
 function TimeTempDisplay() {
   const { timeString, tempF } = useTimeAndTemp();
-
   return (
     <div className="flex flex-col items-end text-[10px] md:text-xs text-amber-100 leading-tight whitespace-nowrap">
       <span>Time: {timeString || "--:--"}</span>
@@ -141,10 +129,8 @@ function TimeTempDisplay() {
   );
 }
 
-/* Optional slim bar version (if you ever want a separate strip) */
 export function TimeTempBar() {
   const { timeString, tempF } = useTimeAndTemp();
-
   return (
     <div className="w-full bg-black/80 border-b border-black/60">
       <div className="container max-w-7xl flex items-center justify-between py-1.5 text-[10px] md:text-xs text-amber-100">
@@ -157,66 +143,6 @@ export function TimeTempBar() {
         </div>
       </div>
     </div>
-  );
-}
-
-/* ====================== Chrome-style panels & brand ====================== */
-
-function AnimBorder({ children, className = "" }) {
-  return (
-    <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>
-      {children}
-    </div>
-  );
-}
-
-function SteelPanel({
-  children,
-  className = "",
-  padded = true,
-  borderColor = "rgba(255,255,255,0.18)",
-}) {
-  return (
-    <div
-      className={`rounded-[22px] border shadow-[0_10px_28px_rgba(0,0,0,0.45)] ${
-        padded ? "px-4 py-5 md:px-6 md:py-6" : ""
-      } ${className}`}
-      style={{
-        backgroundImage:
-          'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        borderColor,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-export function BrandSlab() {
-  return (
-    <AnimBorder>
-      <SteelPanel padded={false} className="px-3 py-1 text-center">
-        <div className="inline-block rounded-2xl bg-black/75 border-2 border-white px-3 py-1.5">
-          <h1
-            className="font-black tracking-tight"
-            style={{
-              fontFamily:
-                'ui-sans-serif, system-ui, "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"',
-              fontSize: "clamp(40px, 7vw, 96px)",
-              color: "#e10600",
-              WebkitTextStroke: "1.5px #000",
-              textShadow: "0 2px 0 #7f1d1d, 0 10px 22px rgba(0,0,0,.5)",
-              lineHeight: 1.05,
-            }}
-          >
-            A&amp;H TOWING &amp; RECOVERY, LLC
-          </h1>
-        </div>
-      </SteelPanel>
-    </AnimBorder>
   );
 }
 
@@ -244,7 +170,6 @@ export function SiteHeader() {
 
   return (
     <>
-      {/* Sticky header bar with nav + time/temp + call button */}
       <header className="sticky top-0 z-[120] bg-ahCharcoal text-ahText border-b border-black/30">
         <div className="container max-w-7xl flex items-center gap-4 py-2.5">
           {/* Left: logo + address */}
@@ -275,10 +200,10 @@ export function SiteHeader() {
             </div>
           </div>
 
-          {/* Right side: nav + time/temp + call button */}
+          {/* Right: nav + time/temp + call */}
           <div className="ml-auto flex items-center gap-3">
             <nav className="hidden md:flex items-center gap-5 text-xs md:text-sm lg:text-base font-extrabold">
-              {/* NEW: Home link */}
+              {/* NEW: Home/Main Page link */}
               <Link
                 href="/"
                 className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
@@ -295,13 +220,7 @@ export function SiteHeader() {
                 <button
                   type="button"
                   className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-                  onClick={() => {
-                    if (servicesOpen) {
-                      setServicesOpen(false);
-                    } else {
-                      openServices();
-                    }
-                  }}
+                  onClick={() => setServicesOpen((v) => !v)}
                 >
                   <span>Services</span>
                   <span className="text-[10px]">▾</span>
@@ -395,17 +314,15 @@ export function SiteHeader() {
               </Link>
             </nav>
 
-            {/* Time + Temp */}
             <div className="hidden sm:block">
               <TimeTempDisplay />
             </div>
 
-            {/* Call button - always in header */}
             <PhoneCTA className="ml-1" />
           </div>
         </div>
 
-        {/* Global styles for animated border (shared across pages) */}
+        {/* Global animation for the rainbow border (used by BrandSlabInline) */}
         <style jsx global>{`
           @property --angle {
             syntax: "<angle>";
@@ -509,53 +426,60 @@ export function SiteFooter() {
 }
 
 /* =================== Brand Hero for Service Pages =================== */
+/* Banner moved ABOVE the video; title box lifted ~0.75" (≈56px). */
 
-export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc, poster }) {
+export function BrandHero({
+  serviceTitle,
+  serviceSubtitle,
+  heroVideoSrc,
+  poster,
+}) {
   return (
-    <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
-      {/* Background video */}
-      {heroVideoSrc && (
-        <video
-          className="absolute inset-0 w-full h-full object-cover"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster={poster || "/fallback.jpg"}
-        >
-          <source src={heroVideoSrc} type="video/mp4" />
-        </video>
-      )}
+    <>
+      {/* A&H banner ABOVE the video */}
+      <section className="w-full bg-neutral-950 border-b border-black/40">
+        <div className="container max-w-7xl py-5 md:py-6 flex justify-center">
+          <BrandSlabInline className="w-full max-w-5xl" />
+        </div>
+      </section>
 
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.55)_78%,rgba(0,0,0,0.75)_100%)]" />
+      {/* HERO with background video */}
+      <section className="relative z-[10] w-full overflow-hidden bg-neutral-950 border-b border-black/40">
+        {heroVideoSrc && (
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster={poster || "/fallback.jpg"}
+          >
+            <source src={heroVideoSrc} type="video/mp4" />
+          </video>
+        )}
 
-      <div className="relative container max-w-7xl py-5 md:py-6 flex flex-col items-center">
-        {/* Big A&H sign on steel */}
-        <div className="w-full flex justify-center">
-          <div className="w-full max-w-5xl">
-            <BrandSlab />
+        {/* overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_55%,rgba(0,0,0,0.55)_78%,rgba(0,0,0,0.75)_100%)]" />
+
+        {/* Centered service box, shifted up ~54–56px */}
+        <div className="relative container max-w-7xl py-10 md:py-16 flex justify-center">
+          <div className="w-full max-w-3xl mx-auto rounded-2xl border-2 border-white bg-black/75 px-4 md:px-6 py-4 text-center transform -translate-y-14">
+            <h2 className="text-xl md:text-3xl font-black text-amber-200 tracking-tight">
+              {serviceTitle}
+            </h2>
+            <p className="mt-2 text-xs md:text-sm font-semibold text-amber-100">
+              {serviceSubtitle}
+            </p>
+
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              <PhoneCTA />
+              <TextCTA />
+            </div>
           </div>
         </div>
-
-        {/* White-bordered text box behind service title + subtitle */}
-        <div className="mt-4 w-full max-w-3xl mx-auto rounded-2xl border-2 border-white bg-black/75 px-4 md:px-6 py-4 text-center">
-          <h2 className="text-xl md:text-3xl font-black text-amber-200 tracking-tight">
-            {serviceTitle}
-          </h2>
-          <p className="mt-2 text-xs md:text-sm font-semibold text-amber-100">
-            {serviceSubtitle}
-          </p>
-
-          {/* Buttons under the subheading */}
-          <div className="mt-4 flex flex-wrap justify-center gap-3">
-            <PhoneCTA />
-            <TextCTA />
-          </div>
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
 

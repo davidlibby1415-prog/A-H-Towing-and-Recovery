@@ -26,6 +26,7 @@ export default function EmergencyRoadsidePage() {
           serviceSubtitle="Fuel, jumpstarts, and lockouts around Pecos, Reeves County, and the West Texas highways."
           heroVideoSrc="/Videos/fuel.mp4"   // <-- path served from /public/Videos/fuel.mp4
           poster="/fallback.jpg"
+          centerOffsetPx={202}
         />
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">

@@ -5,8 +5,9 @@ import {
   TopMarquee,
   BrandHero,
 } from "../../components/ServiceLayout";
+import RBGlobalStyles from "../../components/RBGlobalStyles";
 
-/** Local CTA components – simple anchors (no hooks), safe in a Server Component */
+/** Simple anchors only (no hooks), safe in a Server Component */
 function BlueCallButton({ className = "" }) {
   return (
     <a
@@ -23,7 +24,7 @@ function BlueCallButton({ className = "" }) {
 }
 
 function RedTextFormButton({ className = "" }) {
-  // Link straight to the main page form section; the main page handles smooth scroll.
+  // Link straight to the main page form section; main page handles the smooth scroll.
   return (
     <a
       href="/#contact"
@@ -48,21 +49,12 @@ export default function EmergencyRoadsidePage() {
       <TopMarquee />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO with video (Capital 'V' path) + brighter heading/subtitle */}
+        {/* HERO (note capital V in /Videos/) */}
         <BrandHero
-          heroVideoSrc="/Videos/fuel.mp4"  // <-- critical: capital V
+          heroVideoSrc="/Videos/fuel.mp4"
           poster="/fallback.jpg"
-          serviceTitle={
-            <span className="!text-white drop-shadow-[0_2px_8px_rgba(0,0,0,.85)]">
-              Emergency Roadside Assistance
-            </span>
-          }
-          serviceSubtitle={
-            <span className="!text-white drop-shadow-[0_2px_6px_rgba(0,0,0,.75)]">
-              Fuel, jumpstarts, lockouts, <strong>tire changes</strong>, and <strong>safe transportation</strong> around
-              Pecos, Reeves County, and the West Texas highways.
-            </span>
-          }
+          serviceTitle="Emergency Roadside Assistance"
+          serviceSubtitle="Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways."
           overlayOpacity={0.18}
           cardCenterOffsetPx={8}
         />
@@ -70,7 +62,6 @@ export default function EmergencyRoadsidePage() {
         {/* CONTENT BOXES with vibrant border + bright text */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-
             {/* What we can do on the spot */}
             <div className="rounded-[28px] p-[6px] rb-border">
               <div
@@ -152,27 +143,8 @@ export default function EmergencyRoadsidePage() {
 
       <SiteFooter />
 
-      {/* animated red↔blue border keyframes (same as main) */}
-      <style jsx global>{`
-        @property --angle {
-          syntax: "<angle>";
-          initial-value: 0deg;
-          inherits: false;
-        }
-        @keyframes rb-rotate {
-          to { --angle: 360deg; }
-        }
-        .rb-border {
-          --angle: 0deg;
-          background: conic-gradient(
-            from var(--angle),
-            #3b82f6 0%,
-            #ef4444 50%,
-            #3b82f6 100%
-          );
-          animation: rb-rotate 24s linear infinite;
-        }
-      `}</style>
+      {/* Global styles injected from a Client Component */}
+      <RBGlobalStyles />
     </>
   );
 }

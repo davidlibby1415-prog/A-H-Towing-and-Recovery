@@ -153,7 +153,7 @@ function BrandSlabInline() {
   );
 }
 
-/* =================== Header / Footer (no marquee here) =================== */
+/* =================== Header / Footer (no marquee inside) =================== */
 
 function TimeTempDisplay() {
   const { timeString, tempF } = useTimeAndTemp();

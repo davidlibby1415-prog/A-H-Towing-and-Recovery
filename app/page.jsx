@@ -354,7 +354,7 @@ function GoldenFacts() {
 
 function TopLocationsMarquee() {
   const text =
-    "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Kermit • Jal • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County";
+    "Pecos, TX (Home Base) • Reeves County • Pecos County • Midland/Odessa Metro & I-20 Corridor • US-285 • TX-17 • TX-18 • TX-302 • Balmorhea • Carlsbad • Coyanosa • Crane • Crane County • Culberson County • Ector County • Fort Davis • Fort Stockton • Grandfalls • Goldsmith • Imperial • I-20 Corridor • Jal • Kermit • Lindsay • Loving County • McCamey • Mentone • Midland County • Monahans • Notrees • Odessa • Oilfield Routes • Orla • Plateau • Pyote • Royalty • Saragosa • Toyah • Toyahvale • Upton County • Van Horn • Verhalen • Ward County • Wickett • Wink • Winkler County";
 
   return (
     <div className="w-full bg-[#0b0f14] text-sm">
@@ -401,7 +401,7 @@ function TopLocationsMarquee() {
             transform: translateX(0);
           }
           100% {
-          transform: translateX(-50%);
+            transform: translateX(-50%);
           }
         }
         .marquee {
@@ -641,9 +641,7 @@ export default function Home() {
                 <button
                   type="button"
                   className="inline-flex items-center gap-1 px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-                  onClick={() =>
-                    setServicesOpen((open) => !open)
-                  }
+                  onClick={() => setServicesOpen((open) => !open)}
                 >
                   <span>Services</span>
                   <span className="text-[10px]">▾</span>
@@ -694,11 +692,11 @@ export default function Home() {
                       Emergency Roadside Assistance
                     </Link>
                     <Link
-                      href="/accidents-and-accident-removal"
+                      href="/accident-management-and-removal"
                       className="block px-4 py-2 hover:bg-yellow-400 hover:text-black"
                       onClick={() => setServicesOpen(false)}
                     >
-                      Accident Removal
+                      Accident Management and Removal
                     </Link>
                     <Link
                       href="/winching-recovery"
@@ -1013,7 +1011,7 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Accidents */}
+              {/* Accidents -> Accident Management and Removal */}
               <div className="mt-8">
                 <div className="mb-3">
                   <div
@@ -1028,7 +1026,7 @@ export default function Home() {
                         color: "#60a5fa",
                       }}
                     >
-                      Accidents
+                      Accident Management and Removal
                     </h4>
                   </div>
                 </div>
@@ -1036,9 +1034,9 @@ export default function Home() {
                   {[
                     {
                       icon: IconTruck,
-                      title: "Accident Removal",
+                      title: "Accident Management and Removal",
                       desc: "Secure, professional scene towing",
-                      href: "/accidents-and-accident-removal",
+                      href: "/accident-management-and-removal",
                     },
                     {
                       icon: IconHook,
@@ -1082,9 +1080,6 @@ export default function Home() {
             </SteelPanel>
           </AnimBorder>
         </Section>
-
-        {/* SERVICE AREA, Tow3 video, Request for Services, footer, etc. */}
-        {/* --- everything below here is exactly as you had it, including the form --- */}
 
         {/* SERVICE AREA */}
         <Section id="coverage" className="bg-red-900/80">
@@ -1210,7 +1205,10 @@ export default function Home() {
                   <p className="text-base md:text-lg font-extrabold text-amber-100">
                     &quot;Listen, I&apos;ve traveled every road in this here
                     land. I&apos;ve been everywhere, man. Crossed the deserts
-                    bare, man.&quot; – Johnny Cash
+                    bare, man.&quot;
+                  </p>
+                  <p className="mt-1 text-base md:text-lg font-extrabold text-amber-100">
+                    -Johnny Cash
                   </p>
                   <div className="mt-1 text-xl">🎵 🎶 🎵</div>
                 </div>
@@ -1413,7 +1411,7 @@ export default function Home() {
   );
 }
 
-/* ========================= Contact Section (unchanged) ========================= */
+/* ========================= Contact Section (unchanged except TikTok embed) ========================= */
 
 function ContactSection() {
   const [name, setName] = useState("");
@@ -1666,59 +1664,66 @@ function ContactSection() {
                 <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-black">
                   <span className="text-[13px]">♪</span>
                 </span>
-                <span className="font-semibold">@285302ditchking</span>
+                <span className="font-semibold">@alejandrasykes666</span>
               </div>
 
               <div className="w-full h-full overflow-y-auto flex items-center justify-center px-1 pt-6 pb-2">
                 <blockquote
                   className="tiktok-embed"
-                  cite="https://www.tiktok.com/@285302ditchking/video/7226078493514222894"
-                  data-video-id="7226078493514222894"
+                  cite="https://www.tiktok.com/@alejandrasykes666/video/7541454523265535245"
+                  data-video-id="7541454523265535245"
                   data-color="black"
                   style={{ maxWidth: "605px", minWidth: "325px", margin: 0 }}
                 >
                   <section>
                     <a
                       target="_blank"
-                      title="@285302ditchking"
-                      href="https://www.tiktok.com/@285302ditchking?refer=embed"
+                      title="@alejandrasykes666"
+                      href="https://www.tiktok.com/@alejandrasykes666?refer=embed"
                     >
-                      @285302ditchking
+                      @alejandrasykes666
                     </a>{" "}
                     <a
-                      title="towtruckstories"
+                      title="towing"
                       target="_blank"
-                      href="https://www.tiktok.com/tag/towtruckstories?refer=embed"
+                      href="https://www.tiktok.com/tag/towing?refer=embed"
                     >
-                      #towtruckstories
+                      #towing
                     </a>{" "}
                     <a
-                      title="towoperator"
+                      title="westtx"
                       target="_blank"
-                      href="https://www.tiktok.com/tag/towoperator?refer=embed"
+                      href="https://www.tiktok.com/tag/westtx?refer=embed"
                     >
-                      #towoperator
+                      #westtx
                     </a>{" "}
                     <a
-                      title="wreckersoftiktok"
+                      title="pecos"
                       target="_blank"
-                      href="https://www.tiktok.com/tag/wreckersoftiktok?refer=embed"
+                      href="https://www.tiktok.com/tag/pecos?refer=embed"
                     >
-                      #wreckersoftiktok
+                      #pecos
                     </a>{" "}
                     <a
-                      title="itbelikethat"
+                      title="businessowner"
                       target="_blank"
-                      href="https://www.tiktok.com/tag/itbelikethat?refer=embed"
+                      href="https://www.tiktok.com/tag/businessowner?refer=embed"
                     >
-                      #itbelikethat
+                      #businessowner
+                    </a>{" "}
+                    <a
+                      title="a"
+                      target="_blank"
+                      href="https://www.tiktok.com/tag/a?refer=embed"
+                    >
+                      #A
                     </a>{" "}
                     <a
                       target="_blank"
-                      title="♬ original sound - 285/302 ditch king"
-                      href="https://www.tiktok.com/music/original-sound-7226078466881080106?refer=embed"
+                      title="♬ Pasta - Los Dareyes De La Sierra"
+                      href="https://www.tiktok.com/music/Pasta-7527051487597742081?refer=embed"
                     >
-                      ♬ original sound - 285/302 ditch king
+                      ♬ Pasta - Los Dareyes De La Sierra
                     </a>
                   </section>
                 </blockquote>
@@ -1730,7 +1735,7 @@ function ContactSection() {
         <div className="mt-4">
           <a
             className="inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-rose-500 text-black font-black text-sm md:text-base uppercase tracking-wide shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95 animate-cta-pulse"
-            href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
+            href="https://www.tiktok.com/@alejandrasykes666?is_from_webapp=1&sender_device=pc"
             target="_blank"
             rel="noreferrer"
           >

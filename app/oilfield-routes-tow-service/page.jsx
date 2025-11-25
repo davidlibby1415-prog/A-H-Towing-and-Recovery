@@ -187,66 +187,52 @@ function TopMarquee() {
 
 /* =========================== Hero with two videos ============================ */
 
+/* =========================== Hero ============================ */
+
 function OilfieldHero() {
   return (
-    <section className="relative isolate w-full bg-neutral-950 border-b border-black/60">
-      {/* much smaller vertical padding */}
-      <div className="container max-w-7xl px-4 py-2 md:py-3">
-        {/* shorter hero height, videos fill it */}
-        <div className="relative flex flex-col md:flex-row gap-4 md:gap-5 lg:gap-6 min-h-[360px] md:min-h-[400px]">
-          {/* LEFT: rig video */}
-          <div className="relative flex-1 rounded-[28px] overflow-hidden bg-black shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
+    <section className="relative isolate bg-neutral-950">
+      {/* outer container only adds side padding, no big top/bottom padding */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        {/* this div is the hero “frame” that the videos fill */}
+        <div className="relative grid md:grid-cols-2 gap-4 lg:gap-6 items-stretch min-h-[420px] md:min-h-[480px] lg:min-h-[520px] py-2">
+
+          {/* LEFT HERO VIDEO */}
+          <div className="relative overflow-hidden rounded-[32px] bg-black/90 border border-yellow-400/80 shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <video
-              className="absolute inset-0 h-full w-full"
-              muted
-              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+              src="/Videos/tow2.mp4"
               autoPlay
+              muted
               loop
+              playsInline
               preload="metadata"
-              style={{
-                objectFit: "cover",
-                // this is the zoom/framing you liked
-                transform: "scale(0.62)",
-                transformOrigin: "50% 65%",
-              }}
-            >
-              <source src="/Videos/tow2.mp4" type="video/mp4" />
-            </video>
+            />
           </div>
 
-          {/* RIGHT: fuel-tow video */}
-          <div className="relative flex-1 rounded-[28px] overflow-hidden bg-black shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
+          {/* RIGHT HERO VIDEO */}
+          <div className="relative overflow-hidden rounded-[32px] bg-black/90 border border-yellow-400/80 shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <video
-              className="absolute inset-0 h-full w-full"
-              muted
-              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
+              src="/Videos/fueltow.mp4"
               autoPlay
+              muted
               loop
+              playsInline
               preload="metadata"
-              style={{
-                objectFit: "cover",
-                // slight zoom, keeps your “perfect” framing
-                transform: "scale(0.9)",
-                transformOrigin: "50% 52%",
-              }}
-            >
-              <source src="/Videos/fueltow.mp4" type="video/mp4" />
-            </video>
+            />
           </div>
 
-          {/* CENTERED OVERLAY CARD */}
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center px-2 sm:px-6">
-            <div className="pointer-events-auto max-w-2xl w-full">
-              <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-4 md:px-8 md:py-5 text-center shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
-                <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
-                <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-                  Oilfield Routes Tow Service
-                </h1>
-
-                <div className="mt-4 flex flex-wrap justify-center gap-3">
-                  <BlueCallButton />
-                  <RedTextFormButton />
-                </div>
+          {/* CENTERED HERO CARD OVER BOTH VIDEOS */}
+          <div className="pointer-events-none absolute inset-x-4 sm:inset-x-8 lg:inset-x-16 top-1/2 -translate-y-1/2 flex justify-center">
+            <div className="pointer-events-auto max-w-3xl w-full rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-5 md:px-8 md:py-6 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
+              <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
+              <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+                Oilfield Routes Tow Service
+              </h1>
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
+                <BlueCallButton />
+                <RedTextFormButton />
               </div>
             </div>
           </div>

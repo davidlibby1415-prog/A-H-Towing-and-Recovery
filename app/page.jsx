@@ -1668,12 +1668,13 @@ function ContactSection() {
         </div>
 
         <div className="mt-4">
-          <a
-            className="inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-rose-500 text-black font-black text-sm md:text-base uppercase tracking-wide shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95 animate-cta-pulse"
-            href="https://www.tiktok.com/@alejandrasykes666?is_from_webapp=1&sender_device=pc"
-            target="_blank"
-            rel="noreferrer"
-          >
+         <a
+  className="inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-rose-500 text-black font-black text-sm md:text-base uppercase tracking-wide shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95 animate-cta-pulse"
+  href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
+  target="_blank"
+  rel="noreferrer"
+>
+
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94.5 2 .76 3.12.76Z" />
             </svg>

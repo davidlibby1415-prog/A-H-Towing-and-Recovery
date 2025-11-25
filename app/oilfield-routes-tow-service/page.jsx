@@ -58,7 +58,7 @@ function RedTextFormButton({ className = "" }) {
   );
 }
 
-/* ============ Time & Temperature (same logic as main page) ============ */
+/* ============ Time & Temperature (like main page) ============ */
 
 function TimeTemp() {
   const [now, setNow] = useState(new Date());
@@ -116,7 +116,6 @@ function TimeTemp() {
 }
 
 /* ========================= Top Marquee ========================= */
-/* Matches main page list */
 
 function TopMarquee() {
   const text =
@@ -185,14 +184,6 @@ function TopMarquee() {
   );
 }
 
-/* ========================== Metadata ========================== */
-
-export const metadata = {
-  title: "Oilfield Routes Tow Service | A & H Towing & Recovery",
-  description:
-    "Remote lease roads, US-285, TX-17, TX-18, TX-302 — light/medium/heavy tows, winch-outs, and safe transport across West Texas oilfield routes.",
-};
-
 /* =========================== Hero ============================ */
 
 function OilfieldHero() {
@@ -201,7 +192,7 @@ function OilfieldHero() {
       className="relative isolate w-full overflow-hidden bg-neutral-950"
       style={{ minHeight: "70vh" }}
     >
-      {/* Background video: object-fit CONTAIN + diamond-plate bars */}
+      {/* Background video: object-fit CONTAIN + diamond-plate fill */}
       <video
         className="absolute inset-0 w-full h-full z-0"
         muted
@@ -242,7 +233,7 @@ function OilfieldHero() {
               Oilfield Routes Tow Service
             </h1>
 
-            {/* Removed extra paragraphs per request */}
+            {/* Removed extra one-line hero text per request */}
 
             <div className="mt-4 flex flex-wrap justify-center gap-3">
               <BlueCallButton />
@@ -362,7 +353,6 @@ function PaymentsBar() {
 /* =========================== Page ============================ */
 
 export default function OilfieldRoutesTowServicePage() {
-  // services dropdown for nav
   const [servicesOpen, setServicesOpen] = useState(false);
   const servicesCloseTimeout = useRef(null);
 
@@ -494,7 +484,7 @@ export default function OilfieldRoutesTowServicePage() {
                 )}
               </div>
 
-              {/* NEW: Home link */}
+              {/* Home link */}
               <Link
                 href="/"
                 className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
@@ -538,12 +528,12 @@ export default function OilfieldRoutesTowServicePage() {
         {/* HERO */}
         <OilfieldHero />
 
-        {/* MAIN CONTENT: two boxes + TikTok grid */}
+        {/* MAIN CONTENT */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
             {/* LEFT COLUMN */}
             <div className="space-y-5">
-              {/* Top box: Oilfield access */}
+              {/* Oilfield access box */}
               <div className="rounded-[28px] p-[6px] rb-border">
                 <div
                   className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
@@ -559,7 +549,6 @@ export default function OilfieldRoutesTowServicePage() {
                     Oilfield access without the guesswork
                   </h2>
 
-                  {/* Shaded box behind text */}
                   <div className="mt-2 rounded-2xl bg-black/75 px-4 py-3 border border-white/10">
                     <p className="text-sm md:text-base font-semibold text-white">
                       We know the lease roads and the realities out here—soft
@@ -582,7 +571,7 @@ export default function OilfieldRoutesTowServicePage() {
                 </div>
               </div>
 
-              {/* Bottom-left box: Safety first (no buttons) */}
+              {/* Safety box (no buttons) */}
               <div className="rounded-[28px] p-[6px] rb-border">
                 <div
                   className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
@@ -617,17 +606,16 @@ export default function OilfieldRoutesTowServicePage() {
                       adjust route or equipment before we arrive.
                     </p>
                   </div>
-                  {/* Red/blue buttons intentionally removed here */}
                 </div>
               </div>
             </div>
 
-            {/* RIGHT: 2×2 TikTok / media grid */}
+            {/* RIGHT: 2×2 grid for TikToks/photos */}
             <OilfieldTikTokGrid />
           </div>
         </section>
 
-        {/* Payments bar at bottom of page */}
+        {/* Payments bar */}
         <PaymentsBar />
       </main>
 

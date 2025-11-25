@@ -189,9 +189,7 @@ function TopMarquee() {
 function OilfieldHero() {
   return (
     <section className="relative isolate bg-neutral-950">
-      {/* outer container only adds side padding, no big top/bottom padding */}
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* this div is the hero “frame” that the videos fill */}
         <div className="relative grid md:grid-cols-2 gap-4 lg:gap-6 items-stretch min-h-[420px] md:min-h-[480px] lg:min-h-[520px] py-2">
           {/* LEFT HERO VIDEO */}
           <div className="relative overflow-hidden rounded-[32px] bg-black/90 border border-yellow-400/80 shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
@@ -240,6 +238,22 @@ function OilfieldHero() {
 
 /* ===================== TikTok / Media grid ===================== */
 
+function FollowTikTokButton({ className = "" }) {
+  return (
+    <a
+      href="https://www.tiktok.com/@285302ditchking"
+      target="_blank"
+      rel="noreferrer"
+      className={`inline-flex items-center gap-2 rounded-full px-5 py-2 bg-gradient-to-r from-pink-500 to-red-500 text-white font-extrabold text-sm md:text-base shadow-[0_12px_24px_rgba(0,0,0,0.7)] border-2 border-white/80 animate-pulse hover:animate-none hover:scale-105 transition-transform ${className}`}
+    >
+      <span className="inline-block h-4 w-4 rounded-[6px] bg-black flex items-center justify-center text-[10px] leading-none">
+        ♫
+      </span>
+      <span>Follow us on TikTok @285302ditchking</span>
+    </a>
+  );
+}
+
 function TikTokWideEmbed({ videoId, title }) {
   const src = `https://www.tiktok.com/embed/v2/${videoId}`;
 
@@ -251,7 +265,7 @@ function TikTokWideEmbed({ videoId, title }) {
           {title}
         </div>
 
-        {/* Video frame – made wider & taller, still cropping TikTok UI */}
+        {/* Video frame – wider & taller crop that hides TikTok chrome */}
         <div className="relative w-full max-w-[580px] mx-auto aspect-[9/16] md:aspect-[9/17] overflow-hidden bg-black">
           <iframe
             src={src}
@@ -295,11 +309,16 @@ function OilfieldTikTokGrid() {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-2xl md:text-3xl font-black text-amber-100 text-center md:text-left">
+      {/* FOLLOW BUTTON – TOP */}
+      <div className="flex justify-center">
+        <FollowTikTokButton />
+      </div>
+
+      <h3 className="text-2xl md:text-3xl font-black text-amber-100 text-center">
         Oilfield Clips &amp; Photos
       </h3>
 
-      <p className="text-sm md:text-base font-semibold text-amber-100/90 text-center md:text-left">
+      <p className="text-sm md:text-base font-semibold text-amber-100/90 text-center">
         Short clips and snapshots from lease roads and oilfield routes. These
         tiles pull straight from @285302ditchking on TikTok.
       </p>
@@ -312,6 +331,11 @@ function OilfieldTikTokGrid() {
             title={clip.title}
           />
         ))}
+      </div>
+
+      {/* FOLLOW BUTTON – BOTTOM */}
+      <div className="mt-4 flex justify-center">
+        <FollowTikTokButton />
       </div>
     </div>
   );
@@ -439,6 +463,15 @@ export default function OilfieldRoutesTowServicePage() {
             </div>
 
             <nav className="ml-auto hidden md:flex items-center gap-6 text-base md:text-lg font-extrabold">
+              {/* Home first */}
+              <Link
+                href="/"
+                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
+              >
+                Home
+              </Link>
+
+              {/* Services dropdown second */}
               <div
                 className="relative"
                 onMouseEnter={openServices}
@@ -515,14 +548,6 @@ export default function OilfieldRoutesTowServicePage() {
                 )}
               </div>
 
-              {/* Home link */}
-              <Link
-                href="/"
-                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
-              >
-                Home
-              </Link>
-
               <Link
                 href="/#coverage"
                 className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
@@ -537,13 +562,13 @@ export default function OilfieldRoutesTowServicePage() {
               </Link>
               <Link
                 href="/tips-tricks"
-                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
+                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors text-center"
               >
                 Tips &amp; Tricks
               </Link>
               <Link
                 href="/#contact"
-                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
+                className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors text-center"
               >
                 Request a Tow
               </Link>
@@ -576,7 +601,13 @@ export default function OilfieldRoutesTowServicePage() {
                     backgroundPosition: "center",
                   }}
                 >
-                  <h2 className="text-2xl md:text-3xl font-black mb-2">
+                  <h2
+                    className="text-2xl md:text-3xl font-black mb-2 text-center text-white"
+                    style={{
+                      textShadow:
+                        "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+                    }}
+                  >
                     Oilfield access without the guesswork
                   </h2>
 
@@ -609,7 +640,13 @@ export default function OilfieldRoutesTowServicePage() {
                     backgroundPosition: "center",
                   }}
                 >
-                  <h3 className="text-2xl md:text-3xl font-black mb-2">
+                  <h3
+                    className="text-2xl md:text-3xl font-black mb-2 text-center text-white"
+                    style={{
+                      textShadow:
+                        "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+                    }}
+                  >
                     Safety first, even miles off the highway
                   </h3>
 

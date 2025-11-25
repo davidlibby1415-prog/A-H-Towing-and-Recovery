@@ -6,8 +6,8 @@ import {
   SiteFooter,
   PhoneCTA,
   TextCTA,
-  TikTokGallery,
 } from "../components/ServiceLayout";
+import { TikTokEmbed } from "../components/TikTokEmbed";
 
 export const metadata = {
   title: "Heavy Duty & Commercial Towing | A & H Towing & Recovery",
@@ -58,6 +58,48 @@ function HeavyDutyHero() {
   );
 }
 
+/* =========== Heavy Duty TikTok Grid (4 videos) =========== */
+
+function HeavyDutyTikTokGrid() {
+  const videos = [
+    {
+      id: "7403892840364838174",
+      caption: "Heavy Duty Tow: We Do It the Right Way",
+    },
+    {
+      id: "7512230159630617887",
+      caption: "Commercial Tow: The Flying School Bus",
+    },
+    {
+      id: "7422122230550760734",
+      caption: "Safety Tip: Always Check Your Brakes! See Why",
+    },
+    {
+      id: "7415077930256272671",
+      caption: "Commercial Tow: Dolly in Action",
+    },
+  ];
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+      {videos.map((video) => (
+        <div
+          key={video.id}
+          className="rounded-[28px] p-[6px] bg-black/80 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)]"
+        >
+          <div className="rounded-[22px] bg-black overflow-hidden flex justify-center p-2">
+            <TikTokEmbed
+              videoId={video.id}
+              caption={video.caption}
+              className="w-full max-w-[420px]"
+            />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 /* =========================== Page =========================== */
 
 export default function HeavyDutyCommercialTowingPage() {
@@ -96,15 +138,8 @@ export default function HeavyDutyCommercialTowingPage() {
               </p>
             </div>
 
-            {/* RIGHT: TikTok-style gallery / visuals */}
-            <TikTokGallery
-              images={[
-                "/images/heavy-1.jpg",
-                "/images/heavy-2.jpg",
-                "/images/heavy-3.jpg",
-                "/images/heavy-4.jpg",
-              ]}
-            />
+            {/* RIGHT: Heavy Duty TikTok grid */}
+            <HeavyDutyTikTokGrid />
           </div>
 
           {/* Bottom buttons */}
@@ -119,4 +154,3 @@ export default function HeavyDutyCommercialTowingPage() {
     </>
   );
 }
-

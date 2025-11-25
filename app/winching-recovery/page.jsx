@@ -147,7 +147,7 @@ export default function WinchingRecoveryPage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO with heavy-duty-bg.mp4 and translucent text card */}
+        {/* HERO with heavy-duty-bg.mp4 and transparent text card */}
         <WinchingHero />
 
         {/* MAIN SECTION */}
@@ -171,7 +171,8 @@ export default function WinchingRecoveryPage() {
                       Stuck doesn&apos;t mean stranded.
                     </h2>
 
-                    <p className="text-sm md:text-base font-semibold">
+                    {/* PARAGRAPH 1 – bright yellow */}
+                    <p className="text-sm md:text-base font-semibold text-amber-200">
                       Lease roads, caliche, sand, and soft shoulders will humble
                       anyone. We treat recoveries like a job to be{" "}
                       <span className="font-black">planned and executed</span>,
@@ -180,8 +181,8 @@ export default function WinchingRecoveryPage() {
 
                     <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold">
                       <li>
-                        • Mud, sand, and soft-shoulder recoveries on lease roads
-                        and ranch tracks
+                        • Mud, sand, and soft-shoulder recoveries on lease
+                        roads and ranch tracks
                       </li>
                       <li>
                         • Off-road pulls with attention to tire ruts, ruts, and
@@ -196,7 +197,8 @@ export default function WinchingRecoveryPage() {
                       </li>
                     </ul>
 
-                    <p className="mt-3 text-sm md:text-base font-semibold">
+                    {/* PARAGRAPH 2 – bright yellow */}
+                    <p className="mt-3 text-sm md:text-base font-semibold text-amber-200">
                       The goal is simple:{" "}
                       <span className="font-black">
                         get you out with as little extra damage as possible
@@ -221,7 +223,9 @@ export default function WinchingRecoveryPage() {
                           • Any obstacles (ditches, fences, posts, etc.)
                         </li>
                       </ul>
-                      <p className="mt-2">
+
+                      {/* PARAGRAPH 3 – bright yellow */}
+                      <p className="mt-2 text-amber-200">
                         The more detail you give us up front, the better we can
                         prepare the truck, gear, and approach.
                       </p>
@@ -230,8 +234,8 @@ export default function WinchingRecoveryPage() {
                 </div>
               </div>
 
-              {/* Railcar TikTok – constrained width like others */}
-              <div className="rounded-[28px] p-[6px] bg-black/80 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)] max-w-[460px] mx-auto w-full">
+              {/* Railcar TikTok – sized like others */}
+              <div className="rounded-[28px] p-[6px] bg-black/80 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)] max-w-[420px] mx-auto w-full">
                 <div className="px-3 pt-2 pb-1">
                   <h4 className="text-sm md:text-base font-extrabold text-amber-50 text-center">
                     Repo: The Railcar Mover
@@ -241,7 +245,7 @@ export default function WinchingRecoveryPage() {
                   <TikTokEmbed
                     videoId="6896206161771547909"
                     caption="Repo: The Railcar Mover"
-                    className="w-full max-w-[420px]"
+                    className="w-full"
                   />
                 </div>
               </div>

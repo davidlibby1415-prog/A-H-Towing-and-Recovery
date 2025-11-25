@@ -17,10 +17,10 @@ function TimeTemp() {
     return () => clearInterval(id);
   }, []);
 
-  // fetch temperature once (if API key exists)
+  // fetch temperature once (if API key is present)
   useEffect(() => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
-    if (!apiKey) return; // will just show location if no key
+    if (!apiKey) return; // fall back to location only
 
     const lat = 31.4229;
     const lon = -103.4938;
@@ -405,14 +405,14 @@ export function BrandHero({
         }}
       />
 
-      {/* Main card */}
+      {/* Main card – fully transparent with black outline */}
       <div className="relative z-20 flex items-center justify-center px-4 pt-10 pb-12">
         <div
           className="container max-w-5xl"
           style={cardTranslate ? { transform: cardTranslate } : undefined}
         >
           <div
-            className="rounded-[22px] border border-white/20 bg-black/10 shadow-[0_10px_28px_rgba(0,0,0,0.65)] px-5 py-6 md:px-8 md:py-7 text-center"
+            className="rounded-[22px] border border-black/80 bg-transparent backdrop-blur-none shadow-none px-5 py-6 md:px-8 md:py-7 text-center"
             style={{
               WebkitTextStroke: "0.25px rgba(0,0,0,.6)",
               textShadow: "0 1px 2px rgba(0,0,0,.65)",

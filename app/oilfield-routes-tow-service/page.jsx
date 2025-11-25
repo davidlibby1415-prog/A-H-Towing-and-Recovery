@@ -244,15 +244,15 @@ function TikTokWideEmbed({ videoId, title }) {
   const src = `https://www.tiktok.com/embed/v2/${videoId}`;
 
   return (
-    <div className="rounded-[28px] p-[6px] rb-border">
+    <div className="rounded-[28px] p-[4px] rb-border">
       <div className="relative rounded-[22px] overflow-hidden bg-black/85 border border-yellow-400/80 shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
         {/* Title strip */}
         <div className="px-4 pt-3 pb-2 text-amber-100 font-extrabold text-sm md:text-base text-center border-b border-white/10 bg-gradient-to-r from-sky-500/25 via-rose-500/25 to-amber-400/25">
           {title}
         </div>
 
-        {/* Video frame – overscaled & cropped to hide extra TikTok text */}
-        <div className="relative w-full aspect-[9/16] md:aspect-[4/5] overflow-hidden bg-black">
+        {/* Video frame – made wider & taller, still cropping TikTok UI */}
+        <div className="relative w-full max-w-[580px] mx-auto aspect-[9/16] md:aspect-[9/17] overflow-hidden bg-black">
           <iframe
             src={src}
             title={title}
@@ -266,7 +266,6 @@ function TikTokWideEmbed({ videoId, title }) {
             allowFullScreen
             loading="lazy"
           />
-          {/* Soft fade at the bottom in case a bit of UI peeks through */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
         </div>
       </div>
@@ -305,7 +304,7 @@ function OilfieldTikTokGrid() {
         tiles pull straight from @285302ditchking on TikTok.
       </p>
 
-      <div className="mt-4 grid gap-5 md:grid-cols-2">
+      <div className="mt-4 grid gap-4 md:grid-cols-2">
         {clips.map((clip) => (
           <TikTokWideEmbed
             key={clip.videoId}

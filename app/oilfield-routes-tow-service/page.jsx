@@ -62,7 +62,7 @@ function RedTextFormButton({ className = "" }) {
 
 function TimeTemp() {
   const [now, setNow] = useState(new Date());
-  const [temp, setTemp] = useState(null);
+  const [temp, setTemp] = useState<number | null>(null);
   const [locationLabel, setLocationLabel] = useState("Pecos, TX");
 
   useEffect(() => {
@@ -160,6 +160,7 @@ function TopMarquee() {
         </div>
       </div>
 
+      {/* global styles for marquee + rotating border, shared with main page */}
       <style jsx global>{`
         @keyframes marquee-x {
           0% {
@@ -179,77 +180,110 @@ function TopMarquee() {
             animation: none !important;
           }
         }
+
+        @property --angle {
+          syntax: "<angle>";
+          initial-value: 0deg;
+          inherits: false;
+        }
+        @keyframes rb-rotate {
+          to {
+            --angle: 360deg;
+          }
+        }
+        .rb-border {
+          --angle: 0deg;
+          background: conic-gradient(
+            from var(--angle),
+            #3b82f6 0%,
+            #ef4444 50%,
+            #3b82f6 100%
+          );
+          animation: rb-rotate 24s linear infinite;
+        }
+
+        @keyframes cta-pulse {
+          0%,
+          100% {
+            transform: translateY(0) scale(1);
+          }
+          50% {
+            transform: translateY(-2px) scale(1.03);
+          }
+        }
+        .animate-cta-pulse {
+          animation: cta-pulse 2.1s ease-in-out infinite;
+        }
       `}</style>
     </div>
   );
 }
 
-/* =========================== HERO (two videos visible) =========================== */
+/* =========================== HERO (two videos) =========================== */
 
 function OilfieldHero() {
   return (
-    <section className="relative isolate w-full overflow-hidden bg-neutral-950">
-      <div className="relative w-full min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] overflow-hidden">
-        {/* VIDEO LAYER: side-by-side, filling from header border to red section */}
-        <div className="absolute inset-0 flex">
-          {/* LEFT: rig video – zoomed out and biased down so the truck + glow show */}
-          <div className="relative flex-1 overflow-hidden">
-            <video
-              className="w-full h-full object-cover"
-              muted
-              playsInline
-              autoPlay
-              loop
-              preload="metadata"
-              style={{
-                transform: "scale(0.6)",
-                transformOrigin: "50% 80%", // push framing downward
-              }}
-            >
-              <source src="/Videos/tow2.mp4" type="video/mp4" />
-            </video>
-          </div>
-
-          {/* RIGHT: fuel-tow video – slight zoom so the trucks are clear */}
-          <div className="relative flex-1 overflow-hidden">
-            <video
-              className="w-full h-full object-cover"
-              muted
-              playsInline
-              autoPlay
-              loop
-              preload="metadata"
-              style={{
-                transform: "scale(0.9)",
-                transformOrigin: "50% 65%",
-              }}
-            >
-              <source src="/Videos/fueltow.mp4" type="video/mp4" />
-            </video>
-          </div>
+    <section
+      className="relative isolate w-full overflow-hidden bg-neutral-950"
+      style={{ minHeight: "68vh" }}
+    >
+      {/* background videos, full height, no gaps */}
+      <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2">
+        {/* LEFT: RIG / NIGHT SHOT */}
+        <div className="relative overflow-hidden">
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            muted
+            playsInline
+            autoPlay
+            loop
+            preload="metadata"
+            poster="/Videos/tow2-poster.jpg"
+            // push the crop slightly DOWN so we see more truck + glow
+            style={{
+              objectPosition: "50% 85%",
+            }}
+          >
+            <source src="/Videos/tow2.mp4" type="video/mp4" />
+          </video>
         </div>
 
-        {/* Soft dark vignette over videos */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.9) 100%)",
-          }}
-        />
+        {/* RIGHT: FUEL / TOW SHOT */}
+        <div className="relative overflow-hidden">
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            muted
+            playsInline
+            autoPlay
+            loop
+            preload="metadata"
+            poster="/Videos/fueltow-poster.jpg"
+            // just nudge a bit down to show the trucks more
+            style={{
+              objectPosition: "50% 72%",
+            }}
+          >
+            <source src="/Videos/fueltow.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
 
-        {/* HERO CARD – on top of everything */}
-        <div className="relative flex items-center justify-center h-full px-4 py-8 md:py-12">
-          <div className="max-w-3xl w-full">
-            <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
-              <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
-              <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-                Oilfield Routes Tow Service
-              </h1>
-              <div className="mt-4 flex flex-wrap justify-center gap-3">
-                <BlueCallButton />
-                <RedTextFormButton />
-              </div>
+      {/* subtle dark overlay for readability */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.2)_30%,rgba(0,0,0,0.85)_90%)]" />
+
+      {/* centered CTA card */}
+      <div className="relative z-10 flex items-center justify-center px-4 py-16 md:py-20">
+        <div className="max-w-3xl w-full">
+          <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
+            <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
+
+            <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+              Oilfield Routes Tow Service
+            </h1>
+
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              <BlueCallButton />
+              <RedTextFormButton />
             </div>
           </div>
         </div>
@@ -496,7 +530,7 @@ export default function OilfieldRoutesTowServicePage() {
                 )}
               </div>
 
-            {/* Home link */}
+              {/* Home link */}
               <Link
                 href="/"
                 className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
@@ -537,15 +571,14 @@ export default function OilfieldRoutesTowServicePage() {
           </div>
         </header>
 
-        {/* HERO with two videos */}
+        {/* HERO */}
         <OilfieldHero />
 
         {/* MAIN CONTENT */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* LEFT COLUMN */}  
+            {/* LEFT COLUMN: Oilfield access box */}
             <div className="space-y-5">
-              {/* Oilfield access box */}
               <div className="rounded-[28px] p-[6px] rb-border">
                 <div
                   className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
@@ -557,7 +590,7 @@ export default function OilfieldRoutesTowServicePage() {
                     backgroundPosition: "center",
                   }}
                 >
-                  <h2 className="text-2xl md:text-3xl font-black mb-2">
+                  <h2 className="text-2xl md:text-3xl font-black mb-2 text-white">
                     Oilfield access without the guesswork
                   </h2>
 
@@ -583,7 +616,7 @@ export default function OilfieldRoutesTowServicePage() {
                 </div>
               </div>
 
-              {/* Safety box (no buttons) */}
+              {/* Safety box */}
               <div className="rounded-[28px] p-[6px] rb-border">
                 <div
                   className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
@@ -595,7 +628,7 @@ export default function OilfieldRoutesTowServicePage() {
                     backgroundPosition: "center",
                   }}
                 >
-                  <h3 className="text-2xl md:text-3xl font-black mb-2">
+                  <h3 className="text-2xl md:text-3xl font-black mb-2 text-white">
                     Safety first, even miles off the highway
                   </h3>
 
@@ -627,7 +660,7 @@ export default function OilfieldRoutesTowServicePage() {
           </div>
         </section>
 
-        {/* Payments bar */} 
+        {/* Payments bar */}
         <PaymentsBar />
       </main>
 

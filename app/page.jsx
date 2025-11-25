@@ -1665,21 +1665,20 @@ function ContactSection() {
             <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden flex items-center justify-center">
               <div className="w-full h-full overflow-hidden flex items-center justify-center px-1 py-2">
                 {/* Shift & scale embed so username bar is off-screen */}
-               <div
+              <div
   className="w-full"
-  style={{ transform: "translateY(-84px) scale(1.22)" }}
+  style={{ transform: "translateY(-150px) scale(1.45)" }}
 >
+  <blockquote
+    className="tiktok-embed"
+    cite="https://www.tiktok.com/@alejandrasykes666/video/7541454523265535245"
+    data-video-id="7541454523265535245"
+    style={{ maxWidth: "605px", minWidth: "325px", margin: 0 }}
+  >
+    {/* …unchanged TikTok embed markup… */}
+  </blockquote>
+</div>
 
-                  <blockquote
-                    className="tiktok-embed"
-                    cite="https://www.tiktok.com/@alejandrasykes666/video/7541454523265535245"
-                    data-video-id="7541454523265535245"
-                    style={{
-                      maxWidth: "605px",
-                      minWidth: "325px",
-                      margin: 0,
-                    }}
-                  >
                     <section>
                       <a
                         target="_blank"

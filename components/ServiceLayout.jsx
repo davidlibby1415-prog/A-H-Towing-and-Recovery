@@ -113,6 +113,14 @@ export function SiteHeader() {
 
         {/* Nav */}
         <nav className="ml-auto flex items-center gap-4 text-xs sm:text-sm md:text-base font-extrabold">
+          {/* HOME link (to the left of Services) */}
+          <Link
+            href="/"
+            className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors hidden sm:inline-block"
+          >
+            Home
+          </Link>
+
           {/* Services dropdown using <details> (no hooks needed) */}
           <details className="relative group">
             <summary className="list-none px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black cursor-pointer flex items-center gap-1">
@@ -381,24 +389,45 @@ export function BrandHero({
 export function TikTokGallery({ images = [] }) {
   if (!images || images.length === 0) return null;
 
+  // Allow either ["src.jpg", ...] or [{ src, title }, ...]
+  const normalized = images.map((item) =>
+    typeof item === "string" ? { src: item, title: null } : item
+  );
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      {images.map((src, idx) => (
-        <div
-          key={src + idx}
-          className="relative w-full aspect-[9/16] flex items-center justify-center"
-        >
-          <div className="relative w-full h-full rounded-[32px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
-            <div className="relative w-full h-full rounded-[28px] bg-black overflow-hidden flex items-center justify-center">
-              <img
-                src={src}
-                alt={`A & H towing scene ${idx + 1}`}
-                className="w-full h-full object-cover"
-              />
+    <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {normalized.map(({ src, title }, idx) => (
+          <div
+            key={(src || "image") + idx}
+            className="relative w-full aspect-[9/16] flex items-center justify-center"
+          >
+            <div className="relative w-full h-full rounded-[32px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+              <div className="relative w-full h-full rounded-[28px] bg-black overflow-hidden flex items-center justify-center">
+                <img
+                  src={src}
+                  alt={`A & H towing scene ${idx + 1}`}
+                  className="w-full h-full object-cover"
+                />
+
+                {title && (
+                  <div className="absolute inset-x-0 bottom-0 bg-black/75 px-3 py-2">
+                    <p className="text-[13px] md:text-sm font-extrabold text-amber-50 text-center leading-snug">
+                      {title}
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+
+      {/* Bottom CTAs under the TikTok grid */}
+      <div className="mt-6 flex flex-wrap justify-center gap-3">
+        <PhoneCTA />
+        <TextCTA />
+      </div>
     </div>
   );
 }

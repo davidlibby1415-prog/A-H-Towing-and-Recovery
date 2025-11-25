@@ -180,8 +180,8 @@ export default function WinchingRecoveryPage() {
 
                     <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold">
                       <li>
-                        • Mud, sand, and soft-shoulder recoveries on lease
-                        roads and ranch tracks
+                        • Mud, sand, and soft-shoulder recoveries on lease roads
+                        and ranch tracks
                       </li>
                       <li>
                         • Off-road pulls with attention to tire ruts, ruts, and

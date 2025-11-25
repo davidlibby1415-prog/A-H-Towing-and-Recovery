@@ -81,21 +81,39 @@ function HeavyDutyTikTokGrid() {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-      {videos.map((video) => (
-        <div
-          key={video.id}
-          className="rounded-[28px] p-[6px] bg-black/80 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)]"
-        >
-          <div className="rounded-[22px] bg-black overflow-hidden flex justify-center p-2">
-            <TikTokEmbed
-              videoId={video.id}
-              caption={video.caption}
-              className="w-full max-w-[420px]"
-            />
+    <div className="space-y-3">
+      <h3 className="text-2xl md:text-3xl font-black text-amber-100 text-center md:text-left">
+        Heavy Duty Clips &amp; Recoveries
+      </h3>
+
+      <p className="text-sm md:text-base font-semibold text-amber-100/90 text-center md:text-left">
+        Real pulls, real recoveries, and real units from @285302ditchking out of
+        West Texas.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+        {videos.map((video) => (
+          <div
+            key={video.id}
+            className="rounded-[28px] p-[6px] bg-black/80 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)]"
+          >
+            {/* Bold, slightly larger title above each TikTok */}
+            <div className="px-3 pt-2 pb-1">
+              <h4 className="text-sm md:text-base font-extrabold text-amber-50 text-center">
+                {video.caption}
+              </h4>
+            </div>
+
+            <div className="rounded-[22px] bg-black overflow-hidden flex justify-center p-2">
+              <TikTokEmbed
+                videoId={video.id}
+                caption={video.caption}
+                className="w-full max-w-[420px]"
+              />
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
@@ -114,35 +132,52 @@ export default function HeavyDutyCommercialTowingPage() {
         {/* MAIN SECTION */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* LEFT: Text content */}
+            {/* LEFT: Steel text box with grey inner shade */}
             <div className="space-y-4 text-amber-50">
-              <h2 className="text-2xl md:text-3xl font-black">
-                When your work truck can’t work, we move it.
-              </h2>
+              <div className="rounded-[28px] p-[6px] bg-gradient-to-br from-neutral-800 via-neutral-900 to-black border border-yellow-400/70 shadow-[0_10px_28px_rgba(0,0,0,0.6)]">
+                <div
+                  className="rounded-[22px] p-5 border border-white/10"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(0deg, rgba(17,17,17,0.88), rgba(17,17,17,0.88)), url("/diamond-plate.jpg")',
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                  }}
+                >
+                  {/* Inner grey shade for the text */}
+                  <div className="rounded-2xl bg-neutral-900/85 px-4 py-4 border border-white/10">
+                    <h2 className="text-2xl md:text-3xl font-black mb-3">
+                      When your work truck can’t work, we move it.
+                    </h2>
 
-              <p className="text-sm md:text-base font-semibold">
-                From loaded one-tons to service trucks and small commercial
-                units, we understand downtime costs money.
-              </p>
+                    <p className="text-sm md:text-base font-semibold">
+                      From loaded one-tons to service trucks and small
+                      commercial units, we understand downtime costs money.
+                    </p>
 
-              <ul className="space-y-2 text-sm md:text-base font-semibold">
-                <li>• Oilfield and lease road recoveries</li>
-                <li>• Fleet tows to yards and repair shops</li>
-                <li>• Night and weekend calls for working crews</li>
-                <li>• Clear communication with dispatch and safety</li>
-              </ul>
+                    <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold">
+                      <li>• Oilfield and lease road recoveries</li>
+                      <li>• Fleet tows to yards and repair shops</li>
+                      <li>• Night and weekend calls for working crews</li>
+                      <li>• Clear communication with dispatch and safety</li>
+                    </ul>
 
-              <p className="text-sm md:text-base font-semibold">
-                Tell us where the unit is, what you’re driving, and where it
-                needs to go. We’ll give straight answers and show up ready.
-              </p>
+                    <p className="mt-3 text-sm md:text-base font-semibold">
+                      Tell us where the unit is, what you’re driving, and where
+                      it needs to go. We’ll give straight answers and show up
+                      ready.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             {/* RIGHT: Heavy Duty TikTok grid */}
             <HeavyDutyTikTokGrid />
           </div>
 
-          {/* Bottom buttons */}
+          {/* Bottom buttons – blue phone + red text-to-GPS */}
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />

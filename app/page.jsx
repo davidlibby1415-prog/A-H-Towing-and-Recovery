@@ -39,7 +39,7 @@ function PhoneCTA({ className = "", fullWidth = false }) {
   return (
     <a
       href="tel:+14328424578"
-      className={`inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white`}
+      className={`inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border border-white/80`}
       aria-label="Call 24/7 dispatch at (432) 842-4578"
     >
       <span className="uppercase tracking-wide text-xs md:text-sm text-center">
@@ -77,7 +77,7 @@ function ScrollToFormCTA({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white`}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border border-white/80`}
       aria-label="Go to dispatch form"
     >
       {textContent}
@@ -90,33 +90,31 @@ function ScrollToFormCTA({
 function TimeTemp() {
   const [now, setNow] = useState(new Date());
   const [temp, setTemp] = useState(null);
-  const [locationLabel, setLocationLabel] = useState("Pecos, TX");
+  const [locationLabel] = useState("Pecos, TX");
 
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(id);
   }, []);
 
+  // Use Open-Meteo (no API key required) so it works reliably in production
   useEffect(() => {
-    const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
-    if (!apiKey) return;
-
     const lat = 31.4229;
     const lon = -103.4938;
 
     fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`
     )
       .then((res) => res.json())
       .then((data) => {
-        if (data?.main?.temp) {
-          setTemp(Math.round(data.main.temp));
-        }
-        if (data?.name) {
-          setLocationLabel(`${data.name}, TX`);
+        const t = data?.current_weather?.temperature;
+        if (typeof t === "number") {
+          setTemp(Math.round(t));
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        // silently fail; UI will show "--°F"
+      });
   }, []);
 
   const dateStr = now.toLocaleDateString([], {
@@ -1175,7 +1173,7 @@ export default function Home() {
                     <div className="mt-1 flex flex-wrap gap-3 justify-center md:justify-start">
                       <a
                         href="tel:+14328424578"
-                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahBlue text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border-2 border-white"
+                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahBlue text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border border-white/80"
                       >
                         Click Here to Call Dispatch
                       </a>
@@ -1184,7 +1182,7 @@ export default function Home() {
                         onClick={() =>
                           scrollToFormWithOffset("dispatch-form")
                         }
-                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahRed text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border-2 border-white outline outline-2 outline-white"
+                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahRed text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border border-white/80"
                       >
                         Click Here to Text Location
                       </button>
@@ -1623,7 +1621,7 @@ function ContactSection() {
             <button
               type="button"
               onClick={handleSendText}
-              className="flex-1 max-w-xs inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white"
+              className="flex-1 max-w-xs inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border border-white/80"
             >
               <span className="uppercase tracking-wide text-xs md:text-sm text-center font-extrabold">
                 CLICK HERE TO TEXT DISPATCH (INCLUDE GPS LOCATION)

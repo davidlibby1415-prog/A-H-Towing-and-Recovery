@@ -17,10 +17,10 @@ function TimeTemp() {
     return () => clearInterval(id);
   }, []);
 
-  // fetch temperature once (if API key is present)
+  // fetch temperature once (requires NEXT_PUBLIC_OPENWEATHER_KEY)
   useEffect(() => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
-    if (!apiKey) return; // fall back to location only
+    if (!apiKey) return;
 
     const lat = 31.4229;
     const lon = -103.4938;
@@ -57,7 +57,7 @@ function TimeTemp() {
       <span className="font-semibold">{dateStr}</span>
       <span className="font-semibold">{timeStr}</span>
       <span className="font-semibold">
-        {temp != null ? `${temp}°F • ${locationLabel}` : locationLabel}
+        {temp != null ? `${temp}°F` : "--°F"} • {locationLabel}
       </span>
     </div>
   );
@@ -405,14 +405,14 @@ export function BrandHero({
         }}
       />
 
-      {/* Main card – fully transparent with black outline */}
+      {/* Main card – fully transparent, only black border */}
       <div className="relative z-20 flex items-center justify-center px-4 pt-10 pb-12">
         <div
           className="container max-w-5xl"
           style={cardTranslate ? { transform: cardTranslate } : undefined}
         >
           <div
-            className="rounded-[22px] border border-black/80 bg-transparent backdrop-blur-none shadow-none px-5 py-6 md:px-8 md:py-7 text-center"
+            className="rounded-[22px] border border-black/80 bg-transparent px-5 py-6 md:px-8 md:py-7 text-center"
             style={{
               WebkitTextStroke: "0.25px rgba(0,0,0,.6)",
               textShadow: "0 1px 2px rgba(0,0,0,.65)",

@@ -62,7 +62,7 @@ function RedTextFormButton({ className = "" }) {
 
 function TimeTemp() {
   const [now, setNow] = useState(new Date());
-  const [temp, setTemp] = useState<number | null>(null);
+  const [temp, setTemp] = useState(null);
   const [locationLabel, setLocationLabel] = useState("Pecos, TX");
 
   useEffect(() => {
@@ -82,10 +82,10 @@ function TimeTemp() {
     )
       .then((res) => res.json())
       .then((data) => {
-        if (data?.main?.temp) {
+        if (data && data.main && typeof data.main.temp === "number") {
           setTemp(Math.round(data.main.temp));
         }
-        if (data?.name) {
+        if (data && data.name) {
           setLocationLabel(`${data.name}, TX`);
         }
       })
@@ -211,10 +211,6 @@ function OilfieldHero() {
               <h1 className="text-3xl md:text-4xl font-black tracking-tight">
                 Oilfield Routes Tow Service
               </h1>
-              <p className="mt-3 text-sm md:text-base font-semibold text-amber-100/90">
-                US-285 • TX-17 • TX-18 • TX-302 • Lease roads • Remote access •
-                Long &amp; short distance
-              </p>
 
               <div className="mt-4 flex flex-wrap justify-center gap-3">
                 <BlueCallButton />
@@ -254,7 +250,7 @@ function OilfieldHero() {
                   preload="metadata"
                   poster="/fallback.jpg"
                 >
-                  {/* Place fueltow.mp4 in /public/Videos and update path if needed */}
+                  {/* Put fueltow.mp4 in /public/Videos */}
                   <source src="/Videos/fueltow.mp4" type="video/mp4" />
                 </video>
               </div>
@@ -374,9 +370,7 @@ function PaymentsBar() {
 
 export default function OilfieldRoutesTowServicePage() {
   const [servicesOpen, setServicesOpen] = useState(false);
-  const servicesCloseTimeout = useRef<ReturnType<typeof setTimeout> | null>(
-    null
-  );
+  const servicesCloseTimeout = useRef(null);
 
   const openServices = () => {
     if (servicesCloseTimeout.current) {

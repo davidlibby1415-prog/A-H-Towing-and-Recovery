@@ -6,15 +6,55 @@ import {
   SiteFooter,
   PhoneCTA,
   TextCTA,
-} from "../components/ServiceLayout";
-import WinchingHero from "../components/WinchingHero";
-import { TikTokEmbed } from "../components/TikTokEmbed";
+} from "../../components/ServiceLayout";
+import { TikTokEmbed } from "../../components/TikTokEmbed";
 
 export const metadata = {
   title: "Winching / Recovery | A & H Towing & Recovery",
   description:
     "Off-road winching and recovery for mud, sand, soft shoulder, and lease roads across Pecos, Reeves County, and West Texas.",
 };
+
+/* ===================== HERO WITH VIDEO ===================== */
+
+function WinchingHero() {
+  return (
+    <section className="relative isolate bg-neutral-950">
+      {/* Background video */}
+      <div className="absolute inset-0">
+        <video
+          className="w-full h-full object-cover"
+          src="/Videos/heavy-duty-bg.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
+        {/* Light darkening for readability (not a card) */}
+        <div className="absolute inset-0 bg-black/35" />
+      </div>
+
+      {/* Centered transparent text box with only a border */}
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 flex flex-col items-center text-center">
+        <div className="inline-flex flex-col items-center justify-center rounded-[22px] border border-black/80 bg-transparent px-6 py-4">
+          <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+            Winching / Recovery
+          </h1>
+          <p className="mt-2 max-w-2xl text-sm md:text-base font-semibold text-amber-50">
+            Off-road, mud, sand, and soft-shoulder recoveries on lease roads,
+            ranch tracks, and West Texas highways — planned, not rushed.
+          </p>
+
+          <div className="mt-4 flex flex-wrap justify-center gap-3">
+            <PhoneCTA />
+            <TextCTA />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 /* =========== Winching TikTok Grid (4 videos) =========== */
 
@@ -147,7 +187,7 @@ export default function WinchingRecoveryPage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO with heavy-duty-bg.mp4 and transparent text card */}
+        {/* HERO with heavy-duty-bg.mp4 and transparent-outline text box */}
         <WinchingHero />
 
         {/* MAIN SECTION */}
@@ -171,18 +211,18 @@ export default function WinchingRecoveryPage() {
                       Stuck doesn&apos;t mean stranded.
                     </h2>
 
-                    {/* YELLOW body text */}
+                    {/* YELLOW paragraph 1 */}
                     <p className="text-sm md:text-base font-semibold text-amber-200">
-                      Lease roads, caliche, sand, and soft shoulders will humble
-                      anyone. We treat recoveries like a job to be{" "}
+                      Lease roads, caliche, sand, and soft shoulders will
+                      humble anyone. We treat recoveries like a job to be{" "}
                       <span className="font-black">planned and executed</span>,
                       not rushed and guessed at.
                     </p>
 
                     <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold">
                       <li>
-                        • Mud, sand, and soft-shoulder recoveries on lease
-                        roads and ranch tracks
+                        • Mud, sand, and soft-shoulder recoveries on lease roads
+                        and ranch tracks
                       </li>
                       <li>
                         • Off-road pulls with attention to tire ruts, ruts, and
@@ -197,7 +237,7 @@ export default function WinchingRecoveryPage() {
                       </li>
                     </ul>
 
-                    {/* YELLOW goal sentence */}
+                    {/* YELLOW paragraph 2 */}
                     <p className="mt-3 text-sm md:text-base font-semibold text-amber-200">
                       The goal is simple:{" "}
                       <span className="font-black">
@@ -223,7 +263,8 @@ export default function WinchingRecoveryPage() {
                           • Any obstacles (ditches, fences, posts, etc.)
                         </li>
                       </ul>
-                      {/* YELLOW closing sentence */}
+
+                      {/* YELLOW paragraph 3 */}
                       <p className="mt-2 text-amber-200">
                         The more detail you give us up front, the better we can
                         prepare the truck, gear, and approach.
@@ -233,8 +274,8 @@ export default function WinchingRecoveryPage() {
                 </div>
               </div>
 
-              {/* Railcar TikTok – same visual scale as other cards */}
-              <div className="rounded-[28px] p-[6px] bg-black/80 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)] max-w-[420px] mx-auto w-full">
+              {/* Railcar TikTok – smaller to match others */}
+              <div className="rounded-[28px] p-[6px] bg-black/80 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)] max-w-[360px] mx-auto w-full">
                 <div className="px-3 pt-2 pb-1">
                   <h4 className="text-sm md:text-base font-extrabold text-amber-50 text-center">
                     Repo: The Railcar Mover
@@ -244,7 +285,7 @@ export default function WinchingRecoveryPage() {
                   <TikTokEmbed
                     videoId="6896206161771547909"
                     caption="Repo: The Railcar Mover"
-                    className="w-full max-w-[420px]"
+                    className="w-full max-w-[320px]"
                   />
                 </div>
               </div>

@@ -1,3 +1,5 @@
+// app/winching-recovery/page.jsx
+
 import React from "react";
 import {
   SiteHeader,
@@ -5,8 +7,8 @@ import {
   PhoneCTA,
   TextCTA,
   TikTokGallery,
+  BrandHero,
 } from "../components/ServiceLayout";
-import WinchingHero from "../components/WinchingHero";
 
 export const metadata = {
   title: "Winching / Recovery | A & H Towing & Recovery",
@@ -20,8 +22,13 @@ export default function WinchingRecoveryPage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* New hero with TikTok background */}
-        <WinchingHero />
+        {/* HERO with heavy-duty background video */}
+        <BrandHero
+          heroVideoSrc="/Videos/heavy-duty-bg.mp4"
+          serviceTitle="Winching / Recovery"
+          serviceSubtitle="Off-road winching and recovery for mud, sand, soft shoulder, and lease roads across Pecos, Reeves County, and West Texas."
+          overlayOpacity={0.45}
+        />
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">

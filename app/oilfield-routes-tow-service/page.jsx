@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { SiteFooter } from "../../components/ServiceLayout";
 import RBGlobalStyles from "../../components/RBGlobalStyles";
-import { TikTokEmbed } from "../../components/TikTokEmbed";
+import { TikTokEmbed } from "../components/TikTokEmbed";
 
 /* ============================ CTAs ============================ */
 

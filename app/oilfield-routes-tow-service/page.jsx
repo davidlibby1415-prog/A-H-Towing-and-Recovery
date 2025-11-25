@@ -62,7 +62,7 @@ function RedTextFormButton({ className = "" }) {
 
 function TimeTemp() {
   const [now, setNow] = useState(new Date());
-  const [temp, setTemp] = useState<number | null>(null);
+  const [temp, setTemp] = useState(null); // <-- fixed: no <number | null>
   const [locationLabel, setLocationLabel] = useState("Pecos, TX");
 
   useEffect(() => {

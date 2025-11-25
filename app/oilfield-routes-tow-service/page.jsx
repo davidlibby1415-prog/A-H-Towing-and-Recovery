@@ -192,82 +192,74 @@ function OilfieldHero() {
       className="relative isolate w-full overflow-hidden bg-neutral-950"
       style={{ minHeight: "70vh" }}
     >
-      <div className="relative h-[60vh] md:h-[70vh] lg:h-[78vh]">
-        {/* Side-by-side background videos */}
-        <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 z-0">
-          {/* LEFT: rig video – zoomed out more and panned down */}
-          <div className="relative w-full h-full overflow-hidden">
-            <video
-              className="absolute inset-0 w-full h-full object-cover"
-              muted
-              playsInline
-              autoPlay
-              loop
-              preload="metadata"
-              poster="/fallback.jpg"
-              style={{
-                transform: "scale(0.55)", // much more zoomed OUT
-                transformOrigin: "center center",
-                // push framing down so the bottom (tow truck) shows
-                objectPosition: "50% 88%",
-                backgroundImage:
-                  'linear-gradient(0deg, rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url("/diamond-plate.jpg")',
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center center",
-              }}
-            >
-              <source src="/Videos/tow2.mp4" type="video/mp4" />
-            </video>
-          </div>
-
-          {/* RIGHT: fuel-tow video – same zoom you liked */}
-          <div className="relative w-full h-full overflow-hidden">
-            <video
-              className="absolute inset-0 w-full h-full object-cover"
-              muted
-              playsInline
-              autoPlay
-              loop
-              preload="metadata"
-              poster="/fallback.jpg"
-              style={{
-                transform: "scale(0.9)", // small zoom in (unchanged)
-                transformOrigin: "center center",
-                objectPosition: "center center",
-                backgroundImage:
-                  'linear-gradient(0deg, rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url("/diamond-plate.jpg")',
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center center",
-              }}
-            >
-              <source src="/Videos/fueltow.mp4" type="video/mp4" />
-            </video>
-          </div>
+      {/* BACKGROUND: two hero videos edge-to-edge */}
+      <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2">
+        {/* LEFT: rig + truck (vertical shot – zoomed out more) */}
+        <div className="relative overflow-hidden">
+          <video
+            className="absolute inset-0 w-full h-full"
+            muted
+            playsInline
+            autoPlay
+            loop
+            preload="metadata"
+            // optional fallback still frame if you want one:
+            // poster="/rig-hero-fallback.jpg"
+            style={{
+              objectFit: "cover",
+              // shrink more so we see more of the frame
+              // and bias a little toward the bottom so the truck is visible
+              transformOrigin: "50% 65%",
+              transform: "scale(0.62)",
+            }}
+          >
+            <source src="/Videos/tow2.mp4" type="video/mp4" />
+          </video>
         </div>
 
-        {/* Dark vignette over both videos */}
-        <div
-          className="absolute inset-0 pointer-events-none z-[1]"
-          style={{
-            background:
-              "radial-gradient(ellipse at center, rgba(0,0,0,0.2) 35%, rgba(0,0,0,0.8) 85%, rgba(0,0,0,0.95) 100%)",
-          }}
-        />
+        {/* RIGHT: fuel-tow clip (horizontal shot – only slightly zoomed out) */}
+        <div className="relative overflow-hidden">
+          <video
+            className="absolute inset-0 w-full h-full"
+            muted
+            playsInline
+            autoPlay
+            loop
+            preload="metadata"
+            // poster="/fueltow-fallback.jpg"
+            style={{
+              objectFit: "cover",
+              transformOrigin: "50% 60%",
+              // only a small zoom-out so framing stays strong
+              transform: "scale(0.9)",
+            }}
+          >
+            <source src="/Videos/fueltow.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
 
-        {/* Centered hero card */}
-        <div className="relative z-[2] flex items-center justify-center px-4 py-14 md:py-20 h-full">
-          <div className="max-w-3xl w-full">
-            <div className="rounded-[28px] bg-black/90 border border-yellow-400/90 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
-              <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
-              <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-                Oilfield Routes Tow Service
-              </h1>
-              <div className="mt-4 flex flex-wrap justify-center gap-3">
-                <BlueCallButton />
-                <RedTextFormButton />
-              </div>
+      {/* Dark vignette over both videos */}
+      <div
+        className="absolute inset-0 z-10 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.85) 85%, rgba(0,0,0,0.95) 100%)",
+        }}
+      />
+
+      {/* Centered hero card */}
+      <div className="relative z-20 flex items-center justify-center px-4 py-14 md:py-20">
+        <div className="max-w-3xl w-full">
+          <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
+            <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
+            <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+              Oilfield Routes Tow Service
+            </h1>
+
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              <BlueCallButton />
+              <RedTextFormButton />
             </div>
           </div>
         </div>

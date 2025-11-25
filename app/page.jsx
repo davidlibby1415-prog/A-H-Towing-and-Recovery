@@ -1412,7 +1412,7 @@ export default function Home() {
   );
 }
 
-/* ========================= Contact Section (clean TikTok embed) ========================= */
+/* ========================= Contact Section (TikTok via iframe) ========================= */
 
 function ContactSection() {
   const [name, setName] = useState("");
@@ -1422,19 +1422,6 @@ function ContactSection() {
   const [issue, setIssue] = useState("");
   const [coords, setCoords] = useState(null);
   const [locStatus, setLocStatus] = useState("Idle");
-
-  // Make sure TikTok embed script is loaded only once
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    const existing = document.querySelector(
-      'script[src="https://www.tiktok.com/embed.js"]'
-    );
-    if (existing) return;
-    const s = document.createElement("script");
-    s.src = "https://www.tiktok.com/embed.js";
-    s.async = true;
-    document.body.appendChild(s);
-  }, []);
 
   const handleSendText = (e) => {
     e.preventDefault();
@@ -1660,28 +1647,22 @@ function ContactSection() {
           </div>
         </div>
 
-        {/* Phone-style frame with cropped TikTok */}
+        {/* Phone-style frame with TikTok iframe cropped */}
         <div className="relative w-[280px] sm:w-[320px] md:w-[360px] aspect-[9/16] flex items-center justify-center">
           <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
-            <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden flex items-center justify-center">
-              <div className="w-full h-full overflow-hidden flex items-center justify-center px-1 pt-6 pb-2">
-                <div
-                  className="w-full"
-                  style={{ transform: "translateY(-150px) scale(1.45)" }}
-                >
-                  <blockquote
-                    className="tiktok-embed"
-                    cite="https://www.tiktok.com/@alejandrasykes666/video/7541454523265535245"
-                    data-video-id="7541454523265535245"
-                    data-color="black"
-                    style={{
-                      maxWidth: "605px",
-                      minWidth: "325px",
-                      margin: 0,
-                    }}
-                  />
-                </div>
-              </div>
+            <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden">
+              <iframe
+                title="A&H Towing TikTok"
+                src="https://www.tiktok.com/embed/v2/7541454523265535245"
+                className="absolute inset-0 w-[120%] h-[120%]"
+                style={{
+                  transform: "translateY(-60px) scale(1.25)",
+                  transformOrigin: "center",
+                }}
+                frameBorder="0"
+                allow="accelerometer; autoplay; encrypted-media; clipboard-write; fullscreen; picture-in-picture"
+                referrerPolicy="strict-origin-when-cross-origin"
+              />
             </div>
           </div>
         </div>
@@ -1699,16 +1680,6 @@ function ContactSection() {
             <span>Follow us on TikTok</span>
           </a>
         </div>
-
-        <style jsx global>{`
-          .tiktok-embed {
-            background-color: #000 !important;
-            color: #fff !important;
-          }
-          .tiktok-embed * {
-            color: #fff !important;
-          }
-        `}</style>
       </div>
     </div>
   );

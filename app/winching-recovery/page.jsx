@@ -171,7 +171,7 @@ export default function WinchingRecoveryPage() {
                       Stuck doesn&apos;t mean stranded.
                     </h2>
 
-                    {/* PARAGRAPH 1 – bright yellow */}
+                    {/* YELLOW body text */}
                     <p className="text-sm md:text-base font-semibold text-amber-200">
                       Lease roads, caliche, sand, and soft shoulders will humble
                       anyone. We treat recoveries like a job to be{" "}
@@ -197,7 +197,7 @@ export default function WinchingRecoveryPage() {
                       </li>
                     </ul>
 
-                    {/* PARAGRAPH 2 – bright yellow */}
+                    {/* YELLOW goal sentence */}
                     <p className="mt-3 text-sm md:text-base font-semibold text-amber-200">
                       The goal is simple:{" "}
                       <span className="font-black">
@@ -223,8 +223,7 @@ export default function WinchingRecoveryPage() {
                           • Any obstacles (ditches, fences, posts, etc.)
                         </li>
                       </ul>
-
-                      {/* PARAGRAPH 3 – bright yellow */}
+                      {/* YELLOW closing sentence */}
                       <p className="mt-2 text-amber-200">
                         The more detail you give us up front, the better we can
                         prepare the truck, gear, and approach.
@@ -234,7 +233,7 @@ export default function WinchingRecoveryPage() {
                 </div>
               </div>
 
-              {/* Railcar TikTok – sized like others */}
+              {/* Railcar TikTok – same visual scale as other cards */}
               <div className="rounded-[28px] p-[6px] bg-black/80 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)] max-w-[420px] mx-auto w-full">
                 <div className="px-3 pt-2 pb-1">
                   <h4 className="text-sm md:text-base font-extrabold text-amber-50 text-center">
@@ -245,7 +244,7 @@ export default function WinchingRecoveryPage() {
                   <TikTokEmbed
                     videoId="6896206161771547909"
                     caption="Repo: The Railcar Mover"
-                    className="w-full"
+                    className="w-full max-w-[420px]"
                   />
                 </div>
               </div>

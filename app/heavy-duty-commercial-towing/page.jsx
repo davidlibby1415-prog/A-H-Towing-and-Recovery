@@ -211,23 +211,23 @@ export default function HeavyDutyCommercialTowingPage() {
                 >
                   {/* Inner grey shade for the text */}
                   <div className="rounded-2xl bg-neutral-900/85 px-4 py-4 border border-white/10">
-                    <h2 className="text-2xl md:text-3xl font-black mb-3">
+                    <h2 className="text-2xl md:text-3xl font-black mb-3 text-white">
                       When your work truck can’t work, we move it.
                     </h2>
 
-                    <p className="text-sm md:text-base font-semibold">
+                    <p className="text-sm md:text-base font-semibold text-white">
                       From loaded one-tons to service trucks and small
                       commercial units, we understand downtime costs money.
                     </p>
 
-                    <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold">
+                    <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold text-white">
                       <li>• Oilfield and lease road recoveries</li>
                       <li>• Fleet tows to yards and repair shops</li>
                       <li>• Night and weekend calls for working crews</li>
                       <li>• Clear communication with dispatch and safety</li>
                     </ul>
 
-                    <p className="mt-3 text-sm md:text-base font-semibold">
+                    <p className="mt-3 text-sm md:text-base font-semibold text-white">
                       Tell us where the unit is, what you’re driving, and where
                       it needs to go. We’ll give straight answers and show up
                       ready.
@@ -246,15 +246,13 @@ export default function HeavyDutyCommercialTowingPage() {
             <PhoneCTA />
             <TextCTA />
           </div>
-        </section>
 
-        {/* Payments bar at bottom, like main page */}
-        <PaymentsBar />
+          {/* Payments bar at bottom */}
+          <PaymentsBar />
+        </section>
       </main>
 
       <SiteFooter />
     </>
   );
 }
-
-

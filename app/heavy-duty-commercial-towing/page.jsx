@@ -99,7 +99,7 @@ function HeavyDutyTikTokGrid() {
           >
             {/* Bold, slightly larger title above each TikTok */}
             <div className="px-3 pt-2 pb-1">
-              <h4 className="text-base md:text-lg font-extrabold text-amber-50 text-center">
+              <h4 className="text-sm md:text-base font-extrabold text-amber-50 text-center">
                 {video.caption}
               </h4>
             </div>
@@ -113,6 +113,70 @@ function HeavyDutyTikTokGrid() {
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+/* ========================= Payments Bar ========================= */
+
+function PaymentsBar() {
+  return (
+    <div className="container max-w-7xl py-4 bg-red-900/60 rounded-2xl mt-6">
+      <div className="w-full flex justify-center">
+        <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/30 via-rose-500/30 to-amber-400/30 border border-black/10 max-w-fit">
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            <div className="font-extrabold text-white text-lg md:text-xl">
+              We accept:
+            </div>
+
+            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-yellow-50 to-amber-100">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <rect x="2" y="6" width="20" height="12" rx="2" />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+              <span className="font-extrabold text-base md:text-lg">Cash</span>
+            </div>
+
+            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-sky-50 to-blue-100">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <rect x="2" y="5" width="20" height="14" rx="2" />
+                <path d="M2 10h20" />
+              </svg>
+              <span className="font-extrabold text-base md:text-lg">
+                All Major Credit Cards
+              </span>
+            </div>
+
+            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-rose-50 to-red-100">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path d="M3 6h18l-2 12H5L3 6Z" />
+                <path d="M7 10h10M6 14h12" />
+              </svg>
+              <span className="font-extrabold text-base md:text-lg">
+                EFS Services
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -132,14 +196,14 @@ export default function HeavyDutyCommercialTowingPage() {
         {/* MAIN SECTION */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* LEFT: Steel text box with grey inner shade (WHITE TEXT) */}
+            {/* LEFT: Steel text box with grey inner shade */}
             <div className="space-y-4 text-white">
               <div className="rounded-[28px] p-[6px] bg-gradient-to-br from-neutral-800 via-neutral-900 to-black border border-yellow-400/70 shadow-[0_10px_28px_rgba(0,0,0,0.6)]">
                 <div
                   className="rounded-[22px] p-5 border border-white/10"
                   style={{
                     backgroundImage:
-                      'linear-gradient(0deg, rgba(17,17,17,0.9), rgba(17,17,17,0.9)), url("/diamond-plate.jpg")',
+                      'linear-gradient(0deg, rgba(17,17,17,0.88), rgba(17,17,17,0.88)), url("/diamond-plate.jpg")',
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
@@ -183,10 +247,14 @@ export default function HeavyDutyCommercialTowingPage() {
             <TextCTA />
           </div>
         </section>
+
+        {/* Payments bar at bottom, like main page */}
+        <PaymentsBar />
       </main>
 
       <SiteFooter />
     </>
   );
 }
+
 

@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { SiteFooter } from "../../components/ServiceLayout";
 import RBGlobalStyles from "../../components/RBGlobalStyles";
+import { TikTokEmbed } from "../../components/TikTokEmbed";
 
 /* ============================ CTAs ============================ */
 
@@ -62,7 +63,7 @@ function RedTextFormButton({ className = "" }) {
 
 function TimeTemp() {
   const [now, setNow] = useState(new Date());
-  const [temp, setTemp] = useState(null); // <-- fixed: no <number | null>
+  const [temp, setTemp] = useState(null);
   const [locationLabel, setLocationLabel] = useState("Pecos, TX");
 
   useEffect(() => {
@@ -82,10 +83,10 @@ function TimeTemp() {
     )
       .then((res) => res.json())
       .then((data) => {
-        if (data?.main?.temp) {
+        if (data && data.main && typeof data.main.temp === "number") {
           setTemp(Math.round(data.main.temp));
         }
-        if (data?.name) {
+        if (data && data.name) {
           setLocationLabel(`${data.name}, TX`);
         }
       })
@@ -160,7 +161,6 @@ function TopMarquee() {
         </div>
       </div>
 
-      {/* global styles for marquee + rotating border, shared with main page */}
       <style jsx global>{`
         @keyframes marquee-x {
           0% {
@@ -180,112 +180,89 @@ function TopMarquee() {
             animation: none !important;
           }
         }
-
-        @property --angle {
-          syntax: "<angle>";
-          initial-value: 0deg;
-          inherits: false;
-        }
-        @keyframes rb-rotate {
-          to {
-            --angle: 360deg;
-          }
-        }
-        .rb-border {
-          --angle: 0deg;
-          background: conic-gradient(
-            from var(--angle),
-            #3b82f6 0%,
-            #ef4444 50%,
-            #3b82f6 100%
-          );
-          animation: rb-rotate 24s linear infinite;
-        }
-
-        @keyframes cta-pulse {
-          0%,
-          100% {
-            transform: translateY(0) scale(1);
-          }
-          50% {
-            transform: translateY(-2px) scale(1.03);
-          }
-        }
-        .animate-cta-pulse {
-          animation: cta-pulse 2.1s ease-in-out infinite;
-        }
       `}</style>
     </div>
   );
 }
 
-/* =========================== HERO (two videos) =========================== */
+/* =========================== Hero with two videos ============================ */
 
 function OilfieldHero() {
   return (
-    <section
-      className="relative isolate w-full overflow-hidden bg-neutral-950"
-      style={{ minHeight: "68vh" }}
-    >
-      {/* background videos, full height, no gaps */}
-      <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2">
-        {/* LEFT: RIG / NIGHT SHOT */}
-        <div className="relative overflow-hidden">
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            muted
-            playsInline
-            autoPlay
-            loop
-            preload="metadata"
-            poster="/Videos/tow2-poster.jpg"
-            // push the crop slightly DOWN so we see more truck + glow
-            style={{
-              objectPosition: "50% 85%",
-            }}
-          >
-            <source src="/Videos/tow2.mp4" type="video/mp4" />
-          </video>
+    <section className="bg-neutral-950 border-b border-black/60">
+      <div className="container max-w-7xl py-6 md:py-8">
+        {/* Heading */}
+        <div className="mb-5 text-center">
+          <h1 className="text-3xl md:text-4xl font-black text-amber-50 tracking-tight">
+            Oilfield Routes Tow Service
+          </h1>
+          <p className="mt-2 text-sm md:text-base font-semibold text-amber-100/90 max-w-3xl mx-auto">
+            Remote lease roads, winch-outs, and heavy recoveries across West
+            Texas oilfield routes.
+          </p>
         </div>
 
-        {/* RIGHT: FUEL / TOW SHOT */}
-        <div className="relative overflow-hidden">
-          <video
-            className="absolute inset-0 w-full h-full object-cover"
-            muted
-            playsInline
-            autoPlay
-            loop
-            preload="metadata"
-            poster="/Videos/fueltow-poster.jpg"
-            // just nudge a bit down to show the trucks more
-            style={{
-              objectPosition: "50% 72%",
-            }}
-          >
-            <source src="/Videos/fueltow.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
-
-      {/* subtle dark overlay for readability */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.2)_30%,rgba(0,0,0,0.85)_90%)]" />
-
-      {/* centered CTA card */}
-      <div className="relative z-10 flex items-center justify-center px-4 py-16 md:py-20">
-        <div className="max-w-3xl w-full">
-          <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
-            <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
-
-            <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-              Oilfield Routes Tow Service
-            </h1>
-
-            <div className="mt-4 flex flex-wrap justify-center gap-3">
-              <BlueCallButton />
-              <RedTextFormButton />
-            </div>
+        {/* Two-video layout */}
+        <div className="grid md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] gap-4 md:gap-6 items-stretch">
+          {/* Left: vertical rig move video */}
+          <div className="relative rounded-[26px] overflow-hidden border border-yellow-400/85 bg-black shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  'linear-gradient(0deg, rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url("/diamond-plate.jpg")',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+            <video
+              className="relative z-10 w-full h-full"
+              muted
+              playsInline
+              autoPlay
+              loop
+              preload="metadata"
+              poster="/fallback.jpg"
+              style={{
+                objectFit: "contain",
+              }}
+            >
+              <source src="/Videos/tow2.mp4" type="video/mp4" />
+            </video>
           </div>
+
+          {/* Right: horizontal fuel/tow video */}
+          <div className="relative rounded-[26px] overflow-hidden border border-yellow-400/85 bg-black shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  'linear-gradient(0deg, rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url("/diamond-plate.jpg")',
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            />
+            <video
+              className="relative z-10 w-full h-full"
+              muted
+              playsInline
+              autoPlay
+              loop
+              preload="metadata"
+              poster="/fallback.jpg"
+              style={{
+                objectFit: "contain",
+              }}
+            >
+              <source src="/fueltow.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+
+        {/* CTAs under videos */}
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <BlueCallButton />
+          <RedTextFormButton />
         </div>
       </div>
     </section>
@@ -295,38 +272,61 @@ function OilfieldHero() {
 /* ===================== TikTok / Media grid ===================== */
 
 function OilfieldTikTokGrid() {
-  const slots = [
-    "Rig move on lease road",
-    "Night recovery on soft shoulder",
-    "Winch-out in deep sand",
-    "Safe load-up before long haul",
-  ];
-
   return (
     <div className="space-y-3">
       <h3 className="text-2xl md:text-3xl font-black text-amber-100 text-center md:text-left">
         Oilfield Clips &amp; Photos
       </h3>
+
       <p className="text-sm md:text-base font-semibold text-amber-100/90 text-center md:text-left">
         Short clips and snapshots from lease roads and oilfield routes. These
-        boxes are ready for your TikTok embeds or still photos.
+        tiles pull straight from @285302ditchking on TikTok.
       </p>
 
-      <div className="grid grid-cols-2 gap-3 mt-2">
-        {slots.map((label, idx) => (
-          <div
-            key={idx}
-            className="relative rounded-2xl border border-yellow-400/80 bg-black/80 shadow-[0_10px_26px_rgba(0,0,0,0.9)] overflow-hidden aspect-[9/16] flex items-center justify-center px-2"
-          >
-            <p className="text-center text-xs md:text-sm font-semibold text-amber-100">
-              {label}
-              <br />
-              <span className="block mt-1 text-[10px] opacity-80">
-                (Replace with TikTok embed or image)
-              </span>
-            </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+        {/* 1 — Water truck recovery */}
+        <div className="rounded-[28px] p-[6px] rb-border">
+          <div className="rounded-[22px] border border-yellow-400/85 bg-black/80 p-2 shadow-[0_10px_26px_rgba(0,0,0,0.9)] flex justify-center">
+            <TikTokEmbed
+              videoId="7406532437817314591"
+              caption="Oilfield Recovery: Water Truck Goes Off-Road"
+              className="w-full max-w-[420px]"
+            />
           </div>
-        ))}
+        </div>
+
+        {/* 2 — Setting it up */}
+        <div className="rounded-[28px] p-[6px] rb-border">
+          <div className="rounded-[22px] border border-yellow-400/85 bg-black/80 p-2 shadow-[0_10px_26px_rgba(0,0,0,0.9)] flex justify-center">
+            <TikTokEmbed
+              videoId="7400942258079534367"
+              caption="Oilfield Service: Setting It Up"
+              className="w-full max-w-[420px]"
+            />
+          </div>
+        </div>
+
+        {/* 3 — Mixer / pulling unit tow */}
+        <div className="rounded-[28px] p-[6px] rb-border">
+          <div className="rounded-[22px] border border-yellow-400/85 bg-black/80 p-2 shadow-[0_10px_26px_rgba(0,0,0,0.9)] flex justify-center">
+            <TikTokEmbed
+              videoId="7480739591905938719"
+              caption="Oilfield Service Tow: Mixer / Pulling Unit Tow"
+              className="w-full max-w-[420px]"
+            />
+          </div>
+        </div>
+
+        {/* 4 — Four oilfield thieves */}
+        <div className="rounded-[28px] p-[6px] rb-border">
+          <div className="rounded-[22px] border border-yellow-400/85 bg-black/80 p-2 shadow-[0_10px_26px_rgba(0,0,0,0.9)] flex justify-center">
+            <TikTokEmbed
+              videoId="7517523143750077726"
+              caption="Oilfield Service Tow: Four Oilfield Thieves"
+              className="w-full max-w-[420px]"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -574,11 +574,12 @@ export default function OilfieldRoutesTowServicePage() {
         {/* HERO */}
         <OilfieldHero />
 
-        {/* MAIN CONTENT */}
+        {/* MAIN CONTENT: info + TikToks */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* LEFT COLUMN: Oilfield access box */}
+            {/* LEFT COLUMN: Info boxes */}
             <div className="space-y-5">
+              {/* Oilfield access box */}
               <div className="rounded-[28px] p-[6px] rb-border">
                 <div
                   className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
@@ -590,11 +591,11 @@ export default function OilfieldRoutesTowServicePage() {
                     backgroundPosition: "center",
                   }}
                 >
-                  <h2 className="text-2xl md:text-3xl font-black mb-2 text-white">
+                  <h2 className="text-2xl md:text-3xl font-black mb-2">
                     Oilfield access without the guesswork
                   </h2>
 
-                  <div className="mt-2 rounded-2xl bg-black/75 px-4 py-3 border border-white/10">
+                  <div className="mt-2 rounded-2xl bg-black/75 px-4 py-3 border border-white/15">
                     <p className="text-sm md:text-base font-semibold text-white">
                       We know the lease roads and the realities out here—soft
                       shoulders, sand, and long distances. From light pickups to
@@ -607,11 +608,6 @@ export default function OilfieldRoutesTowServicePage() {
                       <li>• Safe transport to town, hotel, or shop</li>
                       <li>• Clear pricing and communication</li>
                     </ul>
-                  </div>
-
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    <BlueCallButton />
-                    <RedTextFormButton />
                   </div>
                 </div>
               </div>
@@ -628,11 +624,11 @@ export default function OilfieldRoutesTowServicePage() {
                     backgroundPosition: "center",
                   }}
                 >
-                  <h3 className="text-2xl md:text-3xl font-black mb-2 text-white">
+                  <h3 className="text-2xl md:text-3xl font-black mb-2">
                     Safety first, even miles off the highway
                   </h3>
 
-                  <div className="mt-2 rounded-2xl bg-black/75 px-4 py-3 border border-white/10">
+                  <div className="mt-2 rounded-2xl bg-black/75 px-4 py-3 border border-white/15">
                     <ol className="list-decimal list-inside space-y-2 text-sm md:text-base font-semibold text-white">
                       <li>
                         Confirm your GPS or nearest mile marker/lease gate.
@@ -655,7 +651,7 @@ export default function OilfieldRoutesTowServicePage() {
               </div>
             </div>
 
-            {/* RIGHT: 2×2 grid for TikToks/photos */}
+            {/* RIGHT COLUMN: TikTok grid */}
             <OilfieldTikTokGrid />
           </div>
         </section>

@@ -5,7 +5,6 @@ import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { SiteFooter } from "../../components/ServiceLayout";
 import RBGlobalStyles from "../../components/RBGlobalStyles";
-import { TikTokEmbed } from "../components/TikTokEmbed";
 
 /* ============================ CTAs ============================ */
 
@@ -187,8 +186,6 @@ function TopMarquee() {
 
 /* =========================== Hero with two videos ============================ */
 
-/* =========================== Hero ============================ */
-
 function OilfieldHero() {
   return (
     <section className="relative isolate bg-neutral-950">
@@ -196,7 +193,6 @@ function OilfieldHero() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* this div is the hero “frame” that the videos fill */}
         <div className="relative grid md:grid-cols-2 gap-4 lg:gap-6 items-stretch min-h-[420px] md:min-h-[480px] lg:min-h-[520px] py-2">
-
           {/* LEFT HERO VIDEO */}
           <div className="relative overflow-hidden rounded-[32px] bg-black/90 border border-yellow-400/80 shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <video
@@ -244,9 +240,62 @@ function OilfieldHero() {
 
 /* ===================== TikTok / Media grid ===================== */
 
-function OilfieldTikTokGrid() {
+function TikTokWideEmbed({ videoId, title }) {
+  const src = `https://www.tiktok.com/embed/v2/${videoId}`;
+
   return (
-    <div className="space-y-3">
+    <div className="rounded-[28px] p-[6px] rb-border">
+      <div className="relative rounded-[22px] overflow-hidden bg-black/85 border border-yellow-400/80 shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+        {/* Title strip */}
+        <div className="px-4 pt-3 pb-2 text-amber-100 font-extrabold text-sm md:text-base text-center border-b border-white/10 bg-gradient-to-r from-sky-500/25 via-rose-500/25 to-amber-400/25">
+          {title}
+        </div>
+
+        {/* Video frame – overscaled & cropped to hide extra TikTok text */}
+        <div className="relative w-full aspect-[9/16] md:aspect-[4/5] overflow-hidden bg-black">
+          <iframe
+            src={src}
+            title={title}
+            className="
+              absolute inset-0
+              w-[118%] h-[118%]
+              -translate-x-[9%] -translate-y-[7%]
+              scale-[1.06]
+            "
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen
+            loading="lazy"
+          />
+          {/* Soft fade at the bottom in case a bit of UI peeks through */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function OilfieldTikTokGrid() {
+  const clips = [
+    {
+      videoId: "7406532437817314591",
+      title: "Oilfield Recovery: Water Truck Goes Off-Road",
+    },
+    {
+      videoId: "7400942258079534367",
+      title: "Oilfield Service: Setting It Up",
+    },
+    {
+      videoId: "7480739591905938719",
+      title: "Oilfield Service Tow: Mixer / Pulling Unit Tow",
+    },
+    {
+      videoId: "7517523143750077726",
+      title: "Oilfield Service Tow: Four Oilfield Thieves",
+    },
+  ];
+
+  return (
+    <div className="space-y-4">
       <h3 className="text-2xl md:text-3xl font-black text-amber-100 text-center md:text-left">
         Oilfield Clips &amp; Photos
       </h3>
@@ -256,50 +305,14 @@ function OilfieldTikTokGrid() {
         tiles pull straight from @285302ditchking on TikTok.
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
-        {/* 1 — Water truck recovery */}
-        <div className="rounded-[28px] p-[6px] rb-border">
-          <div className="rounded-[22px] border border-yellow-400/85 bg-black/80 p-2 shadow-[0_10px_26px_rgba(0,0,0,0.9)] flex justify-center">
-            <TikTokEmbed
-              videoId="7406532437817314591"
-              caption="Oilfield Recovery: Water Truck Goes Off-Road"
-              className="w-full max-w-[420px]"
-            />
-          </div>
-        </div>
-
-        {/* 2 — Setting it up */}
-        <div className="rounded-[28px] p-[6px] rb-border">
-          <div className="rounded-[22px] border border-yellow-400/85 bg-black/80 p-2 shadow-[0_10px_26px_rgba(0,0,0,0.9)] flex justify-center">
-            <TikTokEmbed
-              videoId="7400942258079534367"
-              caption="Oilfield Service: Setting It Up"
-              className="w-full max-w-[420px]"
-            />
-          </div>
-        </div>
-
-        {/* 3 — Mixer / pulling unit tow */}
-        <div className="rounded-[28px] p-[6px] rb-border">
-          <div className="rounded-[22px] border border-yellow-400/85 bg-black/80 p-2 shadow-[0_10px_26px_rgba(0,0,0,0.9)] flex justify-center">
-            <TikTokEmbed
-              videoId="7480739591905938719"
-              caption="Oilfield Service Tow: Mixer / Pulling Unit Tow"
-              className="w-full max-w-[420px]"
-            />
-          </div>
-        </div>
-
-        {/* 4 — Four oilfield thieves */}
-        <div className="rounded-[28px] p-[6px] rb-border">
-          <div className="rounded-[22px] border border-yellow-400/85 bg-black/80 p-2 shadow-[0_10px_26px_rgba(0,0,0,0.9)] flex justify-center">
-            <TikTokEmbed
-              videoId="7517523143750077726"
-              caption="Oilfield Service Tow: Four Oilfield Thieves"
-              className="w-full max-w-[420px]"
-            />
-          </div>
-        </div>
+      <div className="mt-4 grid gap-5 md:grid-cols-2">
+        {clips.map((clip) => (
+          <TikTokWideEmbed
+            key={clip.videoId}
+            videoId={clip.videoId}
+            title={clip.title}
+          />
+        ))}
       </div>
     </div>
   );

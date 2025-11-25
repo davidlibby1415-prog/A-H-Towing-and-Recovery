@@ -62,7 +62,7 @@ function RedTextFormButton({ className = "" }) {
 
 function TimeTemp() {
   const [now, setNow] = useState(new Date());
-  const [temp, setTemp] = useState(null);
+  const [temp, setTemp] = useState<number | null>(null);
   const [locationLabel, setLocationLabel] = useState("Pecos, TX");
 
   useEffect(() => {
@@ -188,56 +188,76 @@ function TopMarquee() {
 
 function OilfieldHero() {
   return (
-    <section
-      className="relative isolate w-full overflow-hidden bg-neutral-950"
-      style={{ minHeight: "70vh" }}
-    >
-      {/* Background video: object-fit CONTAIN + diamond-plate fill */}
-      <video
-        className="absolute inset-0 w-full h-full z-0"
-        muted
-        playsInline
-        autoPlay
-        loop
-        preload="metadata"
-        poster="/fallback.jpg"
+    <section className="relative w-full overflow-hidden bg-neutral-950 border-b border-black/40">
+      {/* Diamond-plate background */}
+      <div
+        className="absolute inset-0"
         style={{
-          objectFit: "contain",
-          objectPosition: "center center",
           backgroundImage:
             'linear-gradient(0deg, rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url("/diamond-plate.jpg")',
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center center",
         }}
-      >
-        <source src="/Videos/tow2.mp4" type="video/mp4" />
-      </video>
-
-      {/* Dark vignette overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none z-5"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.9) 100%)",
-        }}
       />
+      <div className="absolute inset-0 bg-black/40" />
 
-      {/* Centered card */}
-      <div className="relative z-10 flex items-center justify-center px-4 py-14 md:py-20">
-        <div className="max-w-3xl w-full">
-          <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
-            <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
+      <div className="relative container max-w-7xl py-10 md:py-14">
+        <div className="grid md:grid-cols-2 gap-6 items-center">
+          {/* LEFT: hero text & CTAs */}
+          <div className="rounded-[28px] p-[6px] rb-border">
+            <div className="rounded-[22px] border border-yellow-400/85 bg-black/85 px-6 py-6 md:px-8 md:py-7 text-center text-white shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
+              <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
+              <h1 className="text-3xl md:text-4xl font-black tracking-tight">
+                Oilfield Routes Tow Service
+              </h1>
+              <p className="mt-3 text-sm md:text-base font-semibold text-amber-100/90">
+                US-285 • TX-17 • TX-18 • TX-302 • Lease roads • Remote access •
+                Long &amp; short distance
+              </p>
 
-            <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-              Oilfield Routes Tow Service
-            </h1>
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
+                <BlueCallButton />
+                <RedTextFormButton />
+              </div>
+            </div>
+          </div>
 
-            {/* Removed extra one-line hero text per request */}
+          {/* RIGHT: two videos side-by-side */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Rig video */}
+            <div className="rounded-[24px] p-[3px] bg-gradient-to-br from-ahBlue via-sky-400 to-ahRed shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+              <div className="rounded-[20px] bg-black overflow-hidden aspect-video">
+                <video
+                  className="w-full h-full object-contain bg-black"
+                  muted
+                  playsInline
+                  autoPlay
+                  loop
+                  preload="metadata"
+                  poster="/fallback.jpg"
+                >
+                  <source src="/Videos/tow2.mp4" type="video/mp4" />
+                </video>
+              </div>
+            </div>
 
-            <div className="mt-4 flex flex-wrap justify-center gap-3">
-              <BlueCallButton />
-              <RedTextFormButton />
+            {/* Fuel / second video */}
+            <div className="rounded-[24px] p-[3px] bg-gradient-to-br from-amber-400 via-rose-500 to-red-700 shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+              <div className="rounded-[20px] bg-black overflow-hidden aspect-video">
+                <video
+                  className="w-full h-full object-contain bg-black"
+                  muted
+                  playsInline
+                  autoPlay
+                  loop
+                  preload="metadata"
+                  poster="/fallback.jpg"
+                >
+                  {/* Place fueltow.mp4 in /public/Videos and update path if needed */}
+                  <source src="/Videos/fueltow.mp4" type="video/mp4" />
+                </video>
+              </div>
             </div>
           </div>
         </div>
@@ -354,7 +374,9 @@ function PaymentsBar() {
 
 export default function OilfieldRoutesTowServicePage() {
   const [servicesOpen, setServicesOpen] = useState(false);
-  const servicesCloseTimeout = useRef(null);
+  const servicesCloseTimeout = useRef<ReturnType<typeof setTimeout> | null>(
+    null
+  );
 
   const openServices = () => {
     if (servicesCloseTimeout.current) {
@@ -562,11 +584,6 @@ export default function OilfieldRoutesTowServicePage() {
                       <li>• Safe transport to town, hotel, or shop</li>
                       <li>• Clear pricing and communication</li>
                     </ul>
-                  </div>
-
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    <BlueCallButton />
-                    <RedTextFormButton />
                   </div>
                 </div>
               </div>

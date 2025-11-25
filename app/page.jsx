@@ -39,7 +39,7 @@ function PhoneCTA({ className = "", fullWidth = false }) {
   return (
     <a
       href="tel:+14328424578"
-      className={`inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border border-white/80`}
+      className={`inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white`}
       aria-label="Call 24/7 dispatch at (432) 842-4578"
     >
       <span className="uppercase tracking-wide text-xs md:text-sm text-center">
@@ -77,7 +77,7 @@ function ScrollToFormCTA({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border border-white/80`}
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white`}
       aria-label="Go to dispatch form"
     >
       {textContent}
@@ -90,31 +90,33 @@ function ScrollToFormCTA({
 function TimeTemp() {
   const [now, setNow] = useState(new Date());
   const [temp, setTemp] = useState(null);
-  const [locationLabel] = useState("Pecos, TX");
+  const [locationLabel, setLocationLabel] = useState("Pecos, TX");
 
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(id);
   }, []);
 
-  // Use Open-Meteo (no API key required) so it works reliably in production
   useEffect(() => {
+    const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
+    if (!apiKey) return;
+
     const lat = 31.4229;
     const lon = -103.4938;
 
     fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&temperature_unit=fahrenheit`
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
     )
       .then((res) => res.json())
       .then((data) => {
-        const t = data?.current_weather?.temperature;
-        if (typeof t === "number") {
-          setTemp(Math.round(t));
+        if (data?.main?.temp) {
+          setTemp(Math.round(data.main.temp));
+        }
+        if (data?.name) {
+          setLocationLabel(`${data.name}, TX`);
         }
       })
-      .catch(() => {
-        // silently fail; UI will show "--°F"
-      });
+      .catch(() => {});
   }, []);
 
   const dateStr = now.toLocaleDateString([], {
@@ -134,7 +136,7 @@ function TimeTemp() {
       <span className="font-semibold">{dateStr}</span>
       <span className="font-semibold">{timeStr}</span>
       <span className="font-semibold">
-        {temp != null ? `${temp}°F` : "--°F"} • {locationLabel}
+        {temp != null ? `${temp}°F • ${locationLabel}` : locationLabel}
       </span>
     </div>
   );
@@ -199,8 +201,9 @@ function AccentStrip({ color = "from-ahBlue to-ahRed", className = "" }) {
 /* =================== GLOBAL Animated Border (red↔blue) =================== */
 
 function AnimBorder({ children, className = "" }) {
+  // Slightly slimmer padding so gradient borders don’t look oversized
   return (
-    <div className={`rb-border p-[6px] rounded-[28px] ${className}`}>
+    <div className={`rb-border p-[4px] rounded-[26px] ${className}`}>
       {children}
     </div>
   );
@@ -868,7 +871,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid md:grid-cols-3 gap-4 items-stretch">
                   {[
                     {
                       icon: IconTruck,
@@ -901,12 +904,12 @@ export default function Home() {
                       href: "/flatbed-rollback-services",
                     },
                   ].map(({ icon: Ico, title, desc, href }) => (
-                    <AnimBorder key={title}>
+                    <AnimBorder key={title} className="h-full">
                       <Link
                         href={href}
-                        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
+                        className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
                       >
-                        <SteelPanel className="p-4 cursor-pointer transition-transform duration-200 hover:scale-[1.05] hover:shadow-xl">
+                        <SteelPanel className="p-4 h-full cursor-pointer transition-transform duration-200 hover:scale-[1.05] hover:shadow-xl">
                           <div className="flex items-start gap-3">
                             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
                               <Ico className="h-6 w-6 text-white" />
@@ -948,7 +951,7 @@ export default function Home() {
                     </h4>
                   </div>
                 </div>
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className="grid md:grid-cols-3 gap-4 items-stretch">
                   {[
                     {
                       icon: IconFuel,
@@ -981,12 +984,12 @@ export default function Home() {
                       href: "/emergency-roadside-assistance",
                     },
                   ].map(({ icon: Ico, title, desc, href }) => (
-                    <AnimBorder key={title}>
+                    <AnimBorder key={title} className="h-full">
                       <Link
                         href={href}
-                        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
+                        className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
                       >
-                        <SteelPanel className="p-4 cursor-pointer transition-transform duration-200 hover:scale-[1.05] hover:shadow-xl">
+                        <SteelPanel className="p-4 h-full cursor-pointer transition-transform duration-200 hover:scale-[1.05] hover:shadow-xl">
                           <div className="flex items-start gap-3">
                             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
                               <Ico className="h-6 w-6 text-white" />
@@ -1028,7 +1031,7 @@ export default function Home() {
                     </h4>
                   </div>
                 </div>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2 gap-4 items-stretch">
                   {[
                     {
                       icon: IconTruck,
@@ -1043,12 +1046,12 @@ export default function Home() {
                       href: "/winching-recovery",
                     },
                   ].map(({ icon: Ico, title, desc, href }) => (
-                    <AnimBorder key={title}>
+                    <AnimBorder key={title} className="h-full">
                       <Link
                         href={href}
-                        className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
+                        className="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-amber-400 rounded-[22px]"
                       >
-                        <SteelPanel className="p-4 cursor-pointer transition-transform duration-200 hover:scale-[1.05] hover:shadow-xl">
+                        <SteelPanel className="p-4 h-full cursor-pointer transition-transform duration-200 hover:scale-[1.05] hover:shadow-xl">
                           <div className="flex items-start gap-3">
                             <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-ahBlue to-ahRed grid place-items-center flex-shrink-0">
                               <Ico className="h-6 w-6 text-white" />
@@ -1173,7 +1176,7 @@ export default function Home() {
                     <div className="mt-1 flex flex-wrap gap-3 justify-center md:justify-start">
                       <a
                         href="tel:+14328424578"
-                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahBlue text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border border-white/80"
+                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahBlue text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border-2 border-white"
                       >
                         Click Here to Call Dispatch
                       </a>
@@ -1182,7 +1185,7 @@ export default function Home() {
                         onClick={() =>
                           scrollToFormWithOffset("dispatch-form")
                         }
-                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahRed text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border border-white/80"
+                        className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahRed text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border-2 border-white outline outline-2 outline-white"
                       >
                         Click Here to Text Location
                       </button>
@@ -1266,7 +1269,7 @@ export default function Home() {
           </AnimBorder>
         </Section>
 
-        {/* Bottom brand slab + payments + footer */}
+        {/* Bottom brand slab + payments + footer all unchanged */}
         <div className="container max-w-7xl pb-2">
           <BrandSlab Tag="h2" />
         </div>
@@ -1621,7 +1624,7 @@ function ContactSection() {
             <button
               type="button"
               onClick={handleSendText}
-              className="flex-1 max-w-xs inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border border-white/80"
+              className="flex-1 max-w-xs inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white"
             >
               <span className="uppercase tracking-wide text-xs md:text-sm text-center font-extrabold">
                 CLICK HERE TO TEXT DISPATCH (INCLUDE GPS LOCATION)
@@ -1657,17 +1660,14 @@ function ContactSection() {
           </div>
         </div>
 
-        {/* Phone-style frame with TikTok embed, masked top/bottom */}
+        {/* Phone-style frame with cropped TikTok */}
         <div className="relative w-[280px] sm:w-[320px] md:w-[360px] aspect-[9/16] flex items-center justify-center">
           <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden flex items-center justify-center">
-              <div className="w-full h-full flex items-center justify-center px-1 pt-6 pb-2">
+              <div className="w-full h-full overflow-hidden flex items-center justify-center px-1 pt-6 pb-2">
                 <div
                   className="w-full"
-                  style={{
-                    transform: "scale(1.1)",
-                    transformOrigin: "center",
-                  }}
+                  style={{ transform: "translateY(-150px) scale(1.45)" }}
                 >
                   <blockquote
                     className="tiktok-embed"
@@ -1679,72 +1679,9 @@ function ContactSection() {
                       minWidth: "325px",
                       margin: 0,
                     }}
-                  >
-                    <section>
-                      <a
-                        target="_blank"
-                        title="@alejandrasykes666"
-                        href="https://www.tiktok.com/@alejandrasykes666?refer=embed"
-                        rel="noreferrer"
-                      >
-                        @alejandrasykes666
-                      </a>{" "}
-                      <a
-                        title="towing"
-                        target="_blank"
-                        href="https://www.tiktok.com/tag/towing?refer=embed"
-                        rel="noreferrer"
-                      >
-                        #towing
-                      </a>{" "}
-                      <a
-                        title="westtx"
-                        target="_blank"
-                        href="https://www.tiktok.com/tag/westtx?refer=embed"
-                        rel="noreferrer"
-                      >
-                        #westtx
-                      </a>{" "}
-                      <a
-                        title="pecos"
-                        target="_blank"
-                        href="https://www.tiktok.com/tag/pecos?refer=embed"
-                        rel="noreferrer"
-                      >
-                        #pecos
-                      </a>{" "}
-                      <a
-                        title="businessowner"
-                        target="_blank"
-                        href="https://www.tiktok.com/tag/businessowner?refer=embed"
-                        rel="noreferrer"
-                      >
-                        #businessowner
-                      </a>{" "}
-                      <a
-                        title="a"
-                        target="_blank"
-                        href="https://www.tiktok.com/tag/a?refer=embed"
-                        rel="noreferrer"
-                      >
-                        #A
-                      </a>{" "}
-                      <a
-                        target="_blank"
-                        title="♬ Pasta - Los Dareyes De La Sierra"
-                        href="https://www.tiktok.com/music/Pasta-7527051487597742081?refer=embed"
-                        rel="noreferrer"
-                      >
-                        ♬ Pasta - Los Dareyes De La Sierra
-                      </a>
-                    </section>
-                  </blockquote>
+                  />
                 </div>
               </div>
-
-              {/* Masks to hide username/caption text */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-black" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-black" />
             </div>
           </div>
         </div>

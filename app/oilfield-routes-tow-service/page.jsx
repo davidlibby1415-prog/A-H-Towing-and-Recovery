@@ -184,44 +184,44 @@ function TopMarquee() {
   );
 }
 
-/* =========================== HERO (two videos) =========================== */
+/* =========================== HERO (two videos visible) =========================== */
 
 function OilfieldHero() {
   return (
     <section className="relative isolate w-full overflow-hidden bg-neutral-950">
-      <div className="relative w-full min-h-[420px] sm:min-h-[520px] lg:min-h-[600px]">
-        {/* Two side-by-side videos filling the hero edge-to-edge */}
-        <div className="grid md:grid-cols-2 w-full h-full">
-          {/* LEFT: rig video – zoomed out and biased downward so the truck is visible */}
-          <div className="relative h-full">
+      <div className="relative w-full min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] overflow-hidden">
+        {/* VIDEO LAYER: side-by-side, filling from header border to red section */}
+        <div className="absolute inset-0 flex">
+          {/* LEFT: rig video – zoomed out and biased down so the truck + glow show */}
+          <div className="relative flex-1 overflow-hidden">
             <video
-              className="absolute inset-0 w-full h-full object-cover"
+              className="w-full h-full object-cover"
               muted
               playsInline
               autoPlay
               loop
               preload="metadata"
-              poster="/fallback.jpg"
               style={{
-                objectPosition: "50% 82%", // push view down towards the truck & ground
+                transform: "scale(0.6)",
+                transformOrigin: "50% 80%", // push framing downward
               }}
             >
               <source src="/Videos/tow2.mp4" type="video/mp4" />
             </video>
           </div>
 
-          {/* RIGHT: fuel-tow video – only slightly zoomed, focus lower-middle */}
-          <div className="relative h-full">
+          {/* RIGHT: fuel-tow video – slight zoom so the trucks are clear */}
+          <div className="relative flex-1 overflow-hidden">
             <video
-              className="absolute inset-0 w-full h-full object-cover"
+              className="w-full h-full object-cover"
               muted
               playsInline
               autoPlay
               loop
               preload="metadata"
-              poster="/fallback.jpg"
               style={{
-                objectPosition: "50% 65%", // keep landscape framing but show the trucks well
+                transform: "scale(0.9)",
+                transformOrigin: "50% 65%",
               }}
             >
               <source src="/Videos/fueltow.mp4" type="video/mp4" />
@@ -229,17 +229,17 @@ function OilfieldHero() {
           </div>
         </div>
 
-        {/* Dark vignette over both videos */}
+        {/* Soft dark vignette over videos */}
         <div
-          className="pointer-events-none absolute inset-0"
+          className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              "radial-gradient(ellipse at center, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.9) 100%)",
+              "radial-gradient(ellipse at center, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.9) 100%)",
           }}
         />
 
-        {/* Centered CTA card spanning both videos */}
-        <div className="absolute inset-0 flex items-center justify-center px-4 py-6">
+        {/* HERO CARD – on top of everything */}
+        <div className="relative flex items-center justify-center h-full px-4 py-8 md:py-12">
           <div className="max-w-3xl w-full">
             <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
               <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
@@ -496,7 +496,7 @@ export default function OilfieldRoutesTowServicePage() {
                 )}
               </div>
 
-              {/* Home link */}
+            {/* Home link */}
               <Link
                 href="/"
                 className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
@@ -543,7 +543,7 @@ export default function OilfieldRoutesTowServicePage() {
         {/* MAIN CONTENT */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* LEFT COLUMN: info boxes */}
+            {/* LEFT COLUMN */}  
             <div className="space-y-5">
               {/* Oilfield access box */}
               <div className="rounded-[28px] p-[6px] rb-border">
@@ -622,12 +622,12 @@ export default function OilfieldRoutesTowServicePage() {
               </div>
             </div>
 
-            {/* RIGHT COLUMN: 2×2 grid for TikToks/photos */}
+            {/* RIGHT: 2×2 grid for TikToks/photos */}
             <OilfieldTikTokGrid />
           </div>
         </section>
 
-        {/* Payments bar on this page */}
+        {/* Payments bar */} 
         <PaymentsBar />
       </main>
 

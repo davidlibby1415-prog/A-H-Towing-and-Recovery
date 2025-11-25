@@ -203,7 +203,7 @@ export default function WinchingRecoveryPage() {
                     and off the unsafe ground.
                   </p>
 
-                  {/* What helps us plan a recovery – still inside same steel card */}
+                  {/* What helps us plan a recovery */}
                   <div className="mt-4 rounded-2xl border border-yellow-400/85 p-4 text-sm md:text-base font-semibold">
                     <h3 className="text-lg md:text-xl font-black mb-2">
                       What helps us plan a recovery
@@ -225,6 +225,22 @@ export default function WinchingRecoveryPage() {
                       prepare the truck, gear, and approach.
                     </p>
                   </div>
+                </div>
+              </div>
+
+              {/* Extra TikTok under the text box: Repo – The Railcar Mover */}
+              <div className="rounded-[28px] p-[6px] bg-black/80 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)]">
+                <div className="px-3 pt-2 pb-1">
+                  <h4 className="text-sm md:text-base font-extrabold text-amber-50 text-center">
+                    Repo: The Railcar Mover
+                  </h4>
+                </div>
+                <div className="rounded-[22px] bg-black overflow-hidden flex justify-center p-2">
+                  <TikTokEmbed
+                    videoId="6896206161771547909"
+                    caption="Repo: The Railcar Mover"
+                    className="w-full max-w-[420px]"
+                  />
                 </div>
               </div>
             </div>

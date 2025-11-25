@@ -46,41 +46,44 @@ export const metadata = {
 function OilfieldHero() {
   return (
     <section
-      className="relative isolate w-full overflow-hidden bg-black"
+      className="relative isolate w-full overflow-hidden bg-neutral-950"
       style={{ minHeight: "70vh" }}
     >
-      {/* Background video, zoomed OUT more */}
+      {/* Background video: object-fit CONTAIN + diamond-plate bars */}
       <video
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full z-0"
         muted
         playsInline
         autoPlay
         loop
         preload="metadata"
         poster="/fallback.jpg"
-        // key part: NO extra scale, centered frame
         style={{
+          objectFit: "contain",          // <— key change
           objectPosition: "center center",
-          transform: "scale(1.0)",
-          transformOrigin: "center center",
+          backgroundImage:
+            'linear-gradient(0deg, rgba(0,0,0,0.75), rgba(0,0,0,0.75)), url("/diamond-plate.jpg")',
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center center",
         }}
       >
         <source src="/Videos/tow2.mp4" type="video/mp4" />
       </video>
 
-      {/* Dark vignette overlay */}
+      {/* Dark vignette overlay so card pops and the bars aren’t distracting */}
       <div
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none z-5"
         style={{
           background:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0.9) 100%)",
+            "radial-gradient(ellipse at center, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.9) 100%)",
         }}
       />
 
       {/* Centered card */}
       <div className="relative z-10 flex items-center justify-center px-4 py-14 md:py-20">
         <div className="max-w-3xl w-full">
-          <div className="rounded-[28px] bg-black/80 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
+          <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
             <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
 
             <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
@@ -111,7 +114,6 @@ function OilfieldHero() {
 /* ===================== TikTok / Media grid ===================== */
 
 function OilfieldTikTokGrid() {
-  // Swap these placeholders later for real TikTok embeds or JPG/MP4 thumbnails.
   const slots = [
     "Rig move on lease road",
     "Night recovery on soft shoulder",
@@ -158,10 +160,8 @@ export default function OilfieldRoutesTowServicePage() {
       <TopMarquee />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO with zoomed-out video */}
         <OilfieldHero />
 
-        {/* MAIN CONTENT: left = copy, right = 4-box TikTok grid */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
             {/* LEFT: copy + CTAs */}
@@ -243,3 +243,4 @@ export default function OilfieldRoutesTowServicePage() {
     </>
   );
 }
+

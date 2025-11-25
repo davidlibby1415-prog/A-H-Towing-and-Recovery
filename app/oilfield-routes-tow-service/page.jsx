@@ -1,15 +1,11 @@
 // app/oilfield-routes-tow-service/page.jsx
 
 import React from "react";
-import {
-  SiteHeader,
-  SiteFooter,
-  TopMarquee,
-} from "../../components/ServiceLayout";
+import { SiteHeader, SiteFooter, TopMarquee } from "../../components/ServiceLayout";
 import RBGlobalStyles from "../../components/RBGlobalStyles";
-import { TikTokEmbed } from "../../components/TikTokEmbed";
 
 /* ===== Simple, server-safe CTA buttons (no hooks) ===== */
+
 function BlueCallButton({ className = "" }) {
   return (
     <a
@@ -26,7 +22,6 @@ function BlueCallButton({ className = "" }) {
 }
 
 function RedTextFormButton({ className = "" }) {
-  // Link to the main page’s form section; main page handles scroll/behavior.
   return (
     <a
       href="/#contact"
@@ -38,21 +33,23 @@ function RedTextFormButton({ className = "" }) {
   );
 }
 
+/* ========================== Metadata ========================== */
+
 export const metadata = {
   title: "Oilfield Routes Tow Service | A & H Towing & Recovery",
   description:
     "Remote lease roads, US-285, TX-17, TX-18, TX-302 — light/medium/heavy tows, winch-outs, and safe transport across West Texas oilfield routes.",
 };
 
-/* ================= HERO with less zoomed video ================= */
+/* =========================== Hero ============================ */
 
 function OilfieldHero() {
   return (
     <section
-      className="relative isolate w-full overflow-hidden border-b border-black/40 bg-black"
-      style={{ minHeight: "min(78vh, 900px)" }}
+      className="relative isolate w-full overflow-hidden bg-black"
+      style={{ minHeight: "70vh" }}
     >
-      {/* Background video */}
+      {/* Background video, zoomed OUT more */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
         muted
@@ -61,52 +58,49 @@ function OilfieldHero() {
         loop
         preload="metadata"
         poster="/fallback.jpg"
+        // key part: NO extra scale, centered frame
         style={{
-          objectPosition: "center center", // pull back from the super-zoomed bottom
+          objectPosition: "center center",
+          transform: "scale(1.0)",
+          transformOrigin: "center center",
         }}
       >
         <source src="/Videos/tow2.mp4" type="video/mp4" />
       </video>
 
-      {/* Dark gradient overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90" />
+      {/* Dark vignette overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, rgba(0,0,0,0.05) 40%, rgba(0,0,0,0.6) 85%, rgba(0,0,0,0.9) 100%)",
+        }}
+      />
 
-      {/* Content card */}
-      <div className="relative z-10">
-        <div className="container max-w-7xl py-10 md:py-16 flex items-center">
-          <div className="max-w-2xl rounded-[28px] p-[6px] rb-border">
-            <div
-              className="rounded-[22px] border border-yellow-400/85 bg-black/80 px-5 py-6 md:px-7 md:py-7 text-white shadow-[0_10px_28px_rgba(0,0,0,0.65)]"
-              style={{
-                backgroundImage:
-                  'linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("/diamond-plate.jpg")',
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
-              }}
-            >
-              <p className="text-xs md:text-sm font-extrabold uppercase tracking-[0.22em] text-amber-300 mb-1">
-                Oilfield • Lease Roads • Remote Access
-              </p>
-              <h1 className="text-[clamp(28px,4.2vw,40px)] font-black leading-tight">
-                Oilfield Routes Tow Service
-              </h1>
-              <p className="mt-2 text-sm md:text-base font-semibold text-amber-50">
-                US-285 • TX-17 • TX-18 • TX-302 • Lease roads • Remote access •
-                Long &amp; short distance.
-              </p>
-              <p className="mt-2 text-sm md:text-base font-semibold text-amber-50/90">
-                We know the lease roads and the realities out here—soft
-                shoulders, sand, and long distances. From light pickups to
-                heavier rigs, we’ll get you out, get you safe, and get you
-                moving again.
-              </p>
+      {/* Centered card */}
+      <div className="relative z-10 flex items-center justify-center px-4 py-14 md:py-20">
+        <div className="max-w-3xl w-full">
+          <div className="rounded-[28px] bg-black/80 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
+            <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
 
-              <div className="mt-4 flex flex-wrap gap-3">
-                <BlueCallButton />
-                <RedTextFormButton />
-              </div>
+            <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+              Oilfield Routes Tow Service
+            </h1>
+
+            <p className="mt-2 text-sm md:text-base font-semibold text-amber-50">
+              US-285 • TX-17 • TX-18 • TX-302 • Lease roads • Remote access • Long &amp;
+              short distance
+            </p>
+
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              <BlueCallButton />
+              <RedTextFormButton />
             </div>
+
+            <p className="mt-3 text-xs md:text-sm font-semibold text-amber-100/90">
+              Call or text with your vehicle, location (GPS if possible), and what happened.
+              We&apos;ll give you a straight answer on ETA and pricing.
+            </p>
           </div>
         </div>
       </div>
@@ -114,17 +108,48 @@ function OilfieldHero() {
   );
 }
 
-/* ================= TikTok helper card ================= */
+/* ===================== TikTok / Media grid ===================== */
 
-function TikTokCard({ videoId, caption }) {
+function OilfieldTikTokGrid() {
+  // Swap these placeholders later for real TikTok embeds or JPG/MP4 thumbnails.
+  const slots = [
+    "Rig move on lease road",
+    "Night recovery on soft shoulder",
+    "Winch-out in deep sand",
+    "Safe load-up before long haul",
+  ];
+
   return (
-    <div className="rounded-2xl border border-yellow-400/80 bg-black/85 p-2">
-      <TikTokEmbed videoId={videoId} caption={caption} />
+    <div className="space-y-3">
+      <h3 className="text-2xl md:text-3xl font-black text-amber-100 text-center md:text-left">
+        Oilfield Clips &amp; Photos
+      </h3>
+      <p className="text-sm md:text-base font-semibold text-amber-100/90 text-center md:text-left">
+        Short clips and snapshots from lease roads and oilfield routes. These boxes are
+        ready for your TikTok embeds or still photos.
+      </p>
+
+      <div className="grid grid-cols-2 gap-3 mt-2">
+        {slots.map((label, idx) => (
+          <div
+            key={idx}
+            className="relative rounded-2xl border border-yellow-400/80 bg-black/80 shadow-[0_10px_26px_rgba(0,0,0,0.9)] overflow-hidden aspect-[9/16] flex items-center justify-center px-2"
+          >
+            <p className="text-center text-xs md:text-sm font-semibold text-amber-100">
+              {label}
+              <br />
+              <span className="block mt-1 text-[10px] opacity-80">
+                (Replace with TikTok embed or image)
+              </span>
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-/* ==================== PAGE ==================== */
+/* =========================== Page ============================ */
 
 export default function OilfieldRoutesTowServicePage() {
   return (
@@ -133,90 +158,82 @@ export default function OilfieldRoutesTowServicePage() {
       <TopMarquee />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO with better framing */}
+        {/* HERO with zoomed-out video */}
         <OilfieldHero />
 
-        {/* Intro / CTAs + TikTok grid */}
+        {/* MAIN CONTENT: left = copy, right = 4-box TikTok grid */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* LEFT: main copy + CTAs (unchanged content) */}
-            <div className="rounded-[28px] p-[6px] rb-border">
-              <div
-                className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                }}
-              >
-                <h2 className="text-2xl md:text-3xl font-black mb-2">
-                  Oilfield access without the guesswork
-                </h2>
-                <p className="text-sm md:text-base font-semibold">
-                  We know the lease roads and the realities out here—soft
-                  shoulders, sand, and long distances. From light pickups to
-                  heavier rigs, we’ll get you out, get you safe, and get you
-                  moving again.
-                </p>
-                <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold">
-                  <li>• Lease road navigation and access coordination</li>
-                  <li>• Winch-outs, recoveries, and long-haul tows</li>
-                  <li>• Safe transport to town, hotel, or shop</li>
-                  <li>• Clear pricing and communication</li>
-                </ul>
+            {/* LEFT: copy + CTAs */}
+            <div className="space-y-5">
+              <div className="rounded-[28px] p-[6px] rb-border">
+                <div
+                  className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                  }}
+                >
+                  <h2 className="text-2xl md:text-3xl font-black mb-2">
+                    Oilfield access without the guesswork
+                  </h2>
+                  <p className="text-sm md:text-base font-semibold">
+                    We know the lease roads and the realities out here—soft shoulders, sand,
+                    and long distances. From light pickups to heavier rigs, we&apos;ll get
+                    you out, get you safe, and get you moving again.
+                  </p>
+                  <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold">
+                    <li>• Lease road navigation and access coordination</li>
+                    <li>• Winch-outs, recoveries, and long-haul tows</li>
+                    <li>• Safe transport to town, hotel, or shop</li>
+                    <li>• Clear pricing and communication</li>
+                  </ul>
 
-                <div className="mt-4 flex flex-wrap gap-3">
-                  <BlueCallButton />
-                  <RedTextFormButton />
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <BlueCallButton />
+                    <RedTextFormButton />
+                  </div>
+                </div>
+              </div>
+
+              <div className="rounded-[28px] p-[6px] rb-border">
+                <div
+                  className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
+                  style={{
+                    backgroundImage:
+                      'linear-gradient(0deg, rgba(0,0,0,0.28), rgba(0,0,0,0.28)), url("/diamond-plate.jpg")',
+                    backgroundSize: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "center",
+                  }}
+                >
+                  <h3 className="text-2xl md:text-3xl font-black mb-2">
+                    Safety first, even miles off the highway
+                  </h3>
+                  <ol className="list-decimal list-inside space-y-2 text-sm md:text-base font-semibold">
+                    <li>Confirm your GPS or nearest mile marker/lease gate.</li>
+                    <li>Stay clear of traffic or soft edges as conditions allow.</li>
+                    <li>Keep a charged phone available for updates.</li>
+                    <li>Let gate guards or on-site security know we&apos;re en route.</li>
+                  </ol>
+                  <p className="mt-3 text-sm md:text-base font-semibold">
+                    If anything changes, call or text us an update so we can adjust route or
+                    equipment before we arrive.
+                  </p>
+
+                  <div className="mt-4 flex flex-wrap gap-3">
+                    <BlueCallButton />
+                    <RedTextFormButton />
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* RIGHT: 2x2 TikTok grid for oilfield clips */}
-            <div className="rounded-[28px] p-[6px] rb-border">
-              <div
-                className="rounded-[22px] border border-yellow-400/85 bg-black/80 p-4 md:p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
-                style={{
-                  backgroundImage:
-                    'linear-gradient(0deg, rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("/diamond-plate.jpg")',
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "center",
-                }}
-              >
-                <h3 className="text-2xl md:text-3xl font-black mb-2">
-                  On the lease, in the field
-                </h3>
-                <p className="text-sm md:text-base font-semibold mb-3">
-                  Real recoveries, real oilfield work. Swap these clips out for
-                  your favorite{" "}
-                  <span className="font-black">285302 DitchKing</span> or
-                  oilfield TikToks anytime by changing the video IDs.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {/* Replace these IDs with your own oilfield videos when ready */}
-                  <TikTokCard
-                    videoId="6908073338308939014"
-                    caption="Flipped 18-wheeler recovery"
-                  />
-                  <TikTokCard
-                    videoId="7230219035911327022"
-                    caption="Locomotive accident recovery"
-                  />
-                  <TikTokCard
-                    videoId="7414757668876733726"
-                    caption="Rotator on an oversized load"
-                  />
-                  <TikTokCard
-                    videoId="7501393555433262367"
-                    caption="Practice for perfection"
-                  />
-                </div>
-              </div>
-            </div>
+            {/* RIGHT: 2×2 TikTok / media grid */}
+            <OilfieldTikTokGrid />
           </div>
         </section>
       </main>
@@ -226,4 +243,3 @@ export default function OilfieldRoutesTowServicePage() {
     </>
   );
 }
-

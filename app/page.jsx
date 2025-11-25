@@ -1411,7 +1411,7 @@ export default function Home() {
   );
 }
 
-/* ========================= Contact Section (updated TikTok framing) ========================= */
+/* ========================= Contact Section (clean TikTok embed) ========================= */
 
 function ContactSection() {
   const [name, setName] = useState("");
@@ -1422,7 +1422,7 @@ function ContactSection() {
   const [coords, setCoords] = useState(null);
   const [locStatus, setLocStatus] = useState("Idle");
 
-  // Ensure TikTok embed script is loaded once on the page
+  // Make sure TikTok embed script is loaded only once
   useEffect(() => {
     if (typeof document === "undefined") return;
     const existing = document.querySelector(
@@ -1619,7 +1619,7 @@ function ContactSection() {
           </div>
 
           <div className="flex flex-wrap items-stretch gap-3 mt-2 justify-start">
-            <PhoneCTA className="flex-1 max-w-xs" />
+            <PhoneCTA className="flex-1 max-w-xs" fullWidth />
             <button
               type="button"
               onClick={handleSendText}
@@ -1659,78 +1659,26 @@ function ContactSection() {
           </div>
         </div>
 
-        {/* Cropped / framed TikTok embed */}
+        {/* Phone-style frame with cropped TikTok */}
         <div className="relative w-[280px] sm:w-[320px] md:w-[360px] aspect-[9/16] flex items-center justify-center">
           <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden flex items-center justify-center">
-              <div className="w-full h-full overflow-hidden flex items-center justify-center px-1 py-2">
-                {/* Shift & scale embed so username bar is off-screen */}
-              <div
-  className="w-full"
-  style={{ transform: "translateY(-150px) scale(1.45)" }}
->
-  <blockquote
-    className="tiktok-embed"
-    cite="https://www.tiktok.com/@alejandrasykes666/video/7541454523265535245"
-    data-video-id="7541454523265535245"
-    style={{ maxWidth: "605px", minWidth: "325px", margin: 0 }}
-  >
-    {/* …unchanged TikTok embed markup… */}
-  </blockquote>
-</div>
-
-                    <section>
-                      <a
-                        target="_blank"
-                        title="@alejandrasykes666"
-                        href="https://www.tiktok.com/@alejandrasykes666?refer=embed"
-                      >
-                        @alejandrasykes666
-                      </a>{" "}
-                      <a
-                        title="towing"
-                        target="_blank"
-                        href="https://www.tiktok.com/tag/towing?refer=embed"
-                      >
-                        #towing
-                      </a>{" "}
-                      <a
-                        title="westtx"
-                        target="_blank"
-                        href="https://www.tiktok.com/tag/westtx?refer=embed"
-                      >
-                        #westtx
-                      </a>{" "}
-                      <a
-                        title="pecos"
-                        target="_blank"
-                        href="https://www.tiktok.com/tag/pecos?refer=embed"
-                      >
-                        #pecos
-                      </a>{" "}
-                      <a
-                        title="businessowner"
-                        target="_blank"
-                        href="https://www.tiktok.com/tag/businessowner?refer=embed"
-                      >
-                        #businessowner
-                      </a>{" "}
-                      <a
-                        title="a"
-                        target="_blank"
-                        href="https://www.tiktok.com/tag/a?refer=embed"
-                      >
-                        #A
-                      </a>{" "}
-                      <a
-                        target="_blank"
-                        title="♬ Pasta - Los Dareyes De La Sierra"
-                        href="https://www.tiktok.com/music/Pasta-7527051487597742081?refer=embed"
-                      >
-                        ♬ Pasta - Los Dareyes De La Sierra
-                      </a>
-                    </section>
-                  </blockquote>
+              <div className="w-full h-full overflow-hidden flex items-center justify-center px-1 pt-6 pb-2">
+                <div
+                  className="w-full"
+                  style={{ transform: "translateY(-150px) scale(1.45)" }}
+                >
+                  <blockquote
+                    className="tiktok-embed"
+                    cite="https://www.tiktok.com/@alejandrasykes666/video/7541454523265535245"
+                    data-video-id="7541454523265535245"
+                    data-color="black"
+                    style={{
+                      maxWidth: "605px",
+                      minWidth: "325px",
+                      margin: 0,
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -1764,4 +1712,5 @@ function ContactSection() {
     </div>
   );
 }
+
 

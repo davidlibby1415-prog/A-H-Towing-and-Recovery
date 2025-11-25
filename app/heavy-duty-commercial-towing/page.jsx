@@ -47,7 +47,8 @@ function HeavyDutyHero() {
               Reeves County, and the West Texas patch.
             </p>
 
-            <div className="mt-4 flex flex-wrap justify-center gap-3">
+            {/* Buttons dropped lower by increasing top margin */}
+            <div className="mt-12 flex flex-wrap justify-center gap-3">
               <PhoneCTA />
               <TextCTA />
             </div>

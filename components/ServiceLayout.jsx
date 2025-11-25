@@ -4,6 +4,65 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
+/* ===================== Time & Temperature ===================== */
+
+function TimeTemp() {
+  const [now, setNow] = useState(new Date());
+  const [temp, setTemp] = useState(null);
+  const [locationLabel, setLocationLabel] = useState("Pecos, TX");
+
+  // update clock every minute
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 60000);
+    return () => clearInterval(id);
+  }, []);
+
+  // fetch temperature once
+  useEffect(() => {
+    const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
+    if (!apiKey) return; // will show --°F if no key
+
+    const lat = 31.4229;
+    const lon = -103.4938;
+
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.main && typeof data.main.temp === "number") {
+          setTemp(Math.round(data.main.temp));
+        }
+        if (data && data.name) {
+          setLocationLabel(`${data.name}, TX`);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const dateStr = now.toLocaleDateString([], {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  const timeStr = now.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  return (
+    <div className="hidden sm:flex flex-col items-end text-[10px] leading-tight text-amber-100/90">
+      <span className="font-semibold">{dateStr}</span>
+      <span className="font-semibold">{timeStr}</span>
+      <span className="font-semibold">
+        {temp != null ? `${temp}°F` : "--°F"} • {locationLabel}
+      </span>
+    </div>
+  );
+}
+
 /* ====================== Shared CTA Buttons ====================== */
 
 export function PhoneCTA({ className = "" }) {
@@ -77,67 +136,6 @@ export function TopMarquee() {
   );
 }
 
-/* ====================== Time / Temp (header right) ====================== */
-
-function TimeTemp() {
-  const [now, setNow] = useState(new Date());
-  const [temp, setTemp] = useState(null);
-  const [locationLabel, setLocationLabel] = useState("Pecos, TX");
-
-  // keep clock updated
-  useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 60000);
-    return () => clearInterval(id);
-  }, []);
-
-  // fetch current temperature (requires NEXT_PUBLIC_OPENWEATHER_KEY)
-  useEffect(() => {
-    const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
-    if (!apiKey) return;
-
-    const lat = 31.4229;
-    const lon = -103.4938;
-
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.main && typeof data.main.temp === "number") {
-          setTemp(Math.round(data.main.temp));
-        }
-        if (data && data.name) {
-          setLocationLabel(`${data.name}, TX`);
-        }
-      })
-      .catch(() => {
-        // fail silently – just leave temp as "--°F"
-      });
-  }, []);
-
-  const dateStr = now.toLocaleDateString([], {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-
-  const timeStr = now.toLocaleTimeString([], {
-    hour: "numeric",
-    minute: "2-digit",
-  });
-
-  return (
-    <div className="hidden sm:flex flex-col items-end text-[10px] leading-tight text-amber-100/90">
-      <span className="font-semibold">{dateStr}</span>
-      <span className="font-semibold">{timeStr}</span>
-      <span className="font-semibold">
-        {temp != null ? `${temp}°F` : "--°F"} • {locationLabel}
-      </span>
-    </div>
-  );
-}
-
 /* =========================== Site Header =========================== */
 
 export function SiteHeader() {
@@ -174,7 +172,7 @@ export function SiteHeader() {
 
         {/* Nav */}
         <nav className="ml-auto flex items-center gap-4 text-xs sm:text-sm md:text-base font-extrabold">
-          {/* Home button left of Services */}
+          {/* Home button LEFT of Services */}
           <Link
             href="/"
             className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
@@ -369,5 +367,106 @@ export function BrandHero({
 }) {
   const cardTranslate =
     typeof cardCenterOffsetPx === "number" && cardCenterOffsetPx !== 0
-      ?
+      ? `translateY(${cardCenterOffsetPx}px)`
+      : undefined;
 
+  return (
+    <section
+      className="relative isolate w-full overflow-hidden bg-neutral-950"
+      style={{ minHeight: "min(70vh, 900px)" }}
+    >
+      {/* Background video or gradient */}
+      {heroVideoSrc ? (
+        <div className="absolute inset-0">
+          <video
+            className="absolute inset-0 w-full h-full object-cover z-0"
+            muted
+            playsInline
+            autoPlay
+            loop
+            preload="metadata"
+            poster={poster}
+            disablePictureInPicture
+          >
+            <source src={heroVideoSrc} type="video/mp4" />
+          </video>
+        </div>
+      ) : (
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-neutral-900 to-red-900/80" />
+      )}
+
+      {/* Dark radial vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none z-10"
+        style={{
+          background: `radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,${
+            overlayOpacity * 0.57
+          }) 78%, rgba(0,0,0,${overlayOpacity}) 100%)`,
+        }}
+      />
+
+      {/* Main card */}
+      <div className="relative z-20 flex items-center justify-center px-4 pt-10 pb-12">
+        <div
+          className="container max-w-5xl"
+          style={cardTranslate ? { transform: cardTranslate } : undefined}
+        >
+          <div
+            className="rounded-[22px] border border-white/20 bg-black/65 backdrop-blur-md shadow-[0_10px_28px_rgba(0,0,0,0.45)] px-5 py-6 md:px-8 md:py-7 text-center"
+            style={{
+              WebkitTextStroke: "0.25px rgba(0,0,0,.6)",
+              textShadow: "0 1px 2px rgba(0,0,0,.65)",
+            }}
+          >
+            <h1 className="text-white text-[clamp(28px,5vw,40px)] font-black tracking-tight">
+              {serviceTitle}
+            </h1>
+            {serviceSubtitle && (
+              <p className="mt-2 text-white font-semibold text-[clamp(14px,2.6vw,18px)]">
+                {serviceSubtitle}
+              </p>
+            )}
+
+            <div className="mt-4 flex flex-wrap justify-center gap-3">
+              <PhoneCTA />
+              <TextCTA />
+            </div>
+
+            <p className="mt-3 text-xs md:text-sm text-amber-100/90 font-semibold">
+              Call or text with your vehicle, location (GPS if possible), and
+              what happened. We&apos;ll give you a straight answer on ETA and
+              pricing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ========================== TikTokGallery ========================== */
+
+export function TikTokGallery({ images = [] }) {
+  if (!images || images.length === 0) return null;
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {images.map((src, idx) => (
+        <div
+          key={src + idx}
+          className="relative w-full aspect-[9/16] flex items-center justify-center"
+        >
+          <div className="relative w-full h-full rounded-[32px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+            <div className="relative w-full h-full rounded-[28px] bg-black overflow-hidden flex items-center justify-center">
+              <img
+                src={src}
+                alt={`A & H towing scene ${idx + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}

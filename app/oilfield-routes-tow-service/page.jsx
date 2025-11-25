@@ -188,78 +188,68 @@ function TopMarquee() {
 
 function OilfieldHero() {
   return (
-    <section
-      className="relative isolate w-full overflow-hidden bg-neutral-950"
-      style={{ minHeight: "70vh" }}
-    >
-      {/* BACKGROUND: two hero videos edge-to-edge */}
-      <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2">
-        {/* LEFT: rig + truck (vertical shot – zoomed out more) */}
-        <div className="relative overflow-hidden">
-          <video
-            className="absolute inset-0 w-full h-full"
-            muted
-            playsInline
-            autoPlay
-            loop
-            preload="metadata"
-            // optional fallback still frame if you want one:
-            // poster="/rig-hero-fallback.jpg"
-            style={{
-              objectFit: "cover",
-              // shrink more so we see more of the frame
-              // and bias a little toward the bottom so the truck is visible
-              transformOrigin: "50% 65%",
-              transform: "scale(0.62)",
-            }}
-          >
-            <source src="/Videos/tow2.mp4" type="video/mp4" />
-          </video>
+    <section className="relative isolate w-full overflow-hidden bg-neutral-950">
+      <div className="relative w-full min-h-[420px] sm:min-h-[520px] lg:min-h-[600px]">
+        {/* Two side-by-side videos filling the hero edge-to-edge */}
+        <div className="grid md:grid-cols-2 w-full h-full">
+          {/* LEFT: rig video – zoomed out and biased downward so the truck is visible */}
+          <div className="relative h-full">
+            <video
+              className="absolute inset-0 w-full h-full object-cover"
+              muted
+              playsInline
+              autoPlay
+              loop
+              preload="metadata"
+              poster="/fallback.jpg"
+              style={{
+                objectPosition: "50% 82%", // push view down towards the truck & ground
+              }}
+            >
+              <source src="/Videos/tow2.mp4" type="video/mp4" />
+            </video>
+          </div>
+
+          {/* RIGHT: fuel-tow video – only slightly zoomed, focus lower-middle */}
+          <div className="relative h-full">
+            <video
+              className="absolute inset-0 w-full h-full object-cover"
+              muted
+              playsInline
+              autoPlay
+              loop
+              preload="metadata"
+              poster="/fallback.jpg"
+              style={{
+                objectPosition: "50% 65%", // keep landscape framing but show the trucks well
+              }}
+            >
+              <source src="/Videos/fueltow.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
 
-        {/* RIGHT: fuel-tow clip (horizontal shot – only slightly zoomed out) */}
-        <div className="relative overflow-hidden">
-          <video
-            className="absolute inset-0 w-full h-full"
-            muted
-            playsInline
-            autoPlay
-            loop
-            preload="metadata"
-            // poster="/fueltow-fallback.jpg"
-            style={{
-              objectFit: "cover",
-              transformOrigin: "50% 60%",
-              // only a small zoom-out so framing stays strong
-              transform: "scale(0.9)",
-            }}
-          >
-            <source src="/Videos/fueltow.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
+        {/* Dark vignette over both videos */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse at center, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.9) 100%)",
+          }}
+        />
 
-      {/* Dark vignette over both videos */}
-      <div
-        className="absolute inset-0 z-10 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.85) 85%, rgba(0,0,0,0.95) 100%)",
-        }}
-      />
-
-      {/* Centered hero card */}
-      <div className="relative z-20 flex items-center justify-center px-4 py-14 md:py-20">
-        <div className="max-w-3xl w-full">
-          <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
-            <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
-            <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
-              Oilfield Routes Tow Service
-            </h1>
-
-            <div className="mt-4 flex flex-wrap justify-center gap-3">
-              <BlueCallButton />
-              <RedTextFormButton />
+        {/* Centered CTA card spanning both videos */}
+        <div className="absolute inset-0 flex items-center justify-center px-4 py-6">
+          <div className="max-w-3xl w-full">
+            <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
+              <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
+              <h1 className="text-3xl md:text-4xl font-black text-white tracking-tight">
+                Oilfield Routes Tow Service
+              </h1>
+              <div className="mt-4 flex flex-wrap justify-center gap-3">
+                <BlueCallButton />
+                <RedTextFormButton />
+              </div>
             </div>
           </div>
         </div>
@@ -372,7 +362,7 @@ function PaymentsBar() {
   );
 }
 
-/* =========================== PAGE ============================ */
+/* =========================== Page ============================ */
 
 export default function OilfieldRoutesTowServicePage() {
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -399,7 +389,7 @@ export default function OilfieldRoutesTowServicePage() {
       <main className="min-h-screen bg-neutral-950">
         <TopMarquee />
 
-        {/* Header with Home + date/time/temp */}
+        {/* Header with Home link + date/time/temp */}
         <header className="sticky top-0 z-[120] bg-ahCharcoal text-ahText border-b border-black/30">
           <div className="container max-w-7xl flex items-center gap-6 py-3">
             <div className="flex items-center gap-3">
@@ -430,7 +420,6 @@ export default function OilfieldRoutesTowServicePage() {
             </div>
 
             <nav className="ml-auto hidden md:flex items-center gap-6 text-base md:text-lg font-extrabold">
-              {/* Services dropdown */}
               <div
                 className="relative"
                 onMouseEnter={openServices}
@@ -548,13 +537,13 @@ export default function OilfieldRoutesTowServicePage() {
           </div>
         </header>
 
-        {/* HERO */}
+        {/* HERO with two videos */}
         <OilfieldHero />
 
         {/* MAIN CONTENT */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* LEFT COLUMN */}
+            {/* LEFT COLUMN: info boxes */}
             <div className="space-y-5">
               {/* Oilfield access box */}
               <div className="rounded-[28px] p-[6px] rb-border">
@@ -633,12 +622,12 @@ export default function OilfieldRoutesTowServicePage() {
               </div>
             </div>
 
-            {/* RIGHT: 2×2 grid for TikToks/photos */}
+            {/* RIGHT COLUMN: 2×2 grid for TikToks/photos */}
             <OilfieldTikTokGrid />
           </div>
         </section>
 
-        {/* Payments bar */}
+        {/* Payments bar on this page */}
         <PaymentsBar />
       </main>
 

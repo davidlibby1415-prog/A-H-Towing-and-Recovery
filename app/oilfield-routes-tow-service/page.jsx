@@ -184,7 +184,7 @@ function TopMarquee() {
   );
 }
 
-/* =========================== Hero (2 videos) ============================ */
+/* =========================== Hero (two aligned videos) ============================ */
 
 function OilfieldHero() {
   return (
@@ -192,68 +192,53 @@ function OilfieldHero() {
       className="relative isolate w-full overflow-hidden bg-neutral-950"
       style={{ minHeight: "70vh" }}
     >
-      {/* Two side-by-side background videos */}
-      <div className="absolute inset-0 z-0 grid grid-cols-1 md:grid-cols-2">
-        {/* Left video – rig */}
-        <div className="relative">
-          <video
-            className="w-full h-full"
-            muted
-            playsInline
-            autoPlay
-            loop
-            preload="metadata"
-            poster="/fallback.jpg"
-            style={{
-              objectFit: "contain",
-              objectPosition: "center center",
-              backgroundImage:
-                'linear-gradient(0deg, rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url("/diamond-plate.jpg")',
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center center",
-            }}
-          >
-            <source src="/Videos/tow2.mp4" type="video/mp4" />
-          </video>
-        </div>
+      {/* Two-column video background */}
+      <div className="absolute inset-0">
+        <div className="grid h-full w-full grid-cols-1 md:grid-cols-2">
+          {/* LEFT VIDEO */}
+          <div className="relative">
+            <video
+              className="h-full w-full object-cover"
+              muted
+              playsInline
+              autoPlay
+              loop
+              preload="metadata"
+              poster="/fallback.jpg"
+            >
+              <source src="/Videos/tow2.mp4" type="video/mp4" />
+            </video>
+          </div>
 
-        {/* Right video – fuel / second clip */}
-        <div className="relative hidden sm:block">
-          <video
-            className="w-full h-full"
-            muted
-            playsInline
-            autoPlay
-            loop
-            preload="metadata"
-            poster="/fallback.jpg"
-            style={{
-              objectFit: "contain",
-              objectPosition: "center center",
-              backgroundImage:
-                'linear-gradient(0deg, rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url("/diamond-plate.jpg")',
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "center center",
-            }}
-          >
-            <source src="/Videos/fueltow.mp4" type="video/mp4" />
-          </video>
+          {/* RIGHT VIDEO */}
+          <div className="relative">
+            <video
+              className="h-full w-full object-cover"
+              muted
+              playsInline
+              autoPlay
+              loop
+              preload="metadata"
+              poster="/fallback.jpg"
+            >
+              {/* Make sure you put this file in /public/Videos/fueltow.mp4 */}
+              <source src="/Videos/fueltow.mp4" type="video/mp4" />
+            </video>
+          </div>
         </div>
       </div>
 
-      {/* Dark vignette overlay */}
+      {/* Dark overlay to tie both sides together */}
       <div
-        className="absolute inset-0 pointer-events-none z-[1]"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.8) 85%, rgba(0,0,0,0.95) 100%)",
+            "radial-gradient(ellipse at center, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.75) 85%, rgba(0,0,0,0.9) 100%)",
         }}
       />
 
-      {/* Centered CTA card */}
-      <div className="relative z-[2] flex items-center justify-center px-4 py-14 md:py-20">
+      {/* Center hero card */}
+      <div className="relative z-10 flex items-center justify-center px-4 py-14 md:py-20 min-h-[70vh]">
         <div className="max-w-3xl w-full">
           <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
             <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />
@@ -572,7 +557,7 @@ export default function OilfieldRoutesTowServicePage() {
                     backgroundPosition: "center",
                   }}
                 >
-                  <h2 className="text-2xl md:text-3xl font-black mb-2 text-white">
+                  <h2 className="text-2xl md:text-3xl font-black mb-2">
                     Oilfield access without the guesswork
                   </h2>
 
@@ -598,7 +583,7 @@ export default function OilfieldRoutesTowServicePage() {
                 </div>
               </div>
 
-              {/* Safety box (no bottom CTAs) */}
+              {/* Safety box (no buttons) */}
               <div className="rounded-[28px] p-[6px] rb-border">
                 <div
                   className="rounded-[22px] border border-yellow-400/85 bg-black/70 p-5 text-white shadow-[0_10px_28px_rgba(0,0,0,0.45)]"
@@ -610,7 +595,7 @@ export default function OilfieldRoutesTowServicePage() {
                     backgroundPosition: "center",
                   }}
                 >
-                  <h3 className="text-2xl md:text-3xl font-black mb-2 text-white">
+                  <h3 className="text-2xl md:text-3xl font-black mb-2">
                     Safety first, even miles off the highway
                   </h3>
 

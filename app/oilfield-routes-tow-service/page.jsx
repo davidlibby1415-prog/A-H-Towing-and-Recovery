@@ -184,61 +184,73 @@ function TopMarquee() {
   );
 }
 
-/* =========================== Hero (two aligned videos) ============================ */
+/* =========================== Hero ============================ */
 
 function OilfieldHero() {
   return (
     <section
       className="relative isolate w-full overflow-hidden bg-neutral-950"
-      style={{ minHeight: "70vh" }}
+      style={{ minHeight: "72vh" }}
     >
-      {/* Two-column video background */}
-      <div className="absolute inset-0">
-        <div className="grid h-full w-full grid-cols-1 md:grid-cols-2">
-          {/* LEFT VIDEO */}
-          <div className="relative">
-            <video
-              className="h-full w-full object-cover"
-              muted
-              playsInline
-              autoPlay
-              loop
-              preload="metadata"
-              poster="/fallback.jpg"
-            >
-              <source src="/Videos/tow2.mp4" type="video/mp4" />
-            </video>
-          </div>
+      {/* Split background: rig on left, fuel-tow on right */}
+      <div className="absolute inset-0 grid md:grid-cols-2">
+        {/* LEFT: Vertical rig clip – zoomed OUT a bit */}
+        <div className="relative overflow-hidden bg-black">
+          <video
+            className="w-full h-full"
+            muted
+            playsInline
+            autoPlay
+            loop
+            preload="metadata"
+            poster="/fallback.jpg"
+            style={{
+              objectFit: "cover",
+              // show more of the shot (zoom out) and bias slightly toward the top
+              objectPosition: "50% 20%",
+              transform: "scale(0.86)",
+              transformOrigin: "50% 50%",
+            }}
+          >
+            <source src="/Videos/tow2.mp4" type="video/mp4" />
+          </video>
+        </div>
 
-          {/* RIGHT VIDEO */}
-          <div className="relative">
-            <video
-              className="h-full w-full object-cover"
-              muted
-              playsInline
-              autoPlay
-              loop
-              preload="metadata"
-              poster="/fallback.jpg"
-            >
-              {/* Make sure you put this file in /public/Videos/fueltow.mp4 */}
-              <source src="/Videos/fueltow.mp4" type="video/mp4" />
-            </video>
-          </div>
+        {/* RIGHT: 16×9 fuel-tow clip – zoomed OUT + panned DOWN */}
+        <div className="relative overflow-hidden bg-black hidden md:block">
+          <video
+            className="w-full h-full"
+            muted
+            playsInline
+            autoPlay
+            loop
+            preload="metadata"
+            poster="/fallback.jpg"
+            style={{
+              objectFit: "cover",
+              // pan down so trucks are visible
+              objectPosition: "50% 80%",
+              // zoom out a bit versus before
+              transform: "scale(0.9)",
+              transformOrigin: "50% 50%",
+            }}
+          >
+            <source src="/Videos/fueltow.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
 
-      {/* Dark overlay to tie both sides together */}
+      {/* Dark vignette overlay */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.75) 85%, rgba(0,0,0,0.9) 100%)",
+            "radial-gradient(ellipse at center, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.7) 85%, rgba(0,0,0,0.9) 100%)",
         }}
       />
 
-      {/* Center hero card */}
-      <div className="relative z-10 flex items-center justify-center px-4 py-14 md:py-20 min-h-[70vh]">
+      {/* Centered hero card with CTAs */}
+      <div className="relative z-10 flex items-center justify-center px-4 py-14 md:py-20">
         <div className="max-w-3xl w-full">
           <div className="rounded-[28px] bg-black/85 border border-yellow-400/85 px-6 py-6 md:px-8 md:py-7 text-center shadow-[0_18px_40px_rgba(0,0,0,0.85)]">
             <div className="h-1 w-full bg-gradient-to-r from-ahBlue via-sky-400 to-ahRed rounded-full mb-3" />

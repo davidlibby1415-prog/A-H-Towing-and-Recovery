@@ -6,15 +6,77 @@ import {
   SiteFooter,
   PhoneCTA,
   TextCTA,
-  TikTokGallery,
   BrandHero,
 } from "../components/ServiceLayout";
+import { TikTokEmbed } from "../components/TikTokEmbed";
 
 export const metadata = {
   title: "Winching / Recovery | A & H Towing & Recovery",
   description:
     "Off-road winching and recovery for mud, sand, soft shoulder, and lease roads across Pecos, Reeves County, and West Texas.",
 };
+
+/* =========== Winching TikTok Grid (4 videos) =========== */
+
+function WinchingTikTokGrid() {
+  const videos = [
+    {
+      id: "7501393555433262367",
+      caption: "CRST Semi Flipped: Practice Makes Perfect",
+    },
+    {
+      id: "7535674790141791519",
+      caption: "Recovery: Contractor Rolling in the Deep",
+    },
+    {
+      id: "7471099435775200543",
+      caption: "Recovery: Flying Truck in the Ditch",
+    },
+    {
+      id: "7323373707848650015",
+      caption: "Winching Job: Unstable Front End Loader CAT 950",
+    },
+  ];
+
+  return (
+    <div className="space-y-3">
+      <h3 className="text-2xl md:text-3xl font-black text-amber-100 text-center md:text-left">
+        Winching &amp; Recovery Clips
+      </h3>
+
+      <p className="text-sm md:text-base font-semibold text-amber-100/90 text-center md:text-left">
+        Real recoveries, real training moments, and real West Texas jobs from
+        @285302ditchking.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2">
+        {videos.map((video) => (
+          <div
+            key={video.id}
+            className="rounded-[28px] p-[6px] bg-black/80 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)]"
+          >
+            {/* Bold title above TikTok */}
+            <div className="px-3 pt-2 pb-1">
+              <h4 className="text-sm md:text-base font-extrabold text-amber-50 text-center">
+                {video.caption}
+              </h4>
+            </div>
+
+            <div className="rounded-[22px] bg-black overflow-hidden flex justify-center p-2">
+              <TikTokEmbed
+                videoId={video.id}
+                caption={video.caption}
+                className="w-full max-w-[420px]"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* =========================== Page =========================== */
 
 export default function WinchingRecoveryPage() {
   return (
@@ -49,8 +111,8 @@ export default function WinchingRecoveryPage() {
                   ranch tracks
                 </li>
                 <li>
-                  • Off-road pulls with attention to tire ruts, ruts, and
-                  ground conditions
+                  • Off-road pulls with attention to tire ruts, ruts, and ground
+                  conditions
                 </li>
                 <li>
                   • Frame-safe attachment points, soft shackles, and rigging
@@ -86,16 +148,9 @@ export default function WinchingRecoveryPage() {
               </div>
             </div>
 
-            {/* RIGHT: TikTok-style gallery / visuals */}
+            {/* RIGHT: TikTok grid + safety box */}
             <div className="space-y-6">
-              <TikTokGallery
-                images={[
-                  "/images/winch-1.jpg",
-                  "/images/winch-2.jpg",
-                  "/images/winch-3.jpg",
-                  "/images/winch-4.jpg",
-                ]}
-              />
+              <WinchingTikTokGrid />
 
               <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-4 text-sm md:text-base font-semibold text-amber-50">
                 <h4 className="text-lg md:text-xl font-black mb-2 text-amber-300">

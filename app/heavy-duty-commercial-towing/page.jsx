@@ -99,7 +99,7 @@ function HeavyDutyTikTokGrid() {
           >
             {/* Bold, slightly larger title above each TikTok */}
             <div className="px-3 pt-2 pb-1">
-              <h4 className="text-sm md:text-base font-extrabold text-amber-50 text-center">
+              <h4 className="text-base md:text-lg font-extrabold text-amber-50 text-center">
                 {video.caption}
               </h4>
             </div>
@@ -132,14 +132,14 @@ export default function HeavyDutyCommercialTowingPage() {
         {/* MAIN SECTION */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* LEFT: Steel text box with grey inner shade */}
-            <div className="space-y-4 text-amber-50">
+            {/* LEFT: Steel text box with grey inner shade (WHITE TEXT) */}
+            <div className="space-y-4 text-white">
               <div className="rounded-[28px] p-[6px] bg-gradient-to-br from-neutral-800 via-neutral-900 to-black border border-yellow-400/70 shadow-[0_10px_28px_rgba(0,0,0,0.6)]">
                 <div
                   className="rounded-[22px] p-5 border border-white/10"
                   style={{
                     backgroundImage:
-                      'linear-gradient(0deg, rgba(17,17,17,0.88), rgba(17,17,17,0.88)), url("/diamond-plate.jpg")',
+                      'linear-gradient(0deg, rgba(17,17,17,0.9), rgba(17,17,17,0.9)), url("/diamond-plate.jpg")',
                     backgroundSize: "cover",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
@@ -188,4 +188,6 @@ export default function HeavyDutyCommercialTowingPage() {
       <SiteFooter />
     </>
   );
+}
+
 }

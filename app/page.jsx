@@ -1268,7 +1268,7 @@ export default function Home() {
           </AnimBorder>
         </Section>
 
-        {/* Bottom brand slab + payments + footer all unchanged */}
+        {/* Bottom brand slab + payments + footer */}
         <div className="container max-w-7xl pb-2">
           <BrandSlab Tag="h2" />
         </div>
@@ -1659,14 +1659,17 @@ function ContactSection() {
           </div>
         </div>
 
-        {/* Phone-style frame with cropped TikTok */}
+        {/* Phone-style frame with TikTok embed, masked top/bottom */}
         <div className="relative w-[280px] sm:w-[320px] md:w-[360px] aspect-[9/16] flex items-center justify-center">
           <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden flex items-center justify-center">
-              <div className="w-full h-full overflow-hidden flex items-center justify-center px-1 pt-6 pb-2">
+              <div className="w-full h-full flex items-center justify-center px-1 pt-6 pb-2">
                 <div
                   className="w-full"
-                  style={{ transform: "translateY(-150px) scale(1.45)" }}
+                  style={{
+                    transform: "scale(1.1)",
+                    transformOrigin: "center",
+                  }}
                 >
                   <blockquote
                     className="tiktok-embed"
@@ -1678,9 +1681,72 @@ function ContactSection() {
                       minWidth: "325px",
                       margin: 0,
                     }}
-                  />
+                  >
+                    <section>
+                      <a
+                        target="_blank"
+                        title="@alejandrasykes666"
+                        href="https://www.tiktok.com/@alejandrasykes666?refer=embed"
+                        rel="noreferrer"
+                      >
+                        @alejandrasykes666
+                      </a>{" "}
+                      <a
+                        title="towing"
+                        target="_blank"
+                        href="https://www.tiktok.com/tag/towing?refer=embed"
+                        rel="noreferrer"
+                      >
+                        #towing
+                      </a>{" "}
+                      <a
+                        title="westtx"
+                        target="_blank"
+                        href="https://www.tiktok.com/tag/westtx?refer=embed"
+                        rel="noreferrer"
+                      >
+                        #westtx
+                      </a>{" "}
+                      <a
+                        title="pecos"
+                        target="_blank"
+                        href="https://www.tiktok.com/tag/pecos?refer=embed"
+                        rel="noreferrer"
+                      >
+                        #pecos
+                      </a>{" "}
+                      <a
+                        title="businessowner"
+                        target="_blank"
+                        href="https://www.tiktok.com/tag/businessowner?refer=embed"
+                        rel="noreferrer"
+                      >
+                        #businessowner
+                      </a>{" "}
+                      <a
+                        title="a"
+                        target="_blank"
+                        href="https://www.tiktok.com/tag/a?refer=embed"
+                        rel="noreferrer"
+                      >
+                        #A
+                      </a>{" "}
+                      <a
+                        target="_blank"
+                        title="♬ Pasta - Los Dareyes De La Sierra"
+                        href="https://www.tiktok.com/music/Pasta-7527051487597742081?refer=embed"
+                        rel="noreferrer"
+                      >
+                        ♬ Pasta - Los Dareyes De La Sierra
+                      </a>
+                    </section>
+                  </blockquote>
                 </div>
               </div>
+
+              {/* Masks to hide username/caption text */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-black" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-black" />
             </div>
           </div>
         </div>
@@ -1712,5 +1778,3 @@ function ContactSection() {
     </div>
   );
 }
-
-

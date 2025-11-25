@@ -189,10 +189,14 @@ function TopMarquee() {
 
 function OilfieldHero() {
   return (
-    <section className="bg-neutral-950 border-b border-black/60">
-      <div className="container max-w-7xl py-6 md:py-8">
+    <section
+      className="bg-neutral-950 border-b border-black/60"
+      // Slightly shorter hero, but still substantial
+      style={{ minHeight: "58vh" }}
+    >
+      <div className="container max-w-7xl h-full flex flex-col py-4 md:py-6">
         {/* Heading */}
-        <div className="mb-5 text-center">
+        <div className="mb-3 text-center">
           <h1 className="text-3xl md:text-4xl font-black text-amber-50 tracking-tight">
             Oilfield Routes Tow Service
           </h1>
@@ -202,10 +206,10 @@ function OilfieldHero() {
           </p>
         </div>
 
-        {/* Two-video layout */}
-        <div className="grid md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] gap-4 md:gap-6 items-stretch">
-          {/* Left: vertical rig move video */}
-          <div className="relative rounded-[26px] overflow-hidden border border-yellow-400/85 bg-black shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+        {/* Two-video layout fills the hero space */}
+        <div className="flex-1 grid md:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] gap-4 md:gap-6 items-stretch">
+          {/* LEFT: vertical rig / oilfield video (now filling top-to-bottom) */}
+          <div className="relative h-full rounded-[26px] overflow-hidden border border-yellow-400/85 bg-black shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <div
               className="absolute inset-0"
               style={{
@@ -231,8 +235,8 @@ function OilfieldHero() {
             </video>
           </div>
 
-          {/* Right: horizontal fuel/tow video */}
-          <div className="relative rounded-[26px] overflow-hidden border border-yellow-400/85 bg-black shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+          {/* RIGHT: horizontal fuel / tow video, restored */}
+          <div className="relative h-full rounded-[26px] overflow-hidden border border-yellow-400/85 bg-black shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <div
               className="absolute inset-0"
               style={{
@@ -254,13 +258,14 @@ function OilfieldHero() {
                 objectFit: "contain",
               }}
             >
-              <source src="/fueltow.mp4" type="video/mp4" />
+              {/* NOTE: assumes fueltow.mp4 is in /public/Videos/ */}
+              <source src="/Videos/fueltow.mp4" type="video/mp4" />
             </video>
           </div>
         </div>
 
         {/* CTAs under videos */}
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
+        <div className="mt-4 flex flex-wrap justify-center gap-3">
           <BlueCallButton />
           <RedTextFormButton />
         </div>

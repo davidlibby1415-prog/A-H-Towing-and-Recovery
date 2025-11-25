@@ -1411,7 +1411,7 @@ export default function Home() {
   );
 }
 
-/* ========================= Contact Section (unchanged except TikTok embed) ========================= */
+/* ========================= Contact Section (updated TikTok framing) ========================= */
 
 function ContactSection() {
   const [name, setName] = useState("");
@@ -1422,6 +1422,7 @@ function ContactSection() {
   const [coords, setCoords] = useState(null);
   const [locStatus, setLocStatus] = useState("Idle");
 
+  // Ensure TikTok embed script is loaded once on the page
   useEffect(() => {
     if (typeof document === "undefined") return;
     const existing = document.querySelector(
@@ -1496,6 +1497,7 @@ function ContactSection() {
 
   return (
     <div className="grid md:grid-cols-2 gap-6" id="contact">
+      {/* LEFT: form */}
       <div>
         <div className="rounded-xl bg-yellow-300/95 border border-yellow-600 px-4 py-3 text-sm text-black font-extrabold mb-3">
           <strong>Instructions: </strong>
@@ -1617,7 +1619,7 @@ function ContactSection() {
           </div>
 
           <div className="flex flex-wrap items-stretch gap-3 mt-2 justify-start">
-            <PhoneCTA className="flex-1 max-w-xs" fullWidth />
+            <PhoneCTA className="flex-1 max-w-xs" />
             <button
               type="button"
               onClick={handleSendText}
@@ -1635,7 +1637,7 @@ function ContactSection() {
         </form>
       </div>
 
-      {/* Right side: TikTok & 24/7 message */}
+      {/* RIGHT: TikTok & 24/7 message */}
       <div className="rounded-xl overflow-hidden border border-black/10 bg-black/80 flex flex-col items-center justify-start px-4 py-5">
         <div className="text-center mb-4">
           <div
@@ -1657,76 +1659,79 @@ function ContactSection() {
           </div>
         </div>
 
+        {/* Cropped / framed TikTok embed */}
         <div className="relative w-[280px] sm:w-[320px] md:w-[360px] aspect-[9/16] flex items-center justify-center">
           <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden flex items-center justify-center">
-              <div className="absolute top-2 left-3 flex items-center gap-1 text-[11px] text-white/80 z-10">
-                <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-black">
-                  <span className="text-[13px]">♪</span>
-                </span>
-                <span className="font-semibold">@alejandrasykes666</span>
-              </div>
-
-              <div className="w-full h-full overflow-y-auto flex items-center justify-center px-1 pt-6 pb-2">
-                <blockquote
-                  className="tiktok-embed"
-                  cite="https://www.tiktok.com/@alejandrasykes666/video/7541454523265535245"
-                  data-video-id="7541454523265535245"
-                  data-color="black"
-                  style={{ maxWidth: "605px", minWidth: "325px", margin: 0 }}
+              <div className="w-full h-full overflow-hidden flex items-center justify-center px-1 py-2">
+                {/* Shift & scale embed so username bar is off-screen */}
+                <div
+                  className="w-full"
+                  style={{ transform: "translateY(-36px) scale(1.08)" }}
                 >
-                  <section>
-                    <a
-                      target="_blank"
-                      title="@alejandrasykes666"
-                      href="https://www.tiktok.com/@alejandrasykes666?refer=embed"
-                    >
-                      @alejandrasykes666
-                    </a>{" "}
-                    <a
-                      title="towing"
-                      target="_blank"
-                      href="https://www.tiktok.com/tag/towing?refer=embed"
-                    >
-                      #towing
-                    </a>{" "}
-                    <a
-                      title="westtx"
-                      target="_blank"
-                      href="https://www.tiktok.com/tag/westtx?refer=embed"
-                    >
-                      #westtx
-                    </a>{" "}
-                    <a
-                      title="pecos"
-                      target="_blank"
-                      href="https://www.tiktok.com/tag/pecos?refer=embed"
-                    >
-                      #pecos
-                    </a>{" "}
-                    <a
-                      title="businessowner"
-                      target="_blank"
-                      href="https://www.tiktok.com/tag/businessowner?refer=embed"
-                    >
-                      #businessowner
-                    </a>{" "}
-                    <a
-                      title="a"
-                      target="_blank"
-                      href="https://www.tiktok.com/tag/a?refer=embed"
-                    >
-                      #A
-                    </a>{" "}
-                    <a
-                      target="_blank"
-                      title="♬ Pasta - Los Dareyes De La Sierra"
-                      href="https://www.tiktok.com/music/Pasta-7527051487597742081?refer=embed"
-                    >
-                      ♬ Pasta - Los Dareyes De La Sierra
-                    </a>
-                  </section>
-                </blockquote>
+                  <blockquote
+                    className="tiktok-embed"
+                    cite="https://www.tiktok.com/@alejandrasykes666/video/7541454523265535245"
+                    data-video-id="7541454523265535245"
+                    style={{
+                      maxWidth: "605px",
+                      minWidth: "325px",
+                      margin: 0,
+                    }}
+                  >
+                    <section>
+                      <a
+                        target="_blank"
+                        title="@alejandrasykes666"
+                        href="https://www.tiktok.com/@alejandrasykes666?refer=embed"
+                      >
+                        @alejandrasykes666
+                      </a>{" "}
+                      <a
+                        title="towing"
+                        target="_blank"
+                        href="https://www.tiktok.com/tag/towing?refer=embed"
+                      >
+                        #towing
+                      </a>{" "}
+                      <a
+                        title="westtx"
+                        target="_blank"
+                        href="https://www.tiktok.com/tag/westtx?refer=embed"
+                      >
+                        #westtx
+                      </a>{" "}
+                      <a
+                        title="pecos"
+                        target="_blank"
+                        href="https://www.tiktok.com/tag/pecos?refer=embed"
+                      >
+                        #pecos
+                      </a>{" "}
+                      <a
+                        title="businessowner"
+                        target="_blank"
+                        href="https://www.tiktok.com/tag/businessowner?refer=embed"
+                      >
+                        #businessowner
+                      </a>{" "}
+                      <a
+                        title="a"
+                        target="_blank"
+                        href="https://www.tiktok.com/tag/a?refer=embed"
+                      >
+                        #A
+                      </a>{" "}
+                      <a
+                        target="_blank"
+                        title="♬ Pasta - Los Dareyes De La Sierra"
+                        href="https://www.tiktok.com/music/Pasta-7527051487597742081?refer=embed"
+                      >
+                        ♬ Pasta - Los Dareyes De La Sierra
+                      </a>
+                    </section>
+                  </blockquote>
+                </div>
               </div>
             </div>
           </div>
@@ -1759,3 +1764,4 @@ function ContactSection() {
     </div>
   );
 }
+

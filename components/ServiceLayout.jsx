@@ -1,7 +1,7 @@
 // components/ServiceLayout.jsx
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Link from "next/link";
 
 /* ====================== Shared CTA Buttons ====================== */
@@ -77,21 +77,19 @@ export function TopMarquee() {
   );
 }
 
-/* ===================== Time & Temperature ===================== */
+/* ====================== Time & Temperature ====================== */
 
 function TimeTemp() {
-  const [now, setNow] = useState(new Date());
-  const [temp, setTemp] = useState(null);
-  const [locationLabel, setLocationLabel] = useState("Pecos, TX");
+  const [now, setNow] = React.useState(new Date());
+  const [temp, setTemp] = React.useState(null);
+  const [locationLabel, setLocationLabel] = React.useState("Pecos, TX");
 
-  // Live clock
-  useEffect(() => {
+  React.useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(id);
   }, []);
 
-  // Weather fetch
-  useEffect(() => {
+  React.useEffect(() => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
     if (!apiKey) return;
 
@@ -172,6 +170,14 @@ export function SiteHeader() {
 
         {/* Nav */}
         <nav className="ml-auto flex items-center gap-4 text-xs sm:text-sm md:text-base font-extrabold">
+          {/* Home link (to the left of Services) */}
+          <Link
+            href="/"
+            className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors hidden sm:inline-block"
+          >
+            Home
+          </Link>
+
           {/* Services dropdown using <details> (no hooks needed) */}
           <details className="relative group">
             <summary className="list-none px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black cursor-pointer flex items-center gap-1">
@@ -257,7 +263,7 @@ export function SiteHeader() {
           </a>
         </nav>
 
-        {/* Right side: date/time/temp + CTA on desktop */}
+        {/* Right side date/time/temp + CTA on desktop */}
         <div className="ml-3 hidden sm:flex items-center gap-3">
           <TimeTemp />
           <PhoneCTA />
@@ -356,6 +362,7 @@ export function BrandHero({
   serviceSubtitle,
   overlayOpacity = 0.35,
   cardCenterOffsetPx = 0,
+  cardClassName = "",
 }) {
   const cardTranslate =
     typeof cardCenterOffsetPx === "number" && cardCenterOffsetPx !== 0
@@ -398,13 +405,13 @@ export function BrandHero({
       />
 
       {/* Main card */}
-      <div className="relative z-20 flex items-center justify-center px-4 pt-10 pb-12">
+      <div className="relative z-20 flex itemscenter justify-center px-4 pt-10 pb-12">
         <div
           className="container max-w-5xl"
           style={{ transform: cardTranslate }}
         >
           <div
-            className="rounded-[22px] border border-white/20 bg-black/65 backdrop-blur-md shadow-[0_10px_28px_rgba(0,0,0,0.45)] px-5 py-6 md:px-8 md:py-7 text-center"
+            className={`rounded-[22px] border border-white/20 bg-black/65 backdrop-blur-md shadow-[0_10px_28px_rgba(0,0,0,0.45)] px-5 py-6 md:px-8 md:py-7 text-center ${cardClassName}`}
             style={{
               WebkitTextStroke: "0.25px rgba(0,0,0,.6)",
               textShadow: "0 1px 2px rgba(0,0,0,.65)",

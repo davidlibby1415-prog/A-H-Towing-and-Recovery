@@ -1,3 +1,5 @@
+// FILE: app/equipment-transport/page.jsx
+
 import React from "react";
 import {
   SiteHeader,
@@ -5,8 +7,8 @@ import {
   BrandHero,
   PhoneCTA,
   TextCTA,
-  TikTokGallery,
 } from "../components/ServiceLayout";
+// If you already import TikTokEmbed or other components below, keep those imports too.
 
 export const metadata = {
   title: "Equipment Transport | A & H Towing & Recovery",
@@ -20,49 +22,43 @@ export default function EquipmentTransportPage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
+        {/* HERO – same clear/glass style as Winching, but with truckunit.mp4 */}
         <BrandHero
           serviceTitle="Equipment Transport"
           serviceSubtitle="Light equipment, tool trailers, and small machinery moved safely around Pecos, Reeves County, and West Texas."
+          heroVideoSrc="/Videos/truckunit.mp4"
         />
 
-        <section className="py-8 bg-red-900/90 border-y border-black/40">
-          <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* LEFT: Text content */}
-            <div className="space-y-4 text-amber-50">
-              <h2 className="text-2xl md:text-3xl font-black">
+        {/* === keep all your existing sections under here, or use this starter === */}
+        <section className="py-10 bg-gradient-to-b from-neutral-950 via-red-950/70 to-black border-y border-black/40">
+          <div className="container max-w-7xl space-y-6">
+            <div className="max-w-3xl rounded-3xl bg-black/70 backdrop-blur-sm border border-red-500/70 px-6 py-6 shadow-2xl shadow-black/70">
+              <h2 className="text-2xl md:text-3xl font-black text-amber-50 drop-shadow">
                 Move your gear without beating it up.
               </h2>
-              <p className="text-sm md:text-base font-semibold">
+
+              <p className="mt-3 text-sm md:text-base font-semibold text-amber-50/90">
                 We handle small equipment and tool trailers that are too heavy
-                or awkward for a regular bumper pull.
+                or awkward for a pickup alone. We load low, secure correctly,
+                and unload clean at yards, shops, and job sites across West
+                Texas.
               </p>
-              <ul className="space-y-2 text-sm md:text-base font-semibold">
-                <li>• Compressors, welders, and light machinery</li>
-                <li>• Tool and jobsite trailers</li>
-                <li>• Yard-to-yard, shop-to-site moves</li>
-                <li>• Careful loading and securement</li>
+
+              <ul className="mt-4 space-y-2 text-sm md:text-base font-semibold text-amber-50/90">
+                <li>• Tool trailers, compressors, welders, and generators</li>
+                <li>• Small machinery and shop equipment</li>
+                <li>• Yard-to-yard and shop-to-location moves</li>
+                <li>• Straight communication on timing and price</li>
               </ul>
-              <p className="text-sm md:text-base font-semibold">
-                Tell us what you need moved, approximate weight, and where it’s
-                going. We’ll let you know if it fits our equipment and schedule.
-              </p>
             </div>
 
-            {/* RIGHT: TikTok-style gallery / visuals */}
-            <TikTokGallery
-              images={[
-                "/images/equipment-1.jpg",
-                "/images/equipment-2.jpg",
-                "/images/equipment-3.jpg",
-                "/images/equipment-4.jpg",
-              ]}
-            />
-          </div>
+            {/* Call / text buttons under the copy */}
+            <div className="flex flex-wrap gap-3">
+              <PhoneCTA />
+              <TextCTA />
+            </div>
 
-          {/* Bottom buttons */}
-          <div className="mt-6 flex flex-wrap justify-center gap-3">
-            <PhoneCTA />
-            <TextCTA />
+            {/* If you already have TikTok clips or cards here, keep that section too */}
           </div>
         </section>
       </main>
@@ -71,4 +67,5 @@ export default function EquipmentTransportPage() {
     </>
   );
 }
+
 

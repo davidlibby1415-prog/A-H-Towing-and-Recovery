@@ -6,22 +6,18 @@ import Link from "next/link";
 
 /* ====================== Shared CTA Buttons ====================== */
 
-export function PhoneCTA({ className = "" }) {
+export function TextCTA({ className = "" }) {
   return (
     <a
-      href="tel:+14328424578"
-      className={`inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white ${className}`}
-      aria-label="Call 24/7 dispatch at (432) 842-4578"
+      href="/#text-dispatch" // 👈 make sure your main page section has id="text-dispatch"
+      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white ${className}`}
+      aria-label="Go to text dispatch instructions on main page"
     >
-      <span className="uppercase tracking-wide text-xs md:text-sm text-center">
-        CLICK HERE TO CALL 24/7 DISPATCH
-      </span>
-      <span className="mt-1 text-lg md:text-xl leading-none">
-        (432) 842-4578
-      </span>
+      TEXT DISPATCH (INCLUDE GPS)
     </a>
   );
 }
+
 
 export function TextCTA({ className = "" }) {
   return (

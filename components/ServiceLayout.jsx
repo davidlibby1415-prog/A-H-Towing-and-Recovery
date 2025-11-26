@@ -4,65 +4,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
-/* ===================== Time & Temperature ===================== */
-
-function TimeTemp() {
-  const [now, setNow] = useState(new Date());
-  const [temp, setTemp] = useState(null);
-  const [locationLabel, setLocationLabel] = useState("Pecos, TX");
-
-  // update clock every minute
-  useEffect(() => {
-    const id = setInterval(() => setNow(new Date()), 60000);
-    return () => clearInterval(id);
-  }, []);
-
-  // fetch temperature once (requires NEXT_PUBLIC_OPENWEATHER_KEY)
-  useEffect(() => {
-    const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
-    if (!apiKey) return; // graceful fallback: just show location
-
-    const lat = 31.4229;
-    const lon = -103.4938;
-
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.main && typeof data.main.temp === "number") {
-          setTemp(Math.round(data.main.temp));
-        }
-        if (data && data.name) {
-          setLocationLabel(`${data.name}, TX`);
-        }
-      })
-      .catch(() => {});
-  }, []);
-
-  const dateStr = now.toLocaleDateString([], {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-
-  const timeStr = now.toLocaleTimeString([], {
-    hour: "numeric",
-    minute: "2-digit",
-  });
-
-  return (
-    <div className="hidden sm:flex flex-col items-end text-[10px] leading-tight text-amber-100/90">
-      <span className="font-semibold">{dateStr}</span>
-      <span className="font-semibold">{timeStr}</span>
-      <span className="font-semibold">
-        {temp != null ? `${temp}°F • ${locationLabel}` : locationLabel}
-      </span>
-    </div>
-  );
-}
-
 /* ====================== Shared CTA Buttons ====================== */
 
 export function PhoneCTA({ className = "" }) {
@@ -85,7 +26,7 @@ export function PhoneCTA({ className = "" }) {
 export function TextCTA({ className = "" }) {
   return (
     <a
-      href="/#text-dispatch" // 👈 make sure main page has id="text-dispatch"
+      href="/#text-dispatch" // 👈 make sure your main page section has id="text-dispatch"
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white ${className}`}
       aria-label="Go to text dispatch instructions on main page"
     >
@@ -136,6 +77,65 @@ export function TopMarquee() {
   );
 }
 
+/* ====================== Time & Temperature ====================== */
+
+function TimeTemp() {
+  const [now, setNow] = useState(new Date());
+  const [temp, setTemp] = useState(null);
+  const [locationLabel, setLocationLabel] = useState("Pecos, TX");
+
+  // update clock every minute
+  useEffect(() => {
+    const id = setInterval(() => setNow(new Date()), 60000);
+    return () => clearInterval(id);
+  }, []);
+
+  // fetch temperature once (if API key is present)
+  useEffect(() => {
+    const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
+    if (!apiKey) return; // fallback: just show date/time + location
+
+    const lat = 31.4229;
+    const lon = -103.4938;
+
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.main && typeof data.main.temp === "number") {
+          setTemp(Math.round(data.main.temp));
+        }
+        if (data && data.name) {
+          setLocationLabel(`${data.name}, TX`);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const dateStr = now.toLocaleDateString([], {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  const timeStr = now.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  return (
+    <div className="hidden sm:flex flex-col items-end text-[10px] leading-tight text-amber-100/90">
+      <span className="font-semibold">{dateStr}</span>
+      <span className="font-semibold">{timeStr}</span>
+      <span className="font-semibold">
+        {temp != null ? `${temp}°F • ${locationLabel}` : locationLabel}
+      </span>
+    </div>
+  );
+}
+
 /* =========================== Site Header =========================== */
 
 export function SiteHeader() {
@@ -172,10 +172,10 @@ export function SiteHeader() {
 
         {/* Nav */}
         <nav className="ml-auto flex items-center gap-4 text-xs sm:text-sm md:text-base font-extrabold">
-          {/* Home button LEFT of Services */}
+          {/* Home link (to the left of Services) */}
           <Link
             href="/"
-            className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
+            className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors hidden sm:inline-block"
           >
             Home
           </Link>
@@ -258,14 +258,14 @@ export function SiteHeader() {
             Tips &amp; Tricks
           </Link>
           <a
-            href="/#text-dispatch"
+            href="/#contact"
             className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors hidden sm:inline-block text-center"
           >
             Request a Tow
           </a>
         </nav>
 
-        {/* Right side: time/temp + CTA */}
+        {/* Right side date/time/temp + CTA on desktop */}
         <div className="ml-3 hidden sm:flex items-center gap-3">
           <TimeTemp />
           <PhoneCTA />
@@ -308,7 +308,7 @@ export function SiteFooter() {
               </a>
             </li>
             <li>
-              <a className="underline" href="/#text-dispatch">
+              <a className="underline" href="/#contact">
                 Request a Tow
               </a>
             </li>
@@ -364,6 +364,7 @@ export function BrandHero({
   serviceSubtitle,
   overlayOpacity = 0.35,
   cardCenterOffsetPx = 0,
+  cardClassName = "",
 }) {
   const cardTranslate =
     typeof cardCenterOffsetPx === "number" && cardCenterOffsetPx !== 0
@@ -405,14 +406,14 @@ export function BrandHero({
         }}
       />
 
-      {/* Main card – fully transparent, only black border */}
+      {/* Main card */}
       <div className="relative z-20 flex items-center justify-center px-4 pt-10 pb-12">
         <div
           className="container max-w-5xl"
           style={cardTranslate ? { transform: cardTranslate } : undefined}
         >
           <div
-            className="rounded-[22px] border border-black/80 bg-transparent px-5 py-6 md:px-8 md:py-7 text-center"
+            className={`rounded-[22px] border border-white/20 bg-black/65 backdrop-blur-md shadow-[0_10px_28px_rgba(0,0,0,0.45)] px-5 py-6 md:px-8 md:py-7 text-center ${cardClassName}`}
             style={{
               WebkitTextStroke: "0.25px rgba(0,0,0,.6)",
               textShadow: "0 1px 2px rgba(0,0,0,.65)",

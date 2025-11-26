@@ -6,7 +6,6 @@ import {
   BrandHero,
   PhoneCTA,
   TextCTA,
-  TikTokGallery,
 } from "../components/ServiceLayout";
 
 export const metadata = {
@@ -15,6 +14,40 @@ export const metadata = {
     "Light duty towing for cars, SUVs, and pickups around Pecos, Reeves County, and the West Texas highways with clear communication and careful handling.",
 };
 
+// TikTok IDs pulled from your embed snippets
+const TIKTOK_VIDEOS = [
+  {
+    id: "7495275556246785311",
+    title: "Light Duty Tow: Double Time",
+  },
+  {
+    id: "7479691088521940254",
+    title: "Tow Calls: Alex Does It Herself",
+  },
+  {
+    id: "6886898181007822086",
+    title: "Light Duty Tow: Classic 1958 Ford Thunderbird",
+  },
+  {
+    id: "7541454523265535245",
+    title: "The Boss Works It: Tow Duty",
+  },
+];
+
+function TikTokEmbed({ id, title }) {
+  return (
+    <div className="relative w-full aspect-[9/16] rounded-[28px] overflow-hidden bg-black shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+      <iframe
+        src={`https://www.tiktok.com/embed/v2/${id}`}
+        title={title}
+        className="absolute inset-0 w-full h-full"
+        allow="encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+      />
+    </div>
+  );
+}
+
 export default function LightDutyTowingPage() {
   return (
     <>
@@ -22,8 +55,7 @@ export default function LightDutyTowingPage() {
 
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
-          // 👇 use EXACTLY the same src string as your main page hero
-          heroVideoSrc="/Videos/tow1.mp4"
+          heroVideoSrc="/Videos/tow1.mp4" // same hero video as main page
           serviceTitle="Light Duty Towing"
           serviceSubtitle="Cars, SUVs, and pickups moved safely around Pecos, Reeves County, and the West Texas highways."
         />
@@ -120,10 +152,10 @@ export default function LightDutyTowingPage() {
               </div>
             </div>
 
-            {/* RIGHT: TikTok-style gallery / visuals + follow CTA */}
+            {/* RIGHT: TikTok embeds + follow CTA */}
             <div className="space-y-6">
-              <div className="rounded-2xl border border-yellow-400/80 bg-black/75 p-4 text-amber-50 shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/85 p-4 text-amber-50 shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                   <h3 className="text-lg md:text-xl font-black text-amber-300">
                     Light duty in action
                   </h3>
@@ -137,17 +169,27 @@ export default function LightDutyTowingPage() {
                   </a>
                 </div>
 
-                <TikTokGallery
-                  images={[
-                    "/images/light-1.jpg",
-                    "/images/light-2.jpg",
-                    "/images/light-3.jpg",
-                    "/images/light-4.jpg",
-                  ]}
-                />
+                {/* TikTok grid – tall phone frames */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {TIKTOK_VIDEOS.map((vid) => (
+                    <TikTokEmbed key={vid.id} id={vid.id} title={vid.title} />
+                  ))}
+                </div>
+
+                {/* Second follow button at the “lowest point” */}
+                <div className="mt-4 flex justify-center">
+                  <a
+                    href="https://www.tiktok.com/@285302ditchking"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center rounded-full border border-amber-300 bg-amber-400/10 px-5 py-1.5 text-xs md:text-sm font-black text-amber-200 shadow-cta hover:bg-amber-300 hover:text-black hover:scale-105 active:scale-95 transition-transform"
+                  >
+                    Click here to Follow us on TikTok
+                  </a>
+                </div>
               </div>
 
-              {/* Brighter bottom text (Option A) with shade + border */}
+              {/* Bright bottom text (Option A) with shade + border */}
               <div className="rounded-2xl border border-yellow-400/80 bg-black/80 px-4 py-4 shadow-[0_12px_30px_rgba(0,0,0,0.7)]">
                 <p className="text-sm md:text-base font-semibold text-amber-50 drop-shadow">
                   Want to see more real-world light-duty work?{" "}
@@ -172,4 +214,3 @@ export default function LightDutyTowingPage() {
     </>
   );
 }
-

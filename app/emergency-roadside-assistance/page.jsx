@@ -9,6 +9,7 @@ import {
   TextCTA,
 } from "../components/ServiceLayout";
 
+// META
 export const metadata = {
   title: "Emergency Roadside Assistance | A & H Towing & Recovery",
   description:
@@ -50,7 +51,7 @@ function VibrantBorder({ children, className = "" }) {
   );
 }
 
-// Phone-style TikTok embed with tight crop
+// Phone-style TikTok embed with tight crop (local helper for this page)
 function TikTokEmbed({ id, title }) {
   const src = `https://www.tiktok.com/embed/v2/${id}`;
 
@@ -385,4 +386,3 @@ export default function EmergencyRoadsideAssistancePage() {
     </>
   );
 }
-

@@ -10,10 +10,13 @@ import {
 } from "../components/ServiceLayout";
 import { TikTokEmbed } from "../components/TikTokEmbed";
 
+// TODO: Update this to your actual TikTok profile URL once confirmed.
+const TIKTOK_PROFILE_URL = "https://www.tiktok.com/@YOUR_TIKTOK_HANDLE_HERE";
+
 export const metadata = {
   title: "Flatbed Rollback & Equipment Transport | A & H Towing & Recovery",
   description:
-    "Safe, damage-free flatbed rollback towing and equipment transport across Pecos, Reeves County, and the West Texas highways.",
+    "Safe, damage-free flatbed rollback towing and equipment transport across West Texas highways.",
 };
 
 export default function FlatbedRollbackPage() {
@@ -25,7 +28,7 @@ export default function FlatbedRollbackPage() {
         {/* HERO: uses storage.mp4 as the background video */}
         <BrandHero
           serviceTitle="Flatbed Rollback & Equipment Transport"
-          serviceSubtitle="Light- and medium-duty vehicles, equipment, and trailers — loaded, secured, and delivered with care."
+          serviceSubtitle="Vehicles, equipment, and trailers — loaded, secured, and delivered with care across West Texas."
           heroVideoSrc="/Videos/storage.mp4" // put storage.mp4 in /public/Videos
         />
 
@@ -46,7 +49,9 @@ export default function FlatbedRollbackPage() {
 
               <ul className="mt-4 space-y-2 text-sm md:text-base font-semibold text-amber-50/90">
                 <li>• Flatbed rollback for cars, pickups, and work trucks</li>
-                <li>• Equipment transport for skids, manlifts, forklifts, and more</li>
+                <li>
+                  • Equipment transport for skids, manlifts, forklifts, and more
+                </li>
                 <li>• Yard-to-yard, shop-to-location, and accident pickups</li>
                 <li>• Professional tie-down and loading procedures</li>
               </ul>
@@ -74,30 +79,58 @@ export default function FlatbedRollbackPage() {
               </div>
             </div>
 
-            {/* RIGHT: TikTok grid – your 3 equipment transport clips */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-              {/* 1. Tow Calls: Offload on the House */}
-              <div className="rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70 md:col-span-1 xl:col-span-1">
-                <TikTokEmbed
-                  videoId="7419451829223836959"
-                  caption="Tow Calls: Offload on the House"
-                />
+            {/* RIGHT: TikTok grid – equipment / rollback clips with follow CTAs */}
+            <div className="space-y-4">
+              {/* TIKTOK – Follow CTA (top of grid) */}
+              <div className="flex justify-center">
+                <a
+                  href={TIKTOK_PROFILE_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-emerald-400/80 bg-emerald-400/90 px-5 py-2 text-xs md:text-sm font-black uppercase tracking-[0.18em] text-black shadow-lg shadow-emerald-500/50 hover:bg-emerald-300 transition-transform duration-200 hover:-translate-y-0.5 animate-pulse"
+                >
+                  <span className="text-lg">🎵</span>
+                  <span>Follow Us On TikTok</span>
+                </a>
               </div>
 
-              {/* 2. Equipment Transport: Double Stacking Trailers */}
-              <div className="rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70 md:col-span-1 xl:col-span-1">
-                <TikTokEmbed
-                  videoId="7348837007935769902"
-                  caption="Equipment Transport: Double Stacking Trailers"
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                {/* 1. Tow Calls: Offload on the House */}
+                <div className="rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70 md:col-span-1 xl:col-span-1">
+                  <TikTokEmbed
+                    videoId="7419451829223836959"
+                    caption="Tow Calls: Offload on the House"
+                  />
+                </div>
+
+                {/* 2. Equipment Transport: Double Stacking Trailers */}
+                <div className="rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70 md:col-span-1 xl:col-span-1">
+                  <TikTokEmbed
+                    videoId="7348837007935769902"
+                    caption="Equipment Transport: Double Stacking Trailers"
+                  />
+                </div>
+
+                {/* 3. Equipment Transport: Pickup from Accident */}
+                <div className="rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70 md:col-span-2 xl:col-span-1">
+                  <TikTokEmbed
+                    videoId="7275994610713988398"
+                    caption="Equipment Transport: Pickup from Accident"
+                  />
+                </div>
               </div>
 
-              {/* 3. Equipment Transport: Pickup from Accident */}
-              <div className="rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70 md:col-span-2 xl:col-span-1">
-                <TikTokEmbed
-                  videoId="7275994610713988398"
-                  caption="Equipment Transport: Pickup from Accident"
-                />
+              {/* TIKTOK – Follow CTA (bottom of grid) */}
+              <div className="flex justify-center">
+                <a
+                  href={TIKTOK_PROFILE_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-emerald-400/80 bg-emerald-400/90 px-5 py-2 text-xs md:text-sm font-black uppercase tracking-[0.18em] text-black shadow-lg shadow-emerald-500/50 hover:bg-emerald-300 transition-transform duration-200 hover:-translate-y-0.5 animate-pulse"
+                >
+                  <span className="text-lg">🎵</span>
+                  <span>Follow Us On TikTok</span>
+                </a>
               </div>
             </div>
           </div>
@@ -108,9 +141,36 @@ export default function FlatbedRollbackPage() {
             <TextCTA />
           </div>
         </section>
+
+        {/* "We accept" payment bar – match main page pill style */}
+        <section className="bg-red-950 py-5">
+          <div className="container max-w-7xl flex justify-center">
+            <div className="inline-flex flex-wrap items-center gap-3 rounded-full bg-slate-900/95 px-4 py-2 shadow-lg shadow-black/60 border border-black/40">
+              <span className="text-xs md:text-sm font-bold text-amber-50 mr-1">
+                We accept:
+              </span>
+
+              <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
+                <span>💵</span>
+                <span>Cash</span>
+              </span>
+
+              <span className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
+                <span>💳</span>
+                <span>All Major Credit Cards</span>
+              </span>
+
+              <span className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
+                <span>🧾</span>
+                <span>EFS Services</span>
+              </span>
+            </div>
+          </div>
+        </section>
       </main>
 
       <SiteFooter />
     </>
   );
 }
+

@@ -206,7 +206,6 @@ export default function WinchingRecoveryPage() {
                       Stuck doesn&apos;t mean stranded.
                     </h2>
 
-                    {/* YELLOW paragraph 1 */}
                     <p className="text-sm md:text-base font-semibold text-amber-200">
                       Lease roads, caliche, sand, and soft shoulders will
                       humble anyone. We treat recoveries like a job to be{" "}
@@ -232,7 +231,6 @@ export default function WinchingRecoveryPage() {
                       </li>
                     </ul>
 
-                    {/* YELLOW paragraph 2 */}
                     <p className="mt-3 text-sm md:text-base font-semibold text-amber-200">
                       The goal is simple:{" "}
                       <span className="font-black">
@@ -241,7 +239,6 @@ export default function WinchingRecoveryPage() {
                       and off the unsafe ground.
                     </p>
 
-                    {/* What helps us plan a recovery */}
                     <div className="mt-4 rounded-2xl border border-yellow-400/85 p-4 text-sm md:text-base font-semibold">
                       <h3 className="text-lg md:text-xl font-black mb-2 text-amber-200">
                         What helps us plan a recovery
@@ -259,7 +256,6 @@ export default function WinchingRecoveryPage() {
                         </li>
                       </ul>
 
-                      {/* YELLOW paragraph 3 */}
                       <p className="mt-2 text-amber-200">
                         The more detail you give us up front, the better we can
                         prepare the truck, gear, and approach.

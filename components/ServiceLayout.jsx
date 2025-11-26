@@ -1,4 +1,4 @@
-// components/ServiceLayout.jsx
+// FILE: app/components/ServiceLayout.jsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -20,7 +20,7 @@ function TimeTemp() {
   // fetch temperature once (requires NEXT_PUBLIC_OPENWEATHER_KEY)
   useEffect(() => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
-    if (!apiKey) return;
+    if (!apiKey) return; // graceful fallback: just show location
 
     const lat = 31.4229;
     const lon = -103.4938;
@@ -57,7 +57,7 @@ function TimeTemp() {
       <span className="font-semibold">{dateStr}</span>
       <span className="font-semibold">{timeStr}</span>
       <span className="font-semibold">
-        {temp != null ? `${temp}°F` : "--°F"} • {locationLabel}
+        {temp != null ? `${temp}°F • ${locationLabel}` : locationLabel}
       </span>
     </div>
   );
@@ -85,9 +85,9 @@ export function PhoneCTA({ className = "" }) {
 export function TextCTA({ className = "" }) {
   return (
     <a
-      href="/#contact"
+      href="/#text-dispatch" // 👈 make sure main page has id="text-dispatch"
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white ${className}`}
-      aria-label="Go to dispatch form on main page"
+      aria-label="Go to text dispatch instructions on main page"
     >
       TEXT DISPATCH (INCLUDE GPS)
     </a>
@@ -258,7 +258,7 @@ export function SiteHeader() {
             Tips &amp; Tricks
           </Link>
           <a
-            href="/#contact"
+            href="/#text-dispatch"
             className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors hidden sm:inline-block text-center"
           >
             Request a Tow
@@ -308,7 +308,7 @@ export function SiteFooter() {
               </a>
             </li>
             <li>
-              <a className="underline" href="/#contact">
+              <a className="underline" href="/#text-dispatch">
                 Request a Tow
               </a>
             </li>

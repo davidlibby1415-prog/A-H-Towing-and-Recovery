@@ -1,4 +1,4 @@
-// FILE: app/accidents-and-accident-removal/page.jsx
+// FILE: app/accident-removal/page.jsx
 
 import React from "react";
 import {

@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { TikTokEmbed } from "./components/TikTokEmbed";
 
 /* ============================ Utilities ============================ */
 
@@ -1417,7 +1418,7 @@ export default function Home() {
   );
 }
 
-/* ========================= Contact Section (TikTok via iframe) ========================= */
+/* ========================= Contact Section (TikTok via TikTokEmbed) ========================= */
 
 function ContactSection() {
   const [name, setName] = useState("");
@@ -1652,25 +1653,11 @@ function ContactSection() {
           </div>
         </div>
 
-        {/* Phone-style frame with TikTok iframe cropped */}
-        <div className="relative w-[320px] sm:w-[360px] md:w-[420px] aspect-[9/16] flex items-center justify-center">
-          <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
-            <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden">
-              <iframe
-                title="A&H Towing TikTok"
-                src="https://www.tiktok.com/embed/v2/7541454523265535245"
-                className="absolute inset-0 w-[120%] h-[120%]"
-                style={{
-                  transform: "translateY(-60px) scale(1.25)",
-                  transformOrigin: "center",
-                }}
-                frameBorder="0"
-                allow="accelerometer; autoplay; encrypted-media; clipboard-write; fullscreen; picture-in-picture"
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
-            </div>
-          </div>
-        </div>
+        {/* Phone-style frame with tightly cropped TikTok */}
+        <TikTokEmbed
+          src="https://www.tiktok.com/embed/v2/7541454523265535245"
+          title="A&H Towing TikTok"
+        />
 
         <div className="mt-4">
           <a

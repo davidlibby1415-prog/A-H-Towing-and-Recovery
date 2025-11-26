@@ -1679,4 +1679,3 @@ function ContactSection() {
     </div>
   );
 }
-

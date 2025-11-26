@@ -15,7 +15,7 @@ export const metadata = {
     "Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways.",
 };
 
-// Reuse working TikTok IDs (same style as other pages)
+// Reuse TikTok IDs in the same style as other pages
 const TIKTOK_VIDEOS = [
   {
     id: "7495275556246785311",
@@ -152,13 +152,14 @@ export default function EmergencyRoadsideAssistancePage() {
       <main className="min-h-screen bg-neutral-950">
         {/* HERO: video + one text card, same BrandHero pattern */}
         <BrandHero
-          heroVideoSrc="/Videos/fuel.mp4" // <- make sure this file exists in /public/Videos
+          heroVideoSrc="/Videos/fuelconv.mp4" // <- re-encoded fuel video
+          poster="/Videos/fallback.jpg"
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways."
           overlayOpacity={0.45}
         />
 
-        {/* MAIN CONTENT – same layout as Heavy Duty: left text, right TikToks */}
+        {/* MAIN CONTENT – same layout pattern as Heavy Duty */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-6 items-start">
             {/* LEFT: steel-backed text block + two helper boxes */}
@@ -216,7 +217,7 @@ export default function EmergencyRoadsideAssistancePage() {
                 </div>
               </VibrantBorder>
 
-              {/* Two helper boxes side-by-side on md+ (same pattern as Heavy Duty) */}
+              {/* Two helper boxes side-by-side on md+ */}
               <div className="grid md:grid-cols-2 gap-4">
                 {/* What to tell dispatch */}
                 <VibrantBorder>
@@ -309,7 +310,7 @@ export default function EmergencyRoadsideAssistancePage() {
               </div>
             </div>
 
-            {/* RIGHT: TikTok embeds + follow CTAs (vibrant border only, like Heavy Duty) */}
+            {/* RIGHT: TikTok embeds + follow CTAs */}
             <div className="space-y-6">
               <VibrantBorder>
                 <div className="rounded-[18px] border border-yellow-400/80 bg-black/85 p-4 text-white shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
@@ -327,7 +328,6 @@ export default function EmergencyRoadsideAssistancePage() {
                     </a>
                   </div>
 
-                  {/* One TikTok per row with bold title above, phone-style frame */}
                   <div className="grid grid-cols-1 gap-4">
                     {TIKTOK_VIDEOS.map((vid) => (
                       <div
@@ -355,7 +355,6 @@ export default function EmergencyRoadsideAssistancePage() {
                 </div>
               </VibrantBorder>
 
-              {/* Bottom text callout with vibrant border */}
               <VibrantBorder>
                 <div className="rounded-[18px] border border-yellow-400/80 bg-black/80 px-4 py-4 shadow-[0_12px_30px_rgba(0,0,0,0.7)]">
                   <p className="text-sm md:text-base font-semibold text-white drop-shadow">

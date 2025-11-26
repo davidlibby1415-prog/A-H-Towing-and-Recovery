@@ -1,10 +1,27 @@
 // components/ServiceLayout.jsx
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 /* ====================== Shared CTA Buttons ====================== */
+
+export function PhoneCTA({ className = "" }) {
+  return (
+    <a
+      href="tel:+14328424578"
+      className={`inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white ${className}`}
+      aria-label="Call 24/7 dispatch at (432) 842-4578"
+    >
+      <span className="uppercase tracking-wide text-xs md:text-sm text-center">
+        CLICK HERE TO CALL 24/7 DISPATCH
+      </span>
+      <span className="mt-1 text-lg md:text-xl leading-none">
+        (432) 842-4578
+      </span>
+    </a>
+  );
+}
 
 export function TextCTA({ className = "" }) {
   return (
@@ -12,19 +29,6 @@ export function TextCTA({ className = "" }) {
       href="/#text-dispatch" // 👈 make sure your main page section has id="text-dispatch"
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white ${className}`}
       aria-label="Go to text dispatch instructions on main page"
-    >
-      TEXT DISPATCH (INCLUDE GPS)
-    </a>
-  );
-}
-
-
-export function TextCTA({ className = "" }) {
-  return (
-    <a
-      href="/#contact"
-      className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white ${className}`}
-      aria-label="Go to dispatch form on main page"
     >
       TEXT DISPATCH (INCLUDE GPS)
     </a>
@@ -80,11 +84,13 @@ function TimeTemp() {
   const [temp, setTemp] = useState(null);
   const [locationLabel, setLocationLabel] = useState("Pecos, TX");
 
+  // update clock every minute
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(id);
   }, []);
 
+  // fetch temperature once (requires NEXT_PUBLIC_OPENWEATHER_KEY)
   useEffect(() => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
     if (!apiKey) return; // graceful fallback: just date/time + location
@@ -401,10 +407,10 @@ export function BrandHero({
       />
 
       {/* Main card */}
-      <div className="relative z-20 flex itemscenter justify-center px-4 pt-10 pb-12">
+      <div className="relative z-20 flex items-center justify-center px-4 pt-10 pb-12">
         <div
           className="container max-w-5xl"
-          style={{ transform: cardTranslate }}
+          style={cardTranslate ? { transform: cardTranslate } : undefined}
         >
           <div
             className={`rounded-[22px] border border-white/20 bg-black/65 backdrop-blur-md shadow-[0_10px_28px_rgba(0,0,0,0.45)] px-5 py-6 md:px-8 md:py-7 text-center ${cardClassName}`}

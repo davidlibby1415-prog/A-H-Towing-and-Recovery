@@ -34,36 +34,18 @@ const TIKTOK_VIDEOS = [
   },
 ];
 
-// Vibrant rotating border, matching the main page
+// Vibrant border using static conic gradient (no styled-jsx)
 function VibrantBorder({ children, className = "" }) {
   return (
-    <>
-      <style jsx global>{`
-        @property --angle {
-          syntax: "<angle>";
-          initial-value: 0deg;
-          inherits: false;
-        }
-        @keyframes rb-rotate {
-          to {
-            --angle: 360deg;
-          }
-        }
-        .rb-border {
-          --angle: 0deg;
-          background: conic-gradient(
-            from var(--angle),
-            #3b82f6 0%,
-            #ef4444 50%,
-            #3b82f6 100%
-          );
-          animation: rb-rotate 24s linear infinite;
-        }
-      `}</style>
-      <div className={`rb-border p-[3px] rounded-[22px] ${className}`}>
-        {children}
-      </div>
-    </>
+    <div
+      className={`rounded-[22px] p-[3px] ${className}`}
+      style={{
+        background:
+          "conic-gradient(from 0deg, #3b82f6 0%, #ef4444 50%, #3b82f6 100%)",
+      }}
+    >
+      {children}
+    </div>
   );
 }
 

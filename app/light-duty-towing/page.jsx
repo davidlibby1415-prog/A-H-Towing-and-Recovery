@@ -1,3 +1,5 @@
+// app/light-duty-towing/page.jsx
+
 import React from "react";
 import {
   SiteHeader,
@@ -20,9 +22,12 @@ export default function LightDutyTowingPage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
+        {/* HERO – uses BrandHero with gradient background (no video passed) */}
         <BrandHero
           serviceTitle="Light Duty Towing"
           serviceSubtitle="Cars, SUVs, and pickups moved safely around Pecos, Reeves County, and the West Texas highways."
+          // If you add a hero video later, drop it in /public/Videos and pass:
+          // heroVideoSrc="/Videos/light-duty-bg.mp4"
         />
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
@@ -123,4 +128,3 @@ export default function LightDutyTowingPage() {
     </>
   );
 }
-

@@ -10,10 +10,13 @@ import {
 } from "../components/ServiceLayout";
 import { TikTokEmbed } from "../components/TikTokEmbed";
 
+// TODO: Update this to your actual TikTok profile URL once confirmed.
+const TIKTOK_PROFILE_URL = "https://www.tiktok.com/@YOUR_TIKTOK_HANDLE_HERE";
+
 export const metadata = {
   title: "Equipment Transport | A & H Towing & Recovery",
   description:
-    "Light equipment, tool trailers, and small machinery moved safely around Pecos, Reeves County, and West Texas.",
+    "Large equipment, tool trailers, and machinery moved safely around West Texas.",
 };
 
 export default function EquipmentTransportPage() {
@@ -25,7 +28,7 @@ export default function EquipmentTransportPage() {
         {/* HERO – clear/glass BrandHero style with truckunit.mp4 */}
         <BrandHero
           serviceTitle="Equipment Transport"
-          serviceSubtitle="Light equipment, tool trailers, and small machinery moved safely around Pecos, Reeves County, and West Texas."
+          serviceSubtitle="Large equipment, tool trailers, and machinery moved safely around West Texas."
           heroVideoSrc="/Videos/truckunit.mp4" // ensure this lives in /public/Videos
         />
 
@@ -38,15 +41,15 @@ export default function EquipmentTransportPage() {
               </h2>
 
               <p className="mt-3 text-sm md:text-base font-semibold text-amber-50/90">
-                We handle small equipment and tool trailers that are too heavy
-                or awkward for a pickup alone. We load low, secure correctly,
-                and unload clean at yards, shops, and job sites across West
-                Texas.
+                We handle large equipment, tool trailers, and machinery that are
+                too heavy or awkward for a pickup alone. We load low, secure
+                correctly, and unload clean at yards, shops, and job sites
+                across West Texas.
               </p>
 
               <ul className="mt-4 space-y-2 text-sm md:text-base font-semibold text-amber-50/90">
                 <li>• Tool trailers, compressors, welders, and generators</li>
-                <li>• Small machinery and shop equipment</li>
+                <li>• Heavy machinery and shop equipment</li>
                 <li>• Yard-to-yard and shop-to-location moves</li>
                 <li>• Straight communication on timing and price</li>
               </ul>
@@ -56,6 +59,19 @@ export default function EquipmentTransportPage() {
             <div className="flex flex-wrap gap-3">
               <PhoneCTA />
               <TextCTA />
+            </div>
+
+            {/* TIKTOK – Follow CTA (top of grid) */}
+            <div className="flex justify-center">
+              <a
+                href={TIKTOK_PROFILE_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-emerald-400/80 bg-emerald-400/90 px-5 py-2 text-xs md:text-sm font-black uppercase tracking-[0.18em] text-black shadow-lg shadow-emerald-500/50 hover:bg-emerald-300 transition-transform duration-200 hover:-translate-y-0.5 animate-pulse"
+              >
+                <span className="text-lg">🎵</span>
+                <span>Follow Us On TikTok</span>
+              </a>
             </div>
 
             {/* TIKTOK GRID – Equipment Transport clips */}
@@ -84,6 +100,54 @@ export default function EquipmentTransportPage() {
                 />
               </div>
             </div>
+
+            {/* TIKTOK – Follow CTA (bottom of grid) */}
+            <div className="flex justify-center">
+              <a
+                href={TIKTOK_PROFILE_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-emerald-400/80 bg-emerald-400/90 px-5 py-2 text-xs md:text-sm font-black uppercase tracking-[0.18em] text-black shadow-lg shadow-emerald-500/50 hover:bg-emerald-300 transition-transform duration-200 hover:-translate-y-0.5 animate-pulse"
+              >
+                <span className="text-lg">🎵</span>
+                <span>Follow Us On TikTok</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        {/* "We accept" payment bar – mirror main page behavior */}
+        <section className="border-t border-neutral-800 bg-black/95 py-6">
+          <div className="container max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-xs md:text-sm font-semibold tracking-[0.18em] uppercase text-amber-50/80">
+              We Accept
+            </p>
+            <div className="flex flex-wrap gap-2 md:gap-3 text-[11px] md:text-xs font-semibold text-amber-50/90">
+              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
+                Visa
+              </span>
+              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
+                Mastercard
+              </span>
+              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
+                American Express
+              </span>
+              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
+                Discover
+              </span>
+              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
+                Debit Cards
+              </span>
+              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
+                Cash
+              </span>
+              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
+                Zelle
+              </span>
+              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
+                Cash App
+              </span>
+            </div>
           </div>
         </section>
       </main>
@@ -92,3 +156,4 @@ export default function EquipmentTransportPage() {
     </>
   );
 }
+

@@ -14,7 +14,7 @@ export const metadata = {
     "Light duty towing for cars, SUVs, and pickups around Pecos, Reeves County, and the West Texas highways with clear communication and careful handling.",
 };
 
-// TikTok IDs pulled from your embed snippets
+// TikTok IDs from your embeds
 const TIKTOK_VIDEOS = [
   {
     id: "7495275556246785311",
@@ -42,7 +42,9 @@ function TikTokEmbed({ id, title }) {
         title={title}
         className="absolute inset-0 w-full h-full"
         allow="encrypted-media; fullscreen; picture-in-picture"
+        allowFullScreen
         loading="lazy"
+        referrerPolicy="strict-origin-when-cross-origin"
       />
     </div>
   );
@@ -55,16 +57,16 @@ export default function LightDutyTowingPage() {
 
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
-          heroVideoSrc="/Videos/tow1.mp4" // same hero video as main page
+          heroVideoSrc="/Videos/tow1.mp4"
           serviceTitle="Light Duty Towing"
           serviceSubtitle="Cars, SUVs, and pickups moved safely around Pecos, Reeves County, and the West Texas highways."
         />
 
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-6 items-start">
-            {/* LEFT: Text content with steel/shaded background */}
+            {/* LEFT: steel-backed text block + helpers */}
             <div className="space-y-6 text-amber-50">
-              {/* Big steel-backed block */}
+              {/* Steel/shaded main block */}
               <div
                 className="rounded-[22px] border border-yellow-400/80 shadow-[0_18px_40px_rgba(0,0,0,0.9)] px-5 py-5 md:px-7 md:py-7"
                 style={{
@@ -106,9 +108,9 @@ export default function LightDutyTowingPage() {
                 </p>
               </div>
 
-              {/* Two side-by-side info boxes on md+ */}
+              {/* Two helper boxes side-by-side on md+ */}
               <div className="grid md:grid-cols-2 gap-4">
-                {/* What helps dispatch… */}
+                {/* Dispatch helper */}
                 <div className="rounded-2xl border border-yellow-400/80 bg-black/75 p-4 text-sm md:text-base font-semibold text-white shadow-[0_12px_30px_rgba(0,0,0,0.7)]">
                   <h3 className="text-lg md:text-xl font-black mb-2 text-amber-300">
                     What helps dispatch help you faster
@@ -125,7 +127,7 @@ export default function LightDutyTowingPage() {
                   </p>
                 </div>
 
-                {/* Before we arrive – directly under / beside that one */}
+                {/* Before we arrive */}
                 <div className="rounded-2xl border border-yellow-400/80 bg-black/75 p-4 text-sm md:text-base font-semibold text-white shadow-[0_12px_30px_rgba(0,0,0,0.7)]">
                   <h3 className="text-lg md:text-xl font-black mb-2 text-amber-300">
                     Before we arrive
@@ -152,7 +154,7 @@ export default function LightDutyTowingPage() {
               </div>
             </div>
 
-            {/* RIGHT: TikTok embeds + follow CTA */}
+            {/* RIGHT: TikTok embeds + follow CTAs */}
             <div className="space-y-6">
               <div className="rounded-2xl border border-yellow-400/80 bg-black/85 p-4 text-amber-50 shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
@@ -169,14 +171,14 @@ export default function LightDutyTowingPage() {
                   </a>
                 </div>
 
-                {/* TikTok grid – tall phone frames */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* BIG TikTok frames – single column so each is large */}
+                <div className="grid grid-cols-1 gap-4">
                   {TIKTOK_VIDEOS.map((vid) => (
                     <TikTokEmbed key={vid.id} id={vid.id} title={vid.title} />
                   ))}
                 </div>
 
-                {/* Second follow button at the “lowest point” */}
+                {/* Second follow button at bottom */}
                 <div className="mt-4 flex justify-center">
                   <a
                     href="https://www.tiktok.com/@285302ditchking"
@@ -189,7 +191,7 @@ export default function LightDutyTowingPage() {
                 </div>
               </div>
 
-              {/* Bright bottom text (Option A) with shade + border */}
+              {/* Bright bottom text, shaded + bordered */}
               <div className="rounded-2xl border border-yellow-400/80 bg-black/80 px-4 py-4 shadow-[0_12px_30px_rgba(0,0,0,0.7)]">
                 <p className="text-sm md:text-base font-semibold text-amber-50 drop-shadow">
                   Want to see more real-world light-duty work?{" "}

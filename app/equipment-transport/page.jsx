@@ -8,7 +8,7 @@ import {
   PhoneCTA,
   TextCTA,
 } from "../components/ServiceLayout";
-// If you already import TikTokEmbed or other components below, keep those imports too.
+import { TikTokEmbed } from "../components/TikTokEmbed";
 
 export const metadata = {
   title: "Equipment Transport | A & H Towing & Recovery",
@@ -22,16 +22,16 @@ export default function EquipmentTransportPage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO – same clear/glass style as Winching, but with truckunit.mp4 */}
+        {/* HERO – clear/glass BrandHero style with truckunit.mp4 */}
         <BrandHero
           serviceTitle="Equipment Transport"
           serviceSubtitle="Light equipment, tool trailers, and small machinery moved safely around Pecos, Reeves County, and West Texas."
-          heroVideoSrc="/Videos/truckunit.mp4"
+          heroVideoSrc="/Videos/truckunit.mp4" // ensure this lives in /public/Videos
         />
 
-        {/* === keep all your existing sections under here, or use this starter === */}
         <section className="py-10 bg-gradient-to-b from-neutral-950 via-red-950/70 to-black border-y border-black/40">
-          <div className="container max-w-7xl space-y-6">
+          <div className="container max-w-7xl space-y-8">
+            {/* MAIN COPY CARD */}
             <div className="max-w-3xl rounded-3xl bg-black/70 backdrop-blur-sm border border-red-500/70 px-6 py-6 shadow-2xl shadow-black/70">
               <h2 className="text-2xl md:text-3xl font-black text-amber-50 drop-shadow">
                 Move your gear without beating it up.
@@ -52,13 +52,38 @@ export default function EquipmentTransportPage() {
               </ul>
             </div>
 
-            {/* Call / text buttons under the copy */}
+            {/* CALL / TEXT BUTTONS */}
             <div className="flex flex-wrap gap-3">
               <PhoneCTA />
               <TextCTA />
             </div>
 
-            {/* If you already have TikTok clips or cards here, keep that section too */}
+            {/* TIKTOK GRID – Equipment Transport clips */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center">
+              {/* 1. Tow Calls: Offload on the House */}
+              <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
+                <TikTokEmbed
+                  videoId="7419451829223836959"
+                  caption="Tow Calls: Offload on the House"
+                />
+              </div>
+
+              {/* 2. Equipment Transport: Double Stacking Trailers */}
+              <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
+                <TikTokEmbed
+                  videoId="7348837007935769902"
+                  caption="Equipment Transport: Double Stacking Trailers"
+                />
+              </div>
+
+              {/* 3. Equipment Transport: Pickup from Accident */}
+              <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
+                <TikTokEmbed
+                  videoId="7275994610713988398"
+                  caption="Equipment Transport: Pickup from Accident"
+                />
+              </div>
+            </div>
           </div>
         </section>
       </main>
@@ -67,5 +92,3 @@ export default function EquipmentTransportPage() {
     </>
   );
 }
-
-

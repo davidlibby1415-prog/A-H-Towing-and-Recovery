@@ -150,7 +150,7 @@ export default function HeavyDutyCommercialTowingPage() {
 
       <main className="min-h-screen bg-neutral-950">
         <BrandHero
-          // you can add heroVideoSrc="/Videos/tow3.mp4" later if you want a video header
+          heroVideoSrc="/Videos/tow3.mp4"
           serviceTitle="Heavy Duty & Commercial Towing"
           serviceSubtitle="Rotator & heavy wrecker services for buses, box trucks, semis, and commercial fleets across West Texas."
         />

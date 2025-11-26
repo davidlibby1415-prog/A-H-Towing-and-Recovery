@@ -150,10 +150,9 @@ export default function EmergencyRoadsideAssistancePage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO: uses /Videos/fuel.mp4 */}
+        {/* HERO: uses /fuel.mp4 at the root of /public */}
         <BrandHero
-          heroVideoSrc="/Videos/fuel.mp4"
-          poster="/Videos/fallback.jpg"
+          heroVideoSrc="/fuel.mp4"
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways."
           overlayOpacity={0.45}

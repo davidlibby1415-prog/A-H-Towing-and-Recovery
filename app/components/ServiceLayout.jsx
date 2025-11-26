@@ -80,18 +80,18 @@ export function TopMarquee() {
 /* ====================== Time & Temperature ====================== */
 
 function TimeTemp() {
-  const [now, setNow] = React.useState(new Date());
-  const [temp, setTemp] = React.useState(null);
-  const [locationLabel, setLocationLabel] = React.useState("Pecos, TX");
+  const [now, setNow] = useState(new Date());
+  const [temp, setTemp] = useState(null);
+  const [locationLabel, setLocationLabel] = useState("Pecos, TX");
 
-  React.useEffect(() => {
+  useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(id);
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
-    if (!apiKey) return;
+    if (!apiKey) return; // graceful fallback: just date/time + location
 
     const lat = 31.4229;
     const lon = -103.4938;
@@ -128,7 +128,7 @@ function TimeTemp() {
       <span className="font-semibold">{dateStr}</span>
       <span className="font-semibold">{timeStr}</span>
       <span className="font-semibold">
-        {temp != null ? `${temp}°F` : "--°F"} • {locationLabel}
+        {temp != null ? `${temp}°F • ${locationLabel}` : locationLabel}
       </span>
     </div>
   );

@@ -1,4 +1,4 @@
-// components/ServiceLayout.jsx
+// FILE: app/components/ServiceLayout.jsx
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -26,9 +26,9 @@ export function PhoneCTA({ className = "" }) {
 export function TextCTA({ className = "" }) {
   return (
     <a
-      href="/#text-dispatch" // 👈 make sure your main page section has id="text-dispatch"
+      href="/#contact" // 👈 text form / instructions section on main page
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white ${className}`}
-      aria-label="Go to text dispatch instructions on main page"
+      aria-label="Go to dispatch form on main page"
     >
       TEXT DISPATCH (INCLUDE GPS)
     </a>
@@ -90,10 +90,10 @@ function TimeTemp() {
     return () => clearInterval(id);
   }, []);
 
-  // fetch temperature once (requires NEXT_PUBLIC_OPENWEATHER_KEY)
+  // fetch temperature once (if API key is present)
   useEffect(() => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
-    if (!apiKey) return; // graceful fallback: just date/time + location
+    if (!apiKey) return; // fallback: just show date/time + location
 
     const lat = 31.4229;
     const lon = -103.4938;
@@ -180,7 +180,7 @@ export function SiteHeader() {
             Home
           </Link>
 
-          {/* Services dropdown using <details> (no hooks needed) */}
+          {/* Services dropdown */}
           <details className="relative group">
             <summary className="list-none px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black cursor-pointer flex items-center gap-1">
               <span>Services</span>
@@ -445,7 +445,7 @@ export function BrandHero({
   );
 }
 
-/* ========================== TikTokGallery ========================== */
+/* ========================== TikTokGallery (image-only) ========================== */
 
 export function TikTokGallery({ images = [] }) {
   if (!images || images.length === 0) return null;

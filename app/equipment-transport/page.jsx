@@ -10,8 +10,38 @@ import {
 } from "../components/ServiceLayout";
 import { TikTokEmbed } from "../components/TikTokEmbed";
 
-// TODO: Update this to your actual TikTok profile URL once confirmed.
-const TIKTOK_PROFILE_URL = "https://www.tiktok.com/@YOUR_TIKTOK_HANDLE_HERE";
+// TikTok profile URL
+const TIKTOK_PROFILE_URL = "https://www.tiktok.com/@285302ditchking";
+
+// “We accept” payment bar – match main page pill style
+function PaymentBar() {
+  return (
+    <section className="bg-red-950 py-5">
+      <div className="container max-w-7xl flex justify-center">
+        <div className="inline-flex flex-wrap items-center gap-3 rounded-full bg-slate-900/95 px-4 py-2 shadow-lg shadow-black/60 border border-black/40">
+          <span className="text-xs md:text-sm font-bold text-amber-50 mr-1">
+            We accept:
+          </span>
+
+          <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
+            <span>💵</span>
+            <span>Cash</span>
+          </span>
+
+          <span className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
+            <span>💳</span>
+            <span>All Major Credit Cards</span>
+          </span>
+
+          <span className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
+            <span>🧾</span>
+            <span>EFS Services</span>
+          </span>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export const metadata = {
   title: "Equipment Transport | A & H Towing & Recovery",
@@ -116,44 +146,11 @@ export default function EquipmentTransportPage() {
           </div>
         </section>
 
-        {/* "We accept" payment bar – mirror main page behavior */}
-        <section className="border-t border-neutral-800 bg-black/95 py-6">
-          <div className="container max-w-7xl flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-xs md:text-sm font-semibold tracking-[0.18em] uppercase text-amber-50/80">
-              We Accept
-            </p>
-            <div className="flex flex-wrap gap-2 md:gap-3 text-[11px] md:text-xs font-semibold text-amber-50/90">
-              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
-                Visa
-              </span>
-              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
-                Mastercard
-              </span>
-              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
-                American Express
-              </span>
-              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
-                Discover
-              </span>
-              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
-                Debit Cards
-              </span>
-              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
-                Cash
-              </span>
-              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
-                Zelle
-              </span>
-              <span className="rounded-full border border-amber-400/60 bg-black/70 px-3 py-1">
-                Cash App
-              </span>
-            </div>
-          </div>
-        </section>
+        {/* "We accept" payment bar – match main page */}
+        <PaymentBar />
       </main>
 
       <SiteFooter />
     </>
   );
 }
-

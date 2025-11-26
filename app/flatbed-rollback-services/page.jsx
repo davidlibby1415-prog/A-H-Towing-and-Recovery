@@ -10,8 +10,8 @@ import {
 } from "../components/ServiceLayout";
 import { TikTokEmbed } from "../components/TikTokEmbed";
 
-// TODO: Update this to your actual TikTok profile URL once confirmed.
-const TIKTOK_PROFILE_URL = "https://www.tiktok.com/@YOUR_TIKTOK_HANDLE_HERE";
+// TikTok profile URL
+const TIKTOK_PROFILE_URL = "https://www.tiktok.com/@285302ditchking";
 
 export const metadata = {
   title: "Flatbed Rollback & Equipment Transport | A & H Towing & Recovery",
@@ -94,7 +94,8 @@ export default function FlatbedRollbackPage() {
                 </a>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+              {/* TikTok cards – stacked so they don’t overlap, full visual size */}
+              <div className="grid grid-cols-1 gap-6 justify-items-center">
                 {/* 1. Tow Calls: Offload on the House */}
                 <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
                   <TikTokEmbed

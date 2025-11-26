@@ -7,7 +7,7 @@ import {
   BrandHero,
   PhoneCTA,
   TextCTA,
-} from "../../components/ServiceLayout";
+} from "../components/ServiceLayout";
 
 export const metadata = {
   title: "Emergency Roadside Assistance | A & H Towing & Recovery",
@@ -21,81 +21,107 @@ export default function EmergencyRoadsideAssistancePage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* SINGLE hero over your snow/roadside video */}
+        {/* SINGLE HERO: video + one text card */}
         <BrandHero
-          heroVideoSrc="/videos/emergency-roadside-assistance.mp4" // <-- use your actual video path
-          poster="/images/emergency-roadside-assistance-poster.jpg" // or remove if you don't have a poster
+          heroVideoSrc="/fuel.mp4" // <- uses public/fuel.mp4
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways."
-          overlayOpacity={0.45}
-          cardCenterOffsetPx={0}
+          overlayOpacity={0.6}
         />
 
-        {/* MAIN CONTENT – no second hero card */}
-        <section className="py-8 bg-red-900/90 border-y border-black/40">
-          <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start text-amber-50">
-            {/* LEFT: What we can do on-scene */}
-            <div className="space-y-4">
+        {/* MAIN CONTENT */}
+        <section className="py-10 bg-red-900/90 border-y border-black/40">
+          <div className="container max-w-7xl grid md:grid-cols-2 gap-8 items-start">
+            {/* LEFT: When you’re stuck... */}
+            <div className="space-y-4 text-amber-50">
               <h2 className="text-2xl md:text-3xl font-black">
                 When you’re stuck on the side of the road, we come to you.
               </h2>
               <p className="text-sm md:text-base font-semibold">
-                Our goal is simple:{" "}
+                Whether it&apos;s{" "}
                 <span className="font-black">
-                  get you, your vehicle, and your family out of danger
-                </span>{" "}
-                and back on your way or safely transported.
+                  a dead battery, empty tank, flat tire, or locked doors
+                </span>
+                , our goal is to get you out of danger and back on your way as
+                safely as possible.
               </p>
 
               <ul className="space-y-2 text-sm md:text-base font-semibold">
-                <li>• Fuel delivery when you run out in the middle of nowhere</li>
-                <li>• Jumpstarts for dead batteries and cold mornings</li>
-                <li>• Lockouts – careful entry so you’re not breaking glass</li>
-                <li>• Tire changes and air for low or flat tires</li>
-                <li>• Short-distance tows from breakdown spots to shops or yards</li>
+                <li>• Jumpstarts for cars, pickups, and light commercial units</li>
+                <li>• Fuel delivery when that last bar on the gauge runs out</li>
+                <li>• Tire changes and assistance with damaged wheels</li>
+                <li>• Lockouts — keys locked in or lost on-scene</li>
+                <li>
+                  • Short-distance towing if the vehicle can&apos;t be made
+                  road-ready
+                </li>
               </ul>
 
               <p className="text-sm md:text-base font-semibold">
-                Late nights, dust storms, ice, or triple-digit heat – we know
-                West Texas roads and how fast conditions can go bad.
+                We work the same highways you do —{" "}
+                <span className="font-black">
+                  I-20, farm-to-market roads, and lease roads around Pecos and
+                  Reeves County
+                </span>
+                . If you&apos;re not sure we cover your area, call or text and
+                we&apos;ll tell you straight.
               </p>
             </div>
 
-            {/* RIGHT: What helps us help you + waiting tips */}
-            <div className="space-y-4">
-              <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-4 text-sm md:text-base font-semibold">
-                <h3 className="text-lg md:text-xl font-black mb-2 text-amber-300">
-                  What to tell dispatch when you call or text
-                </h3>
-                <ul className="space-y-1">
-                  <li>• Year / Make / Model of your vehicle</li>
-                  <li>• What happened (won’t start, flat, locked out, out of fuel)</li>
-                  <li>• Exact location, GPS pin, cross street, or mile marker</li>
-                  <li>• If kids, elders, or pets are with you</li>
-                  <li>• Where you want to go (home, shop, yard, motel, etc.)</li>
-                </ul>
-                <p className="mt-2">
-                  The more detail you give us,{" "}
-                  <span className="font-black">
-                    the faster we can pick the right truck, gear, and route.
-                  </span>
-                </p>
-              </div>
+            {/* RIGHT: What to tell dispatch */}
+            <div className="space-y-4 text-amber-50">
+              <h3 className="text-xl md:text-2xl font-black">
+                What to tell dispatch when you call or text
+              </h3>
+              <p className="text-sm md:text-base font-semibold">
+                You don&apos;t have to be an expert. Just give us the basics so
+                we can send the{" "}
+                <span className="font-black">right truck and gear</span> and
+                find you fast.
+              </p>
 
-              <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-4 text-sm md:text-base font-semibold">
-                <h3 className="text-lg md:text-xl font-black mb-2 text-amber-300">
+              <ul className="space-y-2 text-sm md:text-base font-semibold">
+                <li>
+                  • <span className="font-black">Location:</span> GPS pin, mile
+                  marker, nearest exit, or landmark (rest area, lease road
+                  number, etc.).
+                </li>
+                <li>
+                  • <span className="font-black">What happened:</span> won&apos;t
+                  start, flat tire, out of fuel, locked out, or in a ditch.
+                </li>
+                <li>
+                  • <span className="font-black">Vehicle details:</span> year /
+                  make / model and whether it&apos;s a dually, loaded, or
+                  pulling a trailer.
+                </li>
+                <li>
+                  • <span className="font-black">People on-scene:</span> let us
+                  know if there are kids, elders, pets, or mobility issues.
+                </li>
+                <li>
+                  • <span className="font-black">Special hazards:</span> narrow
+                  shoulder, blind hill/curve, heavy traffic, or bad weather.
+                </li>
+              </ul>
+
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-4 text-sm md:text-base font-semibold mt-4">
+                <h4 className="text-lg md:text-xl font-black mb-2 text-amber-300">
                   While you wait on us
-                </h3>
+                </h4>
                 <ul className="space-y-1">
                   <li>• Keep doors locked and seatbelts on if traffic is heavy.</li>
-                  <li>• Turn on hazard flashers; use triangles/flares if you have them.</li>
                   <li>
-                    • Stay away from live lanes – don’t stand between vehicles or on the
-                    traffic side of the shoulder.
+                    • If you step out, do it on the{" "}
+                    <span className="font-black">non-traffic side</span> only.
                   </li>
                   <li>
-                    • Gather keys, wallet/purse, medications, and anything you need to
-                    take with you.
+                    • Turn on hazard flashers and, if safe, set triangles or
+                    flares well behind the vehicle.
+                  </li>
+                  <li>
+                    • Gather keys, wallets, medications, and anything important
+                    you don&apos;t want left behind.
                   </li>
                 </ul>
               </div>
@@ -103,7 +129,7 @@ export default function EmergencyRoadsideAssistancePage() {
           </div>
 
           {/* Bottom CTAs */}
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
             <TextCTA />
           </div>
@@ -114,3 +140,4 @@ export default function EmergencyRoadsideAssistancePage() {
     </>
   );
 }
+

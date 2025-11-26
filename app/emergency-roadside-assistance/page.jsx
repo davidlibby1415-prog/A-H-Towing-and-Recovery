@@ -15,7 +15,7 @@ export const metadata = {
     "Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways.",
 };
 
-// Reuse TikTok IDs in the same style as other pages
+// TikTok videos (you can swap IDs/titles later if you want different clips)
 const TIKTOK_VIDEOS = [
   {
     id: "7495275556246785311",
@@ -50,7 +50,7 @@ function VibrantBorder({ children, className = "" }) {
   );
 }
 
-// Phone-style TikTok embed with tighter crop (same as Heavy Duty)
+// Phone-style TikTok embed with tight crop
 function TikTokEmbed({ id, title }) {
   const src = `https://www.tiktok.com/embed/v2/${id}`;
 
@@ -81,7 +81,7 @@ function TikTokEmbed({ id, title }) {
   );
 }
 
-// “We accept” payment bar, matching the main page / Heavy Duty page
+// “We accept” payment bar
 function PaymentBar() {
   return (
     <div className="container max-w-7xl py-4 bg-red-900/60 rounded-2xl mt-8">
@@ -150,21 +150,21 @@ export default function EmergencyRoadsideAssistancePage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO: video + one text card, same BrandHero pattern */}
+        {/* HERO: uses /Videos/fuel.mp4 */}
         <BrandHero
-          heroVideoSrc="/Videos/fuelconv.mp4" // <- re-encoded fuel video
+          heroVideoSrc="/Videos/fuel.mp4"
           poster="/Videos/fallback.jpg"
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways."
           overlayOpacity={0.45}
         />
 
-        {/* MAIN CONTENT – same layout pattern as Heavy Duty */}
+        {/* MAIN CONTENT – same layout pattern as Heavy Duty page */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
           <div className="container max-w-7xl grid md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)] gap-6 items-start">
-            {/* LEFT: steel-backed text block + two helper boxes */}
+            {/* LEFT: main roadside copy + two helper boxes */}
             <div className="space-y-6 text-amber-50">
-              {/* Main roadside copy with steel + shade + vibrant border */}
+              {/* Main block */}
               <VibrantBorder>
                 <div
                   className="rounded-[18px] border border-yellow-400/80 shadow-[0_18px_40px_rgba(0,0,0,0.9)] px-5 py-5 md:px-7 md:py-7"
@@ -217,7 +217,7 @@ export default function EmergencyRoadsideAssistancePage() {
                 </div>
               </VibrantBorder>
 
-              {/* Two helper boxes side-by-side on md+ */}
+              {/* Two helper boxes side-by-side */}
               <div className="grid md:grid-cols-2 gap-4">
                 {/* What to tell dispatch */}
                 <VibrantBorder>
@@ -377,7 +377,7 @@ export default function EmergencyRoadsideAssistancePage() {
           </div>
         </section>
 
-        {/* Payment bar like the main page / Heavy Duty page */}
+        {/* Payment bar */}
         <PaymentBar />
       </main>
 

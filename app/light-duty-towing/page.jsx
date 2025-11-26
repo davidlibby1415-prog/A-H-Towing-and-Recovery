@@ -34,18 +34,35 @@ const TIKTOK_VIDEOS = [
   },
 ];
 
+// Local TikTok embed using phone-style frame and tighter crop
 function TikTokEmbed({ id, title }) {
+  const src = `https://www.tiktok.com/embed/v2/${id}`;
+
   return (
-    <div className="relative w-full aspect-[9/16] rounded-[28px] overflow-hidden bg-black shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
-      <iframe
-        src={`https://www.tiktok.com/embed/v2/${id}`}
-        title={title}
-        className="absolute inset-0 w-full h-full"
-        allow="encrypted-media; fullscreen; picture-in-picture"
-        allowFullScreen
-        loading="lazy"
-        referrerPolicy="strict-origin-when-cross-origin"
-      />
+    <div className="w-full flex justify-center">
+      <div className="relative w-[260px] sm:w-[280px] md:w-[320px] aspect-[9/16] flex items-center justify-center">
+        {/* Phone-style outer frame */}
+        <div className="relative w-full h-full rounded-[32px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)] border border-neutral-800">
+          <div className="relative w-full h-full rounded-[28px] bg-black overflow-hidden">
+            <iframe
+              src={src}
+              title={title}
+              loading="lazy"
+              className="absolute left-1/2 top-1/2"
+              style={{
+                // TIGHTER CROP to match your yellow rectangle
+                width: "115%",
+                height: "115%",
+                transform: "translate(-50%, -54%)",
+                border: "0",
+              }}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              allowFullScreen
+              referrerPolicy="strict-origin-when-cross-origin"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -94,7 +111,9 @@ export default function LightDutyTowingPage() {
                 <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold text-white drop-shadow">
                   <li>• Cars, SUVs, half-ton and light pickups</li>
                   <li>• Local tows across Pecos and surrounding communities</li>
-                  <li>• Long-distance runs along I-20, US-285, TX-17, TX-302</li>
+                  <li>
+                    • Long-distance runs along I-20, US-285, TX-17, TX-302
+                  </li>
                   <li>
                     • Driveable and non-driveable units (flat tires, no-starts,
                     etc.)
@@ -171,10 +190,18 @@ export default function LightDutyTowingPage() {
                   </a>
                 </div>
 
-                {/* BIG TikTok frames – single column so each is large */}
+                {/* BIG TikTok frames – one per row, centered, phone-style */}
                 <div className="grid grid-cols-1 gap-4">
                   {TIKTOK_VIDEOS.map((vid) => (
-                    <TikTokEmbed key={vid.id} id={vid.id} title={vid.title} />
+                    <div
+                      key={vid.id}
+                      className="flex flex-col items-center gap-2"
+                    >
+                      <div className="text-sm md:text-base font-black text-amber-50 text-center">
+                        {vid.title}
+                      </div>
+                      <TikTokEmbed id={vid.id} title={vid.title} />
+                    </div>
                   ))}
                 </div>
 

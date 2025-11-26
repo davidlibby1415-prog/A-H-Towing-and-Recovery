@@ -3,32 +3,25 @@
 
 import React from "react";
 
-export function TikTokEmbed({
-  src,
-  title = "TikTok video",
-  className = "",
-}) {
+export function TikTokEmbed({ src, title }) {
   return (
-    <div
-      className={`relative w-[280px] sm:w-[320px] md:w-[360px] lg:w-[400px] aspect-[9/16] flex items-center justify-center ${className}`}
-    >
-      <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
-        <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden">
-          <iframe
-            title={title}
-            src={src}
-            className="absolute inset-0 w-[130%] h-[130%]"
-            style={{
-              // Zoom in and push up so you mostly see just the video,
-              // not the white UI + "Watch more" bar.
-              transform: "translateY(-80px) scale(1.35)",
-              transformOrigin: "center top",
-            }}
-            frameBorder="0"
-            allow="accelerometer; autoplay; encrypted-media; clipboard-write; fullscreen; picture-in-picture"
-            referrerPolicy="strict-origin-when-cross-origin"
-          />
-        </div>
+    <div className="relative w-[260px] sm:w-[280px] md:w-[300px] aspect-[9/16] flex items-center justify-center">
+      {/* Phone-ish frame */}
+      <div className="relative w-full h-full rounded-[26px] bg-black overflow-hidden shadow-[0_18px_40px_rgba(0,0,0,0.9)] border border-neutral-800">
+        <iframe
+          src={src}
+          title={title}
+          className="absolute inset-0 w-[145%] h-[145%]"
+          style={{
+            // Zoom in and center on the actual video column
+            // (this cuts off the bottom "Watch now" ad bar and outer margins)
+            transform: "translate(-22%, -6%) scale(1.12)",
+            transformOrigin: "center",
+          }}
+          frameBorder="0"
+          allow="accelerometer; autoplay; encrypted-media; clipboard-write; fullscreen; picture-in-picture"
+          referrerPolicy="strict-origin-when-cross-origin"
+        />
       </div>
     </div>
   );

@@ -345,63 +345,30 @@ function OilfieldTikTokGrid() {
 
 function PaymentsBar() {
   return (
-    <div className="container max-w-7xl py-4 bg-red-900/60 rounded-2xl mt-6">
-      <div className="w-full flex justify-center">
-        <div className="rounded-2xl p-3 bg-gradient-to-r from-sky-500/30 via-rose-500/30 to-amber-400/30 border border-black/10 max-w-fit">
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <div className="font-extrabold text-white text-lg md:text-xl">
-              We accept:
-            </div>
+    <section className="bg-red-950 py-5 mt-6">
+      <div className="container max-w-7xl flex justify-center">
+        <div className="inline-flex flex-wrap items-center gap-3 rounded-full bg-slate-900/95 px-4 py-2 shadow-lg shadow-black/60 border border-black/40">
+          <span className="text-xs md:text-sm font-bold text-amber-50 mr-1">
+            We accept:
+          </span>
 
-            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-yellow-50 to-amber-100">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-              >
-                <rect x="2" y="6" width="20" height="12" rx="2" />
-                <circle cx="12" cy="12" r="3" />
-              </svg>
-              <span className="font-extrabold text-base md:text-lg">Cash</span>
-            </div>
+          <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
+            <span>💵</span>
+            <span>Cash</span>
+          </span>
 
-            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-sky-50 to-blue-100">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-              >
-                <rect x="2" y="5" width="20" height="14" rx="2" />
-                <path d="M2 10h20" />
-              </svg>
-              <span className="font-extrabold text-base md:text-lg">
-                All Major Credit Cards
-              </span>
-            </div>
+          <span className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
+            <span>💳</span>
+            <span>All Major Credit Cards</span>
+          </span>
 
-            <div className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 bg-gradient-to-r from-rose-50 to-red-100">
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path d="M3 6h18l-2 12H5L3 6Z" />
-                <path d="M7 10h10M6 14h12" />
-              </svg>
-              <span className="font-extrabold text-base md:text-lg">
-                EFS Services
-              </span>
-            </div>
-          </div>
+          <span className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
+            <span>🧾</span>
+            <span>EFS Services</span>
+          </span>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
@@ -617,6 +584,11 @@ export default function OilfieldRoutesTowServicePage() {
                       shoulders, sand, and long distances. From light pickups to
                       heavier rigs, we&apos;ll get you out, get you safe, and
                       get you moving again.
+                    </p>
+                    <p className="mt-3 text-sm md:text-base font-semibold text-white">
+                      Our operators also help with offloading and use the tow
+                      trucks for rigging up and rigging down equipment on
+                      location, with professional cleanup when the job is done.
                     </p>
                     <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold text-white">
                       <li>• Lease road navigation and access coordination</li>

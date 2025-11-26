@@ -152,10 +152,10 @@ export default function EmergencyRoadsideAssistancePage() {
       <main className="min-h-screen bg-neutral-950">
         {/* HERO: video + one text card, same BrandHero pattern */}
         <BrandHero
-          heroVideoSrc="/fuel.mp4" // uses public/fuel.mp4
+          heroVideoSrc="/Videos/fuel.mp4" // <- make sure this file exists in /public/Videos
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways."
-          overlayOpacity={0.6}
+          overlayOpacity={0.45}
         />
 
         {/* MAIN CONTENT – same layout as Heavy Duty: left text, right TikToks */}
@@ -386,4 +386,3 @@ export default function EmergencyRoadsideAssistancePage() {
     </>
   );
 }
-

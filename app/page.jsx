@@ -1,4 +1,3 @@
-// app/page.jsx
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
@@ -53,6 +52,13 @@ function PhoneCTA({ className = "", fullWidth = false }) {
   );
 }
 
+/**
+ * RED BUTTONS EVERYWHERE (EXCEPT THE ONE UNDER THE FORM)
+ * ------------------------------------------------------
+ * This component NEVER sends an SMS. It ONLY:
+ *   - scrolls to the form if we’re on the home page, or
+ *   - jumps to "/#text-dispatch" if we’re on another page.
+ */
 function ScrollToFormCTA({
   className = "",
   label = "Text Dispatch (Include GPS)",
@@ -62,11 +68,12 @@ function ScrollToFormCTA({
   const onClick = (e) => {
     e.preventDefault();
     const el = document.getElementById(targetId);
+
     if (el) {
+      // On the home page – scroll down to the form
       scrollToFormWithOffset(targetId);
     } else {
-      // If this component is ever used on another page, jump to the
-      // main page form anchor.
+      // On any other page – go to home page + anchor
       window.location.href = "/#text-dispatch";
     }
   };
@@ -203,7 +210,6 @@ function AccentStrip({ color = "from-ahBlue to-ahRed", className = "" }) {
 /* =================== GLOBAL Animated Border (red↔blue) =================== */
 
 function AnimBorder({ children, className = "" }) {
-  // Slightly slimmer padding so gradient borders don’t look oversized
   return (
     <div className={`rb-border p-[4px] rounded-[26px] ${className}`}>
       {children}
@@ -1229,7 +1235,7 @@ export default function Home() {
           />
         </Section>
 
-        {/* Request for Services section with your original form */}
+        {/* Request for Services section with contact form */}
         <Section id="contact" className="bg-red-900/90">
           <AnimBorder>
             <SteelPanel>
@@ -1264,7 +1270,7 @@ export default function Home() {
                 <ScrollToFormCTA label="Text Dispatch (Include GPS)" />
               </div>
 
-              {/* This wrapper now serves as the anchor for /#text-dispatch */}
+              {/* This wrapper is the anchor for /#text-dispatch */}
               <div
                 id="text-dispatch"
                 className="mt-4 rounded-2xl border border-white/15 bg-emerald-200/90 text-black p-4"
@@ -1275,7 +1281,7 @@ export default function Home() {
           </AnimBorder>
         </Section>
 
-        {/* Bottom brand slab + payments + footer all unchanged */}
+        {/* Bottom brand slab + payments + footer */}
         <div className="container max-w-7xl pb-2">
           <BrandSlab Tag="h2" />
         </div>
@@ -1418,7 +1424,7 @@ export default function Home() {
   );
 }
 
-/* ========================= Contact Section (TikTok via TikTokEmbed) ========================= */
+/* ========================= Contact Section ========================= */
 
 function ContactSection() {
   const [name, setName] = useState("");
@@ -1429,11 +1435,14 @@ function ContactSection() {
   const [coords, setCoords] = useState(null);
   const [locStatus, setLocStatus] = useState("Idle");
 
+  /**
+   * THIS IS THE ONLY BUTTON THAT SENDS A TEXT FROM THE WEBSITE.
+   * It lives under the form and uses this handler.
+   */
   const handleSendText = (e) => {
     e.preventDefault();
 
-    let sent = false;
-    const build = (c) => {
+    const buildBody = (c) => {
       const locLine = c
         ? `Location: ${c.lat.toFixed(5)}, ${c.lng.toFixed(
             5
@@ -1450,39 +1459,35 @@ function ContactSection() {
       ].join("\n");
     };
 
-    const openSMS = (body) => {
-      if (sent) return;
-      sent = true;
+    const openSMS = (coordsForBody) => {
+      const body = buildBody(coordsForBody);
       window.location.href = smsHref("+14328424578", body);
     };
 
-    const fallback = setTimeout(() => openSMS(build(null)), 2500);
-
-    if (navigator?.geolocation) {
-      setLocStatus("Requesting location…");
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          clearTimeout(fallback);
-          const c = {
-            lat: pos.coords.latitude,
-            lng: pos.coords.longitude,
-          };
-          setCoords(c);
-          setLocStatus("Location captured");
-          openSMS(build(c));
-        },
-        (err) => {
-          clearTimeout(fallback);
-          setLocStatus("Location failed: " + err.message);
-          openSMS(build(null));
-        },
-        { enableHighAccuracy: true, timeout: 2000, maximumAge: 0 }
-      );
-    } else {
+    if (!navigator?.geolocation) {
       setLocStatus("Geolocation not supported");
-      clearTimeout(fallback);
-      openSMS(build(null));
+      openSMS(null);
+      return;
     }
+
+    setLocStatus("Requesting location…");
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const c = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude,
+        };
+        setCoords(c);
+        setLocStatus("Location captured");
+        openSMS(c);
+      },
+      (err) => {
+        setLocStatus("Location failed: " + err.message);
+        openSMS(null);
+      },
+      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
+    );
   };
 
   const mapsLink = coords
@@ -1653,11 +1658,8 @@ function ContactSection() {
           </div>
         </div>
 
-        {/* Phone-style frame with tightly cropped TikTok */}
-        <TikTokEmbed
-          src="https://www.tiktok.com/embed/v2/7541454523265535245"
-          title="A&H Towing TikTok"
-        />
+        {/* TikTok video, tightly cropped via shared component */}
+        <TikTokEmbed videoId="7541454523265535245" />
 
         <div className="mt-4">
           <a
@@ -1676,3 +1678,4 @@ function ContactSection() {
     </div>
   );
 }
+

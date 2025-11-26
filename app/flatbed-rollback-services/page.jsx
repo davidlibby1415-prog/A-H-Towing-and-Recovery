@@ -65,7 +65,7 @@ export default function FlatbedRollbackPage() {
               {/* Skill / steel boxes */}
               <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="rounded-2xl border-2 border-emerald-400/90 bg-slate-950/90 px-3 py-2 text-xs md:text-sm font-semibold uppercase tracking-wide text-emerald-200 shadow-lg shadow-black/60">
-                  Offload on the house calls
+                  Professional loading / off-loading
                 </div>
                 <div className="rounded-2xl border-2 border-emerald-400/90 bg-slate-950/90 px-3 py-2 text-xs md:text-sm font-semibold uppercase tracking-wide text-emerald-200 shadow-lg shadow-black/60">
                   Double-stacked trailer moves
@@ -94,9 +94,9 @@ export default function FlatbedRollbackPage() {
                 </a>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
                 {/* 1. Tow Calls: Offload on the House */}
-                <div className="rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70 md:col-span-1 xl:col-span-1">
+                <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
                   <TikTokEmbed
                     videoId="7419451829223836959"
                     caption="Tow Calls: Offload on the House"
@@ -104,7 +104,7 @@ export default function FlatbedRollbackPage() {
                 </div>
 
                 {/* 2. Equipment Transport: Double Stacking Trailers */}
-                <div className="rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70 md:col-span-1 xl:col-span-1">
+                <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
                   <TikTokEmbed
                     videoId="7348837007935769902"
                     caption="Equipment Transport: Double Stacking Trailers"
@@ -112,7 +112,7 @@ export default function FlatbedRollbackPage() {
                 </div>
 
                 {/* 3. Equipment Transport: Pickup from Accident */}
-                <div className="rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70 md:col-span-2 xl:col-span-1">
+                <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
                   <TikTokEmbed
                     videoId="7275994610713988398"
                     caption="Equipment Transport: Pickup from Accident"
@@ -173,4 +173,3 @@ export default function FlatbedRollbackPage() {
     </>
   );
 }
-

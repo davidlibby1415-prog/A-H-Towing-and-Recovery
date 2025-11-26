@@ -1424,7 +1424,7 @@ export default function Home() {
   );
 }
 
-/* ========================= Contact Section ========================= */
+/* ========================= Contact Section (TikTok via TikTokEmbed) ========================= */
 
 function ContactSection() {
   const [name, setName] = useState("");
@@ -1435,14 +1435,11 @@ function ContactSection() {
   const [coords, setCoords] = useState(null);
   const [locStatus, setLocStatus] = useState("Idle");
 
-  /**
-   * THIS IS THE ONLY BUTTON THAT SENDS A TEXT FROM THE WEBSITE.
-   * It lives under the form and uses this handler.
-   */
   const handleSendText = (e) => {
     e.preventDefault();
 
-    const buildBody = (c) => {
+    let sent = false;
+    const build = (c) => {
       const locLine = c
         ? `Location: ${c.lat.toFixed(5)}, ${c.lng.toFixed(
             5
@@ -1459,35 +1456,39 @@ function ContactSection() {
       ].join("\n");
     };
 
-    const openSMS = (coordsForBody) => {
-      const body = buildBody(coordsForBody);
+    const openSMS = (body) => {
+      if (sent) return;
+      sent = true;
       window.location.href = smsHref("+14328424578", body);
     };
 
-    if (!navigator?.geolocation) {
+    const fallback = setTimeout(() => openSMS(build(null)), 2500);
+
+    if (navigator?.geolocation) {
+      setLocStatus("Requesting location…");
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          clearTimeout(fallback);
+          const c = {
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          };
+          setCoords(c);
+          setLocStatus("Location captured");
+          openSMS(build(c));
+        },
+        (err) => {
+          clearTimeout(fallback);
+          setLocStatus("Location failed: " + err.message);
+          openSMS(build(null));
+        },
+        { enableHighAccuracy: true, timeout: 2000, maximumAge: 0 }
+      );
+    } else {
       setLocStatus("Geolocation not supported");
-      openSMS(null);
-      return;
+      clearTimeout(fallback);
+      openSMS(build(null));
     }
-
-    setLocStatus("Requesting location…");
-
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const c = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude,
-        };
-        setCoords(c);
-        setLocStatus("Location captured");
-        openSMS(c);
-      },
-      (err) => {
-        setLocStatus("Location failed: " + err.message);
-        openSMS(null);
-      },
-      { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
-    );
   };
 
   const mapsLink = coords
@@ -1618,7 +1619,7 @@ function ContactSection() {
           </div>
 
           <div className="flex flex-wrap items-stretch gap-3 mt-2 justify-start">
-            <PhoneCTA className="flex-1 max-w-xs" fullWidth />
+            <PhoneCTA className="flex-1 max-w-xs" />
             <button
               type="button"
               onClick={handleSendText}
@@ -1636,7 +1637,7 @@ function ContactSection() {
         </form>
       </div>
 
-      {/* RIGHT: TikTok & 24/7 message */}
+      {/* RIGHT: 24/7 message + TikTok in phone frame */}
       <div className="rounded-xl overflow-hidden border border-black/10 bg-black/80 flex flex-col items-center justify-start px-4 py-5">
         <div className="text-center mb-4">
           <div
@@ -1658,7 +1659,7 @@ function ContactSection() {
           </div>
         </div>
 
-        {/* TikTok video, tightly cropped via shared component */}
+        {/* Phone-style TikTok embed – now using TikTokEmbed */}
         <TikTokEmbed videoId="7541454523265535245" />
 
         <div className="mt-4">

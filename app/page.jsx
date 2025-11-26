@@ -64,8 +64,9 @@ function ScrollToFormCTA({
     if (el) {
       scrollToFormWithOffset(targetId);
     } else {
-      window.location.hash = "#contact";
-      setTimeout(() => scrollToFormWithOffset(targetId), 300);
+      // If this component is ever used on another page, jump to the
+      // main page form anchor.
+      window.location.href = "/#text-dispatch";
     }
   };
 
@@ -1262,7 +1263,11 @@ export default function Home() {
                 <ScrollToFormCTA label="Text Dispatch (Include GPS)" />
               </div>
 
-              <div className="mt-4 rounded-2xl border border-white/15 bg-emerald-200/90 text-black p-4">
+              {/* This wrapper now serves as the anchor for /#text-dispatch */}
+              <div
+                id="text-dispatch"
+                className="mt-4 rounded-2xl border border-white/15 bg-emerald-200/90 text-black p-4"
+              >
                 <ContactSection />
               </div>
             </SteelPanel>
@@ -1484,7 +1489,7 @@ function ContactSection() {
     : "";
 
   return (
-    <div className="grid md:grid-cols-2 gap-6" id="contact">
+    <div className="grid md:grid-cols-2 gap-6">
       {/* LEFT: form */}
       <div>
         <div className="rounded-xl bg-yellow-300/95 border border-yellow-600 px-4 py-3 text-sm text-black font-extrabold mb-3">
@@ -1648,7 +1653,7 @@ function ContactSection() {
         </div>
 
         {/* Phone-style frame with TikTok iframe cropped */}
-        <div className="relative w-[280px] sm:w-[320px] md:w-[360px] aspect-[9/16] flex items-center justify-center">
+        <div className="relative w-[320px] sm:w-[360px] md:w-[420px] aspect-[9/16] flex items-center justify-center">
           <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
             <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden">
               <iframe
@@ -1668,13 +1673,12 @@ function ContactSection() {
         </div>
 
         <div className="mt-4">
-         <a
-  className="inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-rose-500 text-black font-black text-sm md:text-base uppercase tracking-wide shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95 animate-cta-pulse"
-  href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
-  target="_blank"
-  rel="noreferrer"
->
-
+          <a
+            className="inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 bg-gradient-to-r from-sky-400 via-fuchsia-500 to-rose-500 text-black font-black text-sm md:text-base uppercase tracking-wide shadow-lg transition-transform duration-200 hover:scale-105 active:scale-95 animate-cta-pulse"
+            href="https://www.tiktok.com/@285302ditchking?is_from_webapp=1&sender_device=pc"
+            target="_blank"
+            rel="noreferrer"
+          >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path d="M16 8.04c1.28 0 2.5.39 3.5 1.12V6.31c-1.06-.03-2.2-.36-3.18-.99-1.05-.66-1.8-1.56-2.23-2.59H11.8v12.02c0 1.26-1.03 2.28-2.3 2.28-1.27 0-2.3-1.02-2.3-2.28 0-1.25 1.03-2.27 2.3-2.27.24 0 .47.04.69.1V9.61c.94.5 2 .76 3.12.76Z" />
             </svg>

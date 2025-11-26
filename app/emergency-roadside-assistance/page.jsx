@@ -1,146 +1,111 @@
 // app/emergency-roadside-assistance/page.jsx
 
 import React from "react";
-import Link from "next/link";
 import {
   SiteHeader,
   SiteFooter,
   BrandHero,
   PhoneCTA,
-  TopMarquee,
+  TextCTA,
 } from "../../components/ServiceLayout";
 
 export const metadata = {
   title: "Emergency Roadside Assistance | A & H Towing & Recovery",
   description:
-    "Fuel delivery, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways.",
+    "Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways.",
 };
 
-export default function EmergencyRoadsidePage() {
+export default function EmergencyRoadsideAssistancePage() {
   return (
     <>
       <SiteHeader />
-      <TopMarquee />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO (video) */}
+        {/* SINGLE hero over your snow/roadside video */}
         <BrandHero
-          heroVideoSrc="/Videos/fuel.mp4" // make sure V is capital in your folder
-          poster="/fallback.jpg"
+          heroVideoSrc="/videos/emergency-roadside-assistance.mp4" // <-- use your actual video path
+          poster="/images/emergency-roadside-assistance-poster.jpg" // or remove if you don't have a poster
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways."
+          overlayOpacity={0.45}
+          cardCenterOffsetPx={0}
         />
 
-        {/* Lift box up toward top of video */}
-        <section className="-mt-24 md:-mt-28 pb-6">
-          <div className="container max-w-5xl">
-            <div
-              className="rounded-[22px] border border-white/20 bg-black/65 backdrop-blur-md shadow-[0_10px_28px_rgba(0,0,0,0.45)] px-5 py-6 text-center"
-              style={{
-                WebkitTextStroke: "0.25px rgba(0,0,0,.6)",
-                textShadow: "0 1px 2px rgba(0,0,0,.65)",
-              }}
-            >
-              <h1 className="text-white text-[clamp(28px,5vw,40px)] font-black tracking-tight">
-                Emergency Roadside Assistance
-              </h1>
-              <p className="mt-2 text-white font-semibold text-[clamp(14px,2.6vw,18px)]">
-                Fuel, jumpstarts, lockouts, tire changes, and safe
-                transportation around Pecos, Reeves County, and the West Texas
-                highways.
-              </p>
-
-              <div className="mt-4 flex flex-wrap justify-center gap-3">
-                <PhoneCTA />
-                {/* red button -> main page form */}
-                <Link
-                  href="/#contact"
-                  className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white"
-                  aria-label="Go to dispatch form on main page"
-                >
-                  TEXT DISPATCH (INCLUDE GPS)
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* MAIN TEXT / SERVICES DESCRIPTION */}
+        {/* MAIN CONTENT – no second hero card */}
         <section className="py-8 bg-red-900/90 border-y border-black/40">
-          <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start">
-            {/* Left: what we do on scene */}
-            <div className="rounded-2xl border-2 border-yellow-400/90 bg-black/70 p-5 text-white shadow-[0_0_24px_rgba(250,204,21,0.35)]">
-              <h2 className="text-2xl md:text-3xl font-black mb-2">
-                What we can do on the spot
+          <div className="container max-w-7xl grid md:grid-cols-2 gap-6 items-start text-amber-50">
+            {/* LEFT: What we can do on-scene */}
+            <div className="space-y-4">
+              <h2 className="text-2xl md:text-3xl font-black">
+                When you’re stuck on the side of the road, we come to you.
               </h2>
               <p className="text-sm md:text-base font-semibold">
-                Not every problem needs a full tow. When a breakdown blindsides
-                you, we’ll meet you quickly and handle the small stuff that
-                keeps you rolling: fuel delivery, jumpstarts, lockouts,
-                <span className="font-black"> tire changes</span>, and a calm
-                plan for <span className="font-black">safe transportation</span>{" "}
-                if a tow is the safer call.
+                Our goal is simple:{" "}
+                <span className="font-black">
+                  get you, your vehicle, and your family out of danger
+                </span>{" "}
+                and back on your way or safely transported.
               </p>
-              <ul className="mt-3 space-y-2 text-sm md:text-base font-semibold">
-                <li>• Fuel delivery (gas or diesel)</li>
-                <li>• Jumpstarts and quick roadside battery checks</li>
-                <li>• Lockouts (fast entry with no damage)</li>
-                <li>• Tire changes (spare fitting &amp; lug checks)</li>
-                <li>• Safe transportation to shoulder, lot, or destination</li>
+
+              <ul className="space-y-2 text-sm md:text-base font-semibold">
+                <li>• Fuel delivery when you run out in the middle of nowhere</li>
+                <li>• Jumpstarts for dead batteries and cold mornings</li>
+                <li>• Lockouts – careful entry so you’re not breaking glass</li>
+                <li>• Tire changes and air for low or flat tires</li>
+                <li>• Short-distance tows from breakdown spots to shops or yards</li>
               </ul>
-              <p className="mt-3 text-sm md:text-base font-semibold">
-                Tell us your vehicle, where you are (GPS pin helps), and what
-                happened. We’ll advise if roadside is enough or if a tow makes
-                more sense.
+
+              <p className="text-sm md:text-base font-semibold">
+                Late nights, dust storms, ice, or triple-digit heat – we know
+                West Texas roads and how fast conditions can go bad.
               </p>
-              <div className="mt-4 flex flex-wrap gap-3">
-                <PhoneCTA />
-                <Link
-                  href="/#contact"
-                  className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white"
-                >
-                  TEXT DISPATCH (INCLUDE GPS)
-                </Link>
+            </div>
+
+            {/* RIGHT: What helps us help you + waiting tips */}
+            <div className="space-y-4">
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-4 text-sm md:text-base font-semibold">
+                <h3 className="text-lg md:text-xl font-black mb-2 text-amber-300">
+                  What to tell dispatch when you call or text
+                </h3>
+                <ul className="space-y-1">
+                  <li>• Year / Make / Model of your vehicle</li>
+                  <li>• What happened (won’t start, flat, locked out, out of fuel)</li>
+                  <li>• Exact location, GPS pin, cross street, or mile marker</li>
+                  <li>• If kids, elders, or pets are with you</li>
+                  <li>• Where you want to go (home, shop, yard, motel, etc.)</li>
+                </ul>
+                <p className="mt-2">
+                  The more detail you give us,{" "}
+                  <span className="font-black">
+                    the faster we can pick the right truck, gear, and route.
+                  </span>
+                </p>
+              </div>
+
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-4 text-sm md:text-base font-semibold">
+                <h3 className="text-lg md:text-xl font-black mb-2 text-amber-300">
+                  While you wait on us
+                </h3>
+                <ul className="space-y-1">
+                  <li>• Keep doors locked and seatbelts on if traffic is heavy.</li>
+                  <li>• Turn on hazard flashers; use triangles/flares if you have them.</li>
+                  <li>
+                    • Stay away from live lanes – don’t stand between vehicles or on the
+                    traffic side of the shoulder.
+                  </li>
+                  <li>
+                    • Gather keys, wallet/purse, medications, and anything you need to
+                    take with you.
+                  </li>
+                </ul>
               </div>
             </div>
-
-            {/* Right: safety tips */}
-            <div className="rounded-2xl border-2 border-yellow-400/90 bg-black/70 p-5 text-white shadow-[0_0_24px_rgba(250,204,21,0.35)]">
-              <h3 className="text-2xl md:text-3xl font-black mb-2">
-                Safety Tips Before We Arrive
-              </h3>
-              <ol className="list-decimal list-inside space-y-2 text-sm md:text-base font-semibold">
-                <li>
-                  Make sure your vehicle is in a safe location away from
-                  traffic — or evacuate the vehicle to a safe distance/place
-                  nearby.
-                </li>
-                <li>Turn on hazard flashers if it’s safe.</li>
-                <li>Stay belted inside, or stand well away from traffic.</li>
-                <li>Keep your phone handy so we can reach you.</li>
-                <li>
-                  If law enforcement is on scene, let them know A&amp;H Towing
-                  &amp; Recovery is en route.
-                </li>
-              </ol>
-              <p className="mt-3 text-sm md:text-base font-semibold">
-                Your safety comes first. If anything changes, call or text us
-                an update.
-              </p>
-            </div>
           </div>
-        </section>
 
-        {/* bottom CTA row on this page */}
-        <section className="py-6 bg-red-800/90">
-          <div className="container max-w-7xl flex flex-wrap justify-center gap-3">
+          {/* Bottom CTAs */}
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
             <PhoneCTA />
-            <Link
-              href="/#contact"
-              className="inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white"
-            >
-              TEXT DISPATCH (INCLUDE GPS)
-            </Link>
+            <TextCTA />
           </div>
         </section>
       </main>
@@ -149,4 +114,3 @@ export default function EmergencyRoadsidePage() {
     </>
   );
 }
-

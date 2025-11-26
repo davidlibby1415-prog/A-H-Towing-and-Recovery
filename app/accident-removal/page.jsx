@@ -22,12 +22,11 @@ export default function AccidentRemovalPage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO – uses the same BrandHero pattern as Winching / Heavy Duty */}
+        {/* HERO – now uses the same clear/glass card style as Winching */}
         <BrandHero
           serviceTitle="Accident Management and Removal"
           serviceSubtitle="Professional, patient recovery after a wreck — with care for your vehicle, your family, and the scene."
-          heroVideoSrc="/Videos/accident.mp4" // make sure accident.mp4 is in /public/Videos
-          overlayOpacity={0.45}
+          heroVideoSrc="/Videos/accident.mp4" // accident.mp4 in /public/Videos
         />
 
         {/* MAIN CONTENT – patterned after Heavy Duty Tow */}

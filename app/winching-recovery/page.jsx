@@ -7,7 +7,7 @@ import {
   PhoneCTA,
   TextCTA,
 } from "../../components/ServiceLayout";
-import { TikTokEmbed } from "../../components/TikTokEmbed";
+import { TikTokEmbed } from "../components/TikTokEmbed";
 
 export const metadata = {
   title: "Winching / Recovery | A & H Towing & Recovery",

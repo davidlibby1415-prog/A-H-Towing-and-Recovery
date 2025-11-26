@@ -1,40 +1,35 @@
+// app/components/TikTokEmbed.jsx
 "use client";
 
 import React from "react";
 
-/**
- * Simple iframe-based TikTok embed that does NOT rely on
- * tiktok.com/embed.js scanning the DOM.
- *
- * Usage:
- * <TikTokEmbed videoId="6908073338308939014" caption="Deploy Airbags" />
- */
-export function TikTokEmbed({ videoId, caption }) {
-  if (!videoId) return null;
-
-  const src = `https://www.tiktok.com/embed/v2/${videoId}`;
-
+export function TikTokEmbed({
+  src,
+  title = "TikTok video",
+  className = "",
+}) {
   return (
-    <div className="w-full">
-      {/* 9:16-ish aspect ratio box */}
-      <div className="relative w-full overflow-hidden rounded-2xl border border-neutral-700 bg-black">
-        {/* padding-bottom 177.78% ≈ 9:16 ratio */}
-        <div style={{ paddingBottom: "177.78%" }} />
-        <iframe
-          src={src}
-          title={caption || "TikTok video"}
-          className="absolute inset-0 w-full h-full"
-          allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-          allowFullScreen
-          loading="lazy"
-        />
+    <div
+      className={`relative w-[280px] sm:w-[320px] md:w-[360px] lg:w-[400px] aspect-[9/16] flex items-center justify-center ${className}`}
+    >
+      <div className="relative w-full h-full rounded-[36px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)]">
+        <div className="relative w-full h-full rounded-[32px] bg-black overflow-hidden">
+          <iframe
+            title={title}
+            src={src}
+            className="absolute inset-0 w-[130%] h-[130%]"
+            style={{
+              // Zoom in and push up so you mostly see just the video,
+              // not the white UI + "Watch more" bar.
+              transform: "translateY(-80px) scale(1.35)",
+              transformOrigin: "center top",
+            }}
+            frameBorder="0"
+            allow="accelerometer; autoplay; encrypted-media; clipboard-write; fullscreen; picture-in-picture"
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+        </div>
       </div>
-
-      {caption && (
-        <p className="mt-1 text-[11px] sm:text-xs text-amber-100/80 line-clamp-2">
-          {caption}
-        </p>
-      )}
     </div>
   );
 }

@@ -81,7 +81,7 @@ function TikTokEmbed({ id, title }) {
   );
 }
 
-// “We accept” payment bar
+// “We accept” payment bar (same styling used on other pages)
 function PaymentBar() {
   return (
     <div className="container max-w-7xl py-4 bg-red-900/60 rounded-2xl mt-8">
@@ -150,9 +150,10 @@ export default function EmergencyRoadsideAssistancePage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO: uses /fuel.mp4 at the root of /public */}
+        {/* HERO: uses /Videos/fuel.mp4 from public/Videos */}
         <BrandHero
-          heroVideoSrc="/fuel.mp4"
+          heroVideoSrc="/Videos/fuel.mp4"
+          poster="/Videos/fallback.jpg"
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Fuel, jumpstarts, lockouts, tire changes, and safe transportation around Pecos, Reeves County, and the West Texas highways."
           overlayOpacity={0.45}

@@ -32,7 +32,7 @@ const dateTimeScript = `
 
 export function SiteHeader() {
   return (
-    <header className="bg-black border-b border-yellow-500/40">
+    <header className="sticky top-0 z-50 bg-black border-b border-yellow-500/40">
       <div className="container max-w-7xl mx-auto px-4 md:px-6 py-3 flex flex-wrap items-center gap-4 justify-between">
         {/* LEFT – Logo + company info */}
         <div className="flex items-center gap-3">
@@ -87,12 +87,24 @@ export function SiteHeader() {
                 <div className="py-2">
                   {[
                     ["Light Duty Towing", "/light-duty-towing"],
-                    ["Heavy Duty & Commercial Towing", "/heavy-duty-commercial-towing"],
-                    ["Oilfield Routes Tow Service", "/oilfield-routes-tow-service"],
+                    [
+                      "Heavy Duty & Commercial Towing",
+                      "/heavy-duty-commercial-towing",
+                    ],
+                    [
+                      "Oilfield Routes Tow Service",
+                      "/oilfield-routes-tow-service",
+                    ],
                     ["Equipment Transport", "/equipment-transport"],
                     ["Flatbed / Rollback Services", "/flatbed-rollback-services"],
-                    ["Emergency Roadside Assistance", "/emergency-roadside-assistance"],
-                    ["Accident Management and Removal", "/accident-management-and-removal"],
+                    [
+                      "Emergency Roadside Assistance",
+                      "/emergency-roadside-assistance",
+                    ],
+                    [
+                      "Accident Management and Removal",
+                      "/accident-management-and-removal",
+                    ],
                     ["Winching / Recovery", "/winching-recovery"],
                   ].map(([label, href]) => (
                     <Link
@@ -169,9 +181,7 @@ export function SiteHeader() {
       </div>
 
       {/* inline script to show live date/time & location */}
-      <script
-        dangerouslySetInnerHTML={{ __html: dateTimeScript }}
-      />
+      <script dangerouslySetInnerHTML={{ __html: dateTimeScript }} />
     </header>
   );
 }
@@ -181,6 +191,7 @@ export function SiteHeader() {
 export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc }) {
   return (
     <section className="relative border-b border-yellow-500/30 bg-neutral-950 overflow-hidden">
+      {/* subtle radial glow background */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(234,179,8,0.1),_transparent_60%),radial-gradient(circle_at_bottom,_rgba(248,113,113,0.12),_transparent_60%)] pointer-events-none" />
 
       <div className="container max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-14 grid md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-8 items-center relative z-10">

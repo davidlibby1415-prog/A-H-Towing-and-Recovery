@@ -167,7 +167,7 @@ export function SiteHeader() {
               </Link>
             </li>
 
-            {/* Request a Tow – anchor back to home form (make sure the instructions/form wrapper has id="dispatch-form") */}
+            {/* Request a Tow – anchor back to home form */}
             <li>
               <Link
                 href="/#dispatch-form"
@@ -198,8 +198,7 @@ export function SiteHeader() {
             href="tel:+14328424578"
             className="inline-flex items-center justify-center mt-1 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs sm:text-sm font-bold text-yellow-50 shadow-lg shadow-blue-900/60 text-center"
           >
-            CLICK HERE TO CALL 24/7 DISPATCH
-            <span className="ml-2 whitespace-nowrap">(432) 842-4578</span>
+            CALL 24/7 DISPATCH (432) 842-4578
           </a>
         </div>
       </div>
@@ -272,9 +271,9 @@ export function PhoneCTA() {
   return (
     <a
       href="tel:+14328424578"
-      className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-xs sm:text-sm font-extrabold text-yellow-50 shadow-lg shadow-red-900/60"
+      className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs sm:text-sm font-extrabold text-yellow-50 shadow-lg shadow-blue-900/60"
     >
-      CALL 24/7 DISPATCH • (432) 842-4578
+      CALL 24/7 DISPATCH (432) 842-4578
     </a>
   );
 }
@@ -283,9 +282,9 @@ export function TextCTA() {
   return (
     <Link
       href="/#dispatch-form"
-      className="inline-flex items-center justify-center px-3 py-2 rounded-xl border border-yellow-400/70 bg-black/70 hover:bg-yellow-500/10 text-[11px] sm:text-xs font-semibold text-yellow-100"
+      className="inline-flex items-center justify-center px-3 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-[11px] sm:text-xs font-semibold text-yellow-50 shadow-lg shadow-red-900/60"
     >
-      TEXT / REQUEST A TOW ONLINE
+      TEXT DISPATCH &amp; SHARE MY GPS LOCATION
     </Link>
   );
 }
@@ -295,13 +294,19 @@ export function TextCTA() {
 export function WeAcceptBar() {
   return (
     <div className="bg-black/95 border-t border-yellow-500/40">
-      <div className="container max-w-7xl mx-auto px-4 md:px-6 py-3 flex flex-wrap items-center justify-center gap-4 text-[11px] sm:text-xs text-neutral-100">
+      <div className="container max-w-7xl mx-auto px-4 md:px-6 py-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-amber-50">
         <span className="font-semibold text-yellow-300 tracking-wide">
           We accept:
         </span>
-        <span>Cash</span>
-        <span>Major credit &amp; debit cards</span>
-        <span>EFS / Comchek</span>
+        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-500/50">
+          Cash
+        </span>
+        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-500/50">
+          All major credit &amp; debit cards
+        </span>
+        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-500/50">
+          EFS / Comchek
+        </span>
       </div>
     </div>
   );

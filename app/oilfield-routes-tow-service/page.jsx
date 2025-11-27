@@ -10,28 +10,6 @@ import {
   TextCTA,
 } from "../components/ServiceLayout";
 
-/* ============================ CTAs ============================ */
-
-function PhoneCTA({ className = "", fullWidth = false }) {
-  const widthClasses = fullWidth
-    ? "w-full sm:w-auto !min-w-0"
-    : "min-w-[260px]";
-
-  return (
-    <a
-      href="tel:+14328424578"
-      className={`inline-flex flex-col items-center justify-center rounded-2xl px-5 py-3 font-extrabold shadow-cta text-white bg-ahBlue hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base ${widthClasses} ${className} transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white`}
-      aria-label="Call 24/7 dispatch at (432) 842-4578"
-    >
-      <span className="uppercase tracking-wide text-xs md:text-sm text-center">
-        CLICK HERE TO CALL 24/7 DISPATCH
-      </span>
-      <span className="mt-1 text-lg md:text-xl leading-none">
-        (432) 842-4578
-      </span>
-    </a>
-  );
-}
 
 function BlueCallButton({ className = "" }) {
   return (

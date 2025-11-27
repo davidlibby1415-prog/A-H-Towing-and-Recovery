@@ -55,7 +55,8 @@ function TikTokEmbed({ id, title }) {
 
   return (
     <div className="w-full flex justify-center">
-      <div className="relative w-[260px] sm:w-[280px] md:w-[320px] aspect-[9/16] flex items-center justify-center">
+      {/* 👇 small left shift so phone is visually centered in its border */}
+      <div className="relative w-[260px] sm:w-[280px] md:w-[320px] aspect-[9/16] flex items-center justify-center -translate-x-[4px]">
         <div className="relative w-full h-full rounded-[32px] bg-gradient-to-br from-neutral-900 via-neutral-950 to-black p-[3px] shadow-[0_18px_40px_rgba(0,0,0,0.9)] border border-neutral-800">
           <div className="relative w-full h-full rounded-[28px] bg-black overflow-hidden">
             <iframe
@@ -277,7 +278,7 @@ export default function HeavyDutyCommercialTowingPage() {
               </div>
             </div>
 
-            {/* RIGHT: TikTok embeds + follow CTAs (vibrant border only, like Light Duty) */}
+            {/* RIGHT: TikTok embeds + follow CTAs */}
             <div className="space-y-6">
               <VibrantBorder>
                 <div className="rounded-[18px] border border-yellow-400/80 bg-black/85 p-4 text-white shadow-[0_18px_40px_rgba(0,0,0,0.9)]">

@@ -82,8 +82,8 @@ export function SiteHeader() {
                 <span className="text-xs">▾</span>
               </button>
 
-              {/* DROPDOWN – stays open while pointer is in the area */}
-              <div className="absolute left-0 top-full mt-2 w-80 bg-black/95 border border-yellow-500/60 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition">
+              {/* DROPDOWN – flush with button so no hover gap */}
+              <div className="absolute left-0 top-full w-80 bg-black/95 border border-yellow-500/60 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition z-50">
                 <div className="py-2">
                   {[
                     ["Light Duty Towing", "/light-duty-towing"],

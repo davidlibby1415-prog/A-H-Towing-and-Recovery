@@ -1,15 +1,9 @@
 // app/oilfield-routes-tow-service/page.jsx
 "use client";
 
-import React from "react";
-import {
-  SiteHeader,
-  SiteFooter,
-  BrandHero,
-  PhoneCTA,
-  TextCTA,
-} from "../components/ServiceLayout";
-
+import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import { SiteFooter, PhoneCTA } from "../components/ServiceLayout";
 
 function BlueCallButton({ className = "" }) {
   return (
@@ -637,7 +631,6 @@ export default function OilfieldRoutesTowServicePage() {
       </main>
 
       <SiteFooter />
-      <RBGlobalStyles />
     </>
   );
 }

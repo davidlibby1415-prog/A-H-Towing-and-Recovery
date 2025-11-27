@@ -35,7 +35,7 @@ export default function OwnersPage() {
                   The family behind the trucks.
                 </h1>
                 <p className="mt-4 text-sm sm:text-base leading-relaxed text-amber-100">
-                  Whether you’re a local family, passing through on the
+                  Whether you&apos;re a local family, passing through on the
                   interstate, or working the oilfield, our goal is simple: get
                   you off the shoulder and taken care of without making a bad
                   day worse.
@@ -77,25 +77,27 @@ export default function OwnersPage() {
                 }}
               >
                 <h2 className="text-xl sm:text-2xl font-black text-yellow-300">
-                  We’re not a call center. We’re the people who show up.
+                  We&apos;re not a call center. We&apos;re the people who show
+                  up.
                 </h2>
                 <p className="mt-3 text-sm sm:text-base leading-relaxed text-amber-100">
                   A &amp; H Towing &amp; Recovery is a family-run operation out
-                  of Pecos, Texas. When you call, text, or message us, you’re
+                  of Pecos, Texas. When you call, text, or message us, you&apos;re
                   talking to the same people who schedule the work, run the
                   trucks, and stand out on the shoulder at 2 a.m.
                 </p>
 
                 <h3 className="mt-5 text-lg sm:text-xl font-bold text-yellow-300">
-                  Who’s behind the wheel of this business?
+                  Who&apos;s behind the wheel of this business?
                 </h3>
                 <ul className="mt-2 space-y-1 text-sm sm:text-base text-amber-100 list-disc list-inside">
                   <li>
                     <span className="font-semibold">
                       Real people, not a big company.
                     </span>{" "}
-                    This isn’t a giant corporate fleet. It’s our family name on
-                    the door and our reputation on the line every single call.
+                    This isn&apos;t a giant corporate fleet. It&apos;s our family
+                    name on the door and our reputation on the line every single
+                    call.
                   </li>
                   <li>
                     <span className="font-semibold">
@@ -108,8 +110,8 @@ export default function OwnersPage() {
                     <span className="font-semibold">
                       We answer our own phone.
                     </span>{" "}
-                    No script, no runaround. Just, “Where are you? What’re you
-                    in? Is everyone safe?” and then we get moving.
+                    No script, no runaround. Just, &quot;Where are you? What&apos;re
+                    you in? Is everyone safe?&quot; and then we get moving.
                   </li>
                   <li>
                     <span className="font-semibold">
@@ -125,19 +127,20 @@ export default function OwnersPage() {
                 </h3>
                 <p className="mt-2 text-sm sm:text-base text-amber-100">
                   Anyone can drag a vehicle from Point A to Point B. We care
-                  just as much about how you’re treated while it’s happening.
+                  just as much about how you&apos;re treated while it&apos;s
+                  happening.
                 </p>
                 <ul className="mt-2 space-y-1 text-sm sm:text-base text-amber-100 list-disc list-inside">
                   <li>
                     Safety comes first — for you, us, and the motoring public.
                   </li>
                   <li>
-                    We don’t yell, rush, or shame people on the side of the
+                    We don&apos;t yell, rush, or shame people on the side of the
                     road.
                   </li>
                   <li>
-                    We talk you through what we’re doing and where your vehicle
-                    is going.
+                    We talk you through what we&apos;re doing and where your
+                    vehicle is going.
                   </li>
                   <li>
                     We try to leave every scene a little calmer than we found
@@ -188,7 +191,7 @@ export default function OwnersPage() {
             </p>
 
             <div className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-3">
-              {/* 1 */}
+              {/* 1 – Ale solo portrait */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
                 <img
                   src="/owners/alesolo.jpg"
@@ -196,23 +199,8 @@ export default function OwnersPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              {/* 2 */}
-              <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
-                <img
-                  src="/owners/alexcert.jpg"
-                  alt="Alejandra with Miller Rotator training certificate"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {/* 3 */}
-              <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
-                <img
-                  src="/owners/couple.jpg"
-                  alt="Harvey and Alejandra together outdoors"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {/* 4 */}
+
+              {/* 2 – SWAPPED: now couple1.jpg */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
                 <img
                   src="/owners/couple1.jpg"
@@ -220,15 +208,26 @@ export default function OwnersPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              {/* 5 */}
+
+              {/* 3 – Couple by the water */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
                 <img
-                  src="/owners/hargun.jpg"
-                  alt="Harvey in the shop showing his personality"
+                  src="/owners/couple.jpg"
+                  alt="Harvey and Alejandra together outdoors"
                   className="w-full h-full object-cover"
                 />
               </div>
-              {/* 6 */}
+
+              {/* 4 – SWAPPED: now alexcert.jpg */}
+              <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
+                <img
+                  src="/owners/alexcert.jpg"
+                  alt="Alejandra with Miller Rotator training certificate"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* 5 – SWAPPED: now dpshar.jpg */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
                 <img
                   src="/owners/dpshar.jpg"
@@ -236,7 +235,17 @@ export default function OwnersPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              {/* 7 */}
+
+              {/* 6 – SWAPPED: now hargun.jpg */}
+              <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
+                <img
+                  src="/owners/hargun.jpg"
+                  alt="Harvey in the shop showing his personality"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* 7 – Full-width Harvey cert */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60 md:col-span-3">
                 <img
                   src="/owners/harcert.jpg"
@@ -280,7 +289,7 @@ export default function OwnersPage() {
 
               <div className="space-y-2">
                 <h3 className="text-base sm:text-lg font-bold text-yellow-300">
-                  The Tow Life: This Business Isn’t for the Weak
+                  The Tow Life: This Business Isn&apos;t for the Weak
                 </h3>
                 <div className="rounded-3xl overflow-hidden border border-neutral-700 bg-black/80 p-3">
                   <TikTokEmbed videoId="7382816143372799263" />
@@ -306,3 +315,4 @@ export default function OwnersPage() {
     </>
   );
 }
+

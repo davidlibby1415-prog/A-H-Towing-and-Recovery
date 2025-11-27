@@ -293,24 +293,28 @@ export function TextCTA() {
 
 export function WeAcceptBar() {
   return (
-    <div className="bg-black/95 border-t border-yellow-500/40">
-      <div className="container max-w-7xl mx-auto px-4 md:px-6 py-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs text-amber-50">
-        <span className="font-semibold text-yellow-300 tracking-wide">
+    <div className="bg-black/95 border-t border-yellow-500/60">
+      <div className="container max-w-7xl mx-auto px-4 md:px-6 py-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs">
+        <span className="font-semibold text-yellow-300 tracking-wide uppercase">
           We accept:
         </span>
-        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-500/50">
+
+        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-400/80 text-white font-semibold">
           Cash
         </span>
-        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-500/50">
+
+        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-400/80 text-white font-semibold text-center">
           All major credit &amp; debit cards
         </span>
-        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-500/50">
+
+        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-400/80 text-white font-semibold">
           EFS / Comchek
         </span>
       </div>
     </div>
   );
 }
+
 
 /* ========= Simple footer ========= */
 

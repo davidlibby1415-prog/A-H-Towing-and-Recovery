@@ -26,7 +26,7 @@ export function PhoneCTA({ className = "" }) {
 export function TextCTA({ className = "" }) {
   return (
     <a
-      href="/#text-dispatch" // 👈 bottom “directions / text form” section on main page
+      href="/#text-dispatch" // bottom “directions / text form” section on main page
       className={`inline-flex items-center justify-center rounded-2xl px-5 py-3 font-semibold shadow-cta text-white bg-ahRed hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-offset-2 text-sm md:text-base min-w-[260px] transition-transform duration-200 hover:scale-105 active:scale-95 hover:shadow-2xl border-2 border-white outline outline-2 outline-white ${className}`}
       aria-label="Go to text dispatch instructions on main page"
     >
@@ -84,16 +84,14 @@ function TimeTemp() {
   const [temp, setTemp] = useState(null);
   const [locationLabel, setLocationLabel] = useState("Pecos, TX");
 
-  // update clock every minute
   useEffect(() => {
     const id = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(id);
   }, []);
 
-  // fetch temperature once (if API key is present)
   useEffect(() => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_KEY;
-    if (!apiKey) return; // fallback: just show date/time + location
+    if (!apiKey) return;
 
     const lat = 31.4229;
     const lon = -103.4938;
@@ -172,7 +170,6 @@ export function SiteHeader() {
 
         {/* Nav */}
         <nav className="ml-auto flex items-center gap-4 text-xs sm:text-sm md:text-base font-extrabold">
-          {/* Home link (to the left of Services) */}
           <Link
             href="/"
             className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors hidden sm:inline-block"
@@ -180,7 +177,6 @@ export function SiteHeader() {
             Home
           </Link>
 
-          {/* Services dropdown */}
           <details className="relative group">
             <summary className="list-none px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black cursor-pointer flex items-center gap-1">
               <span>Services</span>
@@ -265,7 +261,6 @@ export function SiteHeader() {
           </a>
         </nav>
 
-        {/* Right side date/time/temp + CTA on desktop */}
         <div className="ml-3 hidden sm:flex items-center gap-3">
           <TimeTemp />
           <PhoneCTA />
@@ -332,7 +327,7 @@ export function SiteFooter() {
         </div>
 
         <div className="text-center md:text-left">
-          <div className="font-semibold text-white">Contact</div>
+          <div className="font-semibold text:white">Contact</div>
           <p className="mt-2 text-white drop-shadow-sm">
             <a className="underline font-semibold" href="tel:+14328424578">
               (432) 842-4578
@@ -376,7 +371,6 @@ export function BrandHero({
       className="relative isolate w-full overflow-hidden bg-neutral-950"
       style={{ minHeight: "min(70vh, 900px)" }}
     >
-      {/* Background video or gradient */}
       {heroVideoSrc ? (
         <div className="absolute inset-0">
           <video
@@ -396,7 +390,6 @@ export function BrandHero({
         <div className="absolute inset-0 bg-gradient-to-br from-black via-neutral-900 to-red-900/80" />
       )}
 
-      {/* Dark radial vignette */}
       <div
         className="absolute inset-0 pointer-events-none z-10"
         style={{
@@ -406,7 +399,6 @@ export function BrandHero({
         }}
       />
 
-      {/* Main card */}
       <div className="relative z-20 flex items-center justify-center px-4 pt-10 pb-12">
         <div
           className="container max-w-5xl"

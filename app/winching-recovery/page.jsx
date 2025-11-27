@@ -1,5 +1,4 @@
 // app/winching-recovery/page.jsx
-"use client";
 
 import React from "react";
 import {

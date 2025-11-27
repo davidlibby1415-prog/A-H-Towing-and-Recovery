@@ -1,4 +1,3 @@
-// FILE: app/components/TikTokEmbed.jsx
 "use client";
 
 import React from "react";
@@ -55,7 +54,6 @@ export function TikTokEmbed({
             loading="lazy"
             className="absolute left-1/2 top-1/2"
             style={{
-              // 🔧 Tighter crop (less extra frame) to match your yellow rectangle
               width: "115%",
               height: "115%",
               transform: "translate(-50%, -54%)",
@@ -69,4 +67,3 @@ export function TikTokEmbed({
     </div>
   );
 }
-

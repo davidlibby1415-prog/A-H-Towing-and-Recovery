@@ -532,10 +532,12 @@ function VideoSection({
 
 export default function Home() {
   useEffect(() => {
-    if ("scrollRestoration" in history) {
+    if (typeof history !== "undefined" && "scrollRestoration" in history) {
       history.scrollRestoration = "manual";
     }
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }
   }, []);
 
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -1589,8 +1591,7 @@ function ContactSection() {
                       setCoords(c);
                       setLocStatus("Location captured");
                     },
-                    (err) =>
-                      setLocStatus("Location failed: " + err.message),
+                    (err) => setLocStatus("Location failed: " + err.message),
                     { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 }
                   );
                 }}
@@ -1620,6 +1621,7 @@ function ContactSection() {
 
           <div className="flex flex-wrap items-stretch gap-3 mt-2 justify-start">
             <PhoneCTA className="flex-1 max-w-xs" />
+            {/* THE ONLY SMS-SENDING RED BUTTON */}
             <button
               type="button"
               onClick={handleSendText}
@@ -1659,7 +1661,7 @@ function ContactSection() {
           </div>
         </div>
 
-        {/* Phone-style TikTok embed – now using TikTokEmbed */}
+        {/* Phone-style TikTok embed – using TikTokEmbed */}
         <TikTokEmbed videoId="7541454523265535245" />
 
         <div className="mt-4">

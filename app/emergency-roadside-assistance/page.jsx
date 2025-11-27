@@ -16,17 +16,14 @@ export const metadata = {
     "Jumps, tire changes, fuel delivery, lockouts, and quick roadside checks anywhere along your West Texas route.",
 };
 
-/* ========= Small TikTok section for this page ========= */
+/* ========= TikTok section for this page ========= */
 
 function RoadsideTikTokSection() {
+  // Removed duplicate “Emergency Roadside: Tire Change” entry
   const videos = [
     {
       id: "7406160390414978334",
       caption: "Roadside Call: Changing Tractor Tires",
-    },
-    {
-      id: "7406160390414978334",
-      caption: "Emergency Roadside: Tire Change",
     },
     {
       id: "7215414816326880554",
@@ -42,16 +39,14 @@ function RoadsideTikTokSection() {
             Real West Texas Roadside Calls
           </h2>
           <p className="mt-2 text-sm md:text-base text-amber-50 max-w-2xl">
-            A few quick clips from the road — tractor tires, emergency roadside work,
-            and the kind of nights that remind us why{" "}
-            <span className="font-bold">
-              “don’t drink and drive”
-            </span>{" "}
-            is more than a slogan.
+            A few quick clips from the road — tractor tires, emergency roadside
+            work, and the kind of nights that remind us why{" "}
+            <span className="font-bold">“don’t drink and drive”</span> is more
+            than a slogan.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {videos.map((video) => (
             <div
               key={video.caption}
@@ -89,6 +84,8 @@ export default function EmergencyRoadsideAssistancePage() {
         <BrandHero
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Jumps, tire changes, fuel delivery, lockouts, and quick roadside checks anywhere along your West Texas route."
+          // If this still doesn’t play, double-check that Fuel.mp4
+          // is in /public/Videos with this exact casing.
           heroVideoSrc="/Videos/Fuel.mp4"
         />
 
@@ -101,15 +98,16 @@ export default function EmergencyRoadsideAssistancePage() {
                 <h1 className="text-2xl md:text-3xl font-black text-yellow-300">
                   Stuck on the shoulder? We’ll come to you.
                 </h1>
-                <p className="text-sm md:text-base">
-                  Not every problem needs a full tow. Sometimes you just need{" "}
+                <p className="text-sm md:text-base text-amber-50">
+                  {/* Brightened this specific paragraph */}
+                  Not every problem needs a full tow. Sometimes you just need a{" "}
                   <span className="font-bold">
-                    a jump, a tire change, fuel, or a quick roadside check
+                    jump, a tire change, fuel, or a quick roadside check
                   </span>{" "}
                   to get rolling again. Our goal is simple:{" "}
                   <span className="font-bold">
-                    keep you safe, get you visible, and either fix it on-scene or
-                    tow you somewhere better.
+                    keep you safe, get you visible, and either fix it on-scene
+                    or tow you somewhere better.
                   </span>
                 </p>
               </div>
@@ -119,22 +117,26 @@ export default function EmergencyRoadsideAssistancePage() {
                 <h2 className="text-xl md:text-2xl font-black text-yellow-300">
                   What we can handle on the roadside
                 </h2>
-                <ul className="space-y-2 text-sm md:text-base">
+                <ul className="space-y-2 text-sm md:text-base text-amber-50">
                   <li>
-                    • <span className="font-bold">Battery jumps</span> on cars, pickups, and some commercial units.
+                    • <span className="font-bold">Battery jumps</span> on cars,
+                    pickups, and some commercial units.
                   </li>
                   <li>
-                    • <span className="font-bold">Tire changes</span> and help with flats where it’s safe to work.
+                    • <span className="font-bold">Tire changes</span> and help
+                    with flats where it’s safe to work.
                   </li>
                   <li>
-                    • <span className="font-bold">Lockouts</span> when keys are stuck inside.
+                    • <span className="font-bold">Lockouts</span> when keys are
+                    stuck inside.
                   </li>
                   <li>
-                    • <span className="font-bold">Fuel delivery</span> to get you off the shoulder and to a stop.
+                    • <span className="font-bold">Fuel delivery</span> to get
+                    you off the shoulder and to a stop.
                   </li>
                   <li>
-                    • Quick visual checks to help you decide if it’s safe to limp
-                    to a shop or if we need to tow.
+                    • Quick visual checks to help you decide if it’s safe to
+                    limp to a shop or if we need to tow.
                   </li>
                 </ul>
               </div>
@@ -144,7 +146,8 @@ export default function EmergencyRoadsideAssistancePage() {
                 <h2 className="text-xl md:text-2xl font-black text-yellow-300">
                   What helps us find you faster
                 </h2>
-                <p className="text-sm md:text-base">
+                <p className="text-sm md:text-base text-amber-50">
+                  {/* Brightened this specific sentence */}
                   You don’t have to know every detail, but whatever you can tell
                   us helps us{" "}
                   <span className="font-bold">
@@ -152,12 +155,21 @@ export default function EmergencyRoadsideAssistancePage() {
                     the shoulder.
                   </span>
                 </p>
-                <ul className="space-y-2 text-sm md:text-base">
+                <ul className="space-y-2 text-sm md:text-base text-amber-50">
                   <li>• Year / make / model of your vehicle</li>
-                  <li>• What’s wrong (flat, no start, out of fuel, locked out, etc.)</li>
-                  <li>• If you’re pulling a trailer or loaded with tools/cargo</li>
-                  <li>• GPS pin, closest mile marker, exit, or landmark</li>
-                  <li>• Where you’d like to go if we can’t fix it on-scene</li>
+                  <li>
+                    • What’s wrong (flat, no start, out of fuel, locked out,
+                    etc.)
+                  </li>
+                  <li>
+                    • If you’re pulling a trailer or loaded with tools/cargo
+                  </li>
+                  <li>
+                    • GPS pin, closest mile marker, exit, or landmark
+                  </li>
+                  <li>
+                    • Where you’d like to go if we can’t fix it on-scene
+                  </li>
                 </ul>
               </div>
 
@@ -166,27 +178,29 @@ export default function EmergencyRoadsideAssistancePage() {
                 <h2 className="text-xl md:text-2xl font-black text-yellow-300">
                   Calling for a family member? We’ve got them.
                 </h2>
-                <p className="text-sm md:text-base">
+                <p className="text-sm md:text-base text-amber-50">
+                  {/* Brightened this specific sentence */}
                   If you’re calling for a parent, grandparent, or someone who’s
                   not comfortable on the side of the road, let us know. We’ll{" "}
                   <span className="font-bold">
-                    speak slowly, explain what we’re doing, and treat them the way
-                    you’d want them treated.
+                    speak slowly, explain what we’re doing, and treat them the
+                    way you’d want them treated.
                   </span>
                 </p>
-                <ul className="space-y-2 text-sm md:text-base">
+                <ul className="space-y-2 text-sm md:text-base text-amber-50">
                   <li>• Tell us if they have mobility or medical issues.</li>
                   <li>
                     • Ask them to keep their phone nearby so we can call when
                     we’re close.
                   </li>
                   <li>
-                    • If you’re not on-scene, stay available so we can update you.
+                    • If you’re not on-scene, stay available so we can update
+                    you.
                   </li>
                 </ul>
               </div>
 
-              {/* While you wait box – make sure text is bright white */}
+              {/* While you wait box */}
               <div className="rounded-2xl border border-yellow-400/80 bg-black/90 p-4 md:p-5">
                 <h2 className="text-lg md:text-xl font-black text-yellow-300 mb-2">
                   While you’re waiting on us
@@ -195,19 +209,20 @@ export default function EmergencyRoadsideAssistancePage() {
                   <li>• Keep your hazard lights on and doors locked.</li>
                   <li>• Stay inside with seatbelts on if traffic is heavy.</li>
                   <li>
-                    • Grab keys, wallet/purse, medications, and valuables in case
-                    the vehicle has to be towed.
+                    • Grab keys, wallet/purse, medications, and valuables in
+                    case the vehicle has to be towed.
                   </li>
                   <li>
-                    • If kids are with you, let them know a tow truck is coming to
-                    help, not to scare them.
+                    • If kids are with you, let them know a tow truck is coming
+                    to help, not to scare them.
                   </li>
                 </ul>
               </div>
 
-              {/* Bright white text for this line, per your note */}
-              <div className="rounded-2xl border border-yellow-400/80 bg-black/90 p-4 md:p-5 text-sm md:text-base text-amber-50">
-                <p>
+              {/* Final CTA line – forced bright text */}
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/90 p-4 md:p-5">
+                <p className="text-sm md:text-base text-amber-50">
+                  {/* Brightened this specific sentence */}
                   <span className="font-bold">
                     Call dispatch or tap the text button to send us your GPS
                     location and details.

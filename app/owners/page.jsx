@@ -1,3 +1,4 @@
+// app/owners/page.jsx
 import React from "react";
 import {
   SiteHeader,
@@ -5,8 +6,38 @@ import {
   BrandHero,
   PhoneCTA,
   TextCTA,
-  TikTokGallery,
 } from "../components/ServiceLayout";
+
+/** Local gallery component for owner photos */
+function TikTokGallery({ images }) {
+  if (!images || images.length === 0) return null;
+
+  return (
+    <div className="rounded-3xl border border-yellow-400/80 bg-black/80 p-4 shadow-[0_12px_30px_rgba(0,0,0,0.9)]">
+      <h3 className="text-lg md:text-xl font-black text-amber-100 mb-3 text-center">
+        A&H in Real Life
+      </h3>
+      <div className="grid grid-cols-2 gap-3">
+        {images.map((src, idx) => (
+          <div
+            key={idx}
+            className="rounded-2xl overflow-hidden bg-neutral-900 aspect-[4/3] border border-neutral-700/70"
+          >
+            <img
+              src={src}
+              alt={`A&H owners photo ${idx + 1}`}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+      <p className="mt-3 text-[11px] text-amber-100/80 text-center">
+        Real trucks, real people, real West Texas miles.
+      </p>
+    </div>
+  );
+}
 
 export const metadata = {
   title: "Owners | A & H Towing & Recovery",
@@ -97,8 +128,13 @@ export default function OwnersPage() {
                   </span>
                 </p>
                 <ul className="space-y-2 text-sm md:text-base font-semibold">
-                  <li>• Safety comes first — for you, us, and the motoring public.</li>
-                  <li>• We don’t yell, rush, or shame people on the side of the road.</li>
+                  <li>
+                    • Safety comes first — for you, us, and the motoring public.
+                  </li>
+                  <li>
+                    • We don’t yell, rush, or shame people on the side of the
+                    road.
+                  </li>
                   <li>
                     • We talk you through what we’re doing and where your
                     vehicle is going.
@@ -123,7 +159,7 @@ export default function OwnersPage() {
               </div>
             </div>
 
-            {/* RIGHT: TikTok-style gallery / visual block */}
+            {/* RIGHT: Image gallery / visual block */}
             <div className="space-y-6">
               <TikTokGallery
                 images={[
@@ -160,3 +196,4 @@ export default function OwnersPage() {
     </>
   );
 }
+

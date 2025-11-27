@@ -1,4 +1,5 @@
 // app/winching-recovery/page.jsx
+"use client";
 
 import React from "react";
 import {
@@ -8,6 +9,8 @@ import {
   PhoneCTA,
   TextCTA,
 } from "../components/ServiceLayout";
+import { TikTokEmbed } from "../components/TikTokEmbed";
+
 
 export const metadata = {
   title: "Winching / Recovery | A & H Towing & Recovery",

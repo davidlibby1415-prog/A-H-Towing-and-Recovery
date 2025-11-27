@@ -7,63 +7,13 @@ import {
   BrandHero,
   PhoneCTA,
   TextCTA,
+  WeAcceptBar,
 } from "../components/ServiceLayout";
-import { TikTokEmbed } from "../components/TikTokEmbed";
-
-// TikTok profile URL
-const TIKTOK_PROFILE_URL = "https://www.tiktok.com/@285302ditchking";
-
-// “We accept” payment bar – match main page pill style
-function PaymentBar() {
-  return (
-    <section className="bg-red-950 py-5">
-      <div className="container max-w-7xl flex justify-center">
-        <div className="inline-flex flex-wrap items-center gap-3 rounded-full bg-slate-900/95 px-4 py-2 shadow-lg shadow-black/60 border border-black/40">
-          <span className="text-xs md:text-sm font-bold text-amber-50 mr-1">
-            We accept:
-          </span>
-
-          <span className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
-            <span>💵</span>
-            <span>Cash</span>
-          </span>
-
-          <span className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
-            <span>💳</span>
-            <span>All Major Credit Cards</span>
-          </span>
-
-          <span className="inline-flex items-center gap-2 rounded-full bg-rose-100 px-3 py-1 text-xs md:text-sm font-semibold text-slate-900">
-            <span>🧾</span>
-            <span>EFS Services</span>
-          </span>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// Reusable framed TikTok card with even green border
-function TikTokFramedCard({ videoId, caption }) {
-  return (
-    <div className="relative w-full max-w-[360px]">
-      <div className="rounded-[32px] border-2 border-emerald-400/90 bg-black/90 p-[6px] shadow-2xl shadow-black/70">
-        <div className="rounded-[28px] bg-black overflow-hidden flex justify-center">
-          <TikTokEmbed
-            videoId={videoId}
-            caption={caption}
-            className="w-[92%]"
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
 
 export const metadata = {
   title: "Equipment Transport | A & H Towing & Recovery",
   description:
-    "Large equipment, tool trailers, and machinery moved safely around West Texas.",
+    "Light equipment, tool trailers, and small machinery moved safely around Pecos, Reeves County, and West Texas.",
 };
 
 export default function EquipmentTransportPage() {
@@ -72,93 +22,67 @@ export default function EquipmentTransportPage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO – clear/glass BrandHero style with truckunit.mp4 */}
         <BrandHero
           serviceTitle="Equipment Transport"
-          serviceSubtitle="Large equipment, tool trailers, and machinery moved safely around West Texas."
-          heroVideoSrc="/Videos/truckunit.mp4" // ensure this lives in /public/Videos
+          serviceSubtitle="Light equipment, tool trailers, and small machinery moved safely around Pecos, Reeves County, and West Texas."
+          heroVideoSrc="/Videos/truckunit.mp4"
         />
 
-        <section className="py-10 bg-gradient-to-b from-neutral-950 via-red-950/70 to-black border-y border-black/40">
-          <div className="container max-w-7xl space-y-8">
-            {/* MAIN COPY CARD */}
-            <div className="max-w-3xl rounded-3xl bg-black/70 backdrop-blur-sm border border-red-500/70 px-6 py-6 shadow-2xl shadow-black/70">
-              <h2 className="text-2xl md:text-3xl font-black text-amber-50 drop-shadow">
-                Move your gear without beating it up.
+        {/* Your existing content sections go here */}
+        <section className="py-10 md:py-12 border-b border-neutral-800">
+          <div className="container max-w-7xl mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-8 items-start">
+            <div className="space-y-4 text-sm sm:text-base text-neutral-100">
+              <h2 className="text-xl sm:text-2xl font-bold text-yellow-300">
+                Safely Moving Your Equipment Across West Texas
               </h2>
-
-              <p className="mt-3 text-sm md:text-base font-semibold text-amber-50/90">
-                We handle large equipment, tool trailers, and machinery that are
-                too heavy or awkward for a pickup alone. We load low, secure
-                correctly, and unload clean at yards, shops, and job sites
-                across West Texas.
+              <p>
+                From small skid steers and tool trailers to light machinery,
+                A&amp;H can move your gear between yards, job sites, and lease
+                roads with the same care we use on your trucks.
               </p>
+              <p>
+                We understand oilfield schedules, gate codes, and night moves.
+                Tell us what you&apos;re hauling, where it&apos;s going, and
+                when it has to be there — we&apos;ll handle the rest.
+              </p>
+            </div>
 
-              <ul className="mt-4 space-y-2 text-sm md:text-base font-semibold text-amber-50/90">
-                <li>• Tool trailers, compressors, welders, and generators</li>
-                <li>• Heavy machinery and shop equipment</li>
-                <li>• Yard-to-yard and shop-to-location moves</li>
-                <li>• Straight communication on timing and price</li>
+            <div className="space-y-3 text-sm text-neutral-100">
+              <h3 className="text-lg font-semibold text-yellow-300">
+                Common moves:
+              </h3>
+              <ul className="list-disc list-inside space-y-1">
+                <li>Light equipment between yards or locations</li>
+                <li>Tool trailers for crews and contractors</li>
+                <li>Small machinery that won&apos;t fit in a pickup bed</li>
+                <li>Project moves around Pecos, Reeves County, and beyond</li>
               </ul>
-            </div>
-
-            {/* CALL / TEXT BUTTONS */}
-            <div className="flex flex-wrap gap-3">
-              <PhoneCTA />
-              <TextCTA />
-            </div>
-
-            {/* TIKTOK – Follow CTA (top of grid) */}
-            <div className="flex justify-center">
-              <a
-                href={TIKTOK_PROFILE_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-emerald-400/80 bg-emerald-400/90 px-5 py-2 text-xs md:text-sm font-black uppercase tracking-[0.18em] text-black shadow-lg shadow-emerald-500/50 hover:bg-emerald-300 transition-transform duration-200 hover:-translate-y-0.5 animate-pulse"
-              >
-                <span className="text-lg">🎵</span>
-                <span>Follow Us On TikTok</span>
-              </a>
-            </div>
-
-            {/* TIKTOK GRID – Equipment Transport clips */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center">
-              {/* 1. Tow Calls: Offload on the House */}
-              <TikTokFramedCard
-                videoId="7419451829223836959"
-                caption="Tow Calls: Offload on the House"
-              />
-
-              {/* 2. Equipment Transport: Double Stacking Trailers */}
-              <TikTokFramedCard
-                videoId="7348837007935769902"
-                caption="Equipment Transport: Double Stacking Trailers"
-              />
-
-              {/* 3. Equipment Transport: Pickup from Accident */}
-              <TikTokFramedCard
-                videoId="7275994610713988398"
-                caption="Equipment Transport: Pickup from Accident"
-              />
-            </div>
-
-            {/* TIKTOK – Follow CTA (bottom of grid) */}
-            <div className="flex justify-center">
-              <a
-                href={TIKTOK_PROFILE_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-emerald-400/80 bg-emerald-400/90 px-5 py-2 text-xs md:text-sm font-black uppercase tracking-[0.18em] text-black shadow-lg shadow-emerald-500/50 hover:bg-emerald-300 transition-transform duration-200 hover:-translate-y-0.5 animate-pulse"
-              >
-                <span className="text-lg">🎵</span>
-                <span>Follow Us On TikTok</span>
-              </a>
             </div>
           </div>
         </section>
 
-        {/* "We accept" payment bar – match main page */}
-        <PaymentBar />
+        {/* Shared call + text block */}
+        <section className="py-8 bg-neutral-950 border-y border-yellow-500/20">
+          <div className="container max-w-7xl mx-auto px-4 md:px-6 flex flex-wrap items-center justify-between gap-4">
+            <div className="text-xs sm:text-sm text-neutral-100 max-w-md">
+              <p className="font-semibold text-yellow-300 mb-1">
+                Ready to move your equipment?
+              </p>
+              <p>
+                Call dispatch or tap the online request button to send us your
+                GPS and job details. We&apos;ll confirm and roll a truck.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap gap-3">
+              <PhoneCTA />
+              <TextCTA />
+            </div>
+          </div>
+        </section>
+
+        {/* We accept bar at the very bottom of the content */}
+        <WeAcceptBar />
       </main>
 
       <SiteFooter />

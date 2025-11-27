@@ -287,3 +287,12 @@ export function SiteFooter() {
     </footer>
   );
 }
+
+/* ========= TikTokGallery placeholder so pages build ========= */
+
+export function TikTokGallery() {
+  // Temporary no-op so /owners and /tips-tricks can build without errors.
+  // We can wire this up to real <TikTokEmbed /> components once everything is stable.
+  return null;
+}
+

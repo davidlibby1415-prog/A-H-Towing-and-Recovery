@@ -295,19 +295,21 @@ export function WeAcceptBar() {
   return (
     <div className="bg-black/95 border-t border-yellow-500/60">
       <div className="container max-w-7xl mx-auto px-4 md:px-6 py-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs">
-        <span className="font-semibold text-yellow-300 tracking-wide uppercase">
-          We accept:
+        {/* "We accept" pill – BLACK text, bold */}
+        <span className="px-3 py-1 rounded-full bg-yellow-300 text-black font-black tracking-wide uppercase">
+          We accept
         </span>
 
-        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-400/80 text-white font-semibold">
+        {/* Payment type pills – also high contrast, black text */}
+        <span className="px-2.5 py-1 rounded-full bg-yellow-200 text-black font-bold">
           Cash
         </span>
 
-        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-400/80 text-white font-semibold text-center">
+        <span className="px-2.5 py-1 rounded-full bg-yellow-200 text-black font-bold text-center">
           All major credit &amp; debit cards
         </span>
 
-        <span className="px-2 py-1 rounded-full bg-neutral-900 border border-yellow-400/80 text-white font-semibold">
+        <span className="px-2.5 py-1 rounded-full bg-yellow-200 text-black font-bold">
           EFS / Comchek
         </span>
       </div>

@@ -1,49 +1,128 @@
 // FILE: app/components/ServiceLayout.jsx
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 /* =================== Shared Constants =================== */
 
 const DISPLAY_PHONE = "(432) 448-0074";
 const TEL_PHONE = "+14324480074";
+const TEMP_LABEL = "Pecos, TX • 82°F"; // <-- change this text if you want a different temp/location
 
 /* =================== Layout Pieces =================== */
 
 export function SiteHeader() {
-  return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-black/80 backdrop-blur-md">
-      <div className="container max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-        {/* Logo + Name */}
-        <Link
-          href="/"
-          className="flex items-center gap-2 group"
-        >
-          <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-red-600 to-amber-400 flex items-center justify-center shadow-lg shadow-red-900/50">
-            <span className="text-xs font-black tracking-[0.08em] text-black">
-              A&amp;H
-            </span>
-          </div>
-          <div className="leading-tight">
-            <p className="text-sm font-semibold text-white tracking-wide">
-              A &amp; H Towing &amp; Recovery
-            </p>
-            <p className="text-[11px] text-neutral-300 uppercase tracking-[0.16em]">
-              Pecos • Reeves County • West Texas
-            </p>
-          </div>
-        </Link>
+  const [now, setNow] = useState(null);
 
-        {/* Call now */}
-        <div className="flex items-center gap-3">
-          <a
-            href={`tel:${TEL_PHONE}`}
-            className="hidden sm:inline-flex items-center gap-2 rounded-full border border-red-500/80 bg-gradient-to-r from-red-700 to-red-500 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-white shadow-lg shadow-red-900/60 hover:from-red-600 hover:to-red-400 transition"
-          >
-            <span className="inline-flex h-2 w-2 rounded-full bg-lime-400 animate-pulse" />
-            Call Now {DISPLAY_PHONE}
-          </a>
+  useEffect(() => {
+    const update = () => setNow(new Date());
+    update();
+    const id = setInterval(update, 60_000);
+    return () => clearInterval(id);
+  }, []);
+
+  let dateStr = "";
+  let timeStr = "";
+  if (now) {
+    dateStr = now.toLocaleDateString("en-US", {
+      weekday: "short",
+      month: "short",
+      day: "numeric",
+    });
+    timeStr = now.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+    });
+  }
+
+  return (
+    <header className="z-40">
+      {/* Top info bar: date / time / temp */}
+      <div className="w-full border-b border-red-800/60 bg-black/90 backdrop-blur">
+        <div className="container max-w-7xl mx-auto px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 text-[11px] text-neutral-300">
+          <div className="flex items-center gap-3">
+            <span className="uppercase tracking-[0.18em] text-red-300">
+              24/7 Dispatch
+            </span>
+            <span className="h-1 w-1 rounded-full bg-red-500" />
+            <span>{TEMP_LABEL}</span>
+          </div>
+          <div className="flex items-center gap-3">
+            {now && (
+              <>
+                <span>{dateStr}</span>
+                <span className="h-1 w-1 rounded-full bg-neutral-500" />
+                <span>{timeStr}</span>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Main header + nav */}
+      <div className="sticky top-0 border-b border-white/10 bg-black/90 backdrop-blur-md">
+        <div className="container max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
+          {/* Logo + Name */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-red-600 to-amber-400 flex items-center justify-center shadow-lg shadow-red-900/50">
+              <span className="text-xs font-black tracking-[0.08em] text-black">
+                A&amp;H
+              </span>
+            </div>
+            <div className="leading-tight">
+              <p className="text-sm font-semibold text-white tracking-wide">
+                A &amp; H Towing &amp; Recovery
+              </p>
+              <p className="text-[11px] text-neutral-300 uppercase tracking-[0.16em]">
+                Pecos • Reeves County • West Texas
+              </p>
+            </div>
+          </Link>
+
+          {/* Nav + Call button */}
+          <div className="flex items-center gap-4">
+            <nav className="hidden md:flex items-center gap-5 text-xs font-medium text-neutral-200">
+              <Link
+                href="/light-duty-towing"
+                className="hover:text-white transition"
+              >
+                Light Duty
+              </Link>
+              <Link
+                href="/heavy-duty-commercial-towing"
+                className="hover:text-white transition"
+              >
+                Heavy / Commercial
+              </Link>
+              <Link
+                href="/oilfield-routes-tow-service"
+                className="hover:text-white transition"
+              >
+                Oilfield Routes
+              </Link>
+              <Link
+                href="/owners"
+                className="hover:text-white transition"
+              >
+                Owners
+              </Link>
+              <Link
+                href="/tips-tricks"
+                className="hover:text-white transition"
+              >
+                Tips &amp; Tricks
+              </Link>
+            </nav>
+
+            <a
+              href={`tel:${TEL_PHONE}`}
+              className="inline-flex items-center gap-2 rounded-full border border-red-500/80 bg-gradient-to-r from-red-700 to-red-500 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white shadow-lg shadow-red-900/60 hover:from-red-600 hover:to-red-400 transition"
+            >
+              <span className="inline-flex h-2 w-2 rounded-full bg-lime-400 animate-pulse" />
+              Call {DISPLAY_PHONE}
+            </a>
+          </div>
         </div>
       </div>
     </header>
@@ -139,7 +218,7 @@ export function BrandHero({
           </div>
         </div>
 
-        {/* Right side: simple accent column for now (can host clear CTA later) */}
+        {/* Right side: accent column / clear CTA box */}
         <div className="flex-1 w-full lg:max-w-sm">
           <div className="bg-black/50 border border-white/10 rounded-2xl p-5 md:p-6 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.85)]">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-300 mb-2">
@@ -220,14 +299,6 @@ export function TextCTA({ heading, body, children }) {
 
 /* =================== TikTok Gallery Shell =================== */
 
-/**
- * Simple layout wrapper. Use it like:
- *
- * <TikTokGallery>
- *   <TikTokEmbed ... />
- *   <TikTokEmbed ... />
- * </TikTokGallery>
- */
 export function TikTokGallery({ children }) {
   return (
     <section className="bg-black py-10 border-t border-white/10">
@@ -243,4 +314,3 @@ export function TikTokGallery({ children }) {
     </section>
   );
 }
-

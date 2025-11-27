@@ -165,9 +165,5 @@ footer {
 .tiktok-embed {
   display: block;
   max-width: 100% !important;
-  min-width: 0 !important; /* lets Tailwind grid/control width */
-}
-
-.tiktok-embed > section {
-  margin: 0;
+  min-width: 0 !important;
 }

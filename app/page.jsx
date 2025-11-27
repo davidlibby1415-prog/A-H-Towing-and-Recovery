@@ -61,7 +61,7 @@ function PhoneCTA({ className = "", fullWidth = false }) {
  */
 function ScrollToFormCTA({
   className = "",
-  label = "Text Dispatch (Include GPS)",
+  label = "Text Dispatch & Share My GPS Location",
   targetId = "dispatch-form",
   appendClickHere = true,
 }) {
@@ -739,7 +739,11 @@ export default function Home() {
                 Tips &amp; Tricks
               </Link>
               <a
-                href="#contact"
+                href="#dispatch-form"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToFormWithOffset("dispatch-form");
+                }}
                 className="px-2 py-1 rounded-md hover:bg-yellow-400 hover:text-black transition-colors"
               >
                 Request a Tow
@@ -826,7 +830,7 @@ export default function Home() {
                 <PhoneCTA className="animate-cta-pulse" />
                 <ScrollToFormCTA
                   className="animate-cta-pulse"
-                  label="CLICK HERE TO TEXT DISPATCH (INCLUDE MY GPS LOCATION)"
+                  label="Text Dispatch & Share My GPS Location"
                   appendClickHere={false}
                 />
               </div>
@@ -1086,7 +1090,7 @@ export default function Home() {
 
               <div className="mt-6 flex gap-3 flex-wrap justify-center">
                 <PhoneCTA />
-                <ScrollToFormCTA />
+                <ScrollToFormCTA label="Text Dispatch & Share My GPS Location" />
               </div>
             </SteelPanel>
           </AnimBorder>
@@ -1197,7 +1201,7 @@ export default function Home() {
                         }
                         className="inline-flex items-center justify-center rounded-2xl px-4 py-2 text-xs md:text-sm font-extrabold bg-ahRed text-white shadow-cta hover:brightness-110 transition-transform duration-200 hover:scale-105 active:scale-95 border-2 border-white outline outline-2 outline-white"
                       >
-                        Click Here to Text Location
+                        Text Dispatch &amp; Share My GPS Location
                       </button>
                     </div>
 
@@ -1269,7 +1273,7 @@ export default function Home() {
 
               <div className="mt-3 flex gap-3 flex-wrap justify-center">
                 <PhoneCTA />
-                <ScrollToFormCTA label="Text Dispatch (Include GPS)" />
+                <ScrollToFormCTA label="Text Dispatch & Share My GPS Location" />
               </div>
 
               {/* This wrapper is the anchor for /#text-dispatch */}
@@ -1376,7 +1380,14 @@ export default function Home() {
                   </a>
                 </li>
                 <li>
-                  <a className="underline" href="#contact">
+                  <a
+                    className="underline"
+                    href="#dispatch-form"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToFormWithOffset("dispatch-form");
+                    }}
+                  >
                     Request a Tow
                   </a>
                 </li>
@@ -1681,4 +1692,3 @@ function ContactSection() {
     </div>
   );
 }
-

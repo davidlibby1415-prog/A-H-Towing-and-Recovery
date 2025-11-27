@@ -1,5 +1,4 @@
-// app/layout.jsx
-import "./globals.css"; // <-- critical
+import "./globals.css";
 
 export const metadata = {
   title: "A&H Towing & Recovery",
@@ -8,12 +7,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="bg-neutral-950">
+      <body className="min-h-screen bg-neutral-950 text-ahText">
         {children}
-        <footer style={{background:"#111827",color:"#fff",textAlign:"center",padding:"12px"}}>
-          © {new Date().getFullYear()} A&H Towing & Recovery, LLC — Pecos, TX
-        </footer>
       </body>
     </html>
   );

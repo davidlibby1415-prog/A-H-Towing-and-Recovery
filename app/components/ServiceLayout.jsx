@@ -3,28 +3,46 @@
 import React from "react";
 import Link from "next/link";
 
-/* ========= Small helper for date/time in header ========= */
+/* ========= Small helper for date/time + temp in header ========= */
 
 const dateTimeScript = `
   (function () {
-    const el = document.getElementById("ah-date-time");
-    if (!el) return;
-    function update() {
-      const now = new Date();
-      const dateStr = now.toLocaleDateString("en-US", {
+    var dtEl = document.getElementById("ah-date-time");
+    var tempEl = document.getElementById("ah-temp");
+    if (!dtEl) return;
+
+    function updateTime() {
+      var now = new Date();
+      var dateStr = now.toLocaleDateString("en-US", {
         weekday: "short",
         month: "short",
         day: "numeric",
-        year: "numeric",
+        year: "numeric"
       });
-      const timeStr = now.toLocaleTimeString("en-US", {
+      var timeStr = now.toLocaleTimeString("en-US", {
         hour: "numeric",
-        minute: "2-digit",
+        minute: "2-digit"
       });
-      el.textContent = dateStr + " • " + timeStr + " • Pecos, TX";
+      dtEl.textContent = dateStr + " • " + timeStr + " • Pecos, TX";
     }
-    update();
-    setInterval(update, 60000);
+
+    updateTime();
+    setInterval(updateTime, 60000);
+
+    // Fetch current temp for Pecos via Open-Meteo (no API key needed)
+    if (tempEl) {
+      fetch("https://api.open-meteo.com/v1/forecast?latitude=31.41&longitude=-103.49&current_weather=true&temperature_unit=fahrenheit")
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          if (data && data.current_weather && typeof data.current_weather.temperature === "number") {
+            var t = data.current_weather.temperature;
+            tempEl.textContent = t.toFixed(0) + "°F";
+          }
+        })
+        .catch(function () {
+          // fail silently if API is down
+        });
+    }
   })();
 `;
 
@@ -82,7 +100,7 @@ export function SiteHeader() {
                 <span className="text-xs">▾</span>
               </button>
 
-              {/* DROPDOWN – flush with button so no hover gap */}
+              {/* DROPDOWN – flush with button so no hover gap, layered above hero */}
               <div className="absolute left-0 top-full w-80 bg-black/95 border border-yellow-500/60 rounded-xl shadow-xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition z-50">
                 <div className="py-2">
                   {[
@@ -149,7 +167,7 @@ export function SiteHeader() {
               </Link>
             </li>
 
-            {/* Request a Tow – anchor back to home form */}
+            {/* Request a Tow – anchor back to home form (make sure the instructions/form wrapper has id="dispatch-form") */}
             <li>
               <Link
                 href="/#dispatch-form"
@@ -161,18 +179,24 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        {/* RIGHT – Date/time + big call button */}
-        <div className="flex flex-col items-end gap-2">
+        {/* RIGHT – Date/time + temperature + big call button */}
+        <div className="flex flex-col items-end gap-1">
           <div
             id="ah-date-time"
             className="text-[11px] leading-tight text-yellow-200/90 tracking-wide text-right"
           >
-            {/* Filled by inline script below */}
+            {/* Filled by inline script */}
+          </div>
+          <div
+            id="ah-temp"
+            className="text-[11px] leading-tight text-sky-300 tracking-wide text-right"
+          >
+            {/* Filled by inline script with live °F */}
           </div>
 
           <a
             href="tel:+14328424578"
-            className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs sm:text-sm font-bold text-yellow-50 shadow-lg shadow-blue-900/60 text-center"
+            className="inline-flex items-center justify-center mt-1 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs sm:text-sm font-bold text-yellow-50 shadow-lg shadow-blue-900/60 text-center"
           >
             CLICK HERE TO CALL 24/7 DISPATCH
             <span className="ml-2 whitespace-nowrap">(432) 842-4578</span>
@@ -180,7 +204,7 @@ export function SiteHeader() {
         </div>
       </div>
 
-      {/* inline script to show live date/time & location */}
+      {/* inline script to show live date/time & location & temp */}
       <script dangerouslySetInnerHTML={{ __html: dateTimeScript }} />
     </header>
   );
@@ -293,7 +317,7 @@ export function SiteFooter() {
           © {new Date().getFullYear()} A&amp;H Towing &amp; Recovery, LLC. All
           rights reserved.
         </span>
-        <span>Serving Pecos, Reeves County, and the West Texas oilfield.</span>
+        <span>Serving the West Texas oilfields.</span>
       </div>
     </footer>
   );

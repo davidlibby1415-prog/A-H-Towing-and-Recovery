@@ -7,36 +7,77 @@ import {
   BrandHero,
   PhoneCTA,
   TextCTA,
-  WeAcceptBar,
 } from "../components/ServiceLayout";
 import { TikTokEmbed } from "../components/TikTokEmbed";
 
 export const metadata = {
   title: "Emergency Roadside Assistance | A & H Towing & Recovery",
   description:
-    "Jumps, tire changes, lockouts, fuel deliveries, and quick roadside checks anywhere along your West Texas route.",
+    "Jumps, tire changes, fuel delivery, lockouts, and quick roadside checks anywhere along your West Texas route.",
 };
 
-/* ========= Optional TikTok section helper ========= */
+/* ========= Small TikTok section for this page ========= */
 
-function TikTokCard({ id, caption }) {
+function RoadsideTikTokSection() {
+  const videos = [
+    {
+      id: "7406160390414978334",
+      caption: "Roadside Call: Changing Tractor Tires",
+    },
+    {
+      id: "7406160390414978334",
+      caption: "Emergency Roadside: Tire Change",
+    },
+    {
+      id: "7215414816326880554",
+      caption: "Accident: Please Don’t Drink and Drive",
+    },
+  ];
+
   return (
-    <div className="rounded-[28px] p-[6px] bg-black/80 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)]">
-      <div className="px-3 pt-2 pb-1">
-        <h4 className="text-sm md:text-base font-extrabold text-amber-50 text-center">
-          {caption}
-        </h4>
+    <section className="py-10 bg-neutral-950 border-t border-black/60">
+      <div className="container max-w-7xl mx-auto px-4 md:px-6 space-y-6">
+        <div className="text-center md:text-left">
+          <h2 className="text-2xl md:text-3xl font-black text-yellow-300">
+            Real West Texas Roadside Calls
+          </h2>
+          <p className="mt-2 text-sm md:text-base text-amber-50 max-w-2xl">
+            A few quick clips from the road — tractor tires, emergency roadside work,
+            and the kind of nights that remind us why{" "}
+            <span className="font-bold">
+              “don’t drink and drive”
+            </span>{" "}
+            is more than a slogan.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {videos.map((video) => (
+            <div
+              key={video.caption}
+              className="rounded-[28px] p-[6px] bg-black/90 border border-yellow-500/60 shadow-[0_10px_26px_rgba(0,0,0,0.9)] flex flex-col"
+            >
+              <div className="px-3 pt-2 pb-1">
+                <h3 className="text-sm md:text-base font-extrabold text-amber-50 text-center">
+                  {video.caption}
+                </h3>
+              </div>
+              <div className="rounded-[22px] bg-black overflow-hidden flex justify-center p-2 flex-1">
+                <TikTokEmbed
+                  videoId={video.id}
+                  caption={video.caption}
+                  className="w-full max-w-[420px]"
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="rounded-[22px] bg-black overflow-hidden flex justify-center p-2">
-        <TikTokEmbed
-          videoId={id}
-          caption={caption}
-          className="w-full max-w-[420px]"
-        />
-      </div>
-    </div>
+    </section>
   );
 }
+
+/* ====================== Page ====================== */
 
 export default function EmergencyRoadsideAssistancePage() {
   return (
@@ -44,153 +85,148 @@ export default function EmergencyRoadsideAssistancePage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950">
-        {/* HERO – now with video */}
+        {/* HERO – uses Fuel hero video */}
         <BrandHero
           serviceTitle="Emergency Roadside Assistance"
-          serviceSubtitle="Jumps, tire changes, lockouts, fuel, and quick roadside checks anywhere along your West Texas route."
-          heroVideoSrc="/Videos/emergency-roadside.mp4" // update path if your file is named differently
+          serviceSubtitle="Jumps, tire changes, fuel delivery, lockouts, and quick roadside checks anywhere along your West Texas route."
+          heroVideoSrc="/Videos/Fuel.mp4"
         />
 
-        {/* MAIN TEXT BOX UNDER HERO */}
-        <section className="py-8 bg-red-900/90 border-y border-black/40">
-          <div className="container max-w-7xl">
-            <div className="rounded-3xl border border-yellow-400/80 bg-black/70 p-6 md:p-8 text-amber-50 space-y-6">
-              {/* What we handle */}
+        {/* MAIN TEXT IN A SINGLE BOX */}
+        <section className="py-10 bg-neutral-950 border-y border-black/60">
+          <div className="container max-w-7xl mx-auto px-4 md:px-6">
+            <div className="rounded-3xl border border-yellow-500/60 bg-black/85 p-6 md:p-8 text-amber-50 space-y-8">
+              {/* Intro / safety focus */}
               <div className="space-y-3">
-                <h2 className="text-2xl md:text-3xl font-black text-amber-300">
-                  Stuck on the shoulder? We’ll help you get moving again.
-                </h2>
-                <p className="text-sm md:text-base font-semibold text-amber-50">
-                  Not every call needs a full tow. Sometimes you just need{" "}
-                  <span className="font-black">
-                    a tire changed, a jump, fuel, or a quick look
+                <h1 className="text-2xl md:text-3xl font-black text-yellow-300">
+                  Stuck on the shoulder? We’ll come to you.
+                </h1>
+                <p className="text-sm md:text-base">
+                  Not every problem needs a full tow. Sometimes you just need{" "}
+                  <span className="font-bold">
+                    a jump, a tire change, fuel, or a quick roadside check
                   </span>{" "}
-                  to decide the next step. Our roadside units are set up to help
-                  you make that call without being stranded in traffic.
-                </p>
-                <ul className="space-y-2 text-sm md:text-base font-semibold text-amber-50">
-                  <li>• Emergency tire changes (tractor & passenger, case by case)</li>
-                  <li>• Jump starts</li>
-                  <li>• Fuel delivery (where permitted)</li>
-                  <li>• Lockouts</li>
-                  <li>• Quick visual checks to decide if you need a tow</li>
-                </ul>
-              </div>
-
-              {/* Safety + what to have ready */}
-              <div className="space-y-3">
-                <h3 className="text-xl md:text-2xl font-black text-amber-300">
-                  Safety first — then the vehicle.
-                </h3>
-                <p className="text-sm md:text-base font-semibold text-amber-50">
-                  We&apos;re thinking about{" "}
-                  <span className="font-black">
-                    you, your family, and other drivers
-                  </span>{" "}
-                  the whole time we&apos;re on scene. Simple steps before we
-                  arrive make everyone safer.
-                </p>
-                <ul className="space-y-2 text-sm md:text-base font-semibold text-amber-50">
-                  <li>
-                    • Move as far off the live lane as you safely can — shoulder,
-                    ramp, or a wide approach.
-                  </li>
-                  <li>
-                    • Turn on your hazard flashers and, if you have them, set
-                    out triangles or flares away from the vehicle.
-                  </li>
-                  <li>
-                    • If traffic is heavy, stay inside the vehicle with seatbelts
-                    on until we arrive.
-                  </li>
-                  <li>
-                    • Only exit on the side away from traffic, never into the lane.
-                  </li>
-                </ul>
-              </div>
-
-              {/* How to contact / GPS line (bright text) */}
-              <div className="space-y-3">
-                <h3 className="text-xl md:text-2xl font-black text-amber-300">
-                  What helps us find you faster
-                </h3>
-                <p className="text-sm md:text-base font-semibold text-amber-50">
-                  Call dispatch or tap the text button to{" "}
-                  <span className="font-black">
-                    send us your GPS location and details
+                  to get rolling again. Our goal is simple:{" "}
+                  <span className="font-bold">
+                    keep you safe, get you visible, and either fix it on-scene or
+                    tow you somewhere better.
                   </span>
-                  . We&apos;ll confirm the call and roll a truck your way.
                 </p>
-                <ul className="space-y-2 text-sm md:text-base font-semibold text-amber-50">
-                  <li>• Year / make / model of the vehicle</li>
-                  <li>• Tractor / trailer, straight truck, or passenger vehicle</li>
-                  <li>• What&apos;s wrong: flat, won&apos;t start, out of fuel, etc.</li>
-                  <li>• GPS pin, mile marker, or the last exit you passed</li>
-                  <li>• Where you want to go if a tow is needed (yard, shop, home)</li>
+              </div>
+
+              {/* What we handle roadside */}
+              <div className="space-y-3">
+                <h2 className="text-xl md:text-2xl font-black text-yellow-300">
+                  What we can handle on the roadside
+                </h2>
+                <ul className="space-y-2 text-sm md:text-base">
+                  <li>
+                    • <span className="font-bold">Battery jumps</span> on cars, pickups, and some commercial units.
+                  </li>
+                  <li>
+                    • <span className="font-bold">Tire changes</span> and help with flats where it’s safe to work.
+                  </li>
+                  <li>
+                    • <span className="font-bold">Lockouts</span> when keys are stuck inside.
+                  </li>
+                  <li>
+                    • <span className="font-bold">Fuel delivery</span> to get you off the shoulder and to a stop.
+                  </li>
+                  <li>
+                    • Quick visual checks to help you decide if it’s safe to limp
+                    to a shop or if we need to tow.
+                  </li>
                 </ul>
               </div>
 
-              {/* CTAs in the same bright card */}
+              {/* Info we need when you call/text */}
               <div className="space-y-3">
-                <div className="flex flex-wrap gap-3">
-                  <PhoneCTA />
-                  <TextCTA />
-                </div>
-                <p className="text-[11px] text-amber-50">
-                  If you&apos;re calling or texting for a family member or
-                  driver, you can share{" "}
-                  <span className="font-black">
-                    their GPS pin, phone number, and any mobility or safety
-                    concerns
-                  </span>{" "}
-                  so we know how to approach the scene.
+                <h2 className="text-xl md:text-2xl font-black text-yellow-300">
+                  What helps us find you faster
+                </h2>
+                <p className="text-sm md:text-base">
+                  You don’t have to know every detail, but whatever you can tell
+                  us helps us{" "}
+                  <span className="font-bold">
+                    pick the right truck, bring the right tools, and spot you on
+                    the shoulder.
+                  </span>
                 </p>
+                <ul className="space-y-2 text-sm md:text-base">
+                  <li>• Year / make / model of your vehicle</li>
+                  <li>• What’s wrong (flat, no start, out of fuel, locked out, etc.)</li>
+                  <li>• If you’re pulling a trailer or loaded with tools/cargo</li>
+                  <li>• GPS pin, closest mile marker, exit, or landmark</li>
+                  <li>• Where you’d like to go if we can’t fix it on-scene</li>
+                </ul>
+              </div>
+
+              {/* Family / elder-friendly tone */}
+              <div className="space-y-3">
+                <h2 className="text-xl md:text-2xl font-black text-yellow-300">
+                  Calling for a family member? We’ve got them.
+                </h2>
+                <p className="text-sm md:text-base">
+                  If you’re calling for a parent, grandparent, or someone who’s
+                  not comfortable on the side of the road, let us know. We’ll{" "}
+                  <span className="font-bold">
+                    speak slowly, explain what we’re doing, and treat them the way
+                    you’d want them treated.
+                  </span>
+                </p>
+                <ul className="space-y-2 text-sm md:text-base">
+                  <li>• Tell us if they have mobility or medical issues.</li>
+                  <li>
+                    • Ask them to keep their phone nearby so we can call when
+                    we’re close.
+                  </li>
+                  <li>
+                    • If you’re not on-scene, stay available so we can update you.
+                  </li>
+                </ul>
+              </div>
+
+              {/* While you wait box – make sure text is bright white */}
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/90 p-4 md:p-5">
+                <h2 className="text-lg md:text-xl font-black text-yellow-300 mb-2">
+                  While you’re waiting on us
+                </h2>
+                <ul className="space-y-1 text-sm md:text-base text-amber-50">
+                  <li>• Keep your hazard lights on and doors locked.</li>
+                  <li>• Stay inside with seatbelts on if traffic is heavy.</li>
+                  <li>
+                    • Grab keys, wallet/purse, medications, and valuables in case
+                    the vehicle has to be towed.
+                  </li>
+                  <li>
+                    • If kids are with you, let them know a tow truck is coming to
+                    help, not to scare them.
+                  </li>
+                </ul>
+              </div>
+
+              {/* Bright white text for this line, per your note */}
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/90 p-4 md:p-5 text-sm md:text-base text-amber-50">
+                <p>
+                  <span className="font-bold">
+                    Call dispatch or tap the text button to send us your GPS
+                    location and details.
+                  </span>{" "}
+                  We&apos;ll confirm the call and roll a truck your way.
+                </p>
+              </div>
+
+              {/* Buttons at bottom of the text box */}
+              <div className="flex flex-wrap justify-center gap-3 pt-2">
+                <PhoneCTA />
+                <TextCTA />
               </div>
             </div>
           </div>
         </section>
 
-        {/* TIKTOK CLIPS – EMERGENCY ROADSIDE & ACCIDENT AWARENESS */}
-        <section className="py-10 bg-neutral-950 border-t border-black/60">
-          <div className="container max-w-7xl space-y-8">
-            <h2 className="text-2xl md:text-3xl font-black text-amber-300 text-center">
-              Real roadside work — what it looks like out here
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* 1. Roadside Call: Changing Tractor Tires */}
-              <TikTokCard
-                id="7406160390414978334"
-                caption="Roadside Call: Changing Tractor Tires"
-              />
-
-              {/* 2. Emergency Roadside: Tire Change (same clip, different title) */}
-              <TikTokCard
-                id="7406160390414978334"
-                caption="Emergency Roadside: Tire Change"
-              />
-
-              {/* 3. Accident: Please Don’t Drink and Drive */}
-              <TikTokCard
-                id="7215414816326880554"
-                caption="Accident: Please Don’t Drink and Drive"
-              />
-            </div>
-
-            <p className="text-sm md:text-base text-neutral-200 text-center max-w-3xl mx-auto">
-              These clips are a small window into what we see on West Texas
-              roads — from routine roadside work to{" "}
-              <span className="font-semibold">
-                crashes that could have been avoided
-              </span>
-              . If you&apos;re stuck, call or text early so we can help before
-              it becomes something worse.
-            </p>
-          </div>
-        </section>
-
-        {/* PAYMENT BAR */}
-        <WeAcceptBar />
+        {/* TikTok clips section */}
+        <RoadsideTikTokSection />
       </main>
 
       <SiteFooter />

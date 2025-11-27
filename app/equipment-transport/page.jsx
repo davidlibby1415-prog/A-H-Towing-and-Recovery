@@ -107,32 +107,41 @@ export default function EquipmentTransportPage() {
             {/* TIKTOK GRID – Equipment Transport clips */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center">
               {/* 1. Tow Calls: Offload on the House */}
-              <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
-                <div className="-translate-x-[4px]">
-                  <TikTokEmbed
-                    videoId="7419451829223836959"
-                    caption="Tow Calls: Offload on the House"
-                  />
+              <div className="relative w-full max-w-[360px]">
+                <div className="rounded-[32px] border-2 border-emerald-400/90 p-[6px] bg-black/90 shadow-2xl shadow-black/70">
+                  <div className="rounded-[28px] bg-black overflow-hidden">
+                    <TikTokEmbed
+                      videoId="7419451829223836959"
+                      caption="Tow Calls: Offload on the House"
+                      className="w-full"
+                    />
+                  </div>
                 </div>
               </div>
 
               {/* 2. Equipment Transport: Double Stacking Trailers */}
-              <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
-                <div className="-translate-x-[4px]">
-                  <TikTokEmbed
-                    videoId="7348837007935769902"
-                    caption="Equipment Transport: Double Stacking Trailers"
-                  />
+              <div className="relative w-full max-w-[360px]">
+                <div className="rounded-[32px] border-2 border-emerald-400/90 p-[6px] bg-black/90 shadow-2xl shadow-black/70">
+                  <div className="rounded-[28px] bg-black overflow-hidden">
+                    <TikTokEmbed
+                      videoId="7348837007935769902"
+                      caption="Equipment Transport: Double Stacking Trailers"
+                      className="w-full"
+                    />
+                  </div>
                 </div>
               </div>
 
               {/* 3. Equipment Transport: Pickup from Accident */}
-              <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
-                <div className="-translate-x-[4px]">
-                  <TikTokEmbed
-                    videoId="7275994610713988398"
-                    caption="Equipment Transport: Pickup from Accident"
-                  />
+              <div className="relative w-full max-w-[360px]">
+                <div className="rounded-[32px] border-2 border-emerald-400/90 p-[6px] bg-black/90 shadow-2xl shadow-black/70">
+                  <div className="rounded-[28px] bg-black overflow-hidden">
+                    <TikTokEmbed
+                      videoId="7275994610713988398"
+                      caption="Equipment Transport: Pickup from Accident"
+                      className="w-full"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

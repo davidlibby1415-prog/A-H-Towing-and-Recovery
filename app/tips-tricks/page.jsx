@@ -7,9 +7,40 @@ import {
   BrandHero,
   PhoneCTA,
   TextCTA,
-  TikTokGallery,
 } from "../components/ServiceLayout";
 import { TikTokEmbed } from "../components/TikTokEmbed";
+
+/** Local gallery component for tips/tricks images */
+function TikTokGallery({ images }) {
+  if (!images || images.length === 0) return null;
+
+  return (
+    <div className="rounded-3xl border border-yellow-400/80 bg-black/80 p-4 shadow-[0_12px_30px_rgba(0,0,0,0.9)]">
+      <h3 className="text-lg md:text-xl font-black text-amber-100 mb-3 text-center">
+        Real Scenes from the Road
+      </h3>
+      <div className="grid grid-cols-2 gap-3">
+        {images.map((src, idx) => (
+          <div
+            key={idx}
+            className="rounded-2xl overflow-hidden bg-neutral-900 aspect-[4/3] border border-neutral-700/70"
+          >
+            <img
+              src={src}
+              alt={`Tips & tricks photo ${idx + 1}`}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+      <p className="mt-3 text-[11px] text-amber-100/80 text-center">
+        West Texas miles, wind, dust, and night work — this is why the safety
+        tips matter.
+      </p>
+    </div>
+  );
+}
 
 export const metadata = {
   title: "Tips & Tricks | A & H Towing & Recovery",
@@ -200,7 +231,9 @@ export default function TipsTricksPage() {
                   <li>• Year / Make / Model of your vehicle</li>
                   <li>• Automatic or standard (if you know)</li>
                   <li>• Is it loaded with tools, cargo, or a trailer?</li>
-                  <li>• Exact location, GPS pin, or closest mile marker / exit</li>
+                  <li>
+                    • Exact location, GPS pin, or closest mile marker / exit
+                  </li>
                   <li>• Where you’d like it towed (home, shop, yard, etc.)</li>
                 </ul>
               </div>
@@ -284,7 +317,9 @@ export default function TipsTricksPage() {
                   <li>• Remove anything you don’t want bouncing around.</li>
                   <li>• Grab medications, chargers, and essentials.</li>
                   <li>• Tell us if there’s a pet in the vehicle.</li>
-                  <li>• Let us know if there’s prior body damage we should note.</li>
+                  <li>
+                    • Let us know if there’s prior body damage we should note.
+                  </li>
                 </ul>
                 <p className="mt-2">
                   The more we know, the better we can plan the hook, route, and

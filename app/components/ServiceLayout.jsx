@@ -198,7 +198,7 @@ export function SiteHeader() {
             href="tel:+14328424578"
             className="inline-flex items-center justify-center mt-1 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs sm:text-sm font-bold text-yellow-50 shadow-lg shadow-blue-900/60 text-center"
           >
-            CALL 24/7 DISPATCH (432) 842-4578
+            CALL 24/7 DISPATCH • (432) 842-4578
           </a>
         </div>
       </div>
@@ -273,19 +273,19 @@ export function PhoneCTA() {
       href="tel:+14328424578"
       className="inline-flex items-center justify-center px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs sm:text-sm font-extrabold text-yellow-50 shadow-lg shadow-blue-900/60"
     >
-      CALL 24/7 DISPATCH (432) 842-4578
+      CALL 24/7 DISPATCH • (432) 842-4578
     </a>
   );
 }
 
 export function TextCTA() {
   return (
-    <Link
+    <a
       href="/#dispatch-form"
       className="inline-flex items-center justify-center px-3 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-[11px] sm:text-xs font-semibold text-yellow-50 shadow-lg shadow-red-900/60"
     >
       TEXT DISPATCH &amp; SHARE MY GPS LOCATION
-    </Link>
+    </a>
   );
 }
 
@@ -293,30 +293,18 @@ export function TextCTA() {
 
 export function WeAcceptBar() {
   return (
-    <div className="bg-black/95 border-t border-yellow-500/60">
-      <div className="container max-w-7xl mx-auto px-4 md:px-6 py-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4 text-[11px] sm:text-xs">
-        {/* "We accept" pill – BLACK text, bold */}
-        <span className="px-3 py-1 rounded-full bg-yellow-300 text-black font-black tracking-wide uppercase">
-          We accept
+    <div className="bg-black/95 border-t border-yellow-500/40">
+      <div className="container max-w-7xl mx-auto px-4 md:px-6 py-3 flex flex-wrap items-center justify-center gap-4 text-[11px] sm:text-xs text-neutral-100">
+        <span className="font-semibold text-yellow-300 tracking-wide">
+          We accept:
         </span>
-
-        {/* Payment type pills – also high contrast, black text */}
-        <span className="px-2.5 py-1 rounded-full bg-yellow-200 text-black font-bold">
-          Cash
-        </span>
-
-        <span className="px-2.5 py-1 rounded-full bg-yellow-200 text-black font-bold text-center">
-          All major credit &amp; debit cards
-        </span>
-
-        <span className="px-2.5 py-1 rounded-full bg-yellow-200 text-black font-bold">
-          EFS / Comchek
-        </span>
+        <span>Cash</span>
+        <span>Major credit &amp; debit cards</span>
+        <span>EFS / Comchek</span>
       </div>
     </div>
   );
 }
-
 
 /* ========= Simple footer ========= */
 

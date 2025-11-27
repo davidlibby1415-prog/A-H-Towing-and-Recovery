@@ -6,14 +6,13 @@ import Link from "next/link";
 
 /* =================== Shared Constants =================== */
 
-const DISPLAY_PHONE = "(432) 448-0074";
-const TEL_PHONE = "+14324480074";
-const TEMP_LABEL = "Pecos, TX • 82°F"; // <-- change this text if you want a different temp/location
+const DISPLAY_PHONE = "(432) 842-4578"; // <- change if needed
+const TEL_PHONE = "+14328424578";
 
-/* =================== Layout Pieces =================== */
+/* =================== Header =================== */
 
 export function SiteHeader() {
-  const [now, setNow] = useState(null);
+  const [now, setNow] = useState<Date | null>(null);
 
   useEffect(() => {
     const update = () => setNow(new Date());
@@ -29,6 +28,7 @@ export function SiteHeader() {
       weekday: "short",
       month: "short",
       day: "numeric",
+      year: "numeric",
     });
     timeStr = now.toLocaleTimeString("en-US", {
       hour: "numeric",
@@ -37,107 +37,183 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="z-40">
-      {/* Top info bar: date / time / temp */}
-      <div className="w-full border-b border-red-800/60 bg-black/90 backdrop-blur">
-        <div className="container max-w-7xl mx-auto px-4 py-1.5 flex flex-wrap items-center justify-between gap-2 text-[11px] text-neutral-300">
-          <div className="flex items-center gap-3">
-            <span className="uppercase tracking-[0.18em] text-red-300">
-              24/7 Dispatch
+    <header className="relative z-40 border-b border-yellow-500/40 bg-[#050505] text-white shadow-lg shadow-black/60">
+      <div className="container max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-6">
+        {/* LEFT: Logo + Business Info */}
+        <div className="flex items-center gap-3">
+          <div className="h-12 w-12 rounded-xl bg-black flex items-center justify-center border border-red-700 shadow-[0_0_18px_rgba(248,113,113,0.6)]">
+            <span className="text-sm font-black tracking-[0.12em] text-red-400">
+              A&amp;H
             </span>
-            <span className="h-1 w-1 rounded-full bg-red-500" />
-            <span>{TEMP_LABEL}</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="leading-tight text-xs md:text-[13px]">
+            <p className="font-semibold text-red-400">
+              A&amp;H Towing &amp; Recovery, LLC
+            </p>
+            <p className="text-neutral-200">
+              2712 W F Street, Pecos, TX 79772
+            </p>
+            <a
+              href="mailto:ah.towing.recovery23@gmail.com"
+              className="text-sky-300 hover:text-sky-200 underline-offset-2 hover:underline"
+            >
+              ah.towing.recovery23@gmail.com
+            </a>
+          </div>
+        </div>
+
+        {/* CENTER: NAV */}
+        <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold">
+          {/* Services dropdown */}
+          <div className="relative group">
+            <button className="inline-flex items-center gap-1 rounded-md bg-yellow-400 px-4 py-1.5 text-black shadow-[0_0_12px_rgba(250,204,21,0.7)] hover:bg-yellow-300">
+              <span>Services</span>
+              <span className="text-xs">▾</span>
+            </button>
+
+            <div className="pointer-events-none absolute left-0 top-full mt-2 w-72 rounded-xl border border-yellow-400 bg-black/98 py-3 shadow-2xl opacity-0 translate-y-1 transition duration-150 group-hover:pointer-events-auto group-hover:opacity-100 group-hover:translate-y-0">
+              <ul className="flex flex-col gap-1 text-[13px]">
+                <li>
+                  <Link
+                    href="/light-duty-towing"
+                    className="block px-4 py-1.5 text-sky-200 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Light Duty Towing
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/heavy-duty-commercial-towing"
+                    className="block px-4 py-1.5 text-sky-200 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Heavy Duty &amp; Commercial Towing
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/oilfield-routes-tow-service"
+                    className="block px-4 py-1.5 text-sky-200 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Oilfield Routes Tow Service
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/equipment-transport"
+                    className="block px-4 py-1.5 text-sky-200 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Equipment Transport
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/flatbed-rollback-services"
+                    className="block px-4 py-1.5 text-sky-200 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Flatbed / Rollback Services
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/emergency-roadside-assistance"
+                    className="block px-4 py-1.5 text-sky-200 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Emergency Roadside Assistance
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/accident-management-and-removal"
+                    className="block px-4 py-1.5 text-sky-200 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Accident Management and Removal
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/winching-recovery"
+                    className="block px-4 py-1.5 text-sky-200 hover:bg-yellow-400 hover:text-black"
+                  >
+                    Winching / Recovery
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <Link
+            href="/coverage"
+            className="text-sky-300 hover:text-sky-100"
+          >
+            Coverage
+          </Link>
+          <Link
+            href="/owners"
+            className="text-sky-300 hover:text-sky-100"
+          >
+            Owners
+          </Link>
+          <Link
+            href="/tips-tricks"
+            className="text-sky-300 hover:text-sky-100"
+          >
+            Tips &amp; Tricks
+          </Link>
+          <Link
+            href="/request-a-tow"
+            className="text-sky-300 hover:text-sky-100"
+          >
+            Request a Tow
+          </Link>
+        </nav>
+
+        {/* RIGHT: Call button + date/time */}
+        <div className="flex flex-col items-end gap-2 text-xs">
+          <a
+            href={`tel:${TEL_PHONE}`}
+            className="inline-flex flex-col items-center justify-center rounded-2xl border-2 border-white bg-[#2563eb] px-5 py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.16em] shadow-[0_0_20px_rgba(37,99,235,0.9)] hover:bg-[#1d4ed8]"
+          >
+            <span>Click here to call 24/7</span>
+            <span>Dispatch</span>
+            <span className="mt-1 text-base tracking-[0.08em]">
+              {DISPLAY_PHONE}
+            </span>
+          </a>
+          <div className="text-[11px] text-neutral-200 text-right leading-tight">
             {now && (
               <>
-                <span>{dateStr}</span>
-                <span className="h-1 w-1 rounded-full bg-neutral-500" />
-                <span>{timeStr}</span>
+                <div>{dateStr}</div>
+                <div>
+                  {timeStr}
+                  <span className="ml-1">Pecos, TX</span>
+                </div>
               </>
             )}
           </div>
         </div>
       </div>
 
-      {/* Main header + nav */}
-      <div className="sticky top-0 border-b border-white/10 bg-black/90 backdrop-blur-md">
-        <div className="container max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          {/* Logo + Name */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-red-600 to-amber-400 flex items-center justify-center shadow-lg shadow-red-900/50">
-              <span className="text-xs font-black tracking-[0.08em] text-black">
-                A&amp;H
-              </span>
-            </div>
-            <div className="leading-tight">
-              <p className="text-sm font-semibold text-white tracking-wide">
-                A &amp; H Towing &amp; Recovery
-              </p>
-              <p className="text-[11px] text-neutral-300 uppercase tracking-[0.16em]">
-                Pecos • Reeves County • West Texas
-              </p>
-            </div>
-          </Link>
-
-          {/* Nav + Call button */}
-          <div className="flex items-center gap-4">
-            <nav className="hidden md:flex items-center gap-5 text-xs font-medium text-neutral-200">
-              <Link
-                href="/light-duty-towing"
-                className="hover:text-white transition"
-              >
-                Light Duty
-              </Link>
-              <Link
-                href="/heavy-duty-commercial-towing"
-                className="hover:text-white transition"
-              >
-                Heavy / Commercial
-              </Link>
-              <Link
-                href="/oilfield-routes-tow-service"
-                className="hover:text-white transition"
-              >
-                Oilfield Routes
-              </Link>
-              <Link
-                href="/owners"
-                className="hover:text-white transition"
-              >
-                Owners
-              </Link>
-              <Link
-                href="/tips-tricks"
-                className="hover:text-white transition"
-              >
-                Tips &amp; Tricks
-              </Link>
-            </nav>
-
-            <a
-              href={`tel:${TEL_PHONE}`}
-              className="inline-flex items-center gap-2 rounded-full border border-red-500/80 bg-gradient-to-r from-red-700 to-red-500 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-white shadow-lg shadow-red-900/60 hover:from-red-600 hover:to-red-400 transition"
-            >
-              <span className="inline-flex h-2 w-2 rounded-full bg-lime-400 animate-pulse" />
-              Call {DISPLAY_PHONE}
-            </a>
-          </div>
-        </div>
+      {/* Mobile note: simple bar */}
+      <div className="lg:hidden border-t border-neutral-700 bg-black/90 px-4 py-2 text-[11px] text-center text-neutral-300">
+        Menu simplified on mobile — tap logo to go home or call dispatch above.
       </div>
     </header>
   );
 }
+
+/* =================== Footer =================== */
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-white/10 bg-black">
       <div className="container max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-neutral-400">
         <p className="text-center md:text-left">
-          © {new Date().getFullYear()} A &amp; H Towing &amp; Recovery. All rights reserved.
+          © {new Date().getFullYear()} A&amp;H Towing &amp; Recovery, LLC. All
+          rights reserved.
         </p>
         <p className="text-center md:text-right">
-          Serving Pecos, Reeves County, and West Texas highways — light, medium &amp; heavy duty.
+          Serving Pecos, Reeves County, and West Texas highways — light, medium
+          &amp; heavy duty.
         </p>
       </div>
     </footer>
@@ -149,7 +225,7 @@ export function SiteFooter() {
 export function BrandHero({
   serviceTitle,
   serviceSubtitle,
-  heroVideoSrc, // optional: video background
+  heroVideoSrc,
 }) {
   return (
     <section className="relative overflow-hidden border-b border-white/10 bg-neutral-950">
@@ -168,15 +244,12 @@ export function BrandHero({
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-red-900 via-neutral-900 to-black" />
         )}
-        {/* Dark overlay */}
         <div className="absolute inset-0 bg-black/70" />
-        {/* Subtle glow band */}
         <div className="absolute -inset-x-20 bottom-[-40%] h-[60%] bg-[radial-gradient(circle_at_top,_rgba(248,250,252,0.16),_transparent_60%)] opacity-70" />
       </div>
 
       {/* Foreground content */}
       <div className="relative container max-w-7xl mx-auto px-4 py-16 md:py-24 flex flex-col lg:flex-row items-start gap-10">
-        {/* Glass content box */}
         <div className="max-w-xl bg-black/55 border border-white/15 rounded-2xl p-6 md:p-8 shadow-[0_18px_60px_rgba(0,0,0,0.8)] backdrop-blur-xl">
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-red-300 mb-2">
             24/7 Dispatch • Fast Response
@@ -188,7 +261,6 @@ export function BrandHero({
             {serviceSubtitle}
           </p>
 
-          {/* Call + SMS quick actions */}
           <div className="flex flex-wrap items-center gap-3">
             <a
               href={`tel:${TEL_PHONE}`}
@@ -205,7 +277,6 @@ export function BrandHero({
             </a>
           </div>
 
-          {/* Micro trust row */}
           <div className="mt-5 flex flex-wrap gap-4 text-[11px] text-neutral-300">
             <span className="inline-flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-lime-400" />
@@ -218,7 +289,6 @@ export function BrandHero({
           </div>
         </div>
 
-        {/* Right side: accent column / clear CTA box */}
         <div className="flex-1 w-full lg:max-w-sm">
           <div className="bg-black/50 border border-white/10 rounded-2xl p-5 md:p-6 backdrop-blur-xl shadow-[0_18px_60px_rgba(0,0,0,0.85)]">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-300 mb-2">
@@ -266,7 +336,10 @@ export function PhoneCTA({ title = "Need a tow right now?", blurb }) {
             </a>
             <p className="text-[11px] text-neutral-400">
               Save us in your phone as{" "}
-              <span className="text-neutral-100 font-medium">A&amp;H Towing</span>.
+              <span className="text-neutral-100 font-medium">
+                A&amp;H Towing
+              </span>
+              .
             </p>
           </div>
         </div>
@@ -306,7 +379,8 @@ export function TikTokGallery({ children }) {
         <div className="grid md:grid-cols-3 gap-6">
           {children || (
             <p className="col-span-full text-sm text-neutral-300">
-              Follow us on TikTok to see real-world recoveries and oilfield tows.
+              Follow us on TikTok to see real-world recoveries and oilfield
+              tows.
             </p>
           )}
         </div>
@@ -314,4 +388,3 @@ export function TikTokGallery({ children }) {
     </section>
   );
 }
-

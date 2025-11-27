@@ -27,7 +27,7 @@ export default function EmergencyRoadsideAssistancePage() {
         <BrandHero
           serviceTitle="Emergency Roadside Assistance"
           serviceSubtitle="Jumps, tire changes, fuel delivery, lockouts, and quick roadside checks anywhere along your West Texas route."
-          heroVideoSrc="/Videos/Fuel.mp4"  // <-- IMPORTANT: path + filename
+          heroVideoSrc="/Videos/Fuel.mp4"
         />
 
         {/* MAIN CONTENT */}
@@ -96,7 +96,7 @@ export default function EmergencyRoadsideAssistancePage() {
           </div>
         </section>
 
-        {/* OPTIONAL: TIKTOK ROW */}
+        {/* TIKTOK ROW */}
         <section className="py-10 bg-red-900 border-y border-black/70">
           <div className="container max-w-7xl mx-auto px-4 md:px-6">
             <h2 className="text-xl sm:text-2xl font-extrabold text-yellow-300 mb-4">
@@ -119,7 +119,7 @@ export default function EmergencyRoadsideAssistancePage() {
                 <TikTokEmbed videoId="7215414816326880554" />
               </div>
 
-              {/* Open third slot for future roadside clip */}
+              {/* Placeholder for future clip */}
               <div className="rounded-2xl border border-yellow-500/70 bg-black/80 p-4 flex items-center justify-center text-center text-sm text-amber-100">
                 More roadside clips coming soon from the West Texas routes.
               </div>

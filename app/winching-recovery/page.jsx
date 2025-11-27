@@ -1,4 +1,4 @@
-// app/winching-recovery/page.jsx
+// FILE: app/winching-recovery/page.jsx
 
 import React from "react";
 import {
@@ -9,7 +9,6 @@ import {
   TextCTA,
 } from "../components/ServiceLayout";
 import { TikTokEmbed } from "../components/TikTokEmbed";
-
 
 export const metadata = {
   title: "Winching / Recovery | A & H Towing & Recovery",
@@ -126,12 +125,15 @@ function WinchingTikTokGrid() {
               </h4>
             </div>
 
+            {/* 👇 extra wrapper with slight left shift so phone centers inside green frame */}
             <div className="rounded-[22px] bg-black overflow-hidden flex justify-center p-2">
-              <TikTokEmbed
-                videoId={video.id}
-                caption={video.caption}
-                className="w-full max-w-[420px]"
-              />
+              <div className="-translate-x-[4px]">
+                <TikTokEmbed
+                  videoId={video.id}
+                  caption={video.caption}
+                  className="w-full max-w-[420px]"
+                />
+              </div>
             </div>
           </div>
         ))}
@@ -275,11 +277,14 @@ export default function WinchingRecoveryPage() {
                   </h4>
                 </div>
                 <div className="rounded-[22px] bg-black overflow-hidden flex justify-center p-2">
-                  <TikTokEmbed
-                    videoId="6896206161771547909"
-                    caption="Repo: The Railcar Mover"
-                    className="w-full max-w-[320px]"
-                  />
+                  {/* 👇 left shift wrapper here too */}
+                  <div className="-translate-x-[4px]">
+                    <TikTokEmbed
+                      videoId="6896206161771547909"
+                      caption="Repo: The Railcar Mover"
+                      className="w-full max-w-[320px]"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

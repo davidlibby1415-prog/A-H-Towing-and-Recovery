@@ -108,26 +108,32 @@ export default function EquipmentTransportPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 justify-items-center">
               {/* 1. Tow Calls: Offload on the House */}
               <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
-                <TikTokEmbed
-                  videoId="7419451829223836959"
-                  caption="Tow Calls: Offload on the House"
-                />
+                <div className="-translate-x-[4px]">
+                  <TikTokEmbed
+                    videoId="7419451829223836959"
+                    caption="Tow Calls: Offload on the House"
+                  />
+                </div>
               </div>
 
               {/* 2. Equipment Transport: Double Stacking Trailers */}
               <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
-                <TikTokEmbed
-                  videoId="7348837007935769902"
-                  caption="Equipment Transport: Double Stacking Trailers"
-                />
+                <div className="-translate-x-[4px]">
+                  <TikTokEmbed
+                    videoId="7348837007935769902"
+                    caption="Equipment Transport: Double Stacking Trailers"
+                  />
+                </div>
               </div>
 
               {/* 3. Equipment Transport: Pickup from Accident */}
               <div className="w-full max-w-xs rounded-3xl border-2 border-emerald-400/90 bg-black/85 p-2 shadow-2xl shadow-black/70">
-                <TikTokEmbed
-                  videoId="7275994610713988398"
-                  caption="Equipment Transport: Pickup from Accident"
-                />
+                <div className="-translate-x-[4px]">
+                  <TikTokEmbed
+                    videoId="7275994610713988398"
+                    caption="Equipment Transport: Pickup from Accident"
+                  />
+                </div>
               </div>
             </div>
 

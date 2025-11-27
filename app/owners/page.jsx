@@ -43,11 +43,11 @@ export default function OwnersPage() {
               </div>
             </div>
 
-            {/* RIGHT – hero video */}
+            {/* RIGHT – hero video (ahsunset2.mp4) */}
             <div className="relative rounded-3xl overflow-hidden border border-neutral-800 bg-black/70 shadow-[0_0_40px_rgba(0,0,0,0.9)]">
               <video
                 className="w-full h-full object-cover aspect-video"
-                src="/Videos/tow1.mp4"
+                src="/Videos/ahsunset2.mp4"
                 autoPlay
                 muted
                 loop
@@ -150,8 +150,9 @@ export default function OwnersPage() {
               </div>
             </div>
 
-            {/* RIGHT: owners photo collage */}
+            {/* RIGHT: owners photo collage – main couple + two portraits */}
             <div className="space-y-4">
+              {/* large couple photo */}
               <div className="rounded-3xl overflow-hidden border border-yellow-400/70 shadow-[0_0_32px_rgba(250,204,21,0.5)]">
                 <img
                   src="/owners/couple.jpg"
@@ -159,6 +160,8 @@ export default function OwnersPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
+
+              {/* two smaller tiles: Ale solo + Harvey gun shot */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-2xl overflow-hidden border border-neutral-700/90">
                   <img
@@ -169,8 +172,8 @@ export default function OwnersPage() {
                 </div>
                 <div className="rounded-2xl overflow-hidden border border-neutral-700/90">
                   <img
-                    src="/owners/dpshar.jpg"
-                    alt="Harvey with DPS troopers and a loaded unit"
+                    src="/owners/hargun.jpg"
+                    alt="Harvey in the shop showing his personality"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -179,7 +182,7 @@ export default function OwnersPage() {
           </div>
         </section>
 
-        {/* OWNERS GALLERY – 7 photos */}
+        {/* OWNERS GALLERY – 6 photos, 2 rows of 3 */}
         <section className="py-10 md:py-12 bg-red-800/95 border-b border-black/60">
           <div className="container max-w-7xl mx-auto px-4 md:px-6">
             <h2 className="text-2xl sm:text-3xl font-black text-yellow-300 text-center">
@@ -191,16 +194,14 @@ export default function OwnersPage() {
             </p>
 
             <div className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-3">
-              {/* 1 – Ale solo portrait */}
+              {/* TOP ROW */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
                 <img
-                  src="/owners/alesolo.jpg"
-                  alt="Alejandra portrait"
+                  src="/owners/alexsemi.png"
+                  alt="Alejandra with the rollback at sunset"
                   className="w-full h-full object-cover"
                 />
               </div>
-
-              {/* 2 – SWAPPED: now couple1.jpg */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
                 <img
                   src="/owners/couple1.jpg"
@@ -208,8 +209,6 @@ export default function OwnersPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-
-              {/* 3 – Couple by the water */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
                 <img
                   src="/owners/couple.jpg"
@@ -218,7 +217,7 @@ export default function OwnersPage() {
                 />
               </div>
 
-              {/* 4 – SWAPPED: now alexcert.jpg */}
+              {/* BOTTOM ROW */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
                 <img
                   src="/owners/alexcert.jpg"
@@ -226,27 +225,14 @@ export default function OwnersPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-
-              {/* 5 – SWAPPED: now dpshar.jpg */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
                 <img
-                  src="/owners/dpshar.jpg"
+                  src="/owners/dpsharvey.jpg"
                   alt="Harvey with DPS troopers and a unit on the deck"
                   className="w-full h-full object-cover"
                 />
               </div>
-
-              {/* 6 – SWAPPED: now hargun.jpg */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
-                <img
-                  src="/owners/hargun.jpg"
-                  alt="Harvey in the shop showing his personality"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* 7 – Full-width Harvey cert */}
-              <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60 md:col-span-3">
                 <img
                   src="/owners/harcert.jpg"
                   alt="Harvey with training or award certificate"

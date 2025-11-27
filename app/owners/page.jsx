@@ -1,4 +1,5 @@
-// app/owners/page.jsx
+// FILE: app/owners/page.jsx
+
 import React from "react";
 import {
   SiteHeader,
@@ -7,43 +8,33 @@ import {
   PhoneCTA,
   TextCTA,
 } from "../components/ServiceLayout";
-
-/** Local gallery component for owner photos */
-function TikTokGallery({ images }) {
-  if (!images || images.length === 0) return null;
-
-  return (
-    <div className="rounded-3xl border border-yellow-400/80 bg-black/80 p-4 shadow-[0_12px_30px_rgba(0,0,0,0.9)]">
-      <h3 className="text-lg md:text-xl font-black text-amber-100 mb-3 text-center">
-        A&H in Real Life
-      </h3>
-      <div className="grid grid-cols-2 gap-3">
-        {images.map((src, idx) => (
-          <div
-            key={idx}
-            className="rounded-2xl overflow-hidden bg-neutral-900 aspect-[4/3] border border-neutral-700/70"
-          >
-            <img
-              src={src}
-              alt={`A&H owners photo ${idx + 1}`}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
-          </div>
-        ))}
-      </div>
-      <p className="mt-3 text-[11px] text-amber-100/80 text-center">
-        Real trucks, real people, real West Texas miles.
-      </p>
-    </div>
-  );
-}
+import { TikTokEmbed } from "../components/TikTokEmbed";
 
 export const metadata = {
   title: "Owners | A & H Towing & Recovery",
   description:
     "Family-owned towing and recovery operation based in Pecos, TX. Learn more about the people behind A & H Towing & Recovery.",
 };
+
+// TikTok clips for Owners page
+const ownerVideos = [
+  {
+    id: "7479691088521940254",
+    caption: "Tow Calls: The Boss Does It Herself!",
+  },
+  {
+    id: "7419425892356738335",
+    caption: "Tow Calls: Dirty Hands, Clean Money",
+  },
+  {
+    id: "7382816143372799263",
+    caption: "The Tow Life: This Business Isn’t for the Weak",
+  },
+  {
+    id: "7541454523265535245",
+    caption: "The Boss Works: Towing Jobs 2",
+  },
+];
 
 export default function OwnersPage() {
   return (
@@ -157,18 +148,47 @@ export default function OwnersPage() {
                   </span>
                 </p>
               </div>
+
+              {/* Bottom buttons */}
+              <div className="pt-2 flex flex-wrap gap-3">
+                <PhoneCTA />
+                <TextCTA />
+              </div>
             </div>
 
-            {/* RIGHT: Image gallery / visual block */}
-            <div className="space-y-6">
-              <TikTokGallery
-                images={[
-                  "/images/owners-1.jpg",
-                  "/images/owners-2.jpg",
-                  "/images/owners-3.jpg",
-                  "/images/owners-4.jpg",
-                ]}
-              />
+            {/* RIGHT: TikTok clips of the owners working */}
+            <div className="space-y-4">
+              <div className="rounded-2xl border border-yellow-400/80 bg-black/75 px-4 py-4 sm:px-5 sm:py-5 shadow-[0_0_24px_rgba(0,0,0,0.8)]">
+                <h3 className="text-lg sm:text-xl font-black text-amber-200 mb-2 text-center sm:text-left">
+                  Meet the owners in action
+                </h3>
+                <p className="text-xs sm:text-sm text-amber-50/90 mb-3">
+                  These clips show the real people behind A&amp;H — running the
+                  big trucks, getting dirty, and doing the work themselves.
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {ownerVideos.map((video) => (
+                    <div
+                      key={video.id}
+                      className="rounded-[22px] p-[6px] bg-black/90 border border-yellow-400/70 shadow-[0_10px_26px_rgba(0,0,0,0.9)]"
+                    >
+                      <div className="px-3 pt-2 pb-1">
+                        <h4 className="text-xs sm:text-sm font-extrabold text-amber-50 text-center">
+                          {video.caption}
+                        </h4>
+                      </div>
+                      <div className="rounded-[18px] bg-black overflow-hidden flex justify-center p-2">
+                        <TikTokEmbed
+                          videoId={video.id}
+                          caption={video.caption}
+                          className="w-full max-w-[420px]"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
               <div className="rounded-2xl border border-yellow-400/80 bg-black/70 p-4 text-sm md:text-base font-semibold text-amber-50">
                 <h4 className="text-lg md:text-xl font-black mb-2 text-amber-300">
@@ -182,12 +202,6 @@ export default function OwnersPage() {
                 </ul>
               </div>
             </div>
-          </div>
-
-          {/* Buttons at bottom */}
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <PhoneCTA />
-            <TextCTA />
           </div>
         </section>
       </main>

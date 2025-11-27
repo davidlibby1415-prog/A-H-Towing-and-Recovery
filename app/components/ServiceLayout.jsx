@@ -1,41 +1,15 @@
 // FILE: app/components/ServiceLayout.jsx
-"use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
+import Script from "next/script";
 
-/* =================== Shared Constants =================== */
-
-const DISPLAY_PHONE = "(432) 842-4578"; // <- change if needed
+const DISPLAY_PHONE = "(432) 842-4578";
 const TEL_PHONE = "+14328424578";
 
-/* =================== Header =================== */
+/* =================== HEADER =================== */
 
 export function SiteHeader() {
-  const [now, setNow] = useState<Date | null>(null);
-
-  useEffect(() => {
-    const update = () => setNow(new Date());
-    update();
-    const id = setInterval(update, 60_000);
-    return () => clearInterval(id);
-  }, []);
-
-  let dateStr = "";
-  let timeStr = "";
-  if (now) {
-    dateStr = now.toLocaleDateString("en-US", {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-    timeStr = now.toLocaleTimeString("en-US", {
-      hour: "numeric",
-      minute: "2-digit",
-    });
-  }
-
   return (
     <header className="relative z-40 border-b border-yellow-500/40 bg-[#050505] text-white shadow-lg shadow-black/60">
       <div className="container max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-6">
@@ -64,7 +38,7 @@ export function SiteHeader() {
 
         {/* CENTER: NAV */}
         <nav className="hidden lg:flex items-center gap-6 text-sm font-semibold">
-          {/* Services dropdown */}
+          {/* Services dropdown – full list like old site */}
           <div className="relative group">
             <button className="inline-flex items-center gap-1 rounded-md bg-yellow-400 px-4 py-1.5 text-black shadow-[0_0_12px_rgba(250,204,21,0.7)] hover:bg-yellow-300">
               <span>Services</span>
@@ -141,22 +115,13 @@ export function SiteHeader() {
             </div>
           </div>
 
-          <Link
-            href="/coverage"
-            className="text-sky-300 hover:text-sky-100"
-          >
+          <Link href="/coverage" className="text-sky-300 hover:text-sky-100">
             Coverage
           </Link>
-          <Link
-            href="/owners"
-            className="text-sky-300 hover:text-sky-100"
-          >
+          <Link href="/owners" className="text-sky-300 hover:text-sky-100">
             Owners
           </Link>
-          <Link
-            href="/tips-tricks"
-            className="text-sky-300 hover:text-sky-100"
-          >
+          <Link href="/tips-tricks" className="text-sky-300 hover:text-sky-100">
             Tips &amp; Tricks
           </Link>
           <Link
@@ -179,29 +144,53 @@ export function SiteHeader() {
               {DISPLAY_PHONE}
             </span>
           </a>
-          <div className="text-[11px] text-neutral-200 text-right leading-tight">
-            {now && (
-              <>
-                <div>{dateStr}</div>
-                <div>
-                  {timeStr}
-                  <span className="ml-1">Pecos, TX</span>
-                </div>
-              </>
-            )}
+
+          <div
+            className="text-[11px] text-neutral-200 text-right leading-tight"
+            suppressHydrationWarning
+          >
+            <div id="header-date" />
+            <div id="header-time" />
           </div>
         </div>
       </div>
 
-      {/* Mobile note: simple bar */}
+      {/* Mobile note */}
       <div className="lg:hidden border-t border-neutral-700 bg-black/90 px-4 py-2 text-[11px] text-center text-neutral-300">
         Menu simplified on mobile — tap logo to go home or call dispatch above.
       </div>
+
+      {/* Inline script to fill date/time on client */}
+      <Script id="header-datetime" strategy="afterInteractive">
+        {`
+          (function () {
+            function update() {
+              var now = new Date();
+              var dateStr = now.toLocaleDateString("en-US", {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              });
+              var timeStr = now.toLocaleTimeString("en-US", {
+                hour: "numeric",
+                minute: "2-digit",
+              });
+              var dateEl = document.getElementById("header-date");
+              var timeEl = document.getElementById("header-time");
+              if (dateEl) dateEl.textContent = dateStr;
+              if (timeEl) timeEl.textContent = timeStr + " Pecos, TX";
+            }
+            update();
+            setInterval(update, 60000);
+          })();
+        `}
+      </Script>
     </header>
   );
 }
 
-/* =================== Footer =================== */
+/* =================== FOOTER =================== */
 
 export function SiteFooter() {
   return (
@@ -220,16 +209,12 @@ export function SiteFooter() {
   );
 }
 
-/* =================== Brand Hero =================== */
+/* =================== BRAND HERO =================== */
 
-export function BrandHero({
-  serviceTitle,
-  serviceSubtitle,
-  heroVideoSrc,
-}) {
+export function BrandHero({ serviceTitle, serviceSubtitle, heroVideoSrc }) {
   return (
     <section className="relative overflow-hidden border-b border-white/10 bg-neutral-950">
-      {/* Background: video or gradient */}
+      {/* Background */}
       <div className="absolute inset-0">
         {heroVideoSrc ? (
           <video
@@ -248,7 +233,7 @@ export function BrandHero({
         <div className="absolute -inset-x-20 bottom-[-40%] h-[60%] bg-[radial-gradient(circle_at_top,_rgba(248,250,252,0.16),_transparent_60%)] opacity-70" />
       </div>
 
-      {/* Foreground content */}
+      {/* Foreground */}
       <div className="relative container max-w-7xl mx-auto px-4 py-16 md:py-24 flex flex-col lg:flex-row items-start gap-10">
         <div className="max-w-xl bg-black/55 border border-white/15 rounded-2xl p-6 md:p-8 shadow-[0_18px_60px_rgba(0,0,0,0.8)] backdrop-blur-xl">
           <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-red-300 mb-2">
@@ -322,9 +307,7 @@ export function PhoneCTA({ title = "Need a tow right now?", blurb }) {
               {title}
             </h2>
             {blurb && (
-              <p className="text-sm md:text-base text-neutral-300">
-                {blurb}
-              </p>
+              <p className="text-sm md:text-base text-neutral-300">{blurb}</p>
             )}
           </div>
           <div className="flex flex-col items-start md:items-end gap-2">
@@ -370,7 +353,7 @@ export function TextCTA({ heading, body, children }) {
   );
 }
 
-/* =================== TikTok Gallery Shell =================== */
+/* =================== TikTok GALLERY SHELL =================== */
 
 export function TikTokGallery({ children }) {
   return (

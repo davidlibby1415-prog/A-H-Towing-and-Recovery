@@ -48,7 +48,7 @@ export default function EquipmentTransportPage() {
                 help you keep jobs moving without tying up your own people.
               </p>
 
-              <p className="mt-4 text-sm sm:text-base leading-relaxed text-neutral-100">
+              <p className="mt-4 text-sm sm:text-base leading-relaxed text-white">
                 We work with yards, shops, field supervisors, and dispatchers to
                 keep moves simple: clear instructions, steady communication, and
                 the same careful loading you'd expect on your own equipment.
@@ -60,19 +60,19 @@ export default function EquipmentTransportPage() {
               </div>
             </div>
 
-            {/* RIGHT: Main info box with yellow headings + white body text */}
+            {/* RIGHT: Main info box with yellow headings + bright white body text */}
             <div>
               <div className="rounded-2xl border border-yellow-400/80 bg-black/75 px-5 py-5 sm:px-6 sm:py-6 text-sm sm:text-base leading-relaxed text-white shadow-[0_0_24px_rgba(0,0,0,0.7)]">
                 {/* Moving more than just trucks */}
                 <h3 className="text-lg sm:text-xl font-bold text-yellow-300">
                   Moving more than just trucks.
                 </h3>
-                <p className="mt-2">
+                <p className="mt-2 text-white">
                   From large equipment and tool trailers to heavy machinery,
                   A&amp;H can move your gear between yards, job sites, and lease
                   roads with the same care we use on your trucks.
                 </p>
-                <p className="mt-2">
+                <p className="mt-2 text-white">
                   We understand oilfield schedules, gate codes, and night moves.
                   Tell us what you're hauling, where it's going, and when it has
                   to be there — we'll handle the rest.
@@ -82,7 +82,7 @@ export default function EquipmentTransportPage() {
                 <h3 className="mt-5 text-lg sm:text-xl font-bold text-yellow-300">
                   Built for the West Texas region
                 </h3>
-                <p className="mt-2">
+                <p className="mt-2 text-white">
                   We know the West Texas region — highways, lease roads, and the
                   yards in between. If you're not sure how to describe the
                   location, send a GPS pin and a contact number and we'll
@@ -108,7 +108,7 @@ export default function EquipmentTransportPage() {
                 <h3 className="mt-5 text-lg sm:text-xl font-bold text-yellow-300">
                   What we need to know before we roll
                 </h3>
-                <p className="mt-2">
+                <p className="mt-2 text-white">
                   Call dispatch or tap the online request button to send us your
                   GPS and job details. We'll confirm the plan and roll a truck.
                 </p>
@@ -140,3 +140,4 @@ export default function EquipmentTransportPage() {
     </>
   );
 }
+

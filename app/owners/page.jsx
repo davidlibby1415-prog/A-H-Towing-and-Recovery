@@ -20,7 +20,7 @@ export default function OwnersPage() {
       <SiteHeader />
 
       <main className="min-h-screen bg-neutral-950 text-white">
-        {/* HERO – video + green bordered text bubble */}
+        {/* HERO – green bubble + sunset video */}
         <section className="relative border-b border-yellow-500/30 bg-neutral-950 overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(34,197,94,0.08),_transparent_55%),radial-gradient(circle_at_bottom,_rgba(248,250,252,0.08),_transparent_60%)] pointer-events-none" />
 
@@ -43,7 +43,7 @@ export default function OwnersPage() {
               </div>
             </div>
 
-            {/* RIGHT – hero video (ahsunset2.mp4) */}
+            {/* RIGHT – hero video (sunset) */}
             <div className="relative rounded-3xl overflow-hidden border border-neutral-800 bg-black/70 shadow-[0_0_40px_rgba(0,0,0,0.9)]">
               <video
                 className="w-full h-full object-cover aspect-video"
@@ -58,7 +58,7 @@ export default function OwnersPage() {
           </div>
         </section>
 
-        {/* MAIN OWNER STORY – blue steel box */}
+        {/* MAIN OWNER STORY – blue steel box + first collage */}
         <section className="py-10 md:py-12 bg-red-900/90 border-b border-black/60">
           <div className="container max-w-7xl mx-auto px-4 md:px-6 grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] gap-8 items-start">
             {/* LEFT: text intro & “not a call center” box */}
@@ -95,9 +95,9 @@ export default function OwnersPage() {
                     <span className="font-semibold">
                       Real people, not a big company.
                     </span>{" "}
-                    This isn&apos;t a giant corporate fleet. It&apos;s our family
-                    name on the door and our reputation on the line every single
-                    call.
+                    This isn&apos;t a giant corporate fleet. It&apos;s our
+                    family name on the door and our reputation on the line every
+                    single call.
                   </li>
                   <li>
                     <span className="font-semibold">
@@ -110,8 +110,9 @@ export default function OwnersPage() {
                     <span className="font-semibold">
                       We answer our own phone.
                     </span>{" "}
-                    No script, no runaround. Just, &quot;Where are you? What&apos;re
-                    you in? Is everyone safe?&quot; and then we get moving.
+                    No script, no runaround. Just, &quot;Where are you?
+                    What&apos;re you in? Is everyone safe?&quot; and then we get
+                    moving.
                   </li>
                   <li>
                     <span className="font-semibold">
@@ -150,9 +151,9 @@ export default function OwnersPage() {
               </div>
             </div>
 
-            {/* RIGHT: owners photo collage – main couple + two portraits */}
+            {/* RIGHT: owners photo collage – couple + two portraits */}
             <div className="space-y-4">
-              {/* large couple photo */}
+              {/* Large couple photo */}
               <div className="rounded-3xl overflow-hidden border border-yellow-400/70 shadow-[0_0_32px_rgba(250,204,21,0.5)]">
                 <img
                   src="/owners/couple.jpg"
@@ -161,7 +162,7 @@ export default function OwnersPage() {
                 />
               </div>
 
-              {/* two smaller tiles: Ale solo + Harvey gun shot */}
+              {/* Two smaller tiles: Ale solo + Harvey gun shot */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="rounded-2xl overflow-hidden border border-neutral-700/90">
                   <img
@@ -182,7 +183,7 @@ export default function OwnersPage() {
           </div>
         </section>
 
-        {/* OWNERS GALLERY – 6 photos, 2 rows of 3 */}
+        {/* OWNERS GALLERY – 2 rows of 3 */}
         <section className="py-10 md:py-12 bg-red-800/95 border-b border-black/60">
           <div className="container max-w-7xl mx-auto px-4 md:px-6">
             <h2 className="text-2xl sm:text-3xl font-black text-yellow-300 text-center">
@@ -196,7 +197,6 @@ export default function OwnersPage() {
             <div className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-3">
               {/* TOP ROW */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
-                {/* zoomed out a bit: show more of Alex + truck */}
                 <img
                   src="/owners/alexsemi.png"
                   alt="Alejandra with the rollback at sunset"
@@ -213,7 +213,7 @@ export default function OwnersPage() {
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
                 <img
                   src="/owners/hthunder.jpg"
-                  alt="Harvey running in the thunder with the truck"
+                  alt="Harvey working the Thunderdome wrecker"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -244,7 +244,7 @@ export default function OwnersPage() {
           </div>
         </section>
 
-             {/* TIKTOK SECTION – 4 owner videos */}
+        {/* TIKTOK SECTION – owner clips */}
         <section className="py-10 md:py-12 bg-neutral-950 border-b border-black/70">
           <div className="container max-w-7xl mx-auto px-4 md:px-6">
             <h2 className="text-2xl sm:text-3xl font-black text-yellow-300 text-center">
@@ -255,8 +255,7 @@ export default function OwnersPage() {
               West Texas miles.
             </p>
 
-            {/* cards use max-w-xs so the frame hugs the TikTok width */}
-            <div className="mt-6 grid gap-8 md:grid-cols-2">
+            <div className="mt-6 grid gap-6 md:grid-cols-2">
               <div className="space-y-2">
                 <h3 className="text-base sm:text-lg font-bold text-yellow-300">
                   Tow Calls: The Boss Does It Herself!
@@ -295,3 +294,12 @@ export default function OwnersPage() {
             </div>
           </div>
         </section>
+
+        {/* Payments bar & footer */}
+        <WeAcceptBar />
+        <SiteFooter />
+      </main>
+    </>
+  );
+}
+

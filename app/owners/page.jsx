@@ -244,23 +244,24 @@ export default function OwnersPage() {
           </div>
         </section>
 
-        {/* TIKTOK SECTION – 4 owner videos */}
+             {/* TIKTOK SECTION – 4 owner videos */}
         <section className="py-10 md:py-12 bg-neutral-950 border-b border-black/70">
           <div className="container max-w-7xl mx-auto px-4 md:px-6">
             <h2 className="text-2xl sm:text-3xl font-black text-yellow-300 text-center">
               Tow life, straight from the owners
             </h2>
-          <p className="mt-2 text-sm sm:text-base text-amber-100 text-center max-w-3xl mx-auto">
+            <p className="mt-2 text-sm sm:text-base text-amber-100 text-center max-w-3xl mx-auto">
               See Alejandra and Harvey on real calls, real recoveries, and real
               West Texas miles.
             </p>
 
-            <div className="mt-6 grid gap-6 md:grid-cols-2">
+            {/* cards use max-w-xs so the frame hugs the TikTok width */}
+            <div className="mt-6 grid gap-8 md:grid-cols-2">
               <div className="space-y-2">
                 <h3 className="text-base sm:text-lg font-bold text-yellow-300">
                   Tow Calls: The Boss Does It Herself!
                 </h3>
-                <div className="rounded-3xl overflow-hidden border border-neutral-700 bg-black/80 p-3">
+                <div className="max-w-xs mx-auto rounded-3xl overflow-hidden border border-neutral-700 bg-black/80 p-2">
                   <TikTokEmbed videoId="7479691088521940254" />
                 </div>
               </div>
@@ -269,7 +270,7 @@ export default function OwnersPage() {
                 <h3 className="text-base sm:text-lg font-bold text-yellow-300">
                   Tow Calls: Dirty Hands, Clean Money
                 </h3>
-                <div className="rounded-3xl overflow-hidden border border-neutral-700 bg-black/80 p-3">
+                <div className="max-w-xs mx-auto rounded-3xl overflow-hidden border border-neutral-700 bg-black/80 p-2">
                   <TikTokEmbed videoId="7419425892356738335" />
                 </div>
               </div>
@@ -278,7 +279,7 @@ export default function OwnersPage() {
                 <h3 className="text-base sm:text-lg font-bold text-yellow-300">
                   The Tow Life: This Business Isn&apos;t for the Weak
                 </h3>
-                <div className="rounded-3xl overflow-hidden border border-neutral-700 bg-black/80 p-3">
+                <div className="max-w-xs mx-auto rounded-3xl overflow-hidden border border-neutral-700 bg-black/80 p-2">
                   <TikTokEmbed videoId="7382816143372799263" />
                 </div>
               </div>
@@ -287,18 +288,10 @@ export default function OwnersPage() {
                 <h3 className="text-base sm:text-lg font-bold text-yellow-300">
                   The Boss Works: Towing Jobs 2
                 </h3>
-                <div className="rounded-3xl overflow-hidden border border-neutral-700 bg-black/80 p-3">
+                <div className="max-w-xs mx-auto rounded-3xl overflow-hidden border border-neutral-700 bg-black/80 p-2">
                   <TikTokEmbed videoId="7541454523265535245" />
                 </div>
               </div>
             </div>
           </div>
         </section>
-
-        {/* Payments bar & footer */}
-        <WeAcceptBar />
-        <SiteFooter />
-      </main>
-    </>
-  );
-}

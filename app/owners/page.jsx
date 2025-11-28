@@ -196,10 +196,11 @@ export default function OwnersPage() {
             <div className="mt-6 grid gap-4 sm:gap-5 md:grid-cols-3">
               {/* TOP ROW */}
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
+                {/* zoomed out a bit: show more of Alex + truck */}
                 <img
                   src="/owners/alexsemi.png"
                   alt="Alejandra with the rollback at sunset"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
@@ -211,8 +212,8 @@ export default function OwnersPage() {
               </div>
               <div className="rounded-2xl overflow-hidden border border-neutral-700/80 bg-black/60">
                 <img
-                  src="/owners/couple.jpg"
-                  alt="Harvey and Alejandra together outdoors"
+                  src="/owners/hthunder.jpg"
+                  alt="Harvey running in the thunder with the truck"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -249,7 +250,7 @@ export default function OwnersPage() {
             <h2 className="text-2xl sm:text-3xl font-black text-yellow-300 text-center">
               Tow life, straight from the owners
             </h2>
-            <p className="mt-2 text-sm sm:text-base text-amber-100 text-center max-w-3xl mx-auto">
+          <p className="mt-2 text-sm sm:text-base text-amber-100 text-center max-w-3xl mx-auto">
               See Alejandra and Harvey on real calls, real recoveries, and real
               West Texas miles.
             </p>
